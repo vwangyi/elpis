@@ -1,4 +1,5 @@
 export default {
+  你好: "你好",
   route: {
     homepage: "首页",
     salary: "工资",

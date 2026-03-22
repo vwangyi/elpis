@@ -1,4 +1,5 @@
 export default {
+  hello: "hello",
   route: {
     homepage: "homepage",
     salary: "salary",

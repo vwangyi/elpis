@@ -1,5 +1,5 @@
-import english from "./dictionaries/english.js";
-import chinese from "./dictionaries/chinese.js";
+import english from "@/lang/en.js";
+import chinese from "@/lang/zh.js";
 
 const options = { english, chinese };
 
@@ -12,7 +12,7 @@ const options = { english, chinese };
  * 使用方式可改为  {{ $t('你好')}}  用中文转其他语言
  */
 function translate(key) {
-  // key >>> `词典.hello`
+  // key >>> `词典.你好`
   const list = key.split("."); // ['词典', 'hello']
   const result = list.reduce((o, i) => {
     if (o) return o[i];

@@ -58,17 +58,6 @@ module.exports = {
         test: /\.styl$/,
         use: [MiniCssExtractPlugin.loader, "css-loader", "stylus-loader"]
       },
-      // webpack4 对 字体等文件 进行解析
-      // {
-      //   test: /\.(woff2?|eot|ttf|otf)$/i,
-      //   use: {
-      //     loader: 'file-loader', // webpack4处理字体 需要额外安装 npm i -D file-loader 包
-      //     options: {
-      //       name: 'fonts/[name].[hash:8].[ext]',
-      //       esModule: false  // 如果需要CommonJS模块
-      //     }
-      //   }
-      // },
       // 对 字体等文件 进行解析
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.+)?$/,
