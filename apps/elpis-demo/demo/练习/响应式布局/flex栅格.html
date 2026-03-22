@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        width: 100%;
+        /* flex容器是否支持换行: wrap: 换  nowrap: 不换(默认) */
+        flex-wrap: wrap;
+      }
+      .box {
+        /* 空隙 */
+        width: calc(25% - 16px);
+        height: 200px;
+        margin: 8px;
+        outline: 1px solid red;
+      }
+
+      /* 媒体查询 */
+      /* 浏览器视口宽度大于900px时 */
+      @media screen and (min-width: 900px) {
+        body {
+          background-color: red;
+        }
+      }
+
+      /* 浏览器视口宽度大于700px 并且 小于900px时 */
+      @media screen and (min-width: 700px) and (max-width: 900px) {
+        body {
+          background-color: blue;
+        }
+      }
+
+      /*
+            800+: 显示4格
+            600~800: 显示3格
+            400~600: 显示2格
+            400-: 显示1格
+        */
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </body>
+</html>

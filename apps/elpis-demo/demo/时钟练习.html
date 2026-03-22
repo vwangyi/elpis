@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .clock {
+        width: 200px;
+        height: 200px;
+        border: 5px solid red;
+        /* 圆角 */
+        border-radius: 50%;
+        /* 相对定位 */
+        position: relative;
+      }
+
+      /* 水平垂直居中 定位的固定写法 */
+      .num {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* 权重: 10 + 10 */
+      .num:nth-child(1) {
+        /*
+                1. 回调-50% 为了居中
+                2. 旋转固定角度
+                3. 向上发射80px
+                4. 转回原来的角度
+            */
+        transform: translate(-50%, -50%) rotate(30deg) translateY(-80px) rotate(-30deg);
+      }
+
+      .num:nth-child(2) {
+        transform: translate(-50%, -50%) rotate(60deg) translateY(-80px) rotate(-60deg);
+      }
+
+      .num:nth-child(3) {
+        transform: translate(-50%, -50%) rotate(90deg) translateY(-80px) rotate(-90deg);
+      }
+
+      /* 更多... */
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <div class="num">1</div>
+      <div class="num">2</div>
+      <div class="num">3</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+/* 全局scss变量 将通过webpack 或 vite 在每个vue文件的style顶层   */
+// 注入 `@use '@/styles/variables.scss';`
+
+/* 该文件 已经通过 vite 对每个vue的style中引入了 不需要在额外引入 */
+
+// $width-1200: 1200px;
+$width1000: 1000px;
+
+// _variables.scss
+
+// 颜色系统
+$primary-color: #1890ff;
+$success-color: #52c41a;
+$warning-color: #faad14;
+$error-color: #f5222d;
+
+// 字体系统
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+$font-size-base: 14px;
+$line-height-base: 1.5;
+
+// 间距系统
+$spacing-xs: 8px;
+$spacing-sm: 12px;
+$spacing-md: 16px;
+$spacing-lg: 24px;
+$spacing-xl: 32px;
+
+// 布局系统
+$container-width: 1200px;
+$sidebar-width: 240px;
+$header-height: 64px;
+
+// 响应式断点
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// 阴影
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+// 边框圆角
+$border-radius-sm: 4px;
+$border-radius-md: 6px;
+$border-radius-lg: 8px;

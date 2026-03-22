@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      body > div {
+        height: 100vh;
+        position: absolute;
+        top: 0;
+      }
+
+      .left {
+        width: 100px;
+        background-color: #555;
+        left: 0;
+      }
+
+      .center {
+        left: 100px;
+        right: 100px;
+        /* width: calc(100% - 200px); */
+        background-color: #777;
+      }
+
+      .right {
+        width: 100px;
+        background-color: #999;
+        right: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="left"></div>
+    <div class="center"></div>
+    <div class="right"></div>
+  </body>
+</html>

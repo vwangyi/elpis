@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <div>
+        <span>123</span>
+    </div> -->
+
+    <script>
+      //
+      class Vue {
+        data = {}
+
+        constructor(option, vDOM, rootElement) {
+          this._vDOM = vDOM
+          this._rootElement = rootElement
+
+          const data = option.data()
+          this.data = data
+          const methods = option.methods
+          this.watch = option.watch
+          this.computed = option.computed
+          option.beforeCreate?.()
+          for (const key in data) {
+            this[key] = data[key]
+          }
+          for (const key in this.computed) {
+            this[key] = this.computed[key].call(this)
+          }
+          for (const key in methods) {
+            this[key] = methods[key]
+          }
+          this._initData()
+          option.created?.()
+          option.beforeMount?.()
+          this._render(vDOM, rootElement)
+          option.mounted?.()
+        }
+
+        // 私有函数
+        _render(vDOM, rootElement) {
+          rootElement.innerHTML = ''
+          const el = document.createElement(vDOM.tagName)
+          el.innerText = this[vDOM.mustache]
+          // el.innerHTML = vDOM.vHTML;
+          for (const eventKey in vDOM.events || {}) {
+            el.addEventListener(eventKey, this[vDOM.events[eventKey]].bind(this))
+          }
+          rootElement.appendChild(el)
+        }
+
+        // 数据驱动DOM
+        // Vue2: Object.defineProperty 面试题
+        // Vue3: es6 Proxy(ie11-不好使)导致整个vue3不支持ie11-
+        _initData() {
+          for (const key in this.data) {
+            Object.defineProperty(this, key, {
+              set(newValue) {
+                this.watch[key]?.(newValue)
+                // 先改data
+                this.data[key] = newValue
+                // 然后改computed
+                for (const computedKey in this.computed) {
+                  this[computedKey] = this.computed[computedKey].call(this)
+                }
+                this.beforeUpdate?.()
+                this._render(this._vDOM, this._rootElement)
+                this.updated?.()
+              },
+              get() {
+                return this.data[key]
+              },
+            })
+          }
+        }
+      }
+
+      const option = {
+        data() {
+          return {
+            list: [],
+            msg: 'hello world',
+            count: 1,
+          }
+        },
+        methods: {
+          sayHi() {
+            console.log(123)
+          },
+          onAdd() {
+            this.count++
+          },
+        },
+        watch: {
+          count(c) {
+            console.log('c', c)
+          },
+        },
+        computed: {
+          doubleCount() {
+            return this.count * 2
+          },
+        },
+        beforeMount() {
+          console.log('首次渲染前')
+        },
+        mounted() {
+          console.log('首次渲染完成')
+        },
+      }
+
+      // this.list
+
+      // vDOM
+      // <div @click="onAdd">{{ count }}</div>
+      // .ast解析
+      const vDOM = {
+        tagName: 'div',
+        mustache: 'doubleCount',
+        events: {
+          click: 'onAdd',
+        },
+      }
+
+      const vInstance = new Vue(option, vDOM, document.body)
+
+      console.log(vInstance)
+    </script>
+  </body>
+</html>

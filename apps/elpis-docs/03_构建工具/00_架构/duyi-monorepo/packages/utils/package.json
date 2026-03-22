@@ -1,0 +1,30 @@
+{
+  "name": "@duyi-monorepo/utils",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "module": "./dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.15.1",
+  "buildOptions": {
+    "name": "DuyiMonorepoUtils",
+    "formats": [
+      "esm",
+      "cjs",
+      "iife"
+    ]
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

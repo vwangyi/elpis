@@ -1,0 +1,9 @@
+
+# .prettierignore
+dist
+public
+.local
+node_modules
+pnpm-lock.yaml
+apps/elpis-docs
+apps/elpis-demo

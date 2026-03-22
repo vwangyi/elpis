@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+        /* 目标2：掌握动画原理和用户交互 */
+        const canvas = document.getElementById('myCanvas'); // 创建画布
+        const ctx = canvas.getContext('2d'); // 拿到画布的画笔
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            // 绘制逻辑
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+
+    </script>
+</body>
+</html>

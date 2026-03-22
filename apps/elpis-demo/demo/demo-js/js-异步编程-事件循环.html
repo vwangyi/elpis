@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.log(1)
+      setTimeout(() => {
+        console.log(3)
+      })
+      new Promise((resolve) => {
+        console.log(4)
+        setTimeout(() => {
+          resolve(5)
+        })
+      }).then((res) => {
+        console.log(res)
+      })
+      console.log(2)
+
+      // 答案解析 =================
+
+      // 执行同步代码
+      console.log(1)
+      // 追加 第1个宏任务
+      setTimeout(() => {
+        console.log(3)
+      })
+
+      new Promise((resolve) => {
+        // 执行同步代码
+        console.log(4)
+        // 追加 第2个宏任务
+        setTimeout(() => {
+          // 追加 第1个微任务
+          resolve(5)
+        })
+      }).then((res) => {
+        console.log(res)
+      })
+      // 执行同步代码
+      console.log(2)
+
+      // 输出结果为 14235
+    </script>
+  </body>
+</html>

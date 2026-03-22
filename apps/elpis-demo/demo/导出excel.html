@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>数组导出Excel工具</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 90%;
+        max-width: 600px;
+        padding: 30px;
+        text-align: center;
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .description {
+        color: #666;
+        margin-bottom: 30px;
+        line-height: 1.6;
+      }
+
+      .input-section {
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        color: #444;
+        font-weight: 500;
+      }
+
+      textarea {
+        width: 100%;
+        height: 120px;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 16px;
+        resize: vertical;
+        transition: border-color 0.3s;
+      }
+
+      textarea:focus {
+        outline: none;
+        border-color: #2575fc;
+        box-shadow: 0 0 0 2px rgba(37, 117, 252, 0.2);
+      }
+
+      .preview {
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        padding: 15px;
+        margin-bottom: 25px;
+        text-align: left;
+      }
+
+      .preview h3 {
+        color: #444;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+
+      .preview-content {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .word-item {
+        background-color: #e9ecef;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 14px;
+      }
+
+      .btn {
+        background: linear-gradient(to right, #2575fc, #6a11cb);
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+        font-weight: 500;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .btn i {
+        font-size: 18px;
+      }
+
+      .info {
+        margin-top: 20px;
+        padding: 12px;
+        background-color: #e7f3ff;
+        border-radius: 6px;
+        color: #0066cc;
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .info h3 {
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          padding: 20px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>数组导出Excel工具</h1>
+      <p class="description">输入单词数组，一键导出为Excel文件</p>
+
+      <div class="input-section">
+        <label for="wordArray">输入单词数组（每行一个单词或使用逗号分隔）</label>
+        <textarea id="wordArray" placeholder="例如：&#10;hello&#10;world&#10;或者：hello, world">
+hello
+world</textarea
+        >
+      </div>
+
+      <div class="preview">
+        <h3>预览</h3>
+        <div class="preview-content" id="previewContent">
+          <!-- 预览内容将通过JS动态生成 -->
+        </div>
+      </div>
+
+      <button class="btn" id="exportBtn"><i>📤</i> 导出到Excel</button>
+
+      <div class="info">
+        <h3><i>💡</i> 使用说明</h3>
+        <p>1. 在文本框中输入单词，每行一个单词，或使用逗号分隔</p>
+        <p>2. 点击"导出到Excel"按钮下载Excel文件</p>
+        <p>3. 导出的Excel文件将包含一个名为"单词表"的工作表</p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const wordArrayTextarea = document.getElementById('wordArray')
+        const previewContent = document.getElementById('previewContent')
+        const exportBtn = document.getElementById('exportBtn')
+
+        // 初始预览
+        updatePreview()
+
+        // 监听输入变化
+        wordArrayTextarea.addEventListener('input', updatePreview)
+
+        // 更新预览
+        function updatePreview() {
+          const words = parseInput(wordArrayTextarea.value)
+          previewContent.innerHTML = ''
+
+          if (words.length === 0) {
+            previewContent.innerHTML =
+              '<span style="color: #999;">输入单词后，将在这里显示预览</span>'
+            return
+          }
+
+          words.forEach((word) => {
+            const wordElement = document.createElement('div')
+            wordElement.className = 'word-item'
+            wordElement.textContent = word
+            previewContent.appendChild(wordElement)
+          })
+        }
+
+        // 解析输入
+        function parseInput(input) {
+          if (!input.trim()) return []
+
+          // 尝试按逗号分割
+          if (input.includes(',')) {
+            return input
+              .split(',')
+              .map((word) => word.trim())
+              .filter((word) => word)
+          }
+
+          // 否则按行分割
+          return input
+            .split('\n')
+            .map((word) => word.trim())
+            .filter((word) => word)
+        }
+
+        // 导出到Excel
+        exportBtn.addEventListener('click', function () {
+          const words = parseInput(wordArrayTextarea.value)
+
+          if (words.length === 0) {
+            alert('请输入至少一个单词')
+            return
+          }
+
+          exportToExcel(words)
+        })
+
+        // 导出到Excel函数
+        function exportToExcel(words) {
+          // 创建Excel文件内容
+          let csvContent = '单词表\n' // 工作表名称
+
+          // 添加表头
+          csvContent += '序号,单词\n'
+
+          // 添加数据行
+          words.forEach((word, index) => {
+            csvContent += `${index + 1},${word}\n`
+          })
+
+          // 创建Blob对象
+          const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+
+          // 创建下载链接
+          const link = document.createElement('a')
+          const url = URL.createObjectURL(blob)
+
+          link.setAttribute('href', url)
+          link.setAttribute('download', '单词表.xlsx')
+          link.style.visibility = 'hidden'
+
+          document.body.appendChild(link)
+          link.click()
+          document.body.removeChild(link)
+
+          // 显示成功消息
+          alert(`成功导出 ${words.length} 个单词到Excel文件！`)
+        }
+      })
+    </script>
+  </body>
+</html>

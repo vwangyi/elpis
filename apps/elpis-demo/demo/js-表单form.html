@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>完整表单示例</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-container">
+        <h1>用户注册表单</h1>
+        <p class="form-description">请填写以下信息完成注册，带 * 的字段为必填项</p>
+        <form id="userForm" action="#" method="POST">
+          <!-- 账号信息 -->
+          <div class="form-group">
+            <label for="username" class="required">用户名</label>
+            <input type="text" id="username" name="username" placeholder="请输入用户名" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="required">密码</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="请输入密码"
+              required
+            />
+          </div>
+
+          <!-- 个人信息 -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fullname" class="required">姓名</label>
+              <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                placeholder="请输入真实姓名"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="email" class="required">电子邮箱</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="example@domain.com"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="phone" class="required">手机号码</label>
+              <input type="text" id="phone" name="phone" placeholder="请输入手机号码" />
+            </div>
+
+            <div class="form-group">
+              <label for="birthdate">出生日期</label>
+              <input type="date" id="birthdate" name="birthdate" />
+            </div>
+          </div>
+
+          <!-- 单选按钮 -->
+          <div class="form-group">
+            <label class="required">性别</label>
+            <div class="radio-group">
+              <div class="radio-option">
+                <input type="radio" id="male" name="gender" value="male" required />
+                <label for="male">男</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="female" name="gender" value="female" />
+                <label for="female">女</label>
+              </div>
+              <div class="radio-option">
+                <input type="radio" id="other" name="gender" value="other" />
+                <label for="other">其他</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 下拉选择 -->
+          <div class="form-group">
+            <label for="country" class="required">国家/地区</label>
+            <select id="country" name="country" required>
+              <option value="">请选择国家/地区</option>
+              <option value="china">中国</option>
+              <option value="usa">美国</option>
+              <option value="uk">英国</option>
+              <option value="japan">日本</option>
+              <option value="korea">韩国</option>
+              <option value="other">其他</option>
+            </select>
+          </div>
+
+          <!-- 多选按钮 -->
+          <div class="form-group">
+            <label>兴趣爱好</label>
+            <div class="checkbox-group">
+              <div class="checkbox-option">
+                <input type="checkbox" id="sports" name="interests" value="sports" />
+                <label for="sports">运动</label>
+              </div>
+              <div class="checkbox-option">
+                <input type="checkbox" id="reading" name="interests" value="reading" />
+                <label for="reading">阅读</label>
+              </div>
+              <div class="checkbox-option">
+                <input type="checkbox" id="music" name="interests" value="music" />
+                <label for="music">音乐</label>
+              </div>
+              <div class="checkbox-option">
+                <input type="checkbox" id="travel" name="interests" value="travel" />
+                <label for="travel">旅行</label>
+              </div>
+              <div class="checkbox-option">
+                <input type="checkbox" id="gaming" name="interests" value="gaming" />
+                <label for="gaming">游戏</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- 文本域 -->
+          <div class="form-group">
+            <label for="bio">个人简介</label>
+            <textarea id="bio" name="bio" rows="4" placeholder="请简要介绍一下自己..."></textarea>
+          </div>
+
+          <!-- 文件上传 -->
+          <div class="form-group">
+            <label for="avatar">上传头像</label>
+            <input type="file" id="avatar" name="avatar" accept="image/*" />
+          </div>
+
+          <!-- 按钮组 -->
+          <div class="btn-group">
+            <button type="submit" class="btn-submit">提交注册</button>
+            <button type="reset" class="btn-reset">重置表单</button>
+            <button type="button" class="btn-cancel">取消</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

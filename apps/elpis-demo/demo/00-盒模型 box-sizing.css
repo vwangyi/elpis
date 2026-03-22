@@ -1,0 +1,158 @@
+/*
+    标准流（3个 block inline inline-block)
+    浮动（float）
+    定位（position）
+    flex
+    grid
+    宽高
+    padding
+    border
+    margin
+    文字
+    背景
+    阴影
+    溢出滚动条
+
+    过渡动画transition
+    帧动画animation
+
+    变换transfrom
+
+    显示隐藏元素
+    选择器：类选择器 id选择器 标签选择器 伪类选择器 伪元素选择器
+
+    css变量 
+    calc() 计算属性
+    
+    
+    原生组件：div span input table 
+    
+ */
+
+.box {
+  /* 布局方式 */
+  display: block;
+  display: inline;
+  /* display: inline-block; */
+  float: left;
+  float: right;
+  float: none;
+
+  position: relative;
+  position: absolute;
+  position: fixed;
+  position: sticky;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+
+  display: flex;
+  display: inline-flex;
+  flex-direction: row;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  flex-grow: row wrap;
+
+  justify-content: center;
+  justify-content: flex-start;
+  justify-content: flex-end;
+  justify-content: space-between; /* 镜像 */
+  justify-content: space-around;
+
+  align-items: center;
+
+  /* 写在子盒子的属性 */
+  flex: 1;
+  order: 1;
+
+  align-self: center; /* 只针对子盒子自己 */
+
+  display: grid;
+
+  /* 盒模型 */
+  box-sizing: content-box;
+  box-sizing: border-box;
+  width: 0px;
+  max-width: 0px;
+  min-width: 0px;
+  height: 0px;
+  min-height: 0px;
+  max-height: 0px;
+
+  padding-top: 1px;
+  padding-right: 2px;
+  padding-bottom: 3px;
+  padding-left: 4px;
+  padding: 1px 2px 3px 4px;
+
+  /* 全边框 */
+  border: 1px solid red;
+  border-width: 1px;
+  border-style: solid;
+  border-color: red;
+
+  border-top: 2px solid #ff0000; /* 上边框 */
+  border-right: 1px dashed #00ff00;
+  border-bottom: 3px dotted #0000ff;
+  border-left: 1px double #ff00ff;
+
+  border-top: 1px solid #333;
+  /* 或者分别设置 */
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-top-color: #666;
+
+  border: none;
+
+  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+
+  margin: 10px;
+  margin-top: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+
+  /* 颜色 */
+  color: red;
+  color: rgb(255, 0, 0); /* 0 ~ 255 */
+  color: #ff0000; /* 00 ~ ff */
+  color: #f00; /* #ff0000 */
+  /* 字体大小 */
+  font-size: 100px;
+  /* 字体粗细 100 ~ 900 lighter light normal bold bolder */
+  font-weight: 100;
+  /* 字体样式: 倾斜 */
+  font-style: italic;
+  /* 字体: Arial */
+  font-family: Arial;
+
+  /* 对齐方式: 居中 */
+  text-align: center;
+  /* 文字装饰: 下划线 */
+  text-decoration: underline;
+  /* 文字缩进: 2个字 */
+  text-indent: 2em;
+  /* 关键字 */
+  font-weight: normal; /* 400 */
+  font-weight: bold; /* 600 */
+  font-weight: lighter;
+  font-weight: bolder;
+
+  /* 数值 */
+  font-weight: 100; /* Thin */
+  font-weight: 200; /* Extra Light */
+  font-weight: 300; /* Light */
+  font-weight: 400; /* Normal */
+  font-weight: 500; /* Medium */
+  font-weight: 600; /* Semi Bold */
+  font-weight: 700; /* Bold */
+  font-weight: 800; /* Extra Bold */
+  font-weight: 900; /* Black */
+}

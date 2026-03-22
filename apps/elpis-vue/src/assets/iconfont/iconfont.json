@@ -1,0 +1,44 @@
+{
+  "id": "5099236",
+  "name": "elpis",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "31987448",
+      "name": "搜索",
+      "font_class": "a-huaban1fuben19",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "37227988",
+      "name": "发布",
+      "font_class": "fabu",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "20558599",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "21243071",
+      "name": "通知",
+      "font_class": "tongzhi",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "8936804",
+      "name": "太阳",
+      "font_class": "taiyang",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    }
+  ]
+}

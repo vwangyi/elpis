@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: elpis-koa-beta-app
+  name: elpis-koa-beta-app-deployment # 资源的名称，唯-标识该 Deployment
+  namespace: elpis-koa-beta # 资源所在的命名空间，用于隔离不同的资源
+
+spec:
+  strategy:
+spec:
+  replicas: 2 # 设置Pod的数量 
+  strategy: 
+  selector:
+    matchLabels:
+      app: elpis-koa-beta-app-pod # 选择器根据标签匹配选择与此 Deployment 相关联的 Pods。
+  template:
+    metadata:
+      labels:
+        app: elpis-koa-beta-app-pod # 为 Pod 添加标签，便于选择和识别。
+    spec:
+      containers:
+        - image: g-huss7087-docker.pkg.coding.net/elpis/elpis-docker/elpis-koa-image-beta # 容器镜像的名称，表示从特定的 Docker Registry 拉取镜像。
+          name: elpis-koa-beta-app-container # 容器的名称，用于识别此容器。
+          ports:
+            - containerPort: 8081 # 容器暴露的端口 
+      imagePullSecrets:
+        - name: coding-registry-cred-9258184 # 指定用于从私有镜像仓库拉取镜像的凭据，确保只有授权用户可以访问私有镜像。
+ 

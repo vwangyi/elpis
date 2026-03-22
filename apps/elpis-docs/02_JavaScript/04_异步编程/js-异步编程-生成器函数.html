@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body> 
+    <script> 
+
+    // 生成器函数
+    function* test(arr) {
+      console.log(arr) 
+       var value1 = yield 1;
+       console.log('value1', value1) 
+       var value2 = yield 2; 
+       console.log('value2', value2)
+       var value3 = yield 3; 
+       console.log('value3', value3)
+
+       // 我们始终 需要拿到 上一个 yield的返回值 
+    }
+
+    const a = test()
+
+    console.log(a.next('one'))
+    console.log(a.next('two'))
+    console.log(a.next('three'))
+    console.log(a.next('four'))
+ 
+// 生成器函数 返回的 迭代器      而迭代器 需要调用 next()方法 才能拿到 yield 的值
+ 
+
+// 生成器函数中 一般不需要return 返回值 而是用yield 返回值 
+
+
+// async函数 就是 生成器函数 + 执行器函数
+    </script>
+  </body>
+</html>

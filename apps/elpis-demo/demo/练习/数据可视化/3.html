@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        background-color: #070a36;
+      }
+      .chart {
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 装图表的容器 -->
+    <div class="chart"></div>
+
+    <script src="./data-err.js"></script>
+    <script src="./lib/echarts.js"></script>
+    <script>
+      // 初始化echarts实例
+      const instance = echarts.init(document.querySelector('.chart'))
+
+      // 填写配置项
+      const option = {
+        tooltip: {},
+        color: [
+          {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 0,
+                color: 'red', // 0% 处的颜色
+              },
+              {
+                offset: 1,
+                color: 'blue', // 100% 处的颜色
+              },
+            ],
+            global: false, // 缺省为 false
+          },
+        ],
+        xAxis: {
+          data: data.map((d) => d.month),
+          axisTick: {
+            show: false,
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#fff',
+            },
+          },
+        },
+        yAxis: {
+          splitLine: {
+            show: false,
+          },
+          axisLine: {
+            show: false,
+          },
+          axisLabel: {
+            color: '#fff',
+          },
+        },
+        series: [
+          {
+            name: 'count',
+            type: 'line',
+            areaStyle: {},
+            data: data.map((d, i) => ({
+              value: d.count,
+              itemStyle: d.hasError
+                ? {
+                    color: 'red',
+                  }
+                : undefined,
+            })),
+          },
+        ],
+      }
+
+      // 把配置项传入实例
+      instance.setOption(option)
+    </script>
+  </body>
+</html>

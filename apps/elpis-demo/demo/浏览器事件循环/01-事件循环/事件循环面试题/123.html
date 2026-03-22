@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>哈哈</h1>
+    <button>按钮</button>
+    <script>
+      // 渲染主线程 申请内存空间
+      const h1 = document.querySelector('h1')
+      // 渲染主线程 申请内存空间
+      const btn = document.querySelector('button')
+
+      // 渲染主线程 申请内存空间
+      function sleep(time) {
+        var start = +new Date()
+        while (+new Date() - start < time) {}
+      }
+
+      // 渲染主线程 开启交互线程 让交互线程去监听用户的点击触发
+      btn.onclick = function () {
+        h1.innerText = 'Hello World'
+        sleep(3000) // 模拟阻塞 让渲染主线程 睡觉3s    卡上3s才能执行绘制任务  我们才看见Hello World
+      }
+
+      // 渲染主线程 开始睡觉了 因为没事了
+
+      // 交互线程监听到用户点击了按钮 然后把任务放到任务队列中
+
+      // 渲染主线程发生有新任务 去执行 h1.innerText = 'Hello World' 产生一个绘制任务 交给渲染线程
+      // 内存中的h1.innerText已经是Hello World了 但页面上还没有绘制
+
+      // 渲染主线程 执行 sleep(3000)  渲染主线程睡觉3s后 渲染主线程醒来  开始执行绘制任务 交给渲染线程
+
+      // 然后用户就看到了 Hello World
+
+      // 把函数 交给 延时线程 延时线程负责 计时并且到时后 把任务放到 延时队列中
+      setTimeout(function () {
+        console.log('setTimeout')
+      }, 0)
+
+      // 把函数直接放微队列
+      Promise.resolve().then(function () {
+        console.log('promise')
+      })
+
+      // 全局同步代码
+      console.log('global')
+
+      // 输出结果为：global promise setTimeout
+    </script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        width: 100%;
+        display: flex;
+      }
+      footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 30px;
+        display: none;
+      }
+      main {
+        height: 100vh;
+        background-color: #ccc;
+        flex: 1;
+      }
+      aside {
+        height: 100vh;
+        width: 200px;
+        background-color: #aaa;
+      }
+      @media screen and (max-width: 800px) {
+        aside {
+          display: none;
+        }
+        footer {
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main></main>
+    <aside></aside>
+    <footer>hello</footer>
+  </body>
+</html>

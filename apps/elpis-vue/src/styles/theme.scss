@@ -1,0 +1,57 @@
+/* 主题 */
+
+/* 用scss语法定一个map映射结构 */
+$themes: (
+  // 浅色
+  light: (
+      textColor: #333,
+      // 文本颜色
+      bgColor: #fff,
+      // 背景颜色
+    ),
+  // 暗色
+  dark: (
+      textColor: #fff,
+      // 文本颜色
+      bgColor: #333,
+      // 背景颜色
+    ) // 可扩展其他主题
+);
+
+$themeMap: ();
+@mixin useTheme() {
+  // 循环上面的map对象
+  @each $key, $value in $themes {
+    $themeMap: $value !global;
+    html[data-theme="#{$key}"] & {
+      @content;
+    }
+  }
+}
+
+@function getVar($paramName) {
+  @return map-get($themeMap, $paramName);
+}
+
+/* 
+编译之后 等同于下面 
+html[data-theme=light] .item {
+    color: #333;
+    background: #fff;
+}
+html[data-theme=dark] .item {
+    color: #fff;
+    background: #333;
+} 
+*/
+
+// window.matchMedia('(prefers-color-scheme: dark)').matches 获取浏览器的主题
+
+/* 使用 */
+.item {
+  font-size: 14px;
+  @include useTheme {
+    color: getVar("textColor");
+    background: getVar("bgColor");
+  }
+}

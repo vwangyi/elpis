@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        display: grid;
+        width: 100%;
+        gap: 16px;
+      }
+      .box {
+        height: 200px;
+        outline: 1px solid red;
+      }
+
+      /* 800+: 显示4格 */
+      @media screen and (min-width: 800px) {
+        body {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      /* 600~800: 显示3格 */
+      @media screen and (min-width: 600px) and (max-width: 800px) {
+        body {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+
+      /* 400~600: 显示2格 */
+      @media screen and (min-width: 400px) and (max-width: 600px) {
+        body {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      /* 400-: 显示1格 */
+      @media screen and (max-width: 400px) {
+        body {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /*
+            800+: 显示4格
+            600~800: 显示3格
+            400~600: 显示2格
+            400-: 显示1格
+        */
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </body>
+</html>

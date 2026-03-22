@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        border: 1px solid #aaa;
+        border-radius: 8px;
+        display: inline-block;
+      }
+
+      /* 权重 11 */
+      .container > div {
+        display: inline-block;
+        padding: 8px;
+        border-right: 1px solid #aaa;
+      }
+
+      /* 权重 20 */
+      .container > .last {
+        border-right: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="btn">一键复制</div>
+      <div class="btn">编辑</div>
+      <div class="btn">Web IDE</div>
+      <div class="btn">原始数据</div>
+      <div class="btn">按行查看</div>
+      <div class="btn last">历史</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,14 @@
+@use "./reset.scss";
+@use "./antd.scss";
+@use "./variables.scss";
+
+@use "./adaptive.scss";
+
+/* 全局类名 全局可用 */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* 隐藏纵向滚动条 Chrome, Safari and Opera */
+}
+.hide-scrollbar {
+  scrollbar-width: none; /* 隐藏纵向滚动条 Firefox */
+  -ms-overflow-style: none; /* 隐藏纵向滚动条 IE and Edge */
+}

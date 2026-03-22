@@ -1,0 +1,206 @@
+
+
+## Chrome Performance工具分析
+```javascript
+点击 开始录制 然后 点击 stop结束录制 
+查看 、
+执行js的时间 
+执行css的时间 
+执行html的时间 
+渲染的时间
+
+```
+
+
+
+1 过早优化是万恶之源 
+
++ 优化是有代价的 
++ 过早优化会带来开发的时间成本增加 
++ 可阅读性降低 （在性能出现问题之前 可阅读性 开发效率 永远高于性能）
+
+
+
+
+
+
+
+## 1 
++ 不需要渲染的数据 不要用响应式数据
+
+## 2
++ 需要渲染但不需要修改的数据 用冻结对象包裹
+
+```vue
+<script setup>
+  const goods = ref([]); // 商品数据用户不能修改
+
+  async function init() {
+     const res = await getGoodsList();
+     goods.value = Object.freeze(res); // 冻结之后 vue就不会把他变为响应式
+     console.log(Object.isFrozen(goods.value)) // true 表示是一个冻结对象
+  }
+</script>
+```
+
+
+
+## 3
++ 采用函数式组件 
++ 因为函数式组件不会创建组件实例 是纯渲染的 而普通组件会创建组件实例对象 
++ 
++ 
+
+## 4
++ 使用 计算属性
+
+
+
+## 5 
++ v-model的性能问题
+
+<font style="color:#000000;">当使用</font><font style="color:#000000;"> v-model </font><font style="color:#000000;">绑定一个表单项时，当用户改变表单项的状态时，也会随之改变数据，从而导致</font><font style="color:#000000;"> vue </font><font style="color:#000000;">发生重渲染</font><font style="color:#000000;">(rerender)</font><font style="color:#000000;">，这会带来一些性能的开销。</font>
+
+<font style="color:#000000;">我们可以通过使用 1azy 或不使用 v-model 的方式解决该问题，但要注意，这样可能会导致在某一个时间段内数据和表单项的值是不一致的。</font>
+
++ v-model.lazy 监听的是change事件  v-model监听的是input事件 
+
+<font style="color:#000000;"></font>
+
+## <font style="color:#000000;">6</font>
++ 尽量保持对象引用稳定（响应式数据能不变就不变 因为只要变了就会触发重新渲染）
+
+```javascript
+在绝大部分情况卜，vue 触发 rerenaer 的时机是其依赖的数据发生变化
+若数据没有发生变化，哪怕给数据重新赋值了，vue 也是不会做出任何处理的
+  下面是 vve 判断数据有没有变化的源码
+function hasChanged(x, y) {
+    if (x === y) {
+        return x === 0 && 1 / x !== 1 / y;
+    }
+    else {
+        return x === x || y === y;
+    }
+} 
+因此，如果需要，只要能保证组件的依赖数据不发生变化，组件就不会重新渲染。
+对于原始数据类型，保持其值不变即可
+对于对象类型，保持其引用不变即可
+从另一方面来说，由于可以通过保持属性引用稳定来避免子组件的重渲染，
+那么我们应该细分组件来尽量避免多余的渲染
+
+
+
+根据vue源码 来判断一个东西到底变没有变  如果是对象仅仅是判断引用地址并没有递归看内部 
+  也就意味着 
+
+const list = ref([]);
+
+list.value = [] // 引用地址改变 一定会触发重新渲染 
+list.value.unshift({a: 1}); // 地址没有改变 不会触发重新渲染  性能更好
+ 
+
+```
+
+
+
+## 7
++ v-show 替换 v-if 
+
+<font style="color:#000000;">对于频繁切换显示状态的元素，使用</font><font style="color:#000000;">v-show</font><font style="color:#000000;">可以保证虚拟</font><font style="color:#000000;">dom</font><font style="color:#000000;">树的稳定，避免频繁的新增和删除元素，特别是对于那些内部包含大量</font><font style="color:#000000;">dom</font><font style="color:#000000;">元素的节点，这一点极其重要</font>
+
+<font style="color:#000000;">关键字:频繁切换显示状态、内部包含大idom元系</font>
+
+<font style="color:#000000;"></font>
+
+<font style="color:#000000;">用户会频繁切换 用 v-show </font>
+
+<font style="color:#000000;">只有初始化会变 用v-if </font>
+
+<font style="color:#000000;"></font>
+
+## <font style="color:#000000;">8</font>
++ 延迟渲染
+
+JS传输完成后，浏览器开始执行JS构造页面
+
+但可能一开始要渲染的组件太多，不仅JS执行的时间很长，而且执行完后浏览器要渲染的元素过多，从而导致页面白屏
+
+一个可行的办法就是延迟渲染组件，让组件按照指定的先后顺序依次一个一个渲染出来
+
+延迟渲染是一个思路，本质上就是利用-requestAnimationFrame 事件分批渲染内容，它的具体实现多种多样
+
+
+
+```javascript
+requestAnimationFrame(() => {
+  console.log('requestAnimationFrame'); 
+});
+Promise.resolve().then(() => {
+  console.log('Promise.then'); 
+});
+
+// vue的nextTick就是Promise.resolve().then() 实现的 
+// 有些浏览器不支持promise才会采用其他方式实现
+nextTick(() => { 
+  console.log('nextTick');
+});
+console.log('同步代码');
+```
+
+## 9
++ 使用 keep-alive 
++ 长列表优化 虚拟列表
++ 打包体积优化 
++ 
+
+
+
+
+
+
+
++ 不需要渲染的数据 采用普通变量 而不是响应式数据   需要渲染但不需要改变的值采用 object.xxx 冻结   
+比如： 商品数据 某些数据 用户只能读 不能操作 这类数据虽然需要渲染 但后续都不用修改 就可以冻结  
+请求到 goods 用 Object.freeze(goods) 包裹一下
+
+
+
+v-for列表渲染优化：使用key， 对于通过循环生成的列表，应给每个列表项一个稳定且唯一的key，这有利于在列表变动时尽量减少DOM操作（删除、新增、改动元素）
+
+
+
+
+
+
+
+1 异步导致 慢 比如网络 promise 等等 预加载
+
+2 计算量太大 cpu处理不过来 导致慢  - webworks
+
+3 渲染任务量大 导致浏览器异步渲染不过来 导致慢  按需渲染 预加载
+
+## 永远不要提前优化
+优化是有代价的 开发成本增加
+
+
+
+1 v-for 使用 key
+
+响应式数据 层级不要嵌套太深 因为会循环
+
+
+
+用v-model.lazy="msg" 或不用v-model   
+ v-model.lazy="msg"和v-model区别 一个监听change 一个监听input  
+vue常见优化手段  
+使用key  
+对于通过循环生成的列表，应给每个列表项一个稳定且唯一的key，这有利于在列表变动时，尽量少的删除、新增、改动元素  
+享户  
+使用冻结的对象  
+冻结的对象不会被响应化  
+uyi Educatio  
+使用函数式组件  
+参见 函数式组件  
+使用计算属性  
+如果模板中某个数据会使用多次，并且该数据是通过计算得到的，使用计算属性以缓存它们
+

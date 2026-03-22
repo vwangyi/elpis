@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 1. 将以下数据渲染为六个按钮
+        const data = [
+            {
+                name: '苹果',
+                id: 0,
+            },
+            {
+                name: '香蕉',
+                id: 1,
+            },
+            {
+                name: '梨',
+                id: 2,
+            },
+            {
+                name: '草莓',
+                id: 3,
+            },
+            {
+                name: '橘子',
+                id: 4,
+            },
+            {
+                name: '葡萄',
+                id: 5,
+            },
+        ];
+
+        // 2. 疯狂点击每个按钮
+        // 3. 统计点击次数最多的三个水果
+
+        // 计数器
+        const counter = {};
+
+      	// 生成所有按钮
+        for (const item of data) {
+            // item: { name: '葡萄', id: 5 }
+            counter[item.name] = 0;
+            const btn = document.createElement('button');
+            btn.innerText = item.name;
+            btn.addEventListener('click', function () {
+                counter[item.name]++;
+                // a: '葡萄'
+                // counter['葡萄']: 0
+                const result = Object
+                    .keys(counter)
+                    .sort((a, b) => counter[b] - counter[a])
+                    .map(item => `${ item }: ${ counter[item] }`)
+                    .slice(0, 3)
+                console.log(result);
+            });
+            document.body.appendChild(btn);
+        }
+
+    </script>
+</body>
+</html>

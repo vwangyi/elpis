@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+        .ball {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="ball"></div>
+
+    <script src="../../../练习/jquery/jquery.js"></script>
+    <script>
+        // 使用jquery写全屏可拖动的小球(单个小球, 无需边缘检测)
+        // 要求按下ctrl+z可以撤回到上一次小球的位置
+        // 并在不能继续撤回时弹出警告框('已经撤回到底了')
+        // (tiger)实现ctrl+y反撤回功能(反悔上一次撤回的操作)
+
+
+
+
+
+        // 答案：>>>>>>>>>>>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function onMouseMove(e) {
+            const { clientX, clientY } = e;
+            this.x = clientX - this.innerX;
+            this.y = clientY - this.innerY;
+            $('.ball').css({ transform: `translate(${ this.x }px, ${ this.y }px)` });
+        }
+
+        function onMouseDown(e) {
+            this.innerX = e.offsetX;
+            this.innerY = e.offsetY;
+            $(document).on('mousemove', onMouseMove.bind(this));
+            // $(document).on('mousemove', this.onMouseMove);
+        }
+
+        function onMouseUp(e) {
+            this.snapshots.splice(++this.currentSnapshotIdx);
+            this.snapshots.push([this.x, this.y]); // 记录x,this.y 用于撤回
+            $(document).off('mousemove');
+            // $(document).off('mousemove', this.onMouseMove);
+        }
+
+        function onKeyDown(e) {
+            // 撤回
+            if (e.ctrlKey && e.key === 'z') {
+                onCtrlZ.call(this);
+            }
+            // 反撤回
+            if (e.ctrlKey && e.key === 'y') {
+                onCtrlY.call(this);
+            }
+        }
+
+        function onCtrlZ() {
+            if (this.currentSnapshotIdx === 0) {
+                alert('撤到底了');
+                return;
+            }
+            this.currentSnapshotIdx--;
+            const [x, y] = this.snapshots[this.currentSnapshotIdx];
+            $('.ball').css({ transform: `translate(${ x }px, ${ y }px)` });
+        }
+
+        function onCtrlY() {
+            if (this.currentSnapshotIdx === this.snapshots.length - 1) {
+                alert('没得撤回了');
+                return;
+            }
+            this.currentSnapshotIdx++;
+            console.log(this);
+            const [x, y] = this.snapshots[this.currentSnapshotIdx];
+            $('.ball').css({ transform: `translate(${ x }px, ${ y }px)` });
+        }
+
+        // 这是主函数 闭包函数 把返回的多个函数组成一个对象 
+        // 把内部函数抽离出去 并且通过不调用函数传递了闭包变量
+        function getEvents() {
+            const x = 0;
+            const y = 0
+            const info = {
+                innerX: 0,
+                innerY: 0,
+                x,
+                y,
+                // 快照数组, 存储每次拖动的位置
+                snapshots: [
+                    [x, y],
+                ],
+                currentSnapshotIdx: 0,
+            };
+
+            return {
+                onMouseMove: onMouseMove.bind(info), // 不调用函数进行传参 细节
+                onMouseDown: onMouseDown.bind(info),
+                onMouseUp: onMouseUp.bind(info),
+                onKeyDown: onKeyDown.bind(info),
+            };
+        }
+
+        const events = getEvents();
+
+        $('.ball').on('mousedown', events.onMouseDown);
+        $(document).on('mouseup', events.onMouseUp);
+        $(window).on('keydown', events.onKeyDown);
+    </script>
+</body>
+</html>

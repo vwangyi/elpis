@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    手机: <input type="text" />
+    <span class="error-msg">请输入正确的手机号</span>
+
+    <script src="../jquery/jquery.js"></script>
+    <script>
+      const telReg = /^1[3-9]\d{9}$/
+      $('input').on('blur', function () {
+        const v = $(this).val()
+        if (!telReg.test(v)) {
+          $('.error-msg').show()
+        } else {
+          $('.error-msg').hide()
+        }
+      })
+
+      $('input').on('input', function () {
+        const v = $(this).val()
+        if (telReg.test(v)) {
+          $('.error-msg').hide()
+        }
+      })
+    </script>
+  </body>
+</html>

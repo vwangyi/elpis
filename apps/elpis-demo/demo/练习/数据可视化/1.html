@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .chart {
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 装图表的容器 -->
+    <div class="chart"></div>
+
+    <script src="./lib/echarts.js"></script>
+    <script>
+      const data = [
+        { name: 'zs', value: 100 },
+        { name: 'ls', value: 200 },
+        { name: 'ww', value: 300 },
+        { name: 'zl', value: 400 },
+        { name: 'lw', value: 500 },
+        { name: 'zl', value: 600 },
+        { name: 'lw', value: 700 },
+        { name: 'zl', value: 800 },
+        { name: 'lw', value: 900 },
+        { name: 'zl', value: 1000 },
+        { name: 'lw', value: 1100 },
+        { name: 'zl', value: 1200 },
+        { name: 'lw', value: 1300 },
+        { name: 'zl', value: 1400 },
+        { name: 'lw', value: 1500 },
+        { name: 'zl', value: 1600 },
+        { name: 'lw', value: 1700 },
+        { name: 'zl', value: 1800 },
+        { name: 'lw', value: 1900 },
+        { name: 'zl', value: 2000 },
+        { name: 'lw', value: 2100 },
+        { name: 'zl', value: 2200 },
+        { name: 'lw', value: 2300 },
+        { name: 'zl', value: 2400 },
+        { name: 'lw', value: 2500 },
+        { name: 'zl', value: 2600 },
+        { name: 'lw', value: 2700 },
+        { name: 'zl', value: 2800 },
+        { name: 'lw', value: 2900 },
+        { name: 'zl', value: 3000 },
+        { name: 'lw', value: 3100 },
+        { name: 'zl', value: 3200 },
+        { name: 'lw', value: 3300 },
+        { name: 'zl', value: 3400 },
+        { name: 'lw', value: 3500 },
+        { name: 'zl', value: 3600 },
+        { name: 'lw', value: 3700 },
+        { name: 'zl', value: 3800 },
+        { name: 'lw', value: 3900 },
+        { name: 'zl', value: 4000 },
+      ]
+
+      // 初始化echarts实例
+      const instance = echarts.init(document.querySelector('.chart'))
+
+      // 填写配置项
+      const option = {
+        color: [
+          {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 1,
+                color: 'red', // 0% 处的颜色
+              },
+              {
+                offset: 0.5,
+                color: 'green', // 0% 处的颜色
+              },
+              {
+                offset: 0,
+                color: 'blue', // 100% 处的颜色
+              },
+            ],
+            global: false, // 缺省为 false
+          },
+          'green',
+        ],
+        title: {
+          text: 'ECharts 入门示例',
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量'],
+        },
+        xAxis: {
+          data: data.map((d) => d.name),
+        },
+        yAxis: {
+          splitLine: {
+            show: false,
+          },
+          axisLabel: {
+            formatter: (value) => `${Math.floor(value / 1000)}k`,
+          },
+        },
+        series: [
+          {
+            name: '销量',
+            type: 'bar',
+            data: data.map((d) => d.value),
+          },
+        ],
+      }
+
+      // 把配置项传入实例
+      instance.setOption(option)
+    </script>
+  </body>
+</html>

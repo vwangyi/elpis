@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+      }
+      .box {
+        margin: 8px;
+        height: 200px;
+        outline: 1px solid red;
+      }
+
+      /* 800+: 显示4格 */
+      @media screen and (min-width: 800px) {
+        .box {
+          width: calc(25% - 16px);
+        }
+      }
+
+      /* 600~800: 显示3格 */
+      @media screen and (min-width: 600px) and (max-width: 800px) {
+        .box {
+          width: calc((100% / 3) - 16px);
+        }
+      }
+
+      /* 400~600: 显示2格 */
+      @media screen and (min-width: 400px) and (max-width: 600px) {
+        .box {
+          width: calc((100% / 2) - 16px);
+        }
+      }
+
+      /* 400-: 显示1格 */
+      @media screen and (max-width: 400px) {
+        .box {
+          width: calc((100% / 1) - 16px);
+        }
+      }
+
+      /*
+            800+: 显示4格
+            600~800: 显示3格
+            400~600: 显示2格
+            400-: 显示1格
+        */
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+    <div class="box"></div>
+  </body>
+</html>

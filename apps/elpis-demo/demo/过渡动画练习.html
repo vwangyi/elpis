@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        border: 1px solid #000;
+        /* 属性名 过渡时间(200-300ms) 过渡方式(linear线性, ease先快后慢) 延迟时间 */
+        transition:
+          transform 2s ease,
+          background-color 1s ease 2s;
+      }
+
+      .box:hover {
+        transform: rotate(360deg);
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+  </body>
+</html>

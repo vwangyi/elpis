@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      @keyframes rotate {
+        0% {
+          transform: translate(-50%, -50%) rotateX(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotateX(360deg);
+        }
+      }
+
+      body {
+        margin: 0;
+        background-color: black;
+        perspective: 3000px;
+        /* 视角在图形的右上方 */
+        perspective-origin: 80vw top;
+        width: 100vw;
+        height: 100vh;
+      }
+
+      .box {
+        transform-origin: center center -50px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-style: preserve-3d;
+        transform: translate(-50%, -50%);
+        animation: rotate 5s linear infinite;
+      }
+
+      .face {
+        width: 100px;
+        height: 100px;
+        background-color: rgba(0, 239, 255, 0.2);
+        outline: 1px solid #00eeff;
+        cursor: pointer;
+      }
+
+      .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 6;
+      }
+
+      .face:nth-child(2) {
+        transform-origin: bottom;
+        transform: translate(-50%, -50%) rotateX(90deg);
+        background-color: rgba(0, 239, 255, 0.2);
+        z-index: 5;
+      }
+
+      .face:nth-child(3) {
+        transform-origin: top;
+        transform: translate(-50%, -50%) rotateX(-90deg);
+        background-color: rgba(0, 239, 255, 0.2);
+        z-index: 4;
+      }
+
+      .face:nth-child(4) {
+        transform-origin: left;
+        transform: translate(-50%, -50%) rotateY(90deg);
+        background-color: rgba(0, 239, 255, 0.2);
+        z-index: 3;
+      }
+
+      .face:nth-child(5) {
+        transform-origin: right;
+        transform: translate(-50%, -50%) rotateY(-90deg);
+        background-color: rgba(0, 239, 255, 0.2);
+        z-index: 2;
+      }
+
+      .face:nth-child(6) {
+        transform: translate(-50%, -50%) translateZ(-100px);
+        background-color: rgba(0, 239, 255, 0.2);
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <!-- 面前的面 -->
+      <div class="face center"></div>
+      <!-- 底 -->
+      <div class="face center"></div>
+      <!-- 顶 -->
+      <div class="face center"></div>
+      <!-- 左面 -->
+      <div class="face center"></div>
+      <!-- 右面 -->
+      <div class="face center"></div>
+      <!-- 后面 -->
+      <div class="face center"></div>
+    </div>
+  </body>
+</html>

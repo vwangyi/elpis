@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      const url = 'http://www.liulongbin.top:3006/api/getbooks'
+
+      // restful:
+      // 增: post
+      // 删: delete
+      // 改: put
+      // 查: get
+
+      // es6 Promise
+      // 1.
+      // axios({
+      //     url,
+      //     method: 'GET',
+      // })
+      // .then((res) => {
+      //     // res.data: 后端返回的完整信息
+      //     console.log(res.data);
+      // });
+
+      // async/await es2016提出
+      ;(async function () {
+        // await的亲爹必须是async函数
+        const res = await axios({
+          url,
+          method: 'GET',
+        })
+
+        console.log(res.data)
+      })()
+    </script>
+  </body>
+</html>

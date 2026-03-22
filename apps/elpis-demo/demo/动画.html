@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="../字体图标/icon/iconfont.css" />
+    <style>
+      i {
+        font-size: 100px !important;
+        /* 关键帧的名字 持续时长 动画效果 无限动画 */
+        animation: heihei 2s linear infinite;
+        /* display: inline-block; */
+        display: block;
+        position: absolute;
+        /*
+                撑开宽度的两种方式
+                1. inline-block
+                2. absolute
+             */
+      }
+
+      /* 关键帧 */
+      @keyframes heihei {
+        0% {
+          transform: rotate(0deg);
+        }
+        /* 50% {
+                font-size: 50px !important;
+            } */
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <i class="iconfont icon-loading"></i>
+  </body>
+</html>

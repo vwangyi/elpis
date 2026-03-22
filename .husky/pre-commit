@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+pnpm prettier && pnpm eslint && pnpm spell
+

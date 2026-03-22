@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      #container {
+        width: 100%;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container"></div>
+    <script
+      type="text/javascript"
+      src="https://webapi.amap.com/maps?v=2.0&key=758243bc2f718078ab06b843cdf7bf1e"
+    ></script>
+    <script>
+      const map = new AMap.Map('container', {
+        zoom: 12, // 级别
+        center: [116.397428, 39.90923], // 中心点坐标
+        viewMode: '3D', // 使用3D视图
+      })
+
+      const points = [
+        {
+          name: 'zsssssss',
+          position: [116.397428, 39.90923],
+        },
+        {
+          name: 'lssssssss',
+          position: [116.41, 39.93],
+        },
+      ]
+
+      for (const point of points) {
+        const pointMarker = new AMap.Text({
+          position: point.position,
+          text: point.name,
+          anchor: 'bottom-center', // 设置文本标记锚点
+          draggable: true,
+          cursor: 'pointer',
+          style: {
+            padding: '4px',
+            'background-color': 'white',
+            'border-width': 0,
+            'box-shadow': '0 2px 6px 0 rgba(114, 124, 245, .5)',
+            'text-align': 'center',
+            'font-size': '12px',
+            color: 'blue',
+            'margin-bottom': '4px',
+          },
+        })
+        map.add(pointMarker)
+      }
+    </script>
+  </body>
+</html>

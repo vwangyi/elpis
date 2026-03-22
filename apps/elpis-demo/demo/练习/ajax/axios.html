@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #edit-submit,
+      .loading,
+      .empty,
+      table {
+        /* 初始隐藏 */
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="abort">中断请求</button>
+
+    名字:<input id="name" type="text" /> 描述:<input id="desc" type="text" />
+    <button id="submit">提交</button>
+    <button id="edit-submit">修改确认</button>
+    <button id="search">查询</button>
+
+    <div class="loading">loading...</div>
+    <div class="empty">暂无数据</div>
+    <table>
+      <thead>
+        <td>id</td>
+        <td>姓名</td>
+        <td>描述</td>
+        <td>操作</td>
+      </thead>
+      <tbody>
+        <!-- 通过数据渲染 -->
+      </tbody>
+    </table>
+
+    <script src="../jquery/jquery.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      /**
+       * @description
+       *      todolist接口: restful
+       *          1. 获取todolist: 'http://localhost/todo/list'
+       *          2. 按照id获取todo: 'http://localhost/todo/1' >> zs
+       *          3. 添加todo: 'http://localhost/todo' && 'post'
+       *          4. 删除todo: 'http://localhost/todo/1' && 'delete'
+       *          5. 更新todo: 'http://localhost/todo/1' && 'put'
+       */
+
+      // const URL = 'http://localhost/todo';
+
+      // 自定义axios
+      const cxios = axios.create({
+        baseURL: 'http://192.168.26.54/todo',
+        timeout: 10000,
+      })
+
+      document.querySelector('#abort').addEventListener('click', () => {
+        const controller = new AbortController()
+        console.log(controller.signal)
+        cxios({
+          method: 'get',
+          url: '/list',
+          signal: controller.signal,
+        })
+        setTimeout(() => {
+          controller.abort()
+        }, 2000)
+      })
+
+      // 正在修改的id
+      let editingId = -1
+
+      function render(data) {
+        if (data.length === 0) {
+          $('table').hide()
+          $('.empty').show()
+          return
+        }
+        $('tbody').html('')
+        for (const d of data) {
+          // d: {id: 1, name: "zs", description: "test"}
+          const tr = $(`
+                    <tr>
+                        <td>${d.id}</td>
+                        <td>${d.name}</td>
+                        <td>${d.description}</td>
+                        <td>
+                            <button
+                                class="edit"
+                                data-id="${d.id}"
+                                data-name="${d.name}"
+                                data-description="${d.description}"
+                            >
+                                修改
+                            </button>
+                        </td>
+                        <td>
+                            <button class="remove" data-id="${d.id}">删除</button>
+                        </td>
+                    </tr>
+                `)
+          $('tbody').append(tr)
+        }
+
+        // 删除的loading
+        const loading4remove = {
+          open() {
+            $(this).text('删除中...').prop('disabled', true)
+          },
+          // close() {
+          //     $(this).text('删除').prop('disabled', false);
+          // },
+        }
+        // 删
+        $('.remove').on('click', async function () {
+          loading4remove.open.call(this)
+          // 先找id
+          const id = $(this).attr('data-id')
+          const res = await cxios({
+            method: 'DELETE',
+            url: `/${id}`,
+          })
+          // 由于整理列表要刷新 所以他本尊都直接再见了 就没有必要close了
+          // loading4remove.close.call(this);
+          // 删除之后 刷新列表
+          onSearch()
+          // alert(res.data.msg);
+        })
+
+        // 修改
+        $('.edit').on('click', async function () {
+          const id = $(this).attr('data-id')
+          // const name = $(this).attr('data-name');
+          // const description = $(this).attr('data-description');
+
+          const { name, description } = await cxios({
+            url: `/${id}`,
+            method: 'GET',
+          }).then((res) => res.data.data)
+
+          $('#name').val(name)
+          $('#desc').val(description)
+          $('#edit-submit').show()
+          $('#submit').hide()
+          editingId = id
+        })
+      }
+
+      // 查的loading
+      const loading = {
+        open() {
+          $('.loading').show()
+          $('table').hide()
+          $('.empty').hide()
+        },
+        close() {
+          $('.loading').hide()
+          $('table').show()
+        },
+      }
+
+      async function onSearch() {
+        loading.open()
+        const res = await cxios({
+          url: '/list',
+          // url传参
+          params: {
+            name: $('#name').val().trim(),
+            description: $('#desc').val().trim(),
+          },
+        })
+        loading.close()
+        // 通过数据渲染
+        render(res.data.data)
+      }
+
+      // 增的loading
+      // loading for submit >>> loading4submit
+      // arr to obj >>> arr2obj
+      // html to canvas >>> html2canvas
+      const loading4submit = {
+        open() {
+          $('#submit').text('提交中...').prop('disabled', true)
+        },
+        close() {
+          $('#submit').text('提交').prop('disabled', false)
+        },
+      }
+
+      // 增
+      $('#submit').on('click', async () => {
+        loading4submit.open()
+        const res = await cxios({
+          method: 'POST',
+          url: '/',
+          // 固定的
+          data: {
+            name: $('#name').val().trim(),
+            description: $('#desc').val().trim(),
+          },
+        }).catch((err) => {
+          alert(err.response.data.msg)
+        })
+
+        loading4submit.close()
+
+        // 成功新增之后 刷新列表
+        if (res) {
+          // 清空输入框
+          $('#name').val('')
+          $('#desc').val('')
+          onSearch()
+          alert(res.data.msg)
+        }
+      })
+
+      // 修改确认
+      $('#edit-submit').on('click', async function () {
+        const res = await cxios({
+          method: 'PUT',
+          url: `/${editingId}`,
+          // 固定的
+          data: {
+            name: $('#name').val().trim(),
+            description: $('#desc').val().trim(),
+          },
+        })
+
+        // 重置按钮状态
+        $('#edit-submit').hide()
+        $('#submit').show()
+
+        // 清空输入框
+        $('#name').val('')
+        $('#desc').val('')
+
+        // 刷新列表
+        onSearch()
+        alert(res.data.msg)
+      })
+
+      // 查
+      onSearch()
+      $('#search').on('click', onSearch)
+    </script>
+  </body>
+</html>

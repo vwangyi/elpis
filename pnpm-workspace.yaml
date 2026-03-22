@@ -1,0 +1,3 @@
+packages:
+  - "packages/*" # 表示packages下所有子文件都是子包
+  - "apps/*" # 表示apps下所有子文件都是子包

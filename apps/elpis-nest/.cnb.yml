@@ -1,0 +1,13 @@
+# 当 main 分支收到 push 事件（即有新 Commit 推送至 main 分支）时触发构建。
+# 选用 node:22 Docker 镜像作为任务执行环境。
+# 依次执行 npm install 和 npm test 两个任务。
+
+main: # 监听main分支
+  push: # 监听git push事件
+    - docker:
+        image: node:20 # 采用docker镜像 node20版本
+      stages:
+        - name: install
+          script: npm install
+        - name: test
+          script: npm test

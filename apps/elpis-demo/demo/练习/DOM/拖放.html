@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+
+      section {
+        margin-top: 20px;
+        width: 500px;
+        height: 300px;
+        outline: 5px dashed red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" draggable="true"></div>
+    <section></section>
+
+    <script>
+      const box = document.querySelector('.box')
+      const section = document.querySelector('section')
+
+      // 解决无法放置的问题
+      // dragover: 拖拽悬停事件
+      section.addEventListener('dragover', function (e) {
+        e.preventDefault()
+      })
+
+      // 放置
+      section.addEventListener('drop', function () {
+        section.appendChild(box)
+      })
+    </script>
+  </body>
+</html>

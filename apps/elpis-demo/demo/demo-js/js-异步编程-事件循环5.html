@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      console.log('a')
+      for (var i = 0; i < 2; i++) {
+        console.log(i)
+
+        setTimeout(() => {
+          setTimeout(() => {
+            console.log(i)
+          }, i * 1000) // 2s
+        }, i * 1000) // 0s
+
+        new Promise((resolve) => {
+          console.log('b:', i)
+          resolve('c' + i)
+        }).then((res) => {
+          console.log(res)
+          console.log(res + i)
+        })
+      }
+
+      // 同步: a, 0, b: 0, 1, b: 1
+      // 0s微: c0, c02, c1, c12
+      // 0s宏+2s宏: 2
+      // 1s宏+2s宏: 2
+    </script>
+  </body>
+</html>

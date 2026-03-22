@@ -1,0 +1,19 @@
+/* 浏览器有一些默认样式 特别丑 这里统一清除这些默认样式 */
+
+body {
+  margin: 0;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box !important;
+}
+
+input {
+  border: none; // 去掉input边框
+  background-color: transparent; // 去掉input的背景色
+}
+
+input:focus {
+  outline: none; // 去掉input聚焦后的边框
+}

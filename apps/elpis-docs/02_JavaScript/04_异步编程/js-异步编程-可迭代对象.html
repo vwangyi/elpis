@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <script>
+      const obj1 = {
+        a: 1,
+        b: 2,
+        c: 3,
+        [Symbol.iterator]: function () {
+          let index = 0;
+          let map = new Map([
+            ["a", 1],
+            ["b", 2],
+            ["c", 3],
+          ]);
+
+          return {
+            next() {
+              const mapEntries = [...map.entries()];
+              if (index < map.size) {
+                return { value: mapEntries[index++], done: false };
+              }
+              return { value: undefined, done: true };
+            },
+          };
+        },
+      };
+
+      const obj = {
+        a: 1,
+        b: 2,
+        c: 3,
+        [Symbol.iterator]: function* () {
+          let index = 0;
+          let map = new Map([
+            ["a", 1],
+            ["b", 2],
+            ["c", 3],
+          ]);
+
+          const mapEntries = [...map.entries()];
+          while (index < mapEntries.length) {
+            yield mapEntries[index++];
+          }
+        },
+      };
+
+      const iter = obj[Symbol.iterator]();
+      console.log(iter.next());
+      console.log(iter.next());
+      console.log(iter.next());
+      console.log(iter.next());
+
+      // for of的本质就是调用 可迭代对象的 Symbol.iterator 方法
+      for (let i of obj) {
+        console.log(i);
+      }
+
+      //   迭代和遍历的区别
+      // 迭代是
+
+      // 迭代的目标源是有序的 且连续 的 比如 Array, Map, Set, String, TypeArray, arguments, NodeList （TypeArray和NodeList 自行查阅是什么）
+      // 都符合
+      // 又因为对象不是有序的 所以 for of 不支持 遍历对象
+
+      const nodeList = document.getElementsByTagName("div");
+
+      console.log("nodeslit", nodeList);
+
+      // 很多情况下 我们希望对象 也可以 是 可迭代的
+
+      //   那就是用 生成器函数 创建 可迭代对象
+
+
+      function* tt() {
+        yield 1;
+        yield 2;
+
+      }
+
+      const iter1 = tt() // 获取迭代器对象 （可迭代对象）
+
+      console.log('迭代器', iter1)
+      // 调用方式1 扩展运算符
+      // console.log('扩展运算符', ...iter1) // 
+ 
+      // // 调用方式2 for of 
+      // for (let i of iter1) {
+      //   console.log('i', i )
+      // }
+
+      // 调用方式3 
+      // console.log(iter1.next())
+      // console.log(iter1.next())
+      // console.log(iter1.next())
+      // console.log(iter1.next())
+      // console.log(iter1.next())
+
+      
+
+    </script>
+  </body>
+</html>

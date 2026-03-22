@@ -1,0 +1,12 @@
+apiVersion: v1  # 定义API版本
+kind: Service  #  资源类型是Service 表示这是一个服务资源 
+metadata:  
+  name: elpis-koa-beta  # Service 的名称，这个名字是集群内唯一的 用于识别和访问 该 Service。
+  namespace: elpis-koa-beta  # 指定该 Service 所属的命名空间 命名空间用于隔离不同环境或应用的资源
+spec:
+  ports: 
+    - port: 8081 # Service 暴露的端口号 集群内部或外部的流量会通过这个端口访问服务。  
+      targetPort: 8081  # 流量被转发到的 Pod 上的目标端口
+  selector:  
+    app: elpis-koa-beta # // 选择器根据标签匹配选择与此 Deployment 相关联的 Pods。 需要和depxxx.yaml的12行一致 
+  type: LoadBalancer # Service 的类型为'。ClusterIP|LoadBalancer|ExternalName|NodePort

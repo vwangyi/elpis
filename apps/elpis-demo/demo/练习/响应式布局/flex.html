@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        /* 排列方向 */
+        flex-direction: row;
+        /* start end center */
+        /* 侧轴对齐方式: 和排列方向相反的轴 */
+        align-items: center;
+        /* center space-between space-around */
+        /* 主轴 */
+        justify-content: center;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+      .box:nth-child(2) {
+        height: 60px;
+        width: 60px;
+        margin-left: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <div class="box">4</div>
+    <div class="box">5</div>
+  </body>
+</html>

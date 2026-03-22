@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button id="begin">开始</button>
+    <button id="btn">添加交互任务</button>
+    <script>
+      const btn = document.querySelector('#btn')
+      const begin = document.querySelector('#begin')
+
+      function sleep(time) {
+        var start = +new Date()
+        while (+new Date() - start < time) {}
+      }
+
+      function addDelay() {
+        console.log('通知延时线程 去计时  到时之后追加到延时队列中')
+        setTimeout(() => {
+          console.log('延时队列执行了')
+        }, 0)
+        sleep(2000)
+      }
+
+      function addInteraction() {
+        console.log('通知交互线程 去监听事件 满足条件后追加到交互队列中')
+        btn.onclick = function () {
+          console.log('交互队列执行了')
+        }
+        sleep(2000)
+      }
+
+      begin.onclick = function () {
+        addDelay()
+        addInteraction()
+        console.log('=================')
+      }
+    </script>
+  </body>
+</html>

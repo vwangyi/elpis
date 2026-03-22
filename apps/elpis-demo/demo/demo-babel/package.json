@@ -1,0 +1,19 @@
+{
+  "name": "demo-babel",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "build": "babel main.js --out-dir dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@babel/cli": "^7.28.6",
+    "@babel/core": "^7.29.0",
+    "@babel/plugin-transform-arrow-functions": "^7.27.1",
+    "@babel/plugin-transform-react-jsx": "^7.28.6",
+    "@babel/preset-env": "^7.29.0"
+  }
+}

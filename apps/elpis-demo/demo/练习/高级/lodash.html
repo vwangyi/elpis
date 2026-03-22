@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script src="./lib/lodash.js"></script>
+    <script>
+      const a = [
+        {
+          label: '标题一',
+          id: '1',
+          parentId: null,
+          children: [
+            {
+              label: '标题1.1',
+              id: '1-1',
+              parentId: '1',
+            },
+            {
+              label: '标题1.2',
+              id: '1-2',
+              parentId: '1',
+            },
+          ],
+        },
+        {
+          label: '标题二',
+          id: '2',
+          parentId: null,
+          children: [
+            {
+              label: '标题2.1',
+              id: '2-1',
+              parentId: '2',
+            },
+          ],
+        },
+        {
+          label: '标题三',
+          id: '3',
+          parentId: null,
+          children: [
+            {
+              label: '标题3.1',
+              id: '3-1',
+              parentId: '3',
+              children: [
+                {
+                  label: '标题3.1.1',
+                  id: '3-1-1',
+                  parentId: '3-1',
+                },
+              ],
+            },
+          ],
+        },
+      ]
+
+      const b = _.cloneDeep(a)
+
+      // a[0].id = 99999999;
+
+      console.log(_.isEqual(a, b)) // false
+    </script>
+  </body>
+</html>

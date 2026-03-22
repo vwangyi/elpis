@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 
+          进阶知识：
+            w3c 不再采用 宏任务的说法
+            之前任务队列 分为 微任务和宏任务
+
+            微任务：Promise、MutationObserver、queueMicrotask
+            宏任务：setTimeout、setInterval、setImmediate、I/O、UI 交互事件
+
+
+            现在不采用 宏任务的说法 而是把 宏任务拆分出了很多队列 比如 
+            延时队列：setTimeout 
+            交互队列：onclick 
+
+            按照之前的说法 setTimeout和 onclick 都是宏任务 谁先执行 取决于 谁先排队并触发 
+            现在没有 宏任务的 因为浏览器厂商大家一致认为 交互队列一定要在延时队列之前执行 因为用户交互是最重要的
+            所以 即使 延时队列 比 交互队列 先排队并触发 由于区分了 交互队列和延时队列 所以一定会先执行交互队列后执行延时队列 
+
+            有些面试官不知道这个特性 仍然采用 微任务队列 宏任务队列 我们也一般采用这个版本进行说明 
+            当面试官提到 没有宏任务队列时 我们就应该答出 在最新的浏览器中 宏任务队列确实被拆分成了多个队列
+            至少有 延时队列和交互队列 交互队列是除了微任务队列之外 优先级最高的队列
+
+    -->
+    <button id="begin">开始</button>
+    <script>
+      // 死循环指定的时间
+      function delay(duration) {
+        var start = Date.now()
+        while (Date.now() - start < duration) {}
+      }
+
+      const begin = document.getElementById('begin')
+      const interaction = document.createElement('button')
+      begin.addEventListener('click', function () {
+        console.log('添加延时队列')
+        setTimeout(() => {
+          console.log('延时队列执行')
+        })
+        delay(2000) // 确保上面的 setTimeout 一定添加到了 延时队列里面
+
+        console.log('添加交互队列')
+        interaction.onclick = function () {
+          console.log('交互队列执行')
+        }
+        interaction.click() // 触发交互事件
+      })
+    </script>
+  </body>
+</html>

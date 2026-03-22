@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .container {
+        /* 1. 把父元素变BFC */
+        /* overflow: hidden; */
+      }
+
+      /* 2. 清除浮动5步曲 */
+      .container::after {
+        content: '';
+        display: block;
+        clear: both; /* 清除浮动 */
+        height: 0;
+        visibility: hidden;
+      }
+
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">1</div>
+      <div class="box">2</div>
+    </div>
+  </body>
+</html>

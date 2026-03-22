@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .switch {
+        width: 200px;
+        height: 100px;
+        background-color: #0ef;
+        border-radius: 50px;
+        position: relative;
+        transition: background-color 1s ease;
+      }
+
+      .switch .btn {
+        width: 80px;
+        height: 80px;
+        background-color: #fff;
+        border-radius: 50%;
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        transition: transform 1s ease;
+      }
+
+      .switch:hover {
+        background-color: #aaa;
+      }
+
+      /*
+            重排: 需要重新计算位置大小的时候
+            重绘: 比如颜色的改变
+        */
+
+      .switch:hover .btn {
+        /* 改定位产生的位置 会发生重排 */
+        /* right: 110px; */
+        /*
+                不会产生重排
+                而只产生重绘
+                CSS3 transform: translate
+             */
+        transform: translateX(-100px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="switch">
+      <div class="btn"></div>
+    </div>
+  </body>
+</html>

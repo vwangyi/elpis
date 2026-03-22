@@ -1,0 +1,42 @@
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.button .loading-icon {
+  animation: loading 1s linear infinite;
+  display: inline-block;
+}
+
+.button .loading-icon > * {
+  display: inline-block;
+}
+
+.button.primary {
+  background-color: blue;
+}
+
+.button.danger {
+  background-color: red;
+}
+
+.row::after {
+  content: '';
+  display: block;
+  visibility: hidden;
+  height: 0;
+  clear: both;
+}
+
+.col {
+  float: left;
+  outline: 1px solid red;
+}
+
+.col:last-child {
+  margin-right: 0 !important;
+}

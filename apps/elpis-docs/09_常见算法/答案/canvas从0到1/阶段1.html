@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 画布 -->
+    <canvas 
+        id="myCanvas" 
+        width="800" 
+        height="600"
+    ></canvas>
+    <script>
+        /* 目标1：掌握 Canvas 基本 API 和绘图基础 */
+        const canvas = document.getElementById('myCanvas'); // 创建画布
+        const context = canvas.getContext('2d'); // 拿到画布的画笔 (想象二维坐标系)
+
+        /* 常用api */
+        // 矩形：fillRect(), strokeRect()
+        // 路径：beginPath(), moveTo(), lineTo(), arc()
+        // 样式：fillStyle, strokeStyle, lineWidth
+        
+        // 练习
+        // 绘制简单图形（矩形、圆形、三角形）
+        // 创建彩色画板
+        // 绘制时钟表盘
+
+
+        context.beginPath()
+
+
+        // 记忆方式： 填充矩形 只需要 x轴 y轴 width height 四个值就可以确定一个2d的矩形
+        context.fillStyle = "green";
+
+        // strokeRect 方法 可以拆分为 2个方法 效果一样   
+        // context.strokeRect(0, 0, canvas.width, canvas.height)  
+        context.rect(0, 0, canvas.width, canvas.height) 
+        context.stroke() 
+
+        context.closePath()
+
+        context.beginPath()
+
+        context.fillStyle = 'red'; 
+
+        // context.fillRect(10, 10, canvas.width, canvas.height) 
+        // fillRect也可以拆分为2个方法  rect 和 fill  
+        context.rect(10, 10, canvas.width, canvas.height) 
+        context.fill()
+
+
+        context.closePath()
+
+
+        // 清除矩形
+        // context.clearRect(0,0,canvas.width, canvas.height) // 清除矩形 
+
+        let height = 0;
+        const intervalId = setInterval(() => {
+            height++;
+            context.clearRect(0, 0, canvas.clientWidth, height);
+            // 如果结束了 就清除定时器
+            if (height > canvas.clientHeight) clearInterval(intervalId)
+        })
+
+
+    </script>
+</body>
+</html>
