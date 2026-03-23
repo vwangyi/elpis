@@ -17,19 +17,19 @@
 </template>
 
 <script>
-import Dropzone from "@/components/Dropzone";
+import Dropzone from '@/components/Dropzone';
 
 export default {
-  name: "DropzoneDemo",
+  name: 'DropzoneDemo',
   components: { Dropzone },
   methods: {
     dropzoneS(file) {
       console.log(file);
-      this.$message({ message: "Upload success", type: "success" });
+      this.$message({ message: 'Upload success', type: 'success' });
     },
     dropzoneR(file) {
       console.log(file);
-      this.$message({ message: "Delete success", type: "success" });
+      this.$message({ message: 'Delete success', type: 'success' });
     }
   }
 };

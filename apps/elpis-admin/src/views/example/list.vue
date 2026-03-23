@@ -9,7 +9,7 @@
 
       <el-table-column width="180px" align="center" label="Date">
         <template slot-scope="scope">
-          <span>{{ scope.row.timestamp | parseTime("{y}-{m}-{d} {h}:{i}") }}</span>
+          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
@@ -61,18 +61,18 @@
 </template>
 
 <script>
-import { fetchList } from "@/api/article";
-import Pagination from "@/components/Pagination"; // Secondary package based on el-pagination
+import { fetchList } from '@/api/article';
+import Pagination from '@/components/Pagination'; // Secondary package based on el-pagination
 
 export default {
-  name: "ArticleList",
+  name: 'ArticleList',
   components: { Pagination },
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: "success",
-        draft: "info",
-        deleted: "danger"
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
       };
       return statusMap[status];
     }

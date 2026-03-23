@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "PanThumb",
+  name: 'PanThumb',
   props: {
     image: {
       type: String,
@@ -24,11 +24,11 @@ export default {
     },
     width: {
       type: String,
-      default: "150px"
+      default: '150px'
     },
     height: {
       type: String,
-      default: "150px"
+      default: '150px'
     }
   }
 };
@@ -93,7 +93,7 @@ export default {
   margin: 0 60px;
   padding: 22px 0 0 0;
   height: 85px;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: 'Open Sans', Arial, sans-serif;
   text-shadow:
     0 0 1px #fff,
     0 1px 2px rgba(0, 0, 0, 0.3);
@@ -123,7 +123,7 @@ export default {
   letter-spacing: 1px;
   padding-top: 24px;
   margin: 7px auto 0;
-  font-family: "Open Sans", Arial, sans-serif;
+  font-family: 'Open Sans', Arial, sans-serif;
   opacity: 0;
   transition:
     transform 0.3s ease-in-out 0.2s,

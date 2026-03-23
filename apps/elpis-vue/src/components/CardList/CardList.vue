@@ -1,19 +1,19 @@
 <script setup>
 /* 富文本编辑器 */
-import { onMounted, ref, computed, useTemplateRef, inject } from "vue";
+import { onMounted, ref, computed, useTemplateRef, inject } from 'vue';
 
-import { useAuthStore } from "@/stores/auth.js";
-import { useCategoryStore } from "@/stores/category.js";
-import { useNoteStore } from "@/stores/note.js";
+import { useAuthStore } from '@/stores/auth.js';
+import { useCategoryStore } from '@/stores/category.js';
+import { useNoteStore } from '@/stores/note.js';
 
-import RichEditor from "@/components/RichEditor/RichEditor.vue";
-import CardList from "@/components/CardList/CardList.vue";
-import ElpisEditor from "@/components/ElpisEditor/ElpisEditor.vue";
+import RichEditor from '@/components/RichEditor/RichEditor.vue';
+import CardList from '@/components/CardList/CardList.vue';
+import ElpisEditor from '@/components/ElpisEditor/ElpisEditor.vue';
 // import ElpisVditor from "@/components/editor/editor.vue";
 // import ElpisVditor from "@/components/editor1/editor1.vue";
 // import ElpisVditor from "@/components/editor2/editor1.vue";
 
-import ElpisDialog from "@/components/ElpisDialog/ElpisDialog.vue";
+import ElpisDialog from '@/components/ElpisDialog/ElpisDialog.vue';
 
 const authStore = useAuthStore();
 const categoryStore = useCategoryStore();
@@ -27,16 +27,16 @@ const activeCategoryIndex = ref(0); // 当前选中的分类索引
 function handleSelectCategory(item, index) {
   activeCategoryIndex.value = index;
 }
-const xxx = useTemplateRef("title");
+const xxx = useTemplateRef('title');
 
 function handleClickCard(item) {
   categoryItem.value = item;
   // 打开详情 弹窗
   openDialog.value = true;
-  console.log("点击card", categoryItem.value);
+  console.log('点击card', categoryItem.value);
 }
 
-const { test } = inject("haha");
+const { test } = inject('haha');
 onMounted(() => {
   noteStore.findAll();
 });

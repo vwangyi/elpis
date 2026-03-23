@@ -1,8 +1,8 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 
 /* user 用户模块 */
-export const useUserStore = defineStore("user", () => {
+export const useUserStore = defineStore('user', () => {
   const list = ref([]); // 用户列表
   const user = ref({}); // 用户详情
 

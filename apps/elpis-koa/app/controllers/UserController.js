@@ -1,6 +1,6 @@
 module.exports = app => {
-  const BaseController = require("./BaseController")(app);
-  const moment = require("moment");
+  const BaseController = require('./BaseController')(app);
+  const moment = require('moment');
   return class UserController extends BaseController {
     async create(ctx) {
       const { UserService } = app.services;
@@ -73,8 +73,8 @@ module.exports = app => {
       const list = all.map(item => {
         return {
           ...item,
-          sex: item.sex === 1 ? "男" : "女",
-          create_time: moment(item.create_time).format("YYYY-MM-DD HH:mm:ss")
+          sex: item.sex === 1 ? '男' : '女',
+          create_time: moment(item.create_time).format('YYYY-MM-DD HH:mm:ss')
         };
       });
       this.success(ctx, { list, total });
@@ -85,7 +85,7 @@ module.exports = app => {
       const { user_id: userId } = app.request.query;
       const user = await UserService.findOneByUserId(userId);
       // 在controller层 处理数据 给前端，前端就不需要处理数据了
-      user.create_time = moment(user.create_time).format("YYYY-MM-DD HH:mm:ss");
+      user.create_time = moment(user.create_time).format('YYYY-MM-DD HH:mm:ss');
       this.success(ctx, user);
     }
 

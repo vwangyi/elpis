@@ -1,15 +1,15 @@
 const vueSticky = {};
 let listenAction;
 vueSticky.install = Vue => {
-  Vue.directive("sticky", {
+  Vue.directive('sticky', {
     inserted(el, binding) {
       const params = binding.value || {};
       const stickyTop = params.stickyTop || 0;
       const zIndex = params.zIndex || 1000;
       const elStyle = el.style;
 
-      elStyle.position = "-webkit-sticky";
-      elStyle.position = "sticky";
+      elStyle.position = '-webkit-sticky';
+      elStyle.position = 'sticky';
       // if the browser support css sticky（Currently Safari, Firefox and Chrome Canary）
       // if (~elStyle.position.indexOf('sticky')) {
       //     elStyle.top = `${stickyTop}px`;
@@ -21,8 +21,8 @@ vueSticky.install = Vue => {
       elStyle.cssText = `top: ${stickyTop}px; z-index: ${zIndex}`;
 
       const parentElm = el.parentNode || document.documentElement;
-      const placeholder = document.createElement("div");
-      placeholder.style.display = "none";
+      const placeholder = document.createElement('div');
+      placeholder.style.display = 'none';
       placeholder.style.width = `${elWidth}px`;
       placeholder.style.height = `${elHeight}px`;
       parentElm.insertBefore(placeholder, el);
@@ -30,10 +30,10 @@ vueSticky.install = Vue => {
       let active = false;
 
       const getScroll = (target, top) => {
-        const prop = top ? "pageYOffset" : "pageXOffset";
-        const method = top ? "scrollTop" : "scrollLeft";
+        const prop = top ? 'pageYOffset' : 'pageXOffset';
+        const method = top ? 'scrollTop' : 'scrollLeft';
         let ret = target[prop];
-        if (typeof ret !== "number") {
+        if (typeof ret !== 'number') {
           ret = window.document.documentElement[method];
         }
         return ret;
@@ -47,9 +47,9 @@ vueSticky.install = Vue => {
           elStyle.height = `${el.offsetHeight}px`;
         }
 
-        elStyle.position = "fixed";
+        elStyle.position = 'fixed';
         elStyle.width = `${elWidth}px`;
-        placeholder.style.display = "inline-block";
+        placeholder.style.display = 'inline-block';
         active = true;
       };
 
@@ -58,8 +58,8 @@ vueSticky.install = Vue => {
           return;
         }
 
-        elStyle.position = "";
-        placeholder.style.display = "none";
+        elStyle.position = '';
+        placeholder.style.display = 'none';
         active = false;
       };
 
@@ -78,11 +78,11 @@ vueSticky.install = Vue => {
         check();
       };
 
-      window.addEventListener("scroll", listenAction);
+      window.addEventListener('scroll', listenAction);
     },
 
     unbind() {
-      window.removeEventListener("scroll", listenAction);
+      window.removeEventListener('scroll', listenAction);
     }
   });
 };

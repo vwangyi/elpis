@@ -7,7 +7,7 @@ export function openDatabase(database, version, upgradeCallback) {
   return new Promise((resolve, reject) => {
     const indexedDB = window.indexedDB;
     if (!indexedDB) {
-      throw new Error("不支持window.indexedDB");
+      throw new Error('不支持window.indexedDB');
     }
     const res = indexedDB.open(database, version);
     // 升级数据库就触发 比如 新建表。表里面新增一条数据 不叫数据库更新 最多叫表更新了
@@ -23,11 +23,11 @@ export function openDatabase(database, version, upgradeCallback) {
  */
 export function detectBrowser() {
   const { userAgent } = window.navigator;
-  if (/Chrome/.test(userAgent) && !/Edg|OPR/.test(userAgent)) return "Chrome";
-  if (/Firefox/.test(userAgent)) return "Firefox";
-  if (/Safari/.test(userAgent) && !/Chrome/.test(userAgent)) return "Safari";
-  if (/Edg/.test(userAgent)) return "Edge";
-  return "";
+  if (/Chrome/.test(userAgent) && !/Edg|OPR/.test(userAgent)) return 'Chrome';
+  if (/Firefox/.test(userAgent)) return 'Firefox';
+  if (/Safari/.test(userAgent) && !/Chrome/.test(userAgent)) return 'Safari';
+  if (/Edg/.test(userAgent)) return 'Edge';
+  return '';
 }
 
 /**
@@ -36,7 +36,7 @@ export function detectBrowser() {
  */
 export async function getBatteryInfo() {
   return new Promise(async (resolve, reject) => {
-    if ("getBattery" in window.navigator) {
+    if ('getBattery' in window.navigator) {
       const battery = await window.navigator.getBattery();
 
       // "电量:", battery.level * 100 + "%");

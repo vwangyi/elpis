@@ -1,7 +1,7 @@
-import waves from "./waves";
+import waves from './waves';
 
 const install = function (Vue) {
-  Vue.directive("waves", waves);
+  Vue.directive('waves', waves);
 };
 
 if (window.Vue) {

@@ -1,36 +1,36 @@
 <script setup>
 /* Vditor 富文本编辑器 */
-import { message } from "ant-design-vue";
-import { onMounted, ref } from "vue";
-import Vditor from "vditor";
-import "vditor/src/assets/less/index"; // 引入样式
-import { useEventListener } from "@/hooks/useEventListener.js";
-import { useNoteStore } from "@/stores/note.js";
+import { message } from 'ant-design-vue';
+import { onMounted, ref } from 'vue';
+import Vditor from 'vditor';
+import 'vditor/src/assets/less/index'; // 引入样式
+import { useEventListener } from '@/hooks/useEventListener.js';
+import { useNoteStore } from '@/stores/note.js';
 
 const props = defineProps({
-  type: { type: String, default: "" }, // create | update // create表示新增 update表示修改
+  type: { type: String, default: '' }, // create | update // create表示新增 update表示修改
   data: { type: Object, default: () => ({}) }
 });
 
 const noteStore = useNoteStore();
 const contentEditor = ref(null);
 const editorOptions = ref({
-  mode: "ir", // wysiwyg所见即所得 | sv分屏渲染 | ir即时渲染
-  theme: "dark", // light | dark | auto
+  mode: 'ir', // wysiwyg所见即所得 | sv分屏渲染 | ir即时渲染
+  theme: 'dark', // light | dark | auto
   height: window.innerHeight - 72,
   outline: {
     enable: true, // 启用大纲
-    position: "right" // 位置：left | 'right'
+    position: 'right' // 位置：left | 'right'
   },
   cache: {
     enable: false
   },
   preview: {
     theme: {
-      current: "dark" // 预览区的主题，light | dark | auto
+      current: 'dark' // 预览区的主题，light | dark | auto
     },
     hljs: {
-      style: "xcode", // 设置代码块主题 亮色建议 xcode 暗色建议 base16/chalk
+      style: 'xcode', // 设置代码块主题 亮色建议 xcode 暗色建议 base16/chalk
       lineNumber: true // 代码块显示行号
     },
     markdown: {
@@ -45,8 +45,8 @@ const editorOptions = ref({
   after: () => {
     // 当前是update模式 且content有值 就设置 Markdown 内容
 
-    console.log("props.type", props.type, props.data.content);
-    if (props.type === "update" && props.data.content) {
+    console.log('props.type', props.type, props.data.content);
+    if (props.type === 'update' && props.data.content) {
       contentEditor.value.setValue(props.data.content);
     }
   },
@@ -56,20 +56,20 @@ const editorOptions = ref({
 /* 监听键盘按下事件 */
 function handleKeyDown(event) {
   // 监听保存快捷键 ctrl+s 或 cmd+s
-  if ((event.metaKey || event.ctrlKey) && event.key === "s") {
+  if ((event.metaKey || event.ctrlKey) && event.key === 's') {
     event.preventDefault();
     saveContent();
   }
 
   /* 保存文章到服务器 */
   async function saveContent() {
-    console.log("saveContent");
+    console.log('saveContent');
     const mdContent = contentEditor.value.getValue(); // 获取 Markdown 内容
     const htmlContent = contentEditor.value.getHTML(); // 获取 HTML 内容
 
     // 验证内容
     if (!mdContent.trim()) {
-      console.log("文章内容不能为空", "error");
+      console.log('文章内容不能为空', 'error');
       return;
     }
 
@@ -78,10 +78,10 @@ function handleKeyDown(event) {
       time: +new Date()
     };
 
-    console.log("props.type", props.type);
-    if (props.type === "create") {
+    console.log('props.type', props.type);
+    if (props.type === 'create') {
       await noteStore.create(data);
-      console.log("数据创建成功");
+      console.log('数据创建成功');
     } else if (false) {
     }
 
@@ -91,8 +91,8 @@ function handleKeyDown(event) {
 
 /* 页面初始化挂载 执行 */
 function init() {
-  contentEditor.value = new Vditor("editor", editorOptions.value);
-  useEventListener(document, "keydown", handleKeyDown);
+  contentEditor.value = new Vditor('editor', editorOptions.value);
+  useEventListener(document, 'keydown', handleKeyDown);
 }
 
 onMounted(init);

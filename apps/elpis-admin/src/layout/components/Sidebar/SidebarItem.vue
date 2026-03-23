@@ -31,14 +31,14 @@
 </template>
 
 <script>
-import path from "path";
-import { isExternal } from "@/utils/validate";
-import Item from "./Item";
-import AppLink from "./Link";
-import FixiOSBug from "./FixiOSBug";
+import path from 'path';
+import { isExternal } from '@/utils/validate';
+import Item from './Item';
+import AppLink from './Link';
+import FixiOSBug from './FixiOSBug';
 
 export default {
-  name: "SidebarItem",
+  name: 'SidebarItem',
   components: { Item, AppLink },
   mixins: [FixiOSBug],
   props: {
@@ -53,7 +53,7 @@ export default {
     },
     basePath: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   data() {
@@ -81,7 +81,7 @@ export default {
 
       // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
-        this.onlyOneChild = { ...parent, path: "", noShowingChildren: true };
+        this.onlyOneChild = { ...parent, path: '', noShowingChildren: true };
         return true;
       }
 

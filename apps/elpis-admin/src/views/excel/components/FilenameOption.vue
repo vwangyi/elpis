@@ -15,7 +15,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   computed: {
@@ -24,7 +24,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit("input", val);
+        this.$emit('input', val);
       }
     }
   }

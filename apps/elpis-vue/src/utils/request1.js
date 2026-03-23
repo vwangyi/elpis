@@ -1,14 +1,14 @@
-import axios from "axios";
-import { Message } from "element-ui";
-import router from "@/router";
+import axios from 'axios';
+import { Message } from 'element-ui';
+import router from '@/router';
 
 const service = axios.create({
-  baseURL: "/api/prod-api"
+  baseURL: '/api/prod-api'
 });
 
 service.interceptors.request.use(
   config => {
-    config.headers.Authorization = localStorage.getItem("HRM_TOKEN");
+    config.headers.Authorization = localStorage.getItem('HRM_TOKEN');
     return config;
   },
   error => {
@@ -21,11 +21,11 @@ service.interceptors.response.use(
   error => {
     switch (error.response.status) {
       case 401:
-        if (router.history.current.name === "login") {
+        if (router.history.current.name === 'login') {
           return;
         }
         router.push({
-          path: "/login",
+          path: '/login',
           query: {
             redirect: router.history.current.path
           }
@@ -38,7 +38,7 @@ service.interceptors.response.use(
 
     Message({
       message: error.message,
-      type: "error",
+      type: 'error',
       duration: 2 * 1000
     });
     return Promise.reject(error);

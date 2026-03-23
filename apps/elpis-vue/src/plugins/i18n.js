@@ -1,5 +1,5 @@
-import english from "@/lang/en.js";
-import chinese from "@/lang/zh.js";
+import english from '@/lang/en.js';
+import chinese from '@/lang/zh.js';
 
 const options = { english, chinese };
 
@@ -13,7 +13,7 @@ const options = { english, chinese };
  */
 function translate(key) {
   // key >>> `词典.你好`
-  const list = key.split("."); // ['词典', 'hello']
+  const list = key.split('.'); // ['词典', 'hello']
   const result = list.reduce((o, i) => {
     if (o) return o[i];
   }, options);

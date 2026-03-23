@@ -1,37 +1,37 @@
-import path from "node:path";
-import URL from "node:url";
-import fs from "node:fs";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "rollup-plugin-typescript2";
-import vue from "@vitejs/plugin-vue";
-import postcss from "rollup-plugin-postcss";
+import path from 'node:path';
+import URL from 'node:url';
+import fs from 'node:fs';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
+import vue from '@vitejs/plugin-vue';
+import postcss from 'rollup-plugin-postcss';
 
 const __filename = URL.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const packages = ["utils", "components"];
+const packages = ['utils', 'components'];
 
 function getPackageRoots() {
-  return packages.map(pkg => path.resolve(__dirname, "../packages", pkg));
+  return packages.map(pkg => path.resolve(__dirname, '../packages', pkg));
 }
 
 async function packageJson(root) {
-  const jsonPath = path.resolve(root, "package.json");
-  const content = await fs.promises.readFile(jsonPath, "utf-8");
+  const jsonPath = path.resolve(root, 'package.json');
+  const content = await fs.promises.readFile(jsonPath, 'utf-8');
   return JSON.parse(content);
 }
 
 async function getRollupConfig(root) {
   const config = await packageJson(root);
-  const tsconfig = path.resolve(root, "tsconfig.json");
+  const tsconfig = path.resolve(root, 'tsconfig.json');
   const { name, formats } = config.buildOptions || {};
-  const dist = path.resolve(root, "./dist");
-  const entry = path.resolve(root, "./src/index.ts");
+  const dist = path.resolve(root, './dist');
+  const entry = path.resolve(root, './src/index.ts');
   const rollupOptions = {
     input: entry,
     sourcemap: true,
-    external: ["vue"],
+    external: ['vue'],
     plugins: [
       nodeResolve(),
       commonjs(),
@@ -51,7 +51,7 @@ async function getRollupConfig(root) {
                   // 过滤掉所有 data-testid 属性
                   node.props = node.props.filter(prop => {
                     if (prop.type === 6 /* NodeTypes.ATTRIBUTE */) {
-                      return prop.name !== "data-testid";
+                      return prop.name !== 'data-testid';
                     }
                     return true;
                   });
@@ -72,10 +72,10 @@ async function getRollupConfig(root) {
       file: path.resolve(dist, `index.${format}.js`),
       sourcemap: true,
       globals: {
-        vue: "Vue"
+        vue: 'Vue'
       }
     };
-    if (format === "iife") {
+    if (format === 'iife') {
       outputItem.name = name;
     }
     output.push(outputItem);
@@ -83,8 +83,8 @@ async function getRollupConfig(root) {
   rollupOptions.output = output;
   // watch options
   rollupOptions.watch = {
-    include: path.resolve(root, "src/**"),
-    exclude: path.resolve(root, "node_modules/**"),
+    include: path.resolve(root, 'src/**'),
+    exclude: path.resolve(root, 'node_modules/**'),
     clearScreen: false
   };
   return rollupOptions;
@@ -101,7 +101,7 @@ export async function getRollupConfigs() {
 }
 
 export function clearDist(name) {
-  const dist = path.resolve(__dirname, "../packages", name, "dist");
+  const dist = path.resolve(__dirname, '../packages', name, 'dist');
   if (fs.existsSync(dist)) {
     fs.rmSync(dist, { recursive: true, force: true });
   }

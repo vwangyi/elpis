@@ -43,7 +43,7 @@ export function scrollTo(to, duration, callback) {
   const change = to - start;
   const increment = 20;
   let currentTime = 0;
-  duration = typeof duration === "undefined" ? 500 : duration;
+  duration = typeof duration === 'undefined' ? 500 : duration;
   var animateScroll = function () {
     // increment the time
     currentTime += increment;
@@ -55,7 +55,7 @@ export function scrollTo(to, duration, callback) {
     if (currentTime < duration) {
       requestAnimFrame(animateScroll);
     } else {
-      if (callback && typeof callback === "function") {
+      if (callback && typeof callback === 'function') {
         // the animation is done so lets callback
         callback();
       }

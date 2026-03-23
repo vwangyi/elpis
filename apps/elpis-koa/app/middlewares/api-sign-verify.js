@@ -1,4 +1,4 @@
-const md5 = require("md5");
+const md5 = require('md5');
 
 /**
  * 校验每个请求的 sign 签名 是否有效 （注意 这和token 完全无关）
@@ -10,13 +10,13 @@ const md5 = require("md5");
  */
 module.exports = app => {
   return async (ctx, next) => {
-    const whiteList = ["/api/user/list", "/api/user/list", "/api/user/list", "/api/user/list"];
+    const whiteList = ['/api/user/list', '/api/user/list', '/api/user/list', '/api/user/list'];
     // 白名单 放行通过
     if (whiteList.some(item => item === ctx.path)) {
       return await next(); // 表示放行通过
     }
     // 页面请求不需要校验签名 只对api请求校验 ： 只有两种请求 页面请求和api请求
-    if (!ctx.path.startsWith("/api/")) {
+    if (!ctx.path.startsWith('/api/')) {
       return await next(); // 表示放行通过
     }
 
@@ -25,7 +25,7 @@ module.exports = app => {
     const { s_sign: sSign, s_t: st } = headers;
 
     // 这个signKey 随意写都可以 但前后端用的是同一个key 这叫 对称加密
-    const signKey = "klx05hb3n1c9ujp8uhx4bs2iksdfsdfk5io6wp212";
+    const signKey = 'klx05hb3n1c9ujp8uhx4bs2iksdfsdfk5io6wp212';
     const signature = md5(`${signKey}_${st}`); // md5加密
 
     app.logger.info(`[${method} ${path}] signature: ${signature}`);
@@ -55,7 +55,7 @@ module.exports = app => {
       ctx.status = 200;
       ctx.body = {
         success: false,
-        message: "signature not correct or api timeout!!",
+        message: 'signature not correct or api timeout!!',
         code: 445
       };
       return;

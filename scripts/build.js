@@ -1,6 +1,6 @@
-import { getRollupConfigs, clearDist } from "./buildBase.js";
-import { rollup } from "rollup";
-import terser from "@rollup/plugin-terser";
+import { getRollupConfigs, clearDist } from './buildBase.js';
+import { rollup } from 'rollup';
+import terser from '@rollup/plugin-terser';
 
 async function build() {
   const configs = await getRollupConfigs();

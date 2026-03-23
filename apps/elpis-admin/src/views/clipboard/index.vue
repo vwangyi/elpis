@@ -21,18 +21,18 @@
 </template>
 
 <script>
-import clip from "@/utils/clipboard"; // use clipboard directly
-import clipboard from "@/directive/clipboard/index.js"; // use clipboard by v-directive
+import clip from '@/utils/clipboard'; // use clipboard directly
+import clipboard from '@/directive/clipboard/index.js'; // use clipboard by v-directive
 
 export default {
-  name: "ClipboardDemo",
+  name: 'ClipboardDemo',
   directives: {
     clipboard
   },
   data() {
     return {
-      activeName: "directly",
-      inputData: "https://github.com/PanJiaChen/vue-element-admin"
+      activeName: 'directly',
+      inputData: 'https://github.com/PanJiaChen/vue-element-admin'
     };
   },
   methods: {
@@ -41,8 +41,8 @@ export default {
     },
     clipboardSuccess() {
       this.$message({
-        message: "Copy successfully",
-        type: "success",
+        message: 'Copy successfully',
+        type: 'success',
         duration: 1500
       });
     }

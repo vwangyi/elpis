@@ -15,7 +15,7 @@ export function isExternal(path) {
  * @returns {Boolean}
  */
 export function validUsername(str) {
-  const valid_map = ["admin", "editor"];
+  const valid_map = ['admin', 'editor'];
   return valid_map.indexOf(str.trim()) >= 0;
 }
 
@@ -71,7 +71,7 @@ export function validEmail(email) {
  * @returns {Boolean}
  */
 export function isString(str) {
-  if (typeof str === "string" || str instanceof String) {
+  if (typeof str === 'string' || str instanceof String) {
     return true;
   }
   return false;
@@ -82,8 +82,8 @@ export function isString(str) {
  * @returns {Boolean}
  */
 export function isArray(arg) {
-  if (typeof Array.isArray === "undefined") {
-    return Object.prototype.toString.call(arg) === "[object Array]";
+  if (typeof Array.isArray === 'undefined') {
+    return Object.prototype.toString.call(arg) === '[object Array]';
   }
   return Array.isArray(arg);
 }

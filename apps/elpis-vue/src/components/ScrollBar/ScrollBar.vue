@@ -1,6 +1,6 @@
 <script setup>
 /* 滚动条组件 */
-import { onMounted, ref } from "vue";
+import { onMounted, ref } from 'vue';
 
 const showToTop = ref(false);
 const progressPathRef = ref(null);
@@ -11,17 +11,17 @@ const handleScroll = () => {
 };
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
 const initProgress = () => {
   let progressPath = progressPathRef.value;
   pathLength.value = progressPath.getTotalLength();
-  progressPath.style.transition = progressPath.style.WebkitTransition = "none";
-  progressPath.style.strokeDasharray = pathLength.value + " " + pathLength.value;
+  progressPath.style.transition = progressPath.style.WebkitTransition = 'none';
+  progressPath.style.strokeDasharray = pathLength.value + ' ' + pathLength.value;
   progressPath.style.strokeDashoffset = pathLength.value;
   progressPath.getBoundingClientRect();
-  progressPath.style.transition = progressPath.style.WebkitTransition = "stroke-dashoffset 10ms linear";
+  progressPath.style.transition = progressPath.style.WebkitTransition = 'stroke-dashoffset 10ms linear';
 };
 
 // 更新进度条的进度
@@ -32,13 +32,13 @@ const updateProgress = () => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener('scroll', handleScroll);
 
   // 初始时更新进度条的进度
   initProgress();
   updateProgress();
   // 监听页面滚动事件，实时更新进度条的进度
-  document.addEventListener("scroll", updateProgress);
+  document.addEventListener('scroll', updateProgress);
 });
 </script>
 <template>

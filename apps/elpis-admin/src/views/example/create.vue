@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import ArticleDetail from "./components/ArticleDetail";
+import ArticleDetail from './components/ArticleDetail';
 
 export default {
-  name: "CreateArticle",
+  name: 'CreateArticle',
   components: { ArticleDetail }
 };
 </script>

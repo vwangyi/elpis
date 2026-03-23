@@ -13,11 +13,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted } from 'vue';
 
 const editorRef = ref(null);
-const placeholder = ref("开始输入 Markdown...");
-const markdownText = ref("");
+const placeholder = ref('开始输入 Markdown...');
+const markdownText = ref('');
 
 const handleInput = () => {
   markdownText.value = editorRef.value.innerText;
@@ -26,25 +26,25 @@ const handleInput = () => {
 
 const renderInlineFormatting = () => {
   const html = markdownText.value
-    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/`(.+?)`/g, "<code>$1</code>")
-    .replace(/\n/g, "<br>");
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
 
   editorRef.value.innerHTML = html;
 };
 
 const handleTab = event => {
   event.preventDefault();
-  document.execCommand("insertText", false, "    ");
+  document.execCommand('insertText', false, '    ');
 };
 
 const handlePaste = event => {
   event.preventDefault();
-  const text = event.clipboardData.getData("text/plain");
-  document.execCommand("insertText", false, text);
+  const text = event.clipboardData.getData('text/plain');
+  document.execCommand('insertText', false, text);
 };
 
 onMounted(() => {
@@ -69,7 +69,7 @@ onMounted(() => {
   line-height: 1.6;
   outline: none;
   overflow-y: auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .editor-area:empty:before {
@@ -100,7 +100,7 @@ onMounted(() => {
 }
 
 .editor-area code {
-  font-family: "SFMono-Regular", Consolas, monospace;
+  font-family: 'SFMono-Regular', Consolas, monospace;
   background: #f6f8fa;
   padding: 2px 4px;
   border-radius: 3px;

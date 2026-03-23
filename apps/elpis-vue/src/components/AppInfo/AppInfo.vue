@@ -1,16 +1,16 @@
 <script setup>
-import { useRouter } from "vue-router";
+import { useRouter } from 'vue-router';
 const router = useRouter();
 function handleBeian() {
-  window.open("https://beian.miit.gov.cn/");
+  window.open('https://beian.miit.gov.cn/');
 }
 var a = 1;
 
 function handleBeianGongAn() {
-  window.open("https://beian.mps.gov.cn/");
+  window.open('https://beian.mps.gov.cn/');
 }
 function toHome() {
-  router.push("/");
+  router.push('/');
 }
 </script>
 <template>

@@ -26,13 +26,13 @@ export default function openWindow(url, title, w, h) {
   const newWindow = window.open(
     url,
     title,
-    "toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=" +
+    'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=yes, copyhistory=no, width=' +
       w +
-      ", height=" +
+      ', height=' +
       h +
-      ", top=" +
+      ', top=' +
       top +
-      ", left=" +
+      ', left=' +
       left
   );
 

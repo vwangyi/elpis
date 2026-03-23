@@ -41,12 +41,12 @@
 </template>
 
 <script>
-import clipboard from "@/utils/clipboard";
-import svgIcons from "./svg-icons";
-import elementIcons from "./element-icons";
+import clipboard from '@/utils/clipboard';
+import svgIcons from './svg-icons';
+import elementIcons from './element-icons';
 
 export default {
-  name: "Icons",
+  name: 'Icons',
   data() {
     return {
       svgIcons,

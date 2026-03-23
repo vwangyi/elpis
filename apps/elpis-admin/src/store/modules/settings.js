@@ -1,5 +1,5 @@
-import { theme } from "@/styles/element-variables.scss";
-import defaultSettings from "@/settings";
+import { theme } from '@/styles/element-variables.scss';
+import defaultSettings from '@/settings';
 
 const { showSettings, tagsView, fixedHeader, sidebarLogo } = defaultSettings;
 
@@ -22,7 +22,7 @@ const mutations = {
 
 const actions = {
   changeSetting({ commit }, data) {
-    commit("CHANGE_SETTING", data);
+    commit('CHANGE_SETTING', data);
   }
 };
 

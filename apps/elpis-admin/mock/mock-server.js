@@ -1,13 +1,13 @@
-const chokidar = require("chokidar");
-const bodyParser = require("body-parser");
-const chalk = require("chalk");
-const path = require("path");
-const Mock = require("mockjs");
-const mockDir = path.join(process.cwd(), "mock");
+const chokidar = require('chokidar');
+const bodyParser = require('body-parser');
+const chalk = require('chalk');
+const path = require('path');
+const Mock = require('mockjs');
+const mockDir = path.join(process.cwd(), 'mock');
 
 function registerRoutes(app) {
   let mockLastIndex;
-  const { mocks } = require("./index.js");
+  const { mocks } = require('./index.js');
   const mocksForServer = mocks.map(route => {
     return responseFake(route.url, route.type, route.response);
   });
@@ -32,12 +32,12 @@ function unregisterRoutes() {
 
 // for mock server
 const responseFake = (url, type, respond) => {
-  console.log("npm run dev 才会执行");
+  console.log('npm run dev 才会执行');
   return {
-    url: new RegExp(`${process.env.VUE_APP_BASE_API || "/dev-api"}${url}`),
-    type: type || "get",
+    url: new RegExp(`${process.env.VUE_APP_BASE_API || '/dev-api'}${url}`),
+    type: type || 'get',
     response(req, res) {
-      console.log("request invoke:" + req.path);
+      console.log('request invoke:' + req.path);
       res.json(Mock.mock(respond instanceof Function ? respond(req, res) : respond));
     }
   };
@@ -63,8 +63,8 @@ module.exports = app => {
       ignored: /mock-server/,
       ignoreInitial: true
     })
-    .on("all", (event, path) => {
-      if (event === "change" || event === "add") {
+    .on('all', (event, path) => {
+      if (event === 'change' || event === 'add') {
         try {
           // remove mock routes stack
           app._router.stack.splice(mockStartIndex, mockRoutesLength);

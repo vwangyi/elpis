@@ -1,3 +1,3 @@
 module.exports = {
-  name: "elpis-dev"
+  name: 'elpis-dev'
 };

@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import draggable from "vuedraggable";
+import draggable from 'vuedraggable';
 
 export default {
-  name: "DndList",
+  name: 'DndList',
   components: { draggable },
   props: {
     list1: {
@@ -47,19 +47,19 @@ export default {
     },
     list1Title: {
       type: String,
-      default: "list1"
+      default: 'list1'
     },
     list2Title: {
       type: String,
-      default: "list2"
+      default: 'list2'
     },
     width1: {
       type: String,
-      default: "48%"
+      default: '48%'
     },
     width2: {
       type: String,
-      default: "48%"
+      default: '48%'
     }
   },
   methods: {
@@ -96,7 +96,7 @@ export default {
     setData(dataTransfer) {
       // to avoid Firefox bug
       // Detail see : https://github.com/RubaXa/Sortable/issues/1012
-      dataTransfer.setData("Text", "");
+      dataTransfer.setData('Text', '');
     }
   }
 };
@@ -107,7 +107,7 @@ export default {
   background: #fff;
   padding-bottom: 40px;
   &:after {
-    content: "";
+    content: '';
     display: table;
     clear: both;
   }

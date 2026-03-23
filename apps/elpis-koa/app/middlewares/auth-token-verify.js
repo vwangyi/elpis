@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 /**
  * 1 当用户 登录后 在某个页面 手动删除token 后。 点击某个按钮访问 api 应该提示登录失效 让用户重新登录
@@ -15,12 +15,12 @@ const jwt = require("jsonwebtoken");
 module.exports = app => {
   // 访问白名单内的api 不需要登录
   const whiteList = [
-    "/",
-    "/api/auth/logout",
-    "/api/auth/login",
-    "/api/user/list",
-    "/api/auth/send_email_code", // 发送验证码 不需要登录
-    "/api/auth/login/by_email_code"
+    '/',
+    '/api/auth/logout',
+    '/api/auth/login',
+    '/api/user/list',
+    '/api/auth/send_email_code', // 发送验证码 不需要登录
+    '/api/auth/login/by_email_code'
   ];
 
   return async (ctx, next) => {
@@ -29,7 +29,7 @@ module.exports = app => {
       return;
     }
     let isLogin = true;
-    ctx.token = ctx.cookies.get("token"); // 拿到token
+    ctx.token = ctx.cookies.get('token'); // 拿到token
 
     if (!ctx.token) {
       isLogin = false;
@@ -47,15 +47,15 @@ module.exports = app => {
 
     // 若没有登录
     if (!isLogin) {
-      ctx.cookies.set("token", "", { expires: new Date(0) });
+      ctx.cookies.set('token', '', { expires: new Date(0) });
 
       // 处理api请求：api请求就没办法重定向了
-      if (ctx.url.startsWith("/api/")) {
+      if (ctx.url.startsWith('/api/')) {
         // 校验token后 提示重新登录
         ctx.body = {
           success: false,
           code: 50000,
-          message: "token已过期，请重新登录"
+          message: 'token已过期，请重新登录'
         };
       }
       // 处理页面请求 就可以重定向

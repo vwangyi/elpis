@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import Dropzone from "dropzone";
-import "dropzone/dist/dropzone.css";
+import Dropzone from 'dropzone';
+import 'dropzone/dist/dropzone.css';
 // import { getToken } from 'api/qiniu';
 
 Dropzone.autoDiscover = false;
@@ -27,11 +27,11 @@ export default {
     },
     defaultMsg: {
       type: String,
-      default: "上传图片"
+      default: '上传图片'
     },
     acceptedFiles: {
       type: String,
-      default: ""
+      default: ''
     },
     thumbnailHeight: {
       type: Number,
@@ -62,7 +62,7 @@ export default {
       default: false
     },
     defaultImg: {
-      default: "",
+      default: '',
       type: [String, Array]
     },
     couldPaste: {
@@ -72,7 +72,7 @@ export default {
   },
   data() {
     return {
-      dropzone: "",
+      dropzone: '',
       initOnce: true
     };
   },
@@ -96,23 +96,23 @@ export default {
       thumbnailHeight: this.thumbnailHeight,
       maxFiles: this.maxFiles,
       maxFilesize: this.maxFilesize,
-      dictRemoveFile: "Remove",
+      dictRemoveFile: 'Remove',
       addRemoveLinks: this.showRemoveLink,
       acceptedFiles: this.acceptedFiles,
       autoProcessQueue: this.autoProcessQueue,
       dictDefaultMessage:
         '<i style="margin-top: 3em;display: inline-block" class="material-icons">' +
         this.defaultMsg +
-        "</i><br>Drop files here to upload",
-      dictMaxFilesExceeded: "只能一个图",
+        '</i><br>Drop files here to upload',
+      dictMaxFilesExceeded: '只能一个图',
       previewTemplate:
         '<div class="dz-preview dz-file-preview">  <div class="dz-image" style="width:' +
         this.thumbnailWidth +
-        "px;height:" +
+        'px;height:' +
         this.thumbnailHeight +
         'px" ><img style="width:' +
         this.thumbnailWidth +
-        "px;height:" +
+        'px;height:' +
         this.thumbnailHeight +
         'px" data-dz-thumbnail /></div>  <div class="dz-details"><div class="dz-size"><span data-dz-size></span></div> <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>  <div class="dz-error-message"><span data-dz-errormessage></span></div>  <div class="dz-success-mark"> <i class="material-icons">done</i> </div>  <div class="dz-error-mark"><i class="material-icons">error</i></div></div>',
       init() {
@@ -121,20 +121,20 @@ export default {
         if (Array.isArray(val)) {
           if (val.length === 0) return;
           val.map((v, i) => {
-            const mockFile = { name: "name" + i, size: 12345, url: v };
+            const mockFile = { name: 'name' + i, size: 12345, url: v };
             this.options.addedfile.call(this, mockFile);
             this.options.thumbnail.call(this, mockFile, v);
-            mockFile.previewElement.classList.add("dz-success");
-            mockFile.previewElement.classList.add("dz-complete");
+            mockFile.previewElement.classList.add('dz-success');
+            mockFile.previewElement.classList.add('dz-complete');
             vm.initOnce = false;
             return true;
           });
         } else {
-          const mockFile = { name: "name", size: 12345, url: val };
+          const mockFile = { name: 'name', size: 12345, url: val };
           this.options.addedfile.call(this, mockFile);
           this.options.thumbnail.call(this, mockFile, val);
-          mockFile.previewElement.classList.add("dz-success");
-          mockFile.previewElement.classList.add("dz-complete");
+          mockFile.previewElement.classList.add('dz-success');
+          mockFile.previewElement.classList.add('dz-complete');
           vm.initOnce = false;
         }
       },
@@ -157,27 +157,27 @@ export default {
     });
 
     if (this.couldPaste) {
-      document.addEventListener("paste", this.pasteImg);
+      document.addEventListener('paste', this.pasteImg);
     }
 
-    this.dropzone.on("success", file => {
-      vm.$emit("dropzone-success", file, vm.dropzone.element);
+    this.dropzone.on('success', file => {
+      vm.$emit('dropzone-success', file, vm.dropzone.element);
     });
-    this.dropzone.on("addedfile", file => {
-      vm.$emit("dropzone-fileAdded", file);
+    this.dropzone.on('addedfile', file => {
+      vm.$emit('dropzone-fileAdded', file);
     });
-    this.dropzone.on("removedfile", file => {
-      vm.$emit("dropzone-removedFile", file);
+    this.dropzone.on('removedfile', file => {
+      vm.$emit('dropzone-removedFile', file);
     });
-    this.dropzone.on("error", (file, error, xhr) => {
-      vm.$emit("dropzone-error", file, error, xhr);
+    this.dropzone.on('error', (file, error, xhr) => {
+      vm.$emit('dropzone-error', file, error, xhr);
     });
-    this.dropzone.on("successmultiple", (file, error, xhr) => {
-      vm.$emit("dropzone-successmultiple", file, error, xhr);
+    this.dropzone.on('successmultiple', (file, error, xhr) => {
+      vm.$emit('dropzone-successmultiple', file, error, xhr);
     });
   },
   destroyed() {
-    document.removeEventListener("paste", this.pasteImg);
+    document.removeEventListener('paste', this.pasteImg);
     this.dropzone.destroy();
   },
   methods: {
@@ -189,7 +189,7 @@ export default {
     },
     pasteImg(event) {
       const items = (event.clipboardData || event.originalEvent.clipboardData).items;
-      if (items[0].kind === "file") {
+      if (items[0].kind === 'file') {
         this.dropzone.addFile(items[0].getAsFile());
       }
     },
@@ -197,19 +197,19 @@ export default {
       if (!val) return;
       if (Array.isArray(val)) {
         val.map((v, i) => {
-          const mockFile = { name: "name" + i, size: 12345, url: v };
+          const mockFile = { name: 'name' + i, size: 12345, url: v };
           this.dropzone.options.addedfile.call(this.dropzone, mockFile);
           this.dropzone.options.thumbnail.call(this.dropzone, mockFile, v);
-          mockFile.previewElement.classList.add("dz-success");
-          mockFile.previewElement.classList.add("dz-complete");
+          mockFile.previewElement.classList.add('dz-success');
+          mockFile.previewElement.classList.add('dz-complete');
           return true;
         });
       } else {
-        const mockFile = { name: "name", size: 12345, url: val };
+        const mockFile = { name: 'name', size: 12345, url: val };
         this.dropzone.options.addedfile.call(this.dropzone, mockFile);
         this.dropzone.options.thumbnail.call(this.dropzone, mockFile, val);
-        mockFile.previewElement.classList.add("dz-success");
-        mockFile.previewElement.classList.add("dz-complete");
+        mockFile.previewElement.classList.add('dz-success');
+        mockFile.previewElement.classList.add('dz-complete');
       }
     }
   }
@@ -219,7 +219,7 @@ export default {
 <style scoped>
 .dropzone {
   border: 2px solid #e5e5e5;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #777;
   transition: background-color 0.2s linear;
   padding: 5px;
@@ -238,7 +238,7 @@ i {
   height: 100%;
 }
 
-.dropzone input[name="file"] {
+.dropzone input[name='file'] {
   display: none;
 }
 

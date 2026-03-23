@@ -1,40 +1,40 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 
 /* category 分类模块 */
-export const useCategoryStore = defineStore("category", () => {
-  const edit = { title: "编辑", component: "ElpisVditor" };
+export const useCategoryStore = defineStore('category', () => {
+  const edit = { title: '编辑', component: 'ElpisVditor' };
   const categoryList = ref([
     // {
     //   title: "推荐",
     //   component: "CardList",
     // },
     {
-      title: "Nodejs"
+      title: 'Nodejs'
     },
     {
-      title: "JavaScript"
+      title: 'JavaScript'
     },
     {
-      title: "TypeScript"
+      title: 'TypeScript'
     },
     {
-      title: "HTML&CSS"
+      title: 'HTML&CSS'
     },
     {
-      title: "Koa"
+      title: 'Koa'
     },
     {
-      title: "Webpack"
+      title: 'Webpack'
     },
     {
-      title: "Vue"
+      title: 'Vue'
     }
   ]);
 
   /* 切换显示编辑 */
   function toggleEdit() {
-    if (categoryList.value[0].component === "RichEditor") {
+    if (categoryList.value[0].component === 'RichEditor') {
       categoryList.value.shift();
       return;
     }

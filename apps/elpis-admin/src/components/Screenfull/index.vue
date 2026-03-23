@@ -5,10 +5,10 @@
 </template>
 
 <script>
-import screenfull from "screenfull";
+import screenfull from 'screenfull';
 
 export default {
-  name: "Screenfull",
+  name: 'Screenfull',
   data() {
     return {
       isFullscreen: false
@@ -24,8 +24,8 @@ export default {
     click() {
       if (!screenfull.enabled) {
         this.$message({
-          message: "you browser can not work",
-          type: "warning"
+          message: 'you browser can not work',
+          type: 'warning'
         });
         return false;
       }
@@ -36,12 +36,12 @@ export default {
     },
     init() {
       if (screenfull.enabled) {
-        screenfull.on("change", this.change);
+        screenfull.on('change', this.change);
       }
     },
     destroy() {
       if (screenfull.enabled) {
-        screenfull.off("change", this.change);
+        screenfull.off('change', this.change);
       }
     }
   }

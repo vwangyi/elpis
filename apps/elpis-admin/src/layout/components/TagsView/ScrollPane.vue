@@ -8,7 +8,7 @@
 const tagAndTagSpacing = 4; // tagAndTagSpacing
 
 export default {
-  name: "ScrollPane",
+  name: 'ScrollPane',
   data() {
     return {
       left: 0
@@ -20,10 +20,10 @@ export default {
     }
   },
   mounted() {
-    this.scrollWrapper.addEventListener("scroll", this.emitScroll, true);
+    this.scrollWrapper.addEventListener('scroll', this.emitScroll, true);
   },
   beforeDestroy() {
-    this.scrollWrapper.removeEventListener("scroll", this.emitScroll);
+    this.scrollWrapper.removeEventListener('scroll', this.emitScroll);
   },
   methods: {
     handleScroll(e) {
@@ -32,7 +32,7 @@ export default {
       $scrollWrapper.scrollLeft = $scrollWrapper.scrollLeft + eventDelta / 4;
     },
     emitScroll() {
-      this.$emit("scroll");
+      this.$emit('scroll');
     },
     moveToTarget(currentTag) {
       const $container = this.$refs.scrollContainer.$el;

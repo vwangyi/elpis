@@ -95,32 +95,32 @@
 </template>
 
 <script>
-import Tinymce from "@/components/Tinymce";
-import Upload from "@/components/Upload/SingleImage3";
-import MDinput from "@/components/MDinput";
-import Sticky from "@/components/Sticky"; // 粘性header组件
-import { validURL } from "@/utils/validate";
-import { fetchArticle } from "@/api/article";
-import { searchUser } from "@/api/remote-search";
-import Warning from "./Warning";
-import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from "./Dropdown";
+import Tinymce from '@/components/Tinymce';
+import Upload from '@/components/Upload/SingleImage3';
+import MDinput from '@/components/MDinput';
+import Sticky from '@/components/Sticky'; // 粘性header组件
+import { validURL } from '@/utils/validate';
+import { fetchArticle } from '@/api/article';
+import { searchUser } from '@/api/remote-search';
+import Warning from './Warning';
+import { CommentDropdown, PlatformDropdown, SourceUrlDropdown } from './Dropdown';
 
 const defaultForm = {
-  status: "draft",
-  title: "", // 文章题目
-  content: "", // 文章内容
-  content_short: "", // 文章摘要
-  source_uri: "", // 文章外链
-  image_uri: "", // 文章图片
+  status: 'draft',
+  title: '', // 文章题目
+  content: '', // 文章内容
+  content_short: '', // 文章摘要
+  source_uri: '', // 文章外链
+  image_uri: '', // 文章图片
   display_time: undefined, // 前台展示时间
   id: undefined,
-  platforms: ["a-platform"],
+  platforms: ['a-platform'],
   comment_disabled: false,
   importance: 0
 };
 
 export default {
-  name: "ArticleDetail",
+  name: 'ArticleDetail',
   components: { Tinymce, MDinput, Upload, Sticky, Warning, CommentDropdown, PlatformDropdown, SourceUrlDropdown },
   props: {
     isEdit: {
@@ -130,12 +130,12 @@ export default {
   },
   data() {
     const validateRequire = (rule, value, callback) => {
-      if (value === "") {
+      if (value === '') {
         this.$message({
-          message: rule.field + "为必传项",
-          type: "error"
+          message: rule.field + '为必传项',
+          type: 'error'
         });
-        callback(new Error(rule.field + "为必传项"));
+        callback(new Error(rule.field + '为必传项'));
       } else {
         callback();
       }
@@ -146,10 +146,10 @@ export default {
           callback();
         } else {
           this.$message({
-            message: "外链url填写不正确",
-            type: "error"
+            message: '外链url填写不正确',
+            type: 'error'
           });
-          callback(new Error("外链url填写不正确"));
+          callback(new Error('外链url填写不正确'));
         }
       } else {
         callback();
@@ -163,7 +163,7 @@ export default {
         image_uri: [{ validator: validateRequire }],
         title: [{ validator: validateRequire }],
         content: [{ validator: validateRequire }],
-        source_uri: [{ validator: validateSourceUri, trigger: "blur" }]
+        source_uri: [{ validator: validateSourceUri, trigger: 'blur' }]
       },
       tempRoute: {}
     };
@@ -217,12 +217,12 @@ export default {
         });
     },
     setTagsViewTitle() {
-      const title = "Edit Article";
+      const title = 'Edit Article';
       const route = Object.assign({}, this.tempRoute, { title: `${title}-${this.postForm.id}` });
-      this.$store.dispatch("tagsView/updateVisitedView", route);
+      this.$store.dispatch('tagsView/updateVisitedView', route);
     },
     setPageTitle() {
-      const title = "Edit Article";
+      const title = 'Edit Article';
       document.title = `${title} - ${this.postForm.id}`;
     },
     submitForm() {
@@ -231,15 +231,15 @@ export default {
         if (valid) {
           this.loading = true;
           this.$notify({
-            title: "成功",
-            message: "发布文章成功",
-            type: "success",
+            title: '成功',
+            message: '发布文章成功',
+            type: 'success',
             duration: 2000
           });
-          this.postForm.status = "published";
+          this.postForm.status = 'published';
           this.loading = false;
         } else {
-          console.log("error submit!!");
+          console.log('error submit!!');
           return false;
         }
       });
@@ -247,18 +247,18 @@ export default {
     draftForm() {
       if (this.postForm.content.length === 0 || this.postForm.title.length === 0) {
         this.$message({
-          message: "请填写必要的标题和内容",
-          type: "warning"
+          message: '请填写必要的标题和内容',
+          type: 'warning'
         });
         return;
       }
       this.$message({
-        message: "保存成功",
-        type: "success",
+        message: '保存成功',
+        type: 'success',
         showClose: true,
         duration: 1000
       });
-      this.postForm.status = "draft";
+      this.postForm.status = 'draft';
     },
     getRemoteUserList(query) {
       searchUser(query).then(response => {
@@ -271,7 +271,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
+@import '~@/styles/mixin.scss';
 
 .createPost-container {
   position: relative;

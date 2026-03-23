@@ -113,14 +113,14 @@
 // source:https://github.com/wemake-services/vue-material-input/blob/master/src/components/MaterialInput.vue
 
 export default {
-  name: "MdInput",
+  name: 'MdInput',
   props: {
     /* eslint-disable */
     icon: String,
     name: String,
     type: {
       type: String,
-      default: "text"
+      default: 'text'
     },
     value: [String, Number],
     placeholder: String,
@@ -137,7 +137,7 @@ export default {
     },
     autoComplete: {
       type: String,
-      default: "off"
+      default: 'off'
     },
     validateEvent: {
       type: Boolean,
@@ -154,9 +154,9 @@ export default {
   computed: {
     computedClasses() {
       return {
-        "material--active": this.focus,
-        "material--disabled": this.disabled,
-        "material--raised": Boolean(this.focus || this.currentValue) // has value
+        'material--active': this.focus,
+        'material--disabled': this.disabled,
+        'material--raised': Boolean(this.focus || this.currentValue) // has value
       };
     }
   },
@@ -168,28 +168,28 @@ export default {
   methods: {
     handleModelInput(event) {
       const value = event.target.value;
-      this.$emit("input", value);
-      if (this.$parent.$options.componentName === "ElFormItem") {
+      this.$emit('input', value);
+      if (this.$parent.$options.componentName === 'ElFormItem') {
         if (this.validateEvent) {
-          this.$parent.$emit("el.form.change", [value]);
+          this.$parent.$emit('el.form.change', [value]);
         }
       }
-      this.$emit("change", value);
+      this.$emit('change', value);
     },
     handleMdFocus(event) {
       this.focus = true;
-      this.$emit("focus", event);
-      if (this.placeholder && this.placeholder !== "") {
+      this.$emit('focus', event);
+      if (this.placeholder && this.placeholder !== '') {
         this.fillPlaceHolder = this.placeholder;
       }
     },
     handleMdBlur(event) {
       this.focus = false;
-      this.$emit("blur", event);
+      this.$emit('blur', event);
       this.fillPlaceHolder = null;
-      if (this.$parent.$options.componentName === "ElFormItem") {
+      if (this.$parent.$options.componentName === 'ElFormItem') {
         if (this.validateEvent) {
-          this.$parent.$emit("el.form.blur", [this.currentValue]);
+          this.$parent.$emit('el.form.blur', [this.currentValue]);
         }
       }
     }
@@ -219,7 +219,7 @@ $color-red: #f44336;
 $color-black: black;
 // Base clases:
 %base-bar-pseudo {
-  content: "";
+  content: '';
   height: 1px;
   width: 0;
   bottom: 0;

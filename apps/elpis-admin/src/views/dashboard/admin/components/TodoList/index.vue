@@ -29,7 +29,7 @@
     <footer v-show="todos.length" class="footer">
       <span class="todo-count">
         <strong>{{ remaining }}</strong>
-        {{ remaining | pluralize("item") }} left
+        {{ remaining | pluralize('item') }} left
       </span>
       <ul class="filters">
         <li v-for="(val, key) in filters" :key="key">
@@ -44,33 +44,33 @@
 </template>
 
 <script>
-import Todo from "./Todo.vue";
+import Todo from './Todo.vue';
 
-const STORAGE_KEY = "todos";
+const STORAGE_KEY = 'todos';
 const filters = {
   all: todos => todos,
   active: todos => todos.filter(todo => !todo.done),
   completed: todos => todos.filter(todo => todo.done)
 };
 const defalutList = [
-  { text: "star this repository", done: false },
-  { text: "fork this repository", done: false },
-  { text: "follow author", done: false },
-  { text: "vue-element-admin", done: true },
-  { text: "vue", done: true },
-  { text: "element-ui", done: true },
-  { text: "axios", done: true },
-  { text: "webpack", done: true }
+  { text: 'star this repository', done: false },
+  { text: 'fork this repository', done: false },
+  { text: 'follow author', done: false },
+  { text: 'vue-element-admin', done: true },
+  { text: 'vue', done: true },
+  { text: 'element-ui', done: true },
+  { text: 'axios', done: true },
+  { text: 'webpack', done: true }
 ];
 export default {
   components: { Todo },
   filters: {
-    pluralize: (n, w) => (n === 1 ? w : w + "s"),
+    pluralize: (n, w) => (n === 1 ? w : w + 's'),
     capitalize: s => s.charAt(0).toUpperCase() + s.slice(1)
   },
   data() {
     return {
-      visibility: "all",
+      visibility: 'all',
       filters,
       // todos: JSON.parse(window.localStorage.getItem(STORAGE_KEY)) || defalutList
       todos: defalutList
@@ -100,7 +100,7 @@ export default {
         });
         this.setLocalStorage();
       }
-      e.target.value = "";
+      e.target.value = '';
     },
     toggleTodo(val) {
       val.done = !val.done;
@@ -129,5 +129,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./index.scss";
+@import './index.scss';
 </style>

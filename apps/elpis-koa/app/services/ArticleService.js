@@ -1,6 +1,6 @@
 /* article 文章模块 */
 module.exports = app => {
-  const BaseService = require("./BaseService")(app);
+  const BaseService = require('./BaseService')(app);
 
   return class ArticleService extends BaseService {
     /* 获取列表（分页） */

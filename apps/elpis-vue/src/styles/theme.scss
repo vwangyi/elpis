@@ -23,7 +23,7 @@ $themeMap: ();
   // 循环上面的map对象
   @each $key, $value in $themes {
     $themeMap: $value !global;
-    html[data-theme="#{$key}"] & {
+    html[data-theme='#{$key}'] & {
       @content;
     }
   }
@@ -51,7 +51,7 @@ html[data-theme=dark] .item {
 .item {
   font-size: 14px;
   @include useTheme {
-    color: getVar("textColor");
-    background: getVar("bgColor");
+    color: getVar('textColor');
+    background: getVar('bgColor');
   }
 }

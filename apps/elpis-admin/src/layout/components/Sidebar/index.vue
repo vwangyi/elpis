@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Logo from "./Logo";
-import SidebarItem from "./SidebarItem";
+import { mapGetters } from 'vuex';
+import Logo from './Logo';
+import SidebarItem from './SidebarItem';
 import {
   menuText,
   menuActiveText,
@@ -31,7 +31,7 @@ import {
   subMenuBg,
   subMenuHover,
   sideBarWidth
-} from "@/styles/variables.scss";
+} from '@/styles/variables.scss';
 
 const variables = {
   menuText,
@@ -47,7 +47,7 @@ const variables = {
 export default {
   components: { SidebarItem, Logo },
   computed: {
-    ...mapGetters(["permission_routes", "sidebar"]),
+    ...mapGetters(['permission_routes', 'sidebar']),
     activeMenu() {
       const route = this.$route;
       const { meta, path } = route;

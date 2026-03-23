@@ -33,11 +33,11 @@
 // import { getToken } from 'api/qiniu'
 
 export default {
-  name: "EditorSlideUpload",
+  name: 'EditorSlideUpload',
   props: {
     color: {
       type: String,
-      default: "#1890ff"
+      default: '#1890ff'
     }
   },
   data() {
@@ -55,11 +55,11 @@ export default {
       const arr = Object.keys(this.listObj).map(v => this.listObj[v]);
       if (!this.checkAllSuccess()) {
         this.$message(
-          "Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!"
+          'Please wait for all images to be uploaded successfully. If there is a network problem, please refresh the page and upload again!'
         );
         return;
       }
-      this.$emit("successCBK", arr);
+      this.$emit('successCBK', arr);
       this.listObj = {};
       this.fileList = [];
       this.dialogVisible = false;

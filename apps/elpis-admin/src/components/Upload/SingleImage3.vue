@@ -32,20 +32,20 @@
 </template>
 
 <script>
-import { getToken } from "@/api/qiniu";
+import { getToken } from '@/api/qiniu';
 
 export default {
-  name: "SingleImageUpload3",
+  name: 'SingleImageUpload3',
   props: {
     value: {
       type: String,
-      default: ""
+      default: ''
     }
   },
   data() {
     return {
-      tempUrl: "",
-      dataObj: { token: "", key: "" }
+      tempUrl: '',
+      dataObj: { token: '', key: '' }
     };
   },
   computed: {
@@ -55,10 +55,10 @@ export default {
   },
   methods: {
     rmImage() {
-      this.emitInput("");
+      this.emitInput('');
     },
     emitInput(val) {
-      this.$emit("input", val);
+      this.$emit('input', val);
     },
     handleImageSuccess(file) {
       this.emitInput(file.files.file);
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~@/styles/mixin.scss";
+@import '~@/styles/mixin.scss';
 .upload-container {
   width: 100%;
   position: relative;

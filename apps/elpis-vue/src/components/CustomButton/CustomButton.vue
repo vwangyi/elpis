@@ -1,6 +1,6 @@
 <script setup>
-import { ref, useAttrs } from "vue";
-import { omit } from "lodash-es"; // omit($attrs, 'onClick')  用于排除对象的onclick属性
+import { ref, useAttrs } from 'vue';
+import { omit } from 'lodash-es'; // omit($attrs, 'onClick')  用于排除对象的onclick属性
 const loading = ref(false);
 
 defineOptions({

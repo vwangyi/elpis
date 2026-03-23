@@ -4,25 +4,25 @@
 
 <script>
 // deps for editor
-import "codemirror/lib/codemirror.css"; // codemirror
-import "tui-editor/dist/tui-editor.css"; // editor ui
-import "tui-editor/dist/tui-editor-contents.css"; // editor content
+import 'codemirror/lib/codemirror.css'; // codemirror
+import 'tui-editor/dist/tui-editor.css'; // editor ui
+import 'tui-editor/dist/tui-editor-contents.css'; // editor content
 
-import Editor from "tui-editor";
-import defaultOptions from "./default-options";
+import Editor from 'tui-editor';
+import defaultOptions from './default-options';
 
 export default {
-  name: "MarkdownEditor",
+  name: 'MarkdownEditor',
   props: {
     value: {
       type: String,
-      default: ""
+      default: ''
     },
     id: {
       type: String,
       required: false,
       default() {
-        return "markdown-editor-" + +new Date() + ((Math.random() * 1000).toFixed(0) + "");
+        return 'markdown-editor-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '');
       }
     },
     options: {
@@ -33,17 +33,17 @@ export default {
     },
     mode: {
       type: String,
-      default: "markdown"
+      default: 'markdown'
     },
     height: {
       type: String,
       required: false,
-      default: "300px"
+      default: '300px'
     },
     language: {
       type: String,
       required: false,
-      default: "en_US" // https://github.com/nhnent/tui.editor/tree/master/src/js/langs
+      default: 'en_US' // https://github.com/nhnent/tui.editor/tree/master/src/js/langs
     }
   },
   data() {
@@ -92,13 +92,13 @@ export default {
       if (this.value) {
         this.editor.setValue(this.value);
       }
-      this.editor.on("change", () => {
-        this.$emit("input", this.editor.getValue());
+      this.editor.on('change', () => {
+        this.$emit('input', this.editor.getValue());
       });
     },
     destroyEditor() {
       if (!this.editor) return;
-      this.editor.off("change");
+      this.editor.off('change');
       this.editor.remove();
     },
     setValue(value) {

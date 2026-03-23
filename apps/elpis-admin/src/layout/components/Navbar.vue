@@ -50,13 +50,13 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import Breadcrumb from "@/components/Breadcrumb";
-import Hamburger from "@/components/Hamburger";
-import ErrorLog from "@/components/ErrorLog";
-import Screenfull from "@/components/Screenfull";
-import SizeSelect from "@/components/SizeSelect";
-import Search from "@/components/HeaderSearch";
+import { mapGetters } from 'vuex';
+import Breadcrumb from '@/components/Breadcrumb';
+import Hamburger from '@/components/Hamburger';
+import ErrorLog from '@/components/ErrorLog';
+import Screenfull from '@/components/Screenfull';
+import SizeSelect from '@/components/SizeSelect';
+import Search from '@/components/HeaderSearch';
 
 export default {
   components: {
@@ -68,14 +68,14 @@ export default {
     Search
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar", "device"])
+    ...mapGetters(['sidebar', 'avatar', 'device'])
   },
   methods: {
     toggleSideBar() {
-      this.$store.dispatch("app/toggleSideBar");
+      this.$store.dispatch('app/toggleSideBar');
     },
     async logout() {
-      await this.$store.dispatch("user/logout");
+      await this.$store.dispatch('user/logout');
       this.$router.push(`/login?redirect=${this.$route.fullPath}`);
     }
   }

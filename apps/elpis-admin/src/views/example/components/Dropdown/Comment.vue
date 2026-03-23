@@ -1,7 +1,7 @@
 <template>
   <el-dropdown :show-timeout="100" trigger="click">
     <el-button plain>
-      {{ !comment_disabled ? "Comment: opened" : "Comment: closed" }}
+      {{ !comment_disabled ? 'Comment: opened' : 'Comment: closed' }}
       <i class="el-icon-caret-bottom el-icon--right" />
     </el-button>
     <el-dropdown-menu slot="dropdown" class="no-padding">
@@ -29,7 +29,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit("input", val);
+        this.$emit('input', val);
       }
     }
   }

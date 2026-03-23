@@ -1,7 +1,7 @@
 <script setup>
-import { ref, computed, watch, onMounted } from "vue";
-import { marked } from "marked";
-import DOMPurify from "dompurify";
+import { ref, computed, watch, onMounted } from 'vue';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 // 如果没有安装 marked，可以使用简单的转换函数
 // 或者使用 CDN: <scri src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></scri>
@@ -22,18 +22,18 @@ const textareaRef = ref(null);
 
 // 工具栏按钮
 const toolbarButtons = [
-  { text: "H1", action: "h1", title: "一级标题" },
-  { text: "H2", action: "h2", title: "二级标题" },
-  { text: "B", action: "bold", title: "加粗" },
-  { text: "I", action: "italic", title: "斜体" },
-  { text: "📄", action: "link", title: "链接" },
-  { text: "🖼️", action: "image", title: "图片" },
-  { text: "📋", action: "code", title: "代码块" },
-  { text: "•", action: "list", title: "无序列表" },
-  { text: "1.", action: "olist", title: "有序列表" },
-  { text: ">", action: "quote", title: "引用" },
-  { text: "📏", action: "hr", title: "分割线" },
-  { text: "📊", action: "table", title: "表格" }
+  { text: 'H1', action: 'h1', title: '一级标题' },
+  { text: 'H2', action: 'h2', title: '二级标题' },
+  { text: 'B', action: 'bold', title: '加粗' },
+  { text: 'I', action: 'italic', title: '斜体' },
+  { text: '📄', action: 'link', title: '链接' },
+  { text: '🖼️', action: 'image', title: '图片' },
+  { text: '📋', action: 'code', title: '代码块' },
+  { text: '•', action: 'list', title: '无序列表' },
+  { text: '1.', action: 'olist', title: '有序列表' },
+  { text: '>', action: 'quote', title: '引用' },
+  { text: '📏', action: 'hr', title: '分割线' },
+  { text: '📊', action: 'table', title: '表格' }
 ];
 
 // 统计信息
@@ -44,7 +44,7 @@ const wordCount = computed(() => {
 
 const charCount = computed(() => markdownText.value.length);
 
-const lineCount = computed(() => markdownText.value.split("\n").length);
+const lineCount = computed(() => markdownText.value.split('\n').length);
 
 // 渲染后的 HTML
 const renderedHtml = computed(() => {
@@ -57,39 +57,39 @@ const renderedHtml = computed(() => {
     // 使用 DOMPurify 清理 HTML，防止 XSS 攻击
     const a = DOMPurify.sanitize(rawHtml, {
       ALLOWED_TAGS: [
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "p",
-        "br",
-        "hr",
-        "strong",
-        "em",
-        "b",
-        "i",
-        "u",
-        "s",
-        "blockquote",
-        "code",
-        "pre",
-        "ul",
-        "ol",
-        "li",
-        "table",
-        "thead",
-        "tbody",
-        "tr",
-        "th",
-        "td",
-        "a",
-        "img",
-        "div",
-        "span"
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'br',
+        'hr',
+        'strong',
+        'em',
+        'b',
+        'i',
+        'u',
+        's',
+        'blockquote',
+        'code',
+        'pre',
+        'ul',
+        'ol',
+        'li',
+        'table',
+        'thead',
+        'tbody',
+        'tr',
+        'th',
+        'td',
+        'a',
+        'img',
+        'div',
+        'span'
       ],
-      ALLOWED_ATTR: ["href", "target", "src", "alt", "title", "class", "id"]
+      ALLOWED_ATTR: ['href', 'target', 'src', 'alt', 'title', 'class', 'id']
     });
     console.log(markdownText.value);
     console.dir(textareaRef.value.value);
@@ -109,7 +109,7 @@ const handleTab = event => {
 
   // 插入两个空格作为缩进
   const text = markdownText.value;
-  const newText = text.substring(0, start) + "  " + text.substring(end);
+  const newText = text.substring(0, start) + '  ' + text.substring(end);
 
   markdownText.value = newText;
 
@@ -127,36 +127,36 @@ const insertMarkdown = type => {
   const selectedText = markdownText.value.substring(start, end);
   const text = markdownText.value;
 
-  let insertText = "";
+  let insertText = '';
   let cursorOffset = 0;
 
   switch (type) {
-    case "h1":
+    case 'h1':
       insertText = `# ${selectedText}`;
       cursorOffset = selectedText ? 0 : 2;
       break;
-    case "h2":
+    case 'h2':
       insertText = `## ${selectedText}`;
       cursorOffset = selectedText ? 0 : 3;
       break;
-    case "bold":
+    case 'bold':
       insertText = `**${selectedText}**`;
       cursorOffset = selectedText ? 0 : 2;
       break;
-    case "italic":
+    case 'italic':
       insertText = `*${selectedText}*`;
       cursorOffset = selectedText ? 0 : 1;
       break;
-    case "link":
-      insertText = `[${selectedText || "链接文字"}](https://example.com)`;
+    case 'link':
+      insertText = `[${selectedText || '链接文字'}](https://example.com)`;
       cursorOffset = selectedText ? 0 : 1;
       break;
-    case "image":
-      insertText = `![${selectedText || "图片描述"}](https://picsum.photos/400/300)`;
+    case 'image':
+      insertText = `![${selectedText || '图片描述'}](https://picsum.photos/400/300)`;
       cursorOffset = selectedText ? 0 : 2;
       break;
-    case "code":
-      if (selectedText.includes("\n")) {
+    case 'code':
+      if (selectedText.includes('\n')) {
         insertText = `\`\`\`\n${selectedText}\n\`\`\``;
         cursorOffset = 3;
       } else {
@@ -164,38 +164,38 @@ const insertMarkdown = type => {
         cursorOffset = selectedText ? 0 : 1;
       }
       break;
-    case "list":
+    case 'list':
       insertText = selectedText
         ? selectedText
-            .split("\n")
+            .split('\n')
             .map(line => `- ${line}`)
-            .join("\n")
-        : "- ";
+            .join('\n')
+        : '- ';
       cursorOffset = 2;
       break;
-    case "olist":
+    case 'olist':
       insertText = selectedText
         ? selectedText
-            .split("\n")
+            .split('\n')
             .map((line, i) => `${i + 1}. ${line}`)
-            .join("\n")
-        : "1. ";
+            .join('\n')
+        : '1. ';
       cursorOffset = 3;
       break;
-    case "quote":
+    case 'quote':
       insertText = selectedText
         ? selectedText
-            .split("\n")
+            .split('\n')
             .map(line => `> ${line}`)
-            .join("\n")
-        : "> ";
+            .join('\n')
+        : '> ';
       cursorOffset = 2;
       break;
-    case "hr":
-      insertText = "\n---\n";
+    case 'hr':
+      insertText = '\n---\n';
       cursorOffset = 1;
       break;
-    case "table":
+    case 'table':
       insertText = `| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |\n| Cell 3   | Cell 4   |`;
       cursorOffset = 0;
       break;
@@ -218,15 +218,15 @@ const insertMarkdown = type => {
 
 // 手动渲染
 const manualRender = () => {
-  const preview = document.querySelector(".preview-content");
-  preview.style.display = "block";
+  const preview = document.querySelector('.preview-content');
+  preview.style.display = 'block';
 };
 
 // 导出内容
 const exportContent = () => {
-  const blob = new Blob([markdownText.value], { type: "text/markdown" });
+  const blob = new Blob([markdownText.value], { type: 'text/markdown' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
   a.download = `markdown-${new Date().getTime()}.md`;
   document.body.appendChild(a);
@@ -390,7 +390,7 @@ onMounted(() => {
   padding: 16px;
   border: none;
   resize: none;
-  font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 14px;
   line-height: 1.6;
   outline: none;
@@ -400,7 +400,7 @@ onMounted(() => {
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
 }
 
@@ -451,7 +451,7 @@ onMounted(() => {
   background: #f6f8fa;
   padding: 2px 4px;
   border-radius: 3px;
-  font-family: "SFMono-Regular", Consolas, monospace;
+  font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: 0.9em;
 }
 

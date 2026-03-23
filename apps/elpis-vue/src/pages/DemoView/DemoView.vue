@@ -1,11 +1,11 @@
 <script setup>
-import CountDown from "@/components/CountDown/CountDown.vue";
+import CountDown from '@/components/CountDown/CountDown.vue';
 </script>
 
 <template>
   <div
     style="
-      font-family: &quot;Segoe UI&quot;, Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;

@@ -18,20 +18,20 @@
 </template>
 
 <script>
-import TabPane from "./components/TabPane";
+import TabPane from './components/TabPane';
 
 export default {
-  name: "Tab",
+  name: 'Tab',
   components: { TabPane },
   data() {
     return {
       tabMapOptions: [
-        { label: "China", key: "CN" },
-        { label: "USA", key: "US" },
-        { label: "Japan", key: "JP" },
-        { label: "Eurozone", key: "EU" }
+        { label: 'China', key: 'CN' },
+        { label: 'USA', key: 'US' },
+        { label: 'Japan', key: 'JP' },
+        { label: 'Eurozone', key: 'EU' }
       ],
-      activeName: "CN",
+      activeName: 'CN',
       createdTimes: 0
     };
   },

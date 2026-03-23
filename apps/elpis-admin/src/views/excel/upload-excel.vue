@@ -8,10 +8,10 @@
 </template>
 
 <script>
-import UploadExcelComponent from "@/components/UploadExcel/index.vue";
+import UploadExcelComponent from '@/components/UploadExcel/index.vue';
 
 export default {
-  name: "UploadExcel",
+  name: 'UploadExcel',
   components: { UploadExcelComponent },
   data() {
     return {
@@ -28,8 +28,8 @@ export default {
       }
 
       this.$message({
-        message: "Please do not upload files larger than 1m in size.",
-        type: "warning"
+        message: 'Please do not upload files larger than 1m in size.',
+        type: 'warning'
       });
       return false;
     },

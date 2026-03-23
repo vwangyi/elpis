@@ -1,6 +1,6 @@
 /* link表 友链模块 */
 module.exports = app => {
-  const BaseService = require("./BaseService")(app);
+  const BaseService = require('./BaseService')(app);
 
   return class LinkService extends BaseService {
     /* 获取列表（分页） */

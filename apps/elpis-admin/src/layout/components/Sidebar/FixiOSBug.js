@@ -15,7 +15,7 @@ export default {
       if ($subMenu) {
         const handleMouseleave = $subMenu.handleMouseleave;
         $subMenu.handleMouseleave = e => {
-          if (this.device === "mobile") {
+          if (this.device === 'mobile') {
             return;
           }
           handleMouseleave(e);

@@ -43,7 +43,7 @@
       <el-table-column align="center" label="Date" width="220">
         <template slot-scope="scope">
           <i class="el-icon-time" />
-          <span>{{ scope.row.timestamp | parseTime("{y}-{m}-{d} {h}:{i}") }}</span>
+          <span>{{ scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -51,11 +51,11 @@
 </template>
 
 <script>
-import { fetchList } from "@/api/article";
-import { parseTime } from "@/utils";
+import { fetchList } from '@/api/article';
+import { parseTime } from '@/utils';
 
 export default {
-  name: "MergeHeader",
+  name: 'MergeHeader',
   data() {
     return {
       list: null,
@@ -76,13 +76,13 @@ export default {
     },
     handleDownload() {
       this.downloadLoading = true;
-      import("@/vendor/Export2Excel").then(excel => {
-        const multiHeader = [["Id", "Main Information", "", "", "Date"]];
-        const header = ["", "Title", "Author", "Readings", ""];
-        const filterVal = ["id", "title", "author", "pageviews", "display_time"];
+      import('@/vendor/Export2Excel').then(excel => {
+        const multiHeader = [['Id', 'Main Information', '', '', 'Date']];
+        const header = ['', 'Title', 'Author', 'Readings', ''];
+        const filterVal = ['id', 'title', 'author', 'pageviews', 'display_time'];
         const list = this.list;
         const data = this.formatJson(filterVal, list);
-        const merges = ["A1:A2", "B1:D1", "E1:E2"];
+        const merges = ['A1:A2', 'B1:D1', 'E1:E2'];
         excel.export_json_to_excel({
           multiHeader,
           header,
@@ -95,7 +95,7 @@ export default {
     formatJson(filterVal, jsonData) {
       return jsonData.map(v =>
         filterVal.map(j => {
-          if (j === "timestamp") {
+          if (j === 'timestamp') {
             return parseTime(v[j]);
           } else {
             return v[j];

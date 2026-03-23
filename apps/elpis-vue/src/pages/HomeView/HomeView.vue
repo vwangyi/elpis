@@ -1,16 +1,16 @@
 <script setup>
-import { useRouter } from "vue-router";
-import { isArray } from "elpis-utils";
-import logo from "@/assets/logo.png";
-import light from "@/assets/light.png";
-import dark from "@/assets/dark.png";
-import { ref, useTemplateRef, computed, provide } from "vue";
-import { useAuthStore } from "@/stores/auth.js";
-import { useCategoryStore } from "@/stores/category.js";
-import { useUserStore } from "@/stores/user.js";
-import RichEditor from "@/components/RichEditor/RichEditor.vue";
-import CardList from "@/components/CardList/CardList.vue";
-import ElpisEditor from "@/components/ElpisEditor/ElpisEditor.vue";
+import { useRouter } from 'vue-router';
+import { isArray } from 'elpis-utils';
+import logo from '@/assets/logo.png';
+import light from '@/assets/light.png';
+import dark from '@/assets/dark.png';
+import { ref, useTemplateRef, computed, provide } from 'vue';
+import { useAuthStore } from '@/stores/auth.js';
+import { useCategoryStore } from '@/stores/category.js';
+import { useUserStore } from '@/stores/user.js';
+import RichEditor from '@/components/RichEditor/RichEditor.vue';
+import CardList from '@/components/CardList/CardList.vue';
+import ElpisEditor from '@/components/ElpisEditor/ElpisEditor.vue';
 
 const test = ref(123);
 
@@ -18,7 +18,7 @@ setInterval(() => {
   test.value++;
 }, 2000);
 
-provide("haha", {
+provide('haha', {
   test
 });
 
@@ -31,7 +31,7 @@ const logined = computed(() => !!authStore?.userInfo?.userId);
 const userInfo = computed(() => authStore.userInfo);
 const theme = computed(() => (false ? dark : light));
 // 当前选中的tab  home | publish | messages | profile （主页 发布 消息 我的）
-const activeTabbar = ref("home");
+const activeTabbar = ref('home');
 
 const componentMapTabbar = {
   home: CardList,
@@ -40,9 +40,9 @@ const componentMapTabbar = {
   profile: CardList
 };
 const dialogRef = ref(null);
-const email = ref("codewy@qq.com");
-const code = ref("");
-const showCode = computed(() => email.value.includes("@"));
+const email = ref('codewy@qq.com');
+const code = ref('');
+const showCode = computed(() => email.value.includes('@'));
 
 // 打开弹窗 模态方式打开
 const showModal = () => {
@@ -61,43 +61,43 @@ const closeModal = () => {
 
 // 确认操作
 const confirm = () => {
-  console.log("确认操作");
+  console.log('确认操作');
   closeModal();
 };
 
 // 监听关闭事件
 const handleClose = event => {
-  console.log("Dialog 关闭了", event);
+  console.log('Dialog 关闭了', event);
 };
 
 // 监听取消事件（按 ESC 键）
 const handleCancel = event => {
-  console.log("Dialog 被取消了", event);
+  console.log('Dialog 被取消了', event);
 };
 
 function toHome() {
-  router.push("/");
+  router.push('/');
 }
 
 function openUserAgreements() {
   const resolved = router.resolve({
-    path: "/",
-    query: { path: "/user-agreement" }
+    path: '/',
+    query: { path: '/user-agreement' }
   });
-  window.open(window.location.origin + resolved.href, "_blank");
+  window.open(window.location.origin + resolved.href, '_blank');
 }
 
 async function sendCode() {
-  if (!email.value.includes("@")) {
-    console.log("邮箱格式不对");
+  if (!email.value.includes('@')) {
+    console.log('邮箱格式不对');
     return;
   }
   if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-    console.log("请输入有效的邮箱地址");
+    console.log('请输入有效的邮箱地址');
     return;
   }
   const a = await authStore.sendEmailCode(email.value);
-  console.log("页面上", a);
+  console.log('页面上', a);
 }
 
 async function handleLogin() {
@@ -111,21 +111,21 @@ async function handleLogin() {
 
 function handleClickPublish(key) {
   activeTabbar.value = key;
-  console.log("点击了发布按钮", key);
+  console.log('点击了发布按钮', key);
 }
 function handleClickHome(key) {
   activeTabbar.value = key;
-  console.log("点击了首页按钮", key);
+  console.log('点击了首页按钮', key);
 }
 
 function handleClickMessages(key) {
   activeTabbar.value = key;
-  console.log("点击了消息按钮", key);
+  console.log('点击了消息按钮', key);
 }
 
 function handleClickProfile(key) {
   activeTabbar.value = key;
-  console.log("点击了我的按钮", key);
+  console.log('点击了我的按钮', key);
 }
 
 function openLogin() {

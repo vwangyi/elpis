@@ -1,4 +1,4 @@
-const superagent = require("superagent"); // 类似前端的axios
+const superagent = require('superagent'); // 类似前端的axios
 
 module.exports = app =>
   class BaseService {

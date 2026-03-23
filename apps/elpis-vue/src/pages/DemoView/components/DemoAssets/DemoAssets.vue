@@ -1,9 +1,9 @@
 <script setup>
-const path = ref("");
+const path = ref('');
 
-import one from "./img/1.png";
-import two from "./img/2.png";
-import three from "./img/3.png";
+import one from './img/1.png';
+import two from './img/2.png';
+import three from './img/3.png';
 // 缺点： 麻烦
 
 async function getUrl(val) {

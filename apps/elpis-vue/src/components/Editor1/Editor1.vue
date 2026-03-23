@@ -19,7 +19,7 @@
           class="mode-toggle"
           :title="editMode === 'preview' ? '切换到编辑模式' : '切换到预览模式'"
         >
-          {{ editMode === "edit" ? "👁️ 预览" : "✏️ 编辑" }}
+          {{ editMode === 'edit' ? '👁️ 预览' : '✏️ 编辑' }}
         </button>
         <button @click="exportContent" class="export-btn" title="导出">📥 导出</button>
       </div>
@@ -45,7 +45,7 @@
     <div class="footer-stats">
       <span>字数：{{ wordCount }}</span>
       <span>字符数：{{ charCount }}</span>
-      <span>模式：{{ editMode === "edit" ? "编辑" : "预览" }}</span>
+      <span>模式：{{ editMode === 'edit' ? '编辑' : '预览' }}</span>
     </div>
 
     <!-- 格式化面板（悬浮） -->
@@ -60,9 +60,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from "vue";
-import { marked } from "marked";
-import DOMPurify from "dompurify";
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 // 配置 marked
 marked.setOptions({
@@ -73,9 +73,9 @@ marked.setOptions({
 
 // 状态
 const editorRef = ref(null);
-const editMode = ref("edit"); // 'edit' 或 'preview'
+const editMode = ref('edit'); // 'edit' 或 'preview'
 const showFormatPanel = ref(false);
-const formatPanelStyle = ref({ top: "0", left: "0" });
+const formatPanelStyle = ref({ top: '0', left: '0' });
 const currentSelection = ref(null);
 
 // 初始内容
@@ -105,17 +105,17 @@ function hello() {
 
 // 工具栏按钮
 const formatButtons = [
-  { icon: "H1", action: "h1", title: "一级标题" },
-  { icon: "H2", action: "h2", title: "二级标题" },
-  { icon: "<b>B</b>", action: "bold", title: "加粗" },
-  { icon: "<i>I</i>", action: "italic", title: "斜体" },
-  { icon: "📋", action: "code", title: "代码块" },
-  { icon: "•", action: "list", title: "无序列表" },
-  { icon: "1.", action: "olist", title: "有序列表" },
-  { icon: ">", action: "quote", title: "引用" },
-  { icon: "📏", action: "hr", title: "分割线" },
-  { icon: "🖼️", action: "image", title: "插入图片" },
-  { icon: "🔗", action: "link", title: "插入链接" }
+  { icon: 'H1', action: 'h1', title: '一级标题' },
+  { icon: 'H2', action: 'h2', title: '二级标题' },
+  { icon: '<b>B</b>', action: 'bold', title: '加粗' },
+  { icon: '<i>I</i>', action: 'italic', title: '斜体' },
+  { icon: '📋', action: 'code', title: '代码块' },
+  { icon: '•', action: 'list', title: '无序列表' },
+  { icon: '1.', action: 'olist', title: '有序列表' },
+  { icon: '>', action: 'quote', title: '引用' },
+  { icon: '📏', action: 'hr', title: '分割线' },
+  { icon: '🖼️', action: 'image', title: '插入图片' },
+  { icon: '🔗', action: 'link', title: '插入链接' }
 ];
 
 // 字数统计
@@ -143,7 +143,7 @@ const saveSelection = () => {
         formatPanelStyle.value = {
           top: `${rect.top - editorRect.top - 40}px`,
           left: `${rect.left - editorRect.left + rect.width / 2}px`,
-          transform: "translateX(-50%)"
+          transform: 'translateX(-50%)'
         };
       } else {
         showFormatPanel.value = false;
@@ -167,7 +167,7 @@ const handleInput = event => {
   contentText.value = htmlToMarkdown(html);
 
   // 如果是编辑模式，实时渲染
-  if (editMode.value === "edit") {
+  if (editMode.value === 'edit') {
     nextTick(() => {
       renderMixedContent();
     });
@@ -180,55 +180,55 @@ const htmlToMarkdown = html => {
 
   // 移除渲染的标签，恢复 Markdown
   text = text
-    .replace(/<h1[^>]*>(.*?)<\/h1>/g, "# $1\n\n")
-    .replace(/<h2[^>]*>(.*?)<\/h2>/g, "## $1\n\n")
-    .replace(/<strong[^>]*>(.*?)<\/strong>/g, "**$1**")
-    .replace(/<b[^>]*>(.*?)<\/b>/g, "**$1**")
-    .replace(/<em[^>]*>(.*?)<\/em>/g, "*$1*")
-    .replace(/<i[^>]*>(.*?)<\/i>/g, "*$1*")
-    .replace(/<code[^>]*>(.*?)<\/code>/g, "`$1`")
-    .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/g, "[$2]($1)")
-    .replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/g, "![$2]($1)")
+    .replace(/<h1[^>]*>(.*?)<\/h1>/g, '# $1\n\n')
+    .replace(/<h2[^>]*>(.*?)<\/h2>/g, '## $1\n\n')
+    .replace(/<strong[^>]*>(.*?)<\/strong>/g, '**$1**')
+    .replace(/<b[^>]*>(.*?)<\/b>/g, '**$1**')
+    .replace(/<em[^>]*>(.*?)<\/em>/g, '*$1*')
+    .replace(/<i[^>]*>(.*?)<\/i>/g, '*$1*')
+    .replace(/<code[^>]*>(.*?)<\/code>/g, '`$1`')
+    .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/g, '[$2]($1)')
+    .replace(/<img[^>]*src="([^"]*)"[^>]*alt="([^"]*)"[^>]*>/g, '![$2]($1)')
     .replace(/<ul[^>]*>(.*?)<\/ul>/gs, (match, p1) => {
-      return p1.replace(/<li[^>]*>(.*?)<\/li>/g, "- $1\n") + "\n";
+      return p1.replace(/<li[^>]*>(.*?)<\/li>/g, '- $1\n') + '\n';
     })
-    .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/g, "> $1\n\n")
-    .replace(/<div[^>]*class="code-block"[^>]*>(.*?)<\/div>/g, "```\n$1\n```\n\n")
-    .replace(/<br>/g, "\n")
-    .replace(/<\/?[^>]+(>|$)/g, ""); // 移除其他标签
+    .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/g, '> $1\n\n')
+    .replace(/<div[^>]*class="code-block"[^>]*>(.*?)<\/div>/g, '```\n$1\n```\n\n')
+    .replace(/<br>/g, '\n')
+    .replace(/<\/?[^>]+(>|$)/g, ''); // 移除其他标签
 
   return text.trim();
 };
 
 // 渲染混合内容（编辑模式下）
 const renderMixedContent = () => {
-  if (!editorRef.value || editMode.value === "preview") return;
+  if (!editorRef.value || editMode.value === 'preview') return;
 
-  const lines = contentText.value.split("\n");
-  let renderedHtml = "";
+  const lines = contentText.value.split('\n');
+  let renderedHtml = '';
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
     // 空行
-    if (line.trim() === "") {
+    if (line.trim() === '') {
       renderedHtml += '<div class="empty-line"><br></div>';
       continue;
     }
 
     // 代码块开始
-    if (line.trim().startsWith("```")) {
-      const language = line.trim().substring(3).trim() || "";
-      let codeContent = "";
+    if (line.trim().startsWith('```')) {
+      const language = line.trim().substring(3).trim() || '';
+      let codeContent = '';
       i++;
-      while (i < lines.length && !lines[i].trim().startsWith("```")) {
-        codeContent += lines[i] + "\n";
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeContent += lines[i] + '\n';
         i++;
       }
       renderedHtml += `
         <div class="code-block" contenteditable="false">
           <div class="code-header">
-            <span class="language">${language || "text"}</span>
+            <span class="language">${language || 'text'}</span>
             <button class="copy-btn" onclick="copyCode(this)">复制</button>
           </div>
           <pre><code>${escapeHtml(codeContent)}</code></pre>
@@ -262,7 +262,7 @@ const renderMixedContent = () => {
     }
 
     // 引用
-    if (line.startsWith("> ")) {
+    if (line.startsWith('> ')) {
       const content = line.substring(2);
       renderedHtml += `<blockquote class="live-quote">${renderInlineMarkdown(content)}</blockquote>`;
       continue;
@@ -295,16 +295,16 @@ const renderMixedContent = () => {
 // 渲染行内 Markdown
 const renderInlineMarkdown = text => {
   return text
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.*?)\*/g, "<em>$1</em>")
-    .replace(/`(.*?)`/g, "<code>$1</code>")
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code>$1</code>')
     .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="inline-image">')
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="inline-link" contenteditable="false">$1</a>');
 };
 
 // HTML 转义
 const escapeHtml = text => {
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 };
@@ -312,7 +312,7 @@ const escapeHtml = text => {
 // 按键处理
 const handleKeydown = event => {
   // Enter 键自动格式化
-  if (event.key === "Enter") {
+  if (event.key === 'Enter') {
     setTimeout(() => {
       const selection = window.getSelection();
       const range = selection.getRangeAt(0);
@@ -322,7 +322,7 @@ const handleKeydown = event => {
       // 列表项自动继续
       if (currentLine.match(/^[-*+]\s/)) {
         event.preventDefault();
-        document.execCommand("insertHTML", false, '<div class="list-item"><span class="bullet">•</span> </div>');
+        document.execCommand('insertHTML', false, '<div class="list-item"><span class="bullet">•</span> </div>');
       }
 
       // 有序列表自动编号
@@ -331,7 +331,7 @@ const handleKeydown = event => {
         const match = currentLine.match(/^(\d+)\.\s/);
         const nextNumber = parseInt(match[1]) + 1;
         document.execCommand(
-          "insertHTML",
+          'insertHTML',
           false,
           `<div class="list-item"><span class="number">${nextNumber}.</span> </div>`
         );
@@ -340,15 +340,15 @@ const handleKeydown = event => {
   }
 
   // Tab 键缩进
-  if (event.key === "Tab") {
+  if (event.key === 'Tab') {
     event.preventDefault();
-    document.execCommand("insertHTML", false, "&nbsp;&nbsp;&nbsp;&nbsp;");
+    document.execCommand('insertHTML', false, '&nbsp;&nbsp;&nbsp;&nbsp;');
   }
 };
 
 // 获取当前行内容
 const getCurrentLine = (node, offset) => {
-  let text = "";
+  let text = '';
   let currentNode = node;
 
   if (currentNode.nodeType === Node.TEXT_NODE) {
@@ -359,26 +359,26 @@ const getCurrentLine = (node, offset) => {
 
   // 简化处理：取文本到光标位置，然后找行开始
   const textBeforeCursor = text.substring(0, offset);
-  const lines = textBeforeCursor.split("\n");
+  const lines = textBeforeCursor.split('\n');
   return lines[lines.length - 1];
 };
 
 // 粘贴处理
 const handlePaste = event => {
   event.preventDefault();
-  const text = event.clipboardData.getData("text/plain");
+  const text = event.clipboardData.getData('text/plain');
 
   // 清理粘贴的文本
-  const cleanedText = text.replace(/<[^>]*>/g, "");
+  const cleanedText = text.replace(/<[^>]*>/g, '');
 
   // 插入到光标位置
-  document.execCommand("insertText", false, cleanedText);
+  document.execCommand('insertText', false, cleanedText);
 };
 
 // 插入 Markdown 语法
 const insertMarkdown = type => {
-  if (editMode.value === "preview") {
-    editMode.value = "edit";
+  if (editMode.value === 'preview') {
+    editMode.value = 'edit';
     nextTick(() => {
       performInsert(type);
     });
@@ -394,49 +394,49 @@ const performInsert = type => {
   if (!range) return;
 
   const selectedText = selection.toString();
-  let insertText = "";
+  let insertText = '';
 
   switch (type) {
-    case "h1":
-      insertText = `# ${selectedText || "标题"}`;
+    case 'h1':
+      insertText = `# ${selectedText || '标题'}`;
       break;
-    case "h2":
-      insertText = `## ${selectedText || "子标题"}`;
+    case 'h2':
+      insertText = `## ${selectedText || '子标题'}`;
       break;
-    case "bold":
-      insertText = `**${selectedText || "加粗文字"}**`;
+    case 'bold':
+      insertText = `**${selectedText || '加粗文字'}**`;
       break;
-    case "italic":
-      insertText = `*${selectedText || "斜体文字"}*`;
+    case 'italic':
+      insertText = `*${selectedText || '斜体文字'}*`;
       break;
-    case "code":
-      if (selectedText.includes("\n")) {
+    case 'code':
+      if (selectedText.includes('\n')) {
         insertText = `\`\`\`\n${selectedText}\n\`\`\``;
       } else {
-        insertText = `\`${selectedText || "代码"}\``;
+        insertText = `\`${selectedText || '代码'}\``;
       }
       break;
-    case "list":
-      insertText = `- ${selectedText || "列表项"}`;
+    case 'list':
+      insertText = `- ${selectedText || '列表项'}`;
       break;
-    case "olist":
-      insertText = `1. ${selectedText || "列表项"}`;
+    case 'olist':
+      insertText = `1. ${selectedText || '列表项'}`;
       break;
-    case "quote":
-      insertText = `> ${selectedText || "引用内容"}`;
+    case 'quote':
+      insertText = `> ${selectedText || '引用内容'}`;
       break;
-    case "hr":
-      insertText = "\n---\n";
+    case 'hr':
+      insertText = '\n---\n';
       break;
-    case "image":
-      insertText = `![${selectedText || "图片描述"}](${getRandomImage()})`;
+    case 'image':
+      insertText = `![${selectedText || '图片描述'}](${getRandomImage()})`;
       break;
-    case "link":
-      insertText = `[${selectedText || "链接文字"}](https://example.com)`;
+    case 'link':
+      insertText = `[${selectedText || '链接文字'}](https://example.com)`;
       break;
   }
 
-  document.execCommand("insertText", false, insertText);
+  document.execCommand('insertText', false, insertText);
   editorRef.value.focus();
 };
 
@@ -459,10 +459,10 @@ const hideFormatPanel = () => {
 
 // 切换模式
 const toggleMode = () => {
-  editMode.value = editMode.value === "edit" ? "preview" : "edit";
+  editMode.value = editMode.value === 'edit' ? 'preview' : 'edit';
 
   nextTick(() => {
-    if (editMode.value === "preview") {
+    if (editMode.value === 'preview') {
       renderFullPreview();
     } else {
       renderMixedContent();
@@ -478,39 +478,39 @@ const renderFullPreview = () => {
     const rawHtml = marked.parse(contentText.value);
     const cleanHtml = DOMPurify.sanitize(rawHtml, {
       ALLOWED_TAGS: [
-        "h1",
-        "h2",
-        "h3",
-        "h4",
-        "h5",
-        "h6",
-        "p",
-        "br",
-        "hr",
-        "strong",
-        "em",
-        "b",
-        "i",
-        "u",
-        "s",
-        "blockquote",
-        "code",
-        "pre",
-        "ul",
-        "ol",
-        "li",
-        "table",
-        "thead",
-        "tbody",
-        "tr",
-        "th",
-        "td",
-        "a",
-        "img",
-        "div",
-        "span"
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'br',
+        'hr',
+        'strong',
+        'em',
+        'b',
+        'i',
+        'u',
+        's',
+        'blockquote',
+        'code',
+        'pre',
+        'ul',
+        'ol',
+        'li',
+        'table',
+        'thead',
+        'tbody',
+        'tr',
+        'th',
+        'td',
+        'a',
+        'img',
+        'div',
+        'span'
       ],
-      ALLOWED_ATTR: ["href", "target", "src", "alt", "title", "class", "id"]
+      ALLOWED_ATTR: ['href', 'target', 'src', 'alt', 'title', 'class', 'id']
     });
 
     editorRef.value.innerHTML = `
@@ -525,9 +525,9 @@ const renderFullPreview = () => {
 
 // 导出内容
 const exportContent = () => {
-  const blob = new Blob([contentText.value], { type: "text/markdown" });
+  const blob = new Blob([contentText.value], { type: 'text/markdown' });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
+  const a = document.createElement('a');
   a.href = url;
   a.download = `markdown-${new Date().getTime()}.md`;
   document.body.appendChild(a);
@@ -548,7 +548,7 @@ onMounted(() => {
 
 // 监听模式变化
 watch(editMode, newMode => {
-  if (newMode === "edit") {
+  if (newMode === 'edit') {
     nextTick(() => {
       editorRef.value.focus();
     });
@@ -557,11 +557,11 @@ watch(editMode, newMode => {
 
 // 复制代码函数（暴露给全局）
 window.copyCode = button => {
-  const codeBlock = button.closest(".code-block");
-  const code = codeBlock.querySelector("code").textContent;
+  const codeBlock = button.closest('.code-block');
+  const code = codeBlock.querySelector('code').textContent;
   navigator.clipboard.writeText(code).then(() => {
     const originalText = button.textContent;
-    button.textContent = "已复制";
+    button.textContent = '已复制';
     setTimeout(() => {
       button.textContent = originalText;
     }, 2000);
@@ -578,7 +578,7 @@ window.copyCode = button => {
   border-radius: 12px;
   overflow: hidden;
   background: white;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .toolbar {
@@ -748,7 +748,7 @@ window.copyCode = button => {
   background: #e1e4e8;
   border-bottom: 1px solid #d1d5da;
   font-size: 14px;
-  font-family: "SFMono-Regular", Consolas, monospace;
+  font-family: 'SFMono-Regular', Consolas, monospace;
 }
 
 .language {
@@ -776,7 +776,7 @@ window.copyCode = button => {
 }
 
 .code-block code {
-  font-family: "SFMono-Regular", Consolas, monospace;
+  font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: 14px;
   line-height: 1.4;
 }
@@ -813,7 +813,7 @@ code:hover {
 
 /* 完整预览模式 */
 .full-preview {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .full-preview h1 {

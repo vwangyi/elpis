@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  name: "BackToTop",
+  name: 'BackToTop',
   props: {
     visibilityHeight: {
       type: Number,
@@ -34,19 +34,19 @@ export default {
       type: Object,
       default: function () {
         return {
-          right: "50px",
-          bottom: "50px",
-          width: "40px",
-          height: "40px",
-          "border-radius": "4px",
-          "line-height": "45px",
-          background: "#e7eaf1"
+          right: '50px',
+          bottom: '50px',
+          width: '40px',
+          height: '40px',
+          'border-radius': '4px',
+          'line-height': '45px',
+          background: '#e7eaf1'
         };
       }
     },
     transitionName: {
       type: String,
-      default: "fade"
+      default: 'fade'
     }
   },
   data() {
@@ -57,10 +57,10 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener("scroll", this.handleScroll);
+    window.addEventListener('scroll', this.handleScroll);
   },
   beforeDestroy() {
-    window.removeEventListener("scroll", this.handleScroll);
+    window.removeEventListener('scroll', this.handleScroll);
     if (this.interval) {
       clearInterval(this.interval);
     }

@@ -1,9 +1,9 @@
 export default {
   bind(el, binding, vnode) {
-    const dialogHeaderEl = el.querySelector(".el-dialog__header");
-    const dragDom = el.querySelector(".el-dialog");
-    dialogHeaderEl.style.cssText += ";cursor:move;";
-    dragDom.style.cssText += ";top:0px;";
+    const dialogHeaderEl = el.querySelector('.el-dialog__header');
+    const dragDom = el.querySelector('.el-dialog');
+    dialogHeaderEl.style.cssText += ';cursor:move;';
+    dragDom.style.cssText += ';top:0px;';
 
     // 获取原有属性 ie dom元素.currentStyle 火狐谷歌 window.getComputedStyle(dom元素, null);
     const getStyle = (function () {
@@ -32,15 +32,15 @@ export default {
       const maxDragDomTop = screenHeight - dragDom.offsetTop - dragDomHeight;
 
       // 获取到的值带px 正则匹配替换
-      let styL = getStyle(dragDom, "left");
-      let styT = getStyle(dragDom, "top");
+      let styL = getStyle(dragDom, 'left');
+      let styT = getStyle(dragDom, 'top');
 
-      if (styL.includes("%")) {
-        styL = +document.body.clientWidth * (+styL.replace(/\%/g, "") / 100);
-        styT = +document.body.clientHeight * (+styT.replace(/\%/g, "") / 100);
+      if (styL.includes('%')) {
+        styL = +document.body.clientWidth * (+styL.replace(/\%/g, '') / 100);
+        styT = +document.body.clientHeight * (+styT.replace(/\%/g, '') / 100);
       } else {
-        styL = +styL.replace(/\px/g, "");
-        styT = +styT.replace(/\px/g, "");
+        styL = +styL.replace(/\px/g, '');
+        styT = +styT.replace(/\px/g, '');
       }
 
       document.onmousemove = function (e) {
@@ -65,7 +65,7 @@ export default {
         dragDom.style.cssText += `;left:${left + styL}px;top:${top + styT}px;`;
 
         // emit onDrag event
-        vnode.child.$emit("dragDialog");
+        vnode.child.$emit('dragDialog');
       };
 
       document.onmouseup = function (e) {

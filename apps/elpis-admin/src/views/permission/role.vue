@@ -60,14 +60,14 @@
 </template>
 
 <script>
-import path from "path";
-import { deepClone } from "@/utils";
-import { getRoutes, getRoles, addRole, deleteRole, updateRole } from "@/api/role";
+import path from 'path';
+import { deepClone } from '@/utils';
+import { getRoutes, getRoles, addRole, deleteRole, updateRole } from '@/api/role';
 
 const defaultRole = {
-  key: "",
-  name: "",
-  description: "",
+  key: '',
+  name: '',
+  description: '',
   routes: []
 };
 
@@ -78,11 +78,11 @@ export default {
       routes: [],
       rolesList: [],
       dialogVisible: false,
-      dialogType: "new",
+      dialogType: 'new',
       checkStrictly: false,
       defaultProps: {
-        children: "children",
-        label: "title"
+        children: 'children',
+        label: 'title'
       }
     };
   },
@@ -108,7 +108,7 @@ export default {
     },
 
     // Reshape the routes structure so that it looks the same as the sidebar
-    generateRoutes(routes, basePath = "/") {
+    generateRoutes(routes, basePath = '/') {
       const res = [];
 
       for (let route of routes) {
@@ -154,11 +154,11 @@ export default {
       if (this.$refs.tree) {
         this.$refs.tree.setCheckedNodes([]);
       }
-      this.dialogType = "new";
+      this.dialogType = 'new';
       this.dialogVisible = true;
     },
     handleEdit(scope) {
-      this.dialogType = "edit";
+      this.dialogType = 'edit';
       this.dialogVisible = true;
       this.checkStrictly = true;
       this.role = deepClone(scope.row);
@@ -170,24 +170,24 @@ export default {
       });
     },
     handleDelete({ $index, row }) {
-      this.$confirm("Confirm to remove the role?", "Warning", {
-        confirmButtonText: "Confirm",
-        cancelButtonText: "Cancel",
-        type: "warning"
+      this.$confirm('Confirm to remove the role?', 'Warning', {
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
       })
         .then(async () => {
           await deleteRole(row.key);
           this.rolesList.splice($index, 1);
           this.$message({
-            type: "success",
-            message: "Delete succed!"
+            type: 'success',
+            message: 'Delete succed!'
           });
         })
         .catch(err => {
           console.error(err);
         });
     },
-    generateTree(routes, basePath = "/", checkedKeys) {
+    generateTree(routes, basePath = '/', checkedKeys) {
       const res = [];
 
       for (const route of routes) {
@@ -205,10 +205,10 @@ export default {
       return res;
     },
     async confirmRole() {
-      const isEdit = this.dialogType === "edit";
+      const isEdit = this.dialogType === 'edit';
 
       const checkedKeys = this.$refs.tree.getCheckedKeys();
-      this.role.routes = this.generateTree(deepClone(this.serviceRoutes), "/", checkedKeys);
+      this.role.routes = this.generateTree(deepClone(this.serviceRoutes), '/', checkedKeys);
 
       if (isEdit) {
         await updateRole(this.role.key, this.role);
@@ -227,14 +227,14 @@ export default {
       const { description, key, name } = this.role;
       this.dialogVisible = false;
       this.$notify({
-        title: "Success",
+        title: 'Success',
         dangerouslyUseHTMLString: true,
         message: `
             <div>Role Key: ${key}</div>
             <div>Role Name: ${name}</div>
             <div>Description: ${description}</div>
           `,
-        type: "success"
+        type: 'success'
       });
     },
     // reference: src/view/layout/components/Sidebar/SidebarItem.vue
@@ -251,7 +251,7 @@ export default {
 
       // Show parent if there are no child route to display
       if (showingChildren.length === 0) {
-        onlyOneChild = { ...parent, path: "", noShowingChildren: true };
+        onlyOneChild = { ...parent, path: '', noShowingChildren: true };
         return onlyOneChild;
       }
 

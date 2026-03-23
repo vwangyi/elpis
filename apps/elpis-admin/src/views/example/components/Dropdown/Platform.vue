@@ -26,9 +26,9 @@ export default {
   data() {
     return {
       platformsOptions: [
-        { key: "a-platform", name: "a-platform" },
-        { key: "b-platform", name: "b-platform" },
-        { key: "c-platform", name: "c-platform" }
+        { key: 'a-platform', name: 'a-platform' },
+        { key: 'b-platform', name: 'b-platform' },
+        { key: 'c-platform', name: 'c-platform' }
       ]
     };
   },
@@ -38,7 +38,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit("input", val);
+        this.$emit('input', val);
       }
     }
   }

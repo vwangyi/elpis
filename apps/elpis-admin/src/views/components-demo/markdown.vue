@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import MarkdownEditor from "@/components/MarkdownEditor";
+import MarkdownEditor from '@/components/MarkdownEditor';
 
 const content = `
 **This is test**
@@ -58,7 +58,7 @@ const content = `
 
 `;
 export default {
-  name: "MarkdownDemo",
+  name: 'MarkdownDemo',
   components: { MarkdownEditor },
   data() {
     return {
@@ -66,17 +66,17 @@ export default {
       content2: content,
       content3: content,
       content4: content,
-      html: "",
+      html: '',
       languageTypeList: {
-        en: "en_US",
-        zh: "zh_CN",
-        es: "es_ES"
+        en: 'en_US',
+        zh: 'zh_CN',
+        es: 'es_ES'
       }
     };
   },
   computed: {
     language() {
-      return this.languageTypeList["en"];
+      return this.languageTypeList['en'];
     }
   },
   methods: {

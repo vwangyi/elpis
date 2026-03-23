@@ -2,7 +2,7 @@ let lastScript = []; // 上一次的script地址
 const scriptReg = /\<script.*src=["'](?<src>[^"']+)/gm;
 
 async function getNewScript() {
-  const html = await fetch("/?_timestamp=" + Date.now()).then(res => res.text());
+  const html = await fetch('/?_timestamp=' + Date.now()).then(res => res.text());
   scriptReg.lastIndex = 0;
   let result = [];
   let match;
@@ -38,7 +38,7 @@ function autoRefresh() {
   setTimeout(async () => {
     const willUpdate = await needUpdate();
     if (willUpdate) {
-      const result = confirm("刷新");
+      const result = confirm('刷新');
       if (result) {
         location.reload();
       }

@@ -1,4 +1,4 @@
-const log4js = require("log4js");
+const log4js = require('log4js');
 /**
  * 日志工具
  * 外部调用 app.logger.info()  app.logger.error() 就可以记录到硬盘
@@ -16,19 +16,19 @@ module.exports = app => {
     log4js.configure({
       appenders: {
         console: {
-          type: "console"
+          type: 'console'
         },
         // 日志 文件切割
         dateFile: {
-          type: "dateFile",
-          filename: "./logs/application.log",
-          pattern: ".yyyy-MM-dd" // 以年月日切割日志
+          type: 'dateFile',
+          filename: './logs/application.log',
+          pattern: '.yyyy-MM-dd' // 以年月日切割日志
         }
       },
       categories: {
         default: {
-          appenders: ["console", "dateFile"],
-          level: "trace"
+          appenders: ['console', 'dateFile'],
+          level: 'trace'
         }
       }
     });

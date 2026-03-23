@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import { addClass, removeClass } from "@/utils";
+import { addClass, removeClass } from '@/utils';
 
 export default {
-  name: "RightPanel",
+  name: 'RightPanel',
   props: {
     clickNotClose: {
       default: false,
@@ -43,9 +43,9 @@ export default {
         this.addEventClick();
       }
       if (value) {
-        addClass(document.body, "showRightPanel");
+        addClass(document.body, 'showRightPanel');
       } else {
-        removeClass(document.body, "showRightPanel");
+        removeClass(document.body, 'showRightPanel');
       }
     }
   },
@@ -58,18 +58,18 @@ export default {
   },
   methods: {
     addEventClick() {
-      window.addEventListener("click", this.closeSidebar);
+      window.addEventListener('click', this.closeSidebar);
     },
     closeSidebar(evt) {
-      const parent = evt.target.closest(".rightPanel");
+      const parent = evt.target.closest('.rightPanel');
       if (!parent) {
         this.show = false;
-        window.removeEventListener("click", this.closeSidebar);
+        window.removeEventListener('click', this.closeSidebar);
       }
     },
     insertToBody() {
       const elx = this.$refs.rightPanel;
-      const body = document.querySelector("body");
+      const body = document.querySelector('body');
       body.insertBefore(elx, body.firstChild);
     }
   }

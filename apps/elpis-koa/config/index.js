@@ -1,5 +1,5 @@
 /* 根据当前启动的环境 来获取环境对应的配置对象 */
-const path = require("path");
+const path = require('path');
 const { sep } = path;
 module.exports = app => {
   // 获取 default.config 和 env.config

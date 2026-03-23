@@ -1,8 +1,8 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
 
 /* player 播放器模块 */
-export const usePlayerStore = defineStore("player", () => {
+export const usePlayerStore = defineStore('player', () => {
   /**
    * 开始播放
    * @param { 'amt' | 'aiqiyi' | 'youku' | 'tencent' | 'music' | 'native' } playerType 播放器类型 分别有 卓影 爱奇艺 优酷 腾讯 音乐 原生 （爱奇艺 优酷 腾讯 统称爱优腾）
@@ -28,7 +28,7 @@ export const usePlayerStore = defineStore("player", () => {
     duration = 0,
     statusCallback
   ) {
-    console.log("调用播放器启动播放方法playVideo");
+    console.log('调用播放器启动播放方法playVideo');
     //播放参数
     startPlayerType = playerType;
     playerInfo = playInfo;
@@ -43,17 +43,17 @@ export const usePlayerStore = defineStore("player", () => {
 
     //移除监听
     if (Listener) {
-      console.log("移除监听");
-      window.JsView?.removeEventListener("iqySDKInitResult", iqySDKInitListener);
-      window.JsView?.removeEventListener("ykSDKInitResult", ykSDKInitListener);
-      window.JsView?.removeEventListener("tencentSDKInitResult", tencentSDKInitListener);
-      window.JsView?.removeEventListener("playerInitResult", initResultListener);
-      window.JsView?.removeEventListener("playerState", stateListener);
+      console.log('移除监听');
+      window.JsView?.removeEventListener('iqySDKInitResult', iqySDKInitListener);
+      window.JsView?.removeEventListener('ykSDKInitResult', ykSDKInitListener);
+      window.JsView?.removeEventListener('tencentSDKInitResult', tencentSDKInitListener);
+      window.JsView?.removeEventListener('playerInitResult', initResultListener);
+      window.JsView?.removeEventListener('playerState', stateListener);
     }
 
     //  播放器为空
     if (isPlayerInit == false) {
-      console.log("播放器为空");
+      console.log('播放器为空');
       //初始化爱优腾SDK,播放器类型playerType
       InitSDK(playerType);
       // setTimeout(() => {
@@ -75,11 +75,11 @@ export const usePlayerStore = defineStore("player", () => {
     // 播放器不为空
     else {
       //如果正在播放则停止播放
-      console.log("播放器不为空,先调用stop");
-      window.playerService?.isPlaying() ? window.playerService?.stop() : "";
+      console.log('播放器不为空,先调用stop');
+      window.playerService?.isPlaying() ? window.playerService?.stop() : '';
       //同类型播放器
       if (curentPlayer == playerType) {
-        console.log("同类型播放器不需要切换内核");
+        console.log('同类型播放器不需要切换内核');
         try {
           startPlay(startPlayerType, playerInfo, playerWidth, playerHeight, playerLeft, playerTop);
         } catch (error) {
@@ -89,24 +89,24 @@ export const usePlayerStore = defineStore("player", () => {
         //切换播放器内核
         switch (playerType) {
           case 0:
-            console.log("切换amt内核");
-            window.playerService?.changePlayerCore("amt");
+            console.log('切换amt内核');
+            window.playerService?.changePlayerCore('amt');
             break;
           case 1:
-            console.log("切换aiqiyi内核");
-            window.playerService?.changePlayerCore("aiqiyi");
+            console.log('切换aiqiyi内核');
+            window.playerService?.changePlayerCore('aiqiyi');
             break;
           case 2:
-            console.log("切换youku内核");
-            window.playerService?.changePlayerCore("youku");
+            console.log('切换youku内核');
+            window.playerService?.changePlayerCore('youku');
             break;
           case 3:
-            console.log("切换tencent内核");
-            window.playerService?.changePlayerCore("tencent");
+            console.log('切换tencent内核');
+            window.playerService?.changePlayerCore('tencent');
             break;
           case 4:
-            console.log("切换music内核");
-            window.playerService?.changePlayerCore("music");
+            console.log('切换music内核');
+            window.playerService?.changePlayerCore('music');
             break;
           default:
             break;
@@ -115,30 +115,30 @@ export const usePlayerStore = defineStore("player", () => {
     }
 
     // 爱奇艺SDK初始化监听
-    window.JsView?.addEventListener("iqySDKInitResult", iqySDKInitListener);
+    window.JsView?.addEventListener('iqySDKInitResult', iqySDKInitListener);
 
     // 优酷SDK初始化监听
-    window.JsView?.addEventListener("ykSDKInitResult", ykSDKInitListener);
+    window.JsView?.addEventListener('ykSDKInitResult', ykSDKInitListener);
 
     // 腾讯SDK初始化监听
-    window.JsView?.addEventListener("tencentSDKInitResult", tencentSDKInitListener);
+    window.JsView?.addEventListener('tencentSDKInitResult', tencentSDKInitListener);
 
     // 播放器初始化监听
     initResultListener = playerInitResultListener(playerType, playInfo, playWidth, playHeight, playLeft, playTop);
-    window.JsView?.addEventListener("playerInitResult", initResultListener);
+    window.JsView?.addEventListener('playerInitResult', initResultListener);
 
     //播放状态监听
     stateListener = playerStateListener(statusCallback);
-    window.JsView?.addEventListener("playerState", stateListener);
+    window.JsView?.addEventListener('playerState', stateListener);
 
     //调用playVideo添加监听
     Listener = true;
   }
   /* 暂停播放 */
   function pause() {
-    console.log("调用播放器暂停播放pause方法");
+    console.log('调用播放器暂停播放pause方法');
     if (Tools.inChildrenModel()) {
-      console.log("pause儿童模式暂停计时");
+      console.log('pause儿童模式暂停计时');
       window.stopWatchRestTime?.();
     }
     return window?.playerService?.pause();
@@ -146,7 +146,7 @@ export const usePlayerStore = defineStore("player", () => {
   /* 恢复播放 */
   function resume() {
     if (Tools.inChildrenModel()) {
-      console.log("resume儿童模式开始计时");
+      console.log('resume儿童模式开始计时');
       window.watchRestTime?.();
     }
     return window?.playerService?.resume();
@@ -159,19 +159,19 @@ export const usePlayerStore = defineStore("player", () => {
       restState();
       window?.playerService?.releasePlayer();
       if (Tools.inChildrenModel()) {
-        console.log("stop儿童模式暂停计时");
+        console.log('stop儿童模式暂停计时');
         window.stopWatchRestTime?.();
       }
 
-      window.JsView?.removeEventListener("playerState", stateListener);
-      window.JsView?.removeEventListener("playerInitResult", initResultListener);
-      window.JsView?.removeEventListener("iqySDKInitResult", iqySDKInitListener);
-      window.JsView?.removeEventListener("ykSDKInitResult", ykSDKInitListener);
-      window.JsView?.removeEventListener("tencentSDKInitResult", tencentSDKInitListener);
-      return "播放器停止播放";
+      window.JsView?.removeEventListener('playerState', stateListener);
+      window.JsView?.removeEventListener('playerInitResult', initResultListener);
+      window.JsView?.removeEventListener('iqySDKInitResult', iqySDKInitListener);
+      window.JsView?.removeEventListener('ykSDKInitResult', ykSDKInitListener);
+      window.JsView?.removeEventListener('tencentSDKInitResult', tencentSDKInitListener);
+      return '播放器停止播放';
     } catch (error) {
-      console.error("播放器停止播放时出错:", error);
-      return "播放器停止播放失败";
+      console.error('播放器停止播放时出错:', error);
+      return '播放器停止播放失败';
     }
   }
   /* 设置播放器 快进快退 */
@@ -196,18 +196,18 @@ export const usePlayerStore = defineStore("player", () => {
   }
   /* 设置播放器窗口大小 */
   function setPlayerLocationAndSize(w, h, l, t) {
-    console.log("调用设置播放器窗口方法");
+    console.log('调用设置播放器窗口方法');
     let screen = window.androidInterfaceService?.getScreenInfo();
-    let screenWidth = parseInt(screen.split("x")[0]);
-    let screenHeight = parseInt(screen.split("x")[1]);
-    console.log("屏幕分辨率2 " + screenWidth + "X" + screenHeight);
-    console.log("--width--:" + w, "--height--:" + h, "--left--:" + l, "--top--:" + t);
+    let screenWidth = parseInt(screen.split('x')[0]);
+    let screenHeight = parseInt(screen.split('x')[1]);
+    console.log('屏幕分辨率2 ' + screenWidth + 'X' + screenHeight);
+    console.log('--width--:' + w, '--height--:' + h, '--left--:' + l, '--top--:' + t);
     let ScalingRatio; //缩放比例
     ScalingRatio = 1080 / screenHeight; // 1080/720=1.5    1080/2160=0.5
     // 判断是否设置全屏
     isFullScreen = w === 1920 && h === 1080 ? 1 : 0;
-    console.log("设置mode::" + isFullScreen);
-    console.log("缩放比例::" + ScalingRatio);
+    console.log('设置mode::' + isFullScreen);
+    console.log('缩放比例::' + ScalingRatio);
     //设置播放器位置大小(判断屏幕分辨率对应缩放)
     window.playerService?.setPlayerSizeAndMode(
       isFullScreen,

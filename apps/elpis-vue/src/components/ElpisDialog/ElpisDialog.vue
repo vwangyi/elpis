@@ -2,10 +2,10 @@
 /**
  *
  */
-import { onMounted, ref, useTemplateRef, watch } from "vue";
-import { message } from "ant-design-vue";
+import { onMounted, ref, useTemplateRef, watch } from 'vue';
+import { message } from 'ant-design-vue';
 
-const dialog = useTemplateRef("dialog");
+const dialog = useTemplateRef('dialog');
 
 const props = defineProps({
   // 弹窗是否打开
@@ -34,14 +34,14 @@ const props = defineProps({
     default: false
   }
 });
-const emit = defineEmits(["update:open"]);
+const emit = defineEmits(['update:open']);
 /* ============================================================= 方法 ========================================================= */
 const show = () => {
   if (props.mask) {
-    console.log("模态方式打开");
+    console.log('模态方式打开');
     dialog.value.showModal(); // 模态方式打开
   } else {
-    console.log("非模态方式打开");
+    console.log('非模态方式打开');
     dialog.value.show(); // 非模态方式打开
   }
 };
@@ -49,7 +49,7 @@ const show = () => {
 // 关闭弹窗
 const close = () => {
   dialog.value.close();
-  emit("update:open", false);
+  emit('update:open', false);
 };
 
 // 确认操作
@@ -76,7 +76,7 @@ onMounted(init);
 watch(
   () => props.open,
   open => {
-    console.log("watch open", open);
+    console.log('watch open', open);
     if (open) {
       show();
     } else {

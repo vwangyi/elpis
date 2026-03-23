@@ -1,11 +1,11 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
-import * as AuthApi from "@/api/auth";
-import * as userApi from "@/api/user";
+import { ref, computed } from 'vue';
+import { defineStore } from 'pinia';
+import * as AuthApi from '@/api/auth';
+import * as userApi from '@/api/user';
 
 /* auth 鉴权模块 */
 export const useAuthStore = defineStore(
-  "auth",
+  'auth',
   () => {
     const userInfo = ref(null); // 当前登录用户信息 不存在表示未登录
 
@@ -47,7 +47,7 @@ export const useAuthStore = defineStore(
   {
     persist: {
       storage: localStorage,
-      pick: ["userInfo"]
+      pick: ['userInfo']
     }
   }
 );

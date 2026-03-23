@@ -1,4 +1,4 @@
-import { unref, watch } from "vue";
+import { unref, watch } from 'vue';
 
 /**
  * 页面上 常常实现 绑定事件 卸载时移除事件 这里封装一个hooks解决
@@ -25,7 +25,7 @@ export function useEventListener(...args) {
    * 再所以 第一个参数不是string 那就表示传了第一个参数
    * 注意 args.shift() 会影响原数组 后面的args就没有第一个参数了
    */
-  const target = typeof args[0] === "string" ? window : args.shift();
+  const target = typeof args[0] === 'string' ? window : args.shift();
 
   // 为什么用watch 而不用 onMounted, onUnmounted
   // 因为某个组件可能是 v-if="false"过几秒才true onMounted挂载钩子就拿不到

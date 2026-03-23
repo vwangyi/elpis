@@ -235,7 +235,7 @@ export default defineConfig({
 
             {
               text: "SourceMap",
-              link: "/03_构建工具/01_Webpack/03_SourceMap.md"
+              link: "/03_构建工具/01_Webpack/10_SourceMap.md"
             },
             {
               text: "TreeShaking",

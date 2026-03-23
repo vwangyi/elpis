@@ -1,6 +1,6 @@
 <script setup>
 /* 倒计时组件 */
-import { ref, computed, onBeforeUnmount } from "vue";
+import { ref, computed, onBeforeUnmount } from 'vue';
 
 const maxMilliseconds = 8640000000; // 最大毫秒数 100天 最大支持 99天23时59分59秒
 const timeRemaining = ref(0); // 倒计时时间戳
@@ -50,12 +50,12 @@ const currentTimestamp = (async () => {
 
 /* 获取目标时间并更新 */
 async function countDown() {
-  const res = "2025-11-31 09:57:00"; // await request.get('xx/xx', {}); // '2025-10-22 12:34:22'
+  const res = '2025-11-31 09:57:00'; // await request.get('xx/xx', {}); // '2025-10-22 12:34:22'
 
   const targetTimestamp = +new Date(res);
   /* 目标时间只能在 当前时间和100天后 这个范围之间 */
   if (targetTimestamp >= +new Date() + maxMilliseconds) {
-    console.log("最大支持100天");
+    console.log('最大支持100天');
     return;
   }
 

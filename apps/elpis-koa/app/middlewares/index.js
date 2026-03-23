@@ -2,14 +2,14 @@
  * Node中叫middleware中间件 Java中叫拦截器
  * 把当前目录下所有中间件都use调用
  */
-const glob = require("glob");
-const path = require("path");
+const glob = require('glob');
+const path = require('path');
 const { sep } = path;
 
 module.exports = app => {
   const middlewaresPath = path.resolve(process.cwd(), `.${sep}app${sep}middlewares`);
   let fileList = glob.sync(path.resolve(middlewaresPath, `.${sep}**${sep}**.js`));
-  fileList = fileList.filter(item => !item.endsWith("index.js"));
+  fileList = fileList.filter(item => !item.endsWith('index.js'));
 
   /**
    * middlewares 对象
@@ -17,12 +17,12 @@ module.exports = app => {
    * value 是 导出的函数调用后 返回值 也是一个函数
    */
   const middlewares = fileList.reduce((prev, filePath) => {
-    const key = filePath.split(sep).slice(-1)[0].split(".")[0];
+    const key = filePath.split(sep).slice(-1)[0].split('.')[0];
     const middleware = require(path.resolve(filePath));
-    if (typeof middleware === "function") {
+    if (typeof middleware === 'function') {
       prev[key] = middleware(app);
     }
-    if (typeof prev[key] !== "function") {
+    if (typeof prev[key] !== 'function') {
       delete prev[key];
     }
     return prev;

@@ -12,12 +12,12 @@ export default {
   props: {
     value: {
       type: String,
-      default: "xlsx"
+      default: 'xlsx'
     }
   },
   data() {
     return {
-      options: ["xlsx", "csv", "txt"]
+      options: ['xlsx', 'csv', 'txt']
     };
   },
   computed: {
@@ -26,7 +26,7 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit("input", val);
+        this.$emit('input', val);
       }
     }
   }

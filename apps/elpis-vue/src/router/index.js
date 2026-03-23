@@ -1,21 +1,21 @@
-import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/pages/HomeView/HomeView.vue";
+import { createRouter, createWebHistory } from 'vue-router';
+import HomeView from '@/pages/HomeView/HomeView.vue';
 
 const routes = [
   {
-    path: "/",
-    name: "HomeView",
+    path: '/',
+    name: 'HomeView',
     component: HomeView
   },
   {
-    path: "/demo",
-    name: "Demo",
-    component: () => import("@/pages/DemoView/DemoView.vue")
+    path: '/demo',
+    name: 'Demo',
+    component: () => import('@/pages/DemoView/DemoView.vue')
   },
   {
-    path: "/user-agreement",
-    name: "UserAgreement",
-    component: () => import("@/pages/UserAgreement/UserAgreement.vue")
+    path: '/user-agreement',
+    name: 'UserAgreement',
+    component: () => import('@/pages/UserAgreement/UserAgreement.vue')
   }
 ];
 

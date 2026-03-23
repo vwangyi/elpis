@@ -118,18 +118,18 @@
 </template>
 
 <script>
-"use strict";
-import request from "@/utils/request";
-import language from "./utils/language.js";
-import mimes from "./utils/mimes.js";
-import data2blob from "./utils/data2blob.js";
-import effectRipple from "./utils/effectRipple.js";
+'use strict';
+import request from '@/utils/request';
+import language from './utils/language.js';
+import mimes from './utils/mimes.js';
+import data2blob from './utils/data2blob.js';
+import effectRipple from './utils/effectRipple.js';
 export default {
   props: {
     // 域，上传文件name，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
     field: {
       type: String,
-      default: "avatar"
+      default: 'avatar'
     },
     // 原名key，类似于id，触发事件会带上（如果一个页面多个图片上传控件，可以做区分
     ki: {
@@ -144,7 +144,7 @@ export default {
     // 上传地址
     url: {
       type: String,
-      default: ""
+      default: ''
     },
     // 其他要上传文件附带的数据，对象格式
     params: {
@@ -189,7 +189,7 @@ export default {
     // 语言类型
     langType: {
       type: String,
-      default: "zh"
+      default: 'zh'
     },
     // 语言包
     langExt: {
@@ -199,7 +199,7 @@ export default {
     // 图片上传格式
     imgFormat: {
       type: String,
-      default: "png"
+      default: 'png'
     },
     // 是否支持跨域
     withCredentials: {
@@ -210,16 +210,16 @@ export default {
   data() {
     const { imgFormat, langType, langExt, width, height } = this;
     let isSupported = true;
-    const allowImgFormat = ["jpg", "png"];
-    const tempImgFormat = allowImgFormat.indexOf(imgFormat) === -1 ? "jpg" : imgFormat;
-    const lang = language[langType] ? language[langType] : language["en"];
+    const allowImgFormat = ['jpg', 'png'];
+    const tempImgFormat = allowImgFormat.indexOf(imgFormat) === -1 ? 'jpg' : imgFormat;
+    const lang = language[langType] ? language[langType] : language['en'];
     const mime = mimes[tempImgFormat];
     // 规范图片格式
     this.imgFormat = tempImgFormat;
     if (langExt) {
       Object.assign(lang, langExt);
     }
-    if (typeof FormData !== "function") {
+    if (typeof FormData !== 'function') {
       isSupported = false;
     }
     return {
@@ -231,7 +231,7 @@ export default {
       isSupported,
       // 浏览器是否支持触屏事件
       // eslint-disable-next-line no-prototype-builtins
-      isSupportTouch: document.hasOwnProperty("ontouchstart"),
+      isSupportTouch: document.hasOwnProperty('ontouchstart'),
       // 步骤
       step: 1, // 1选择文件 2剪裁 3上传
       // 上传状态及进度
@@ -239,13 +239,13 @@ export default {
       progress: 0,
       // 是否有错误及错误信息
       hasError: false,
-      errorMsg: "",
+      errorMsg: '',
       // 需求图宽高比
       ratio: width / height,
       // 原图地址、生成图片地址
       sourceImg: null,
-      sourceImgUrl: "",
-      createImgUrl: "",
+      sourceImgUrl: '',
+      createImgUrl: '',
       // 原图片拖动事件初始值
       sourceImgMouseDown: {
         on: false,
@@ -291,24 +291,24 @@ export default {
     progressStyle() {
       const { progress } = this;
       return {
-        width: progress + "%"
+        width: progress + '%'
       };
     },
     // 原图样式
     sourceImgStyle() {
       const { scale, sourceImgMasking } = this;
-      const top = scale.y + sourceImgMasking.y + "px";
-      const left = scale.x + sourceImgMasking.x + "px";
+      const top = scale.y + sourceImgMasking.y + 'px';
+      const left = scale.x + sourceImgMasking.x + 'px';
       return {
         top,
         left,
-        width: scale.width + "px",
-        height: scale.height + "px",
-        transform: "rotate(" + scale.degree + "deg)", // 旋转时 左侧原始图旋转样式
-        "-ms-transform": "rotate(" + scale.degree + "deg)", // 兼容IE9
-        "-moz-transform": "rotate(" + scale.degree + "deg)", // 兼容FireFox
-        "-webkit-transform": "rotate(" + scale.degree + "deg)", // 兼容Safari 和 chrome
-        "-o-transform": "rotate(" + scale.degree + "deg)" // 兼容 Opera
+        width: scale.width + 'px',
+        height: scale.height + 'px',
+        transform: 'rotate(' + scale.degree + 'deg)', // 旋转时 左侧原始图旋转样式
+        '-ms-transform': 'rotate(' + scale.degree + 'deg)', // 兼容IE9
+        '-moz-transform': 'rotate(' + scale.degree + 'deg)', // 兼容FireFox
+        '-webkit-transform': 'rotate(' + scale.degree + 'deg)', // 兼容Safari 和 chrome
+        '-o-transform': 'rotate(' + scale.degree + 'deg)' // 兼容 Opera
       };
     },
     // 原图蒙版属性
@@ -347,8 +347,8 @@ export default {
       const w = sim.width === sic.width ? sim.width : (sic.width - sim.width) / 2;
       const h = sim.height === sic.height ? sim.height : (sic.height - sim.height) / 2;
       return {
-        width: w + "px",
-        height: h + "px"
+        width: w + 'px',
+        height: h + 'px'
       };
     },
     previewStyle() {
@@ -364,8 +364,8 @@ export default {
         h = pc.width / ratio;
       }
       return {
-        width: w + "px",
-        height: h + "px"
+        width: w + 'px',
+        height: h + 'px'
       };
     }
   },
@@ -378,10 +378,10 @@ export default {
   },
   created() {
     // 绑定按键esc隐藏此插件事件
-    document.addEventListener("keyup", this.closeHandler);
+    document.addEventListener('keyup', this.closeHandler);
   },
   destroyed() {
-    document.removeEventListener("keyup", this.closeHandler);
+    document.removeEventListener('keyup', this.closeHandler);
   },
   methods: {
     // 点击波纹效果
@@ -391,8 +391,8 @@ export default {
     // 关闭控件
     off() {
       setTimeout(() => {
-        this.$emit("input", false);
-        this.$emit("close");
+        this.$emit('input', false);
+        this.$emit('close');
         if (this.step === 3 && this.loading === 2) {
           this.setStep(1);
         }
@@ -436,7 +436,7 @@ export default {
     checkFile(file) {
       const { lang, maxSize } = this;
       // 仅限图片
-      if (file.type.indexOf("image") === -1) {
+      if (file.type.indexOf('image') === -1) {
         this.hasError = true;
         this.errorMsg = lang.error.onlyImg;
         return false;
@@ -444,7 +444,7 @@ export default {
       // 超出大小
       if (file.size / 1024 > maxSize) {
         this.hasError = true;
-        this.errorMsg = lang.error.outOfSize + maxSize + "kb";
+        this.errorMsg = lang.error.outOfSize + maxSize + 'kb';
         return false;
       }
       return true;
@@ -453,7 +453,7 @@ export default {
     reset() {
       this.loading = 0;
       this.hasError = false;
-      this.errorMsg = "";
+      this.errorMsg = '';
       this.progress = 0;
     },
     // 设置图片源
@@ -482,7 +482,7 @@ export default {
         // 图片像素不达标
         if (nWidth < width || nHeight < height) {
           this.hasError = true;
-          this.errorMsg = lang.error.lowestPx + width + "*" + height;
+          this.errorMsg = lang.error.lowestPx + width + '*' + height;
           return false;
         }
         if (ratio > nRatio) {
@@ -688,7 +688,7 @@ export default {
         sourceImgMasking: { scale }
       } = this;
       const canvas = this.$refs.canvas;
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext('2d');
       if (e) {
         // 取消鼠标按下移动状态
         this.sourceImgMouseDown.on = false;
@@ -697,7 +697,7 @@ export default {
       canvas.height = this.height;
       ctx.clearRect(0, 0, this.width, this.height);
       // 将透明区域设置为白色底边
-      ctx.fillStyle = "#fff";
+      ctx.fillStyle = '#fff';
       ctx.fillRect(0, 0, this.width, this.height);
       ctx.translate(this.width * 0.5, this.height * 0.5);
       ctx.rotate((Math.PI * degree) / 180);
@@ -707,8 +707,8 @@ export default {
     },
     prepareUpload() {
       const { url, createImgUrl, field, ki } = this;
-      this.$emit("crop-success", createImgUrl, field, ki);
-      if (typeof url === "string" && url) {
+      this.$emit('crop-success', createImgUrl, field, ki);
+      if (typeof url === 'string' && url) {
         this.upload();
       } else {
         this.off();
@@ -718,9 +718,9 @@ export default {
     upload() {
       const { lang, imgFormat, mime, url, params, field, ki, createImgUrl } = this;
       const fmData = new FormData();
-      fmData.append(field, data2blob(createImgUrl, mime), field + "." + imgFormat);
+      fmData.append(field, data2blob(createImgUrl, mime), field + '.' + imgFormat);
       // 添加其他参数
-      if (typeof params === "object" && params) {
+      if (typeof params === 'object' && params) {
         Object.keys(params).forEach(k => {
           fmData.append(k, params[k]);
         });
@@ -737,24 +737,24 @@ export default {
       this.setStep(3);
       request({
         url,
-        method: "post",
+        method: 'post',
         data: fmData
       })
         .then(resData => {
           this.loading = 2;
-          this.$emit("crop-upload-success", resData.data);
+          this.$emit('crop-upload-success', resData.data);
         })
         .catch(err => {
           if (this.value) {
             this.loading = 3;
             this.hasError = true;
             this.errorMsg = lang.fail;
-            this.$emit("crop-upload-fail", err, field, ki);
+            this.$emit('crop-upload-fail', err, field, ki);
           }
         });
     },
     closeHandler(e) {
-      if (this.value && (e.key === "Escape" || e.keyCode === 27)) {
+      if (this.value && (e.key === 'Escape' || e.keyCode === 27)) {
         this.off();
       }
     }
@@ -866,7 +866,7 @@ export default {
 .vue-image-crop-upload .vicp-wrap .vicp-close .vicp-icon4::before {
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
-  content: "";
+  content: '';
   position: absolute;
   top: 12px;
   left: 4px;
@@ -1061,7 +1061,7 @@ export default {
 }
 .vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range .vicp-icon5::before {
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   left: 3px;
   top: 8px;
@@ -1074,7 +1074,7 @@ export default {
 }
 .vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range .vicp-icon6::before {
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   left: 3px;
   top: 8px;
@@ -1084,7 +1084,7 @@ export default {
 }
 .vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range .vicp-icon6::after {
   position: absolute;
-  content: "";
+  content: '';
   display: block;
   top: 3px;
   left: 8px;
@@ -1092,7 +1092,7 @@ export default {
   height: 12px;
   background-color: #fff;
 }
-.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type="range"] {
+.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type='range'] {
   display: block;
   padding-top: 5px;
   margin: 0 auto;
@@ -1109,7 +1109,7 @@ export default {
   /* 轨道
                ---------------------------------------------------------------*/
 }
-.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type="range"]:focus {
+.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type='range']:focus {
   outline: none;
 }
 .vue-image-crop-upload
@@ -1118,7 +1118,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]::-webkit-slider-thumb {
+  input[type='range']::-webkit-slider-thumb {
   -webkit-box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.18);
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.18);
   -webkit-appearance: none;
@@ -1138,7 +1138,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]::-moz-range-thumb {
+  input[type='range']::-moz-range-thumb {
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.18);
   -moz-appearance: none;
   appearance: none;
@@ -1150,7 +1150,7 @@ export default {
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
-.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type="range"]::-ms-thumb {
+.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type='range']::-ms-thumb {
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.18);
   appearance: none;
   width: 12px;
@@ -1167,7 +1167,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:active::-moz-range-thumb {
+  input[type='range']:active::-moz-range-thumb {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
   width: 14px;
   height: 14px;
@@ -1178,7 +1178,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:active::-ms-thumb {
+  input[type='range']:active::-ms-thumb {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
   width: 14px;
   height: 14px;
@@ -1189,7 +1189,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:active::-webkit-slider-thumb {
+  input[type='range']:active::-webkit-slider-thumb {
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.23);
   margin-top: -4px;
@@ -1202,7 +1202,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]::-webkit-slider-runnable-track {
+  input[type='range']::-webkit-slider-runnable-track {
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   width: 100%;
@@ -1218,7 +1218,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]::-moz-range-track {
+  input[type='range']::-moz-range-track {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   width: 100%;
   height: 6px;
@@ -1227,7 +1227,7 @@ export default {
   border: none;
   background-color: rgba(68, 170, 119, 0.3);
 }
-.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type="range"]::-ms-track {
+.vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-left .vicp-range input[type='range']::-ms-track {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12);
   width: 100%;
   cursor: pointer;
@@ -1244,7 +1244,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]::-ms-fill-lower {
+  input[type='range']::-ms-fill-lower {
   background-color: rgba(68, 170, 119, 0.3);
 }
 .vue-image-crop-upload
@@ -1253,7 +1253,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]::-ms-fill-upper {
+  input[type='range']::-ms-fill-upper {
   background-color: rgba(68, 170, 119, 0.15);
 }
 .vue-image-crop-upload
@@ -1262,7 +1262,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:focus::-webkit-slider-runnable-track {
+  input[type='range']:focus::-webkit-slider-runnable-track {
   background-color: rgba(68, 170, 119, 0.5);
 }
 .vue-image-crop-upload
@@ -1271,7 +1271,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:focus::-moz-range-track {
+  input[type='range']:focus::-moz-range-track {
   background-color: rgba(68, 170, 119, 0.5);
 }
 .vue-image-crop-upload
@@ -1280,7 +1280,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:focus::-ms-fill-lower {
+  input[type='range']:focus::-ms-fill-lower {
   background-color: rgba(68, 170, 119, 0.45);
 }
 .vue-image-crop-upload
@@ -1289,7 +1289,7 @@ export default {
   .vicp-crop
   .vicp-crop-left
   .vicp-range
-  input[type="range"]:focus::-ms-fill-upper {
+  input[type='range']:focus::-ms-fill-upper {
   background-color: rgba(68, 170, 119, 0.25);
 }
 .vue-image-crop-upload .vicp-wrap .vicp-step2 .vicp-crop .vicp-crop-right {
@@ -1409,7 +1409,7 @@ export default {
   animation: vicp_progress 0.5s linear infinite;
 }
 .vue-image-crop-upload .vicp-wrap .vicp-step3 .vicp-upload .vicp-progress-wrap .vicp-progress::after {
-  content: "";
+  content: '';
   position: absolute;
   display: block;
   top: -3px;
@@ -1486,7 +1486,7 @@ export default {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
   transform: rotate(45deg);
-  content: "";
+  content: '';
 }
 .vue-image-crop-upload .vicp-wrap .vicp-icon2 {
   position: relative;
@@ -1497,7 +1497,7 @@ export default {
 }
 .vue-image-crop-upload .vicp-wrap .vicp-icon2::after,
 .vue-image-crop-upload .vicp-wrap .vicp-icon2::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 9px;
   left: 4px;

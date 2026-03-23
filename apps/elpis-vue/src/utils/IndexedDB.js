@@ -2,7 +2,7 @@
  * 封装一个工具类 用来操作 indexedDB
  */
 export default class IndexedDB {
-  name = "elpis"; // 数据库名
+  name = 'elpis'; // 数据库名
   version = 5; // 数据库版本
 
   db = null; // 连接浏览器的indexedDB数据库实例
@@ -27,7 +27,7 @@ export default class IndexedDB {
     table, // 设置id为主键 主键应该唯一
     // 如果autoIncrement为false 表示不自增 那么插入的对象里面必须有keyPath ,
     // 如果autoIncrement为true 表示自增 那么插入的对象里面会自动存在keyPath 且是自增的
-    option = { keyPath: "key", autoIncrement: false }
+    option = { keyPath: 'key', autoIncrement: false }
   ) {
     // 不存在表就创建
     if (!db.objectStoreNames.contains(table)) {
@@ -48,10 +48,10 @@ export default class IndexedDB {
         const db = event.target.result;
 
         // 创建note笔记表
-        this.#createTable(db, "note", { keyPath: "key", autoIncrement: false });
+        this.#createTable(db, 'note', { keyPath: 'key', autoIncrement: false });
         // 创建draft草稿表
-        this.#createTable(db, "draft", {
-          keyPath: "key",
+        this.#createTable(db, 'draft', {
+          keyPath: 'key',
           autoIncrement: false
         });
       };
@@ -65,10 +65,10 @@ export default class IndexedDB {
     if (!this.db) {
       this.db = await this.#init(this.name, this.version);
     }
-    data = { ...data, key: crypto.randomUUID().replace(/-/g, "") };
+    data = { ...data, key: crypto.randomUUID().replace(/-/g, '') };
     return new Promise(async (resolve, reject) => {
       // 开启读写事务
-      const res = this.db.transaction(table, "readwrite").objectStore(table).add(data);
+      const res = this.db.transaction(table, 'readwrite').objectStore(table).add(data);
       res.onerror = reject; // 事务失败
       res.onsuccess = resolve; // 事务成功
     });
@@ -82,7 +82,7 @@ export default class IndexedDB {
     // 根据主键删除
     return new Promise(async (resolve, reject) => {
       // 开启读写事务
-      const res = this.db.transaction(table, "readwrite").objectStore(table).delete(key);
+      const res = this.db.transaction(table, 'readwrite').objectStore(table).delete(key);
       res.onerror = reject; // 事务失败
       res.onsuccess = resolve; // 事务成功
     });
@@ -93,11 +93,11 @@ export default class IndexedDB {
     if (!this.db) {
       this.db = await this.#init(this.name, this.version);
     }
-    data = { ...data, key: crypto.randomUUID().replace(/-/g, "") };
+    data = { ...data, key: crypto.randomUUID().replace(/-/g, '') };
     return new Promise(async (resolve, reject) => {
       try {
         // 开启读写事务
-        const res = this.db.transaction(table, "readwrite").objectStore(table).put(data);
+        const res = this.db.transaction(table, 'readwrite').objectStore(table).put(data);
         res.onerror = reject; // 事务失败
         res.onsuccess = resolve; // 事务成功
       } catch (err) {
@@ -113,7 +113,7 @@ export default class IndexedDB {
     return new Promise(async (resolve, reject) => {
       try {
         // 开启读写事务
-        const res = this.db.transaction(table, "readwrite").objectStore(table).get(id); // get方法接收主键
+        const res = this.db.transaction(table, 'readwrite').objectStore(table).get(id); // get方法接收主键
         res.onerror = reject; // 事务失败
         res.onsuccess = resolve; // 事务成功
       } catch (err) {
@@ -130,7 +130,7 @@ export default class IndexedDB {
     return new Promise(async (resolve, reject) => {
       try {
         // 开启读写事务
-        const res = this.db.transaction(table, "readwrite").objectStore(table).getAll();
+        const res = this.db.transaction(table, 'readwrite').objectStore(table).getAll();
         res.onerror = reject; // 事务失败
         res.onsuccess = resolve; // 事务成功
       } catch (err) {

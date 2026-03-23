@@ -1,4 +1,4 @@
-const Ajv = require("ajv");
+const Ajv = require('ajv');
 const ajv = new Ajv();
 
 /**
@@ -8,10 +8,10 @@ module.exports = app => {
   return 1;
   return async (ctx, next) => {
     // const $schema = 'https://json-schema.org/draft/2020-12/schema';
-    const $schema = "http://json-schema.org/draft-07/schema#";
+    const $schema = 'http://json-schema.org/draft-07/schema#';
 
     // 只对 API 请求做
-    if (ctx.path.indexOf("/api/") < 0) {
+    if (ctx.path.indexOf('/api/') < 0) {
       return await next();
     }
 

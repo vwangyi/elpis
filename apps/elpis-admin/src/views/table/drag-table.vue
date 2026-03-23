@@ -19,7 +19,7 @@
 
       <el-table-column width="180px" align="center" label="Date">
         <template slot-scope="{ row }">
-          <span>{{ row.timestamp | parseTime("{y}-{m}-{d} {h}:{i}") }}</span>
+          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
 
@@ -67,17 +67,17 @@
 </template>
 
 <script>
-import { fetchList } from "@/api/article";
-import Sortable from "sortablejs";
+import { fetchList } from '@/api/article';
+import Sortable from 'sortablejs';
 
 export default {
-  name: "DragTable",
+  name: 'DragTable',
   filters: {
     statusFilter(status) {
       const statusMap = {
-        published: "success",
-        draft: "info",
-        deleted: "danger"
+        published: 'success',
+        draft: 'info',
+        deleted: 'danger'
       };
       return statusMap[status];
     }
@@ -113,13 +113,13 @@ export default {
       });
     },
     setSort() {
-      const el = this.$refs.dragTable.$el.querySelectorAll(".el-table__body-wrapper > table > tbody")[0];
+      const el = this.$refs.dragTable.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0];
       this.sortable = Sortable.create(el, {
-        ghostClass: "sortable-ghost", // Class name for the drop placeholder,
+        ghostClass: 'sortable-ghost', // Class name for the drop placeholder,
         setData: function (dataTransfer) {
           // to avoid Firefox bug
           // Detail see : https://github.com/RubaXa/Sortable/issues/1012
-          dataTransfer.setData("Text", "");
+          dataTransfer.setData('Text', '');
         },
         onEnd: evt => {
           const targetRow = this.list.splice(evt.oldIndex, 1)[0];

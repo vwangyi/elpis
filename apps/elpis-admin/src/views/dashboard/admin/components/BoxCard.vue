@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import PanThumb from "@/components/PanThumb";
-import Mallki from "@/components/TextHoverEffect/Mallki";
+import { mapGetters } from 'vuex';
+import PanThumb from '@/components/PanThumb';
+import Mallki from '@/components/TextHoverEffect/Mallki';
 
 export default {
   components: { PanThumb, Mallki },
@@ -37,8 +37,8 @@ export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        success: "success",
-        pending: "danger"
+        success: 'success',
+        pending: 'danger'
       };
       return statusMap[status];
     }
@@ -52,7 +52,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["name", "avatar", "roles"])
+    ...mapGetters(['name', 'avatar', 'roles'])
   }
 };
 </script>

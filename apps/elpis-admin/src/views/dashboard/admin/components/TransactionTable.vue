@@ -19,14 +19,14 @@
 </template>
 
 <script>
-import { transactionList } from "@/api/remote-search";
+import { transactionList } from '@/api/remote-search';
 
 export default {
   filters: {
     statusFilter(status) {
       const statusMap = {
-        success: "success",
-        pending: "danger"
+        success: 'success',
+        pending: 'danger'
       };
       return statusMap[status];
     },

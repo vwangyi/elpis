@@ -1,14 +1,14 @@
-import Vue from "vue";
-import VueI18n from "vue-i18n";
-import Cookies from "js-cookie";
-import elementEnLocale from "element-ui/lib/locale/lang/en"; // element-ui lang
-import elementZhLocale from "element-ui/lib/locale/lang/zh-CN"; // element-ui lang
-import elementEsLocale from "element-ui/lib/locale/lang/es"; // element-ui lang
-import elementJaLocale from "element-ui/lib/locale/lang/ja"; // element-ui lang
-import enLocale from "./en";
-import zhLocale from "./zh";
-import esLocale from "./es";
-import jaLocale from "./ja";
+import Vue from 'vue';
+import VueI18n from 'vue-i18n';
+import Cookies from 'js-cookie';
+import elementEnLocale from 'element-ui/lib/locale/lang/en'; // element-ui lang
+import elementZhLocale from 'element-ui/lib/locale/lang/zh-CN'; // element-ui lang
+import elementEsLocale from 'element-ui/lib/locale/lang/es'; // element-ui lang
+import elementJaLocale from 'element-ui/lib/locale/lang/ja'; // element-ui lang
+import enLocale from './en';
+import zhLocale from './zh';
+import esLocale from './es';
+import jaLocale from './ja';
 
 Vue.use(VueI18n);
 
@@ -31,7 +31,7 @@ const messages = {
   }
 };
 export function getLanguage() {
-  const chooseLanguage = Cookies.get("language");
+  const chooseLanguage = Cookies.get('language');
   if (chooseLanguage) return chooseLanguage;
 
   // if has not choose language
@@ -42,7 +42,7 @@ export function getLanguage() {
       return locale;
     }
   }
-  return "en";
+  return 'en';
 }
 const i18n = new VueI18n({
   // set locale

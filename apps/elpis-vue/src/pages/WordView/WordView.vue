@@ -1,9 +1,9 @@
 <script setup>
-import { ref } from "vue";
-import req from "@/utils/request";
+import { ref } from 'vue';
+import req from '@/utils/request';
 
-const word = ref("goods");
-const audioValue = ref("");
+const word = ref('goods');
+const audioValue = ref('');
 
 // 处理音频 blob 数据
 function handleAudioBlob(audioBlob) {
@@ -14,14 +14,14 @@ function handleAudioBlob(audioBlob) {
   const audio = new Audio(audioUrl);
 
   // 播放音频
-  audio.play().catch(e => console.error("播放失败:", e));
+  audio.play().catch(e => console.error('播放失败:', e));
 
   // 清理资源（重要！）
-  audio.addEventListener("ended", () => {
+  audio.addEventListener('ended', () => {
     URL.revokeObjectURL(audioUrl);
   });
 
-  audio.addEventListener("error", () => {
+  audio.addEventListener('error', () => {
     URL.revokeObjectURL(audioUrl);
   });
 
@@ -30,14 +30,14 @@ function handleAudioBlob(audioBlob) {
 
 // http://dict.youdao.com/dictvoice?type=0&audio=goods
 async function handleRequest() {
-  const res = await req.get("/youdao/dictvoice", {
+  const res = await req.get('/youdao/dictvoice', {
     query: {
       type: 0,
       audio: word.value
     },
-    responseType: "blob"
+    responseType: 'blob'
   });
-  console.log("回来了", res);
+  console.log('回来了', res);
   handleAudioBlob(res);
   // audioValue.value = URL.createObjectURL(res)
 }

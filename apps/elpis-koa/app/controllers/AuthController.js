@@ -1,7 +1,7 @@
 /* auth 认证模块 */
 module.exports = app => {
-  const BaseController = require("./BaseController")(app);
-  const jwt = require("jsonwebtoken");
+  const BaseController = require('./BaseController')(app);
+  const jwt = require('jsonwebtoken');
   return class AuthController extends BaseController {
     /* 登录 通过邮箱+验证码 */
     async loginByEmailCode(ctx) {
@@ -44,7 +44,7 @@ module.exports = app => {
 
       // 账号或密码错误 业务失败
       if (!user) {
-        return this.fail(ctx, "账号或密码错误", 50000);
+        return this.fail(ctx, '账号或密码错误', 50000);
       }
       // 设置token
       this.setAuthToken(ctx, user.user_id);
@@ -59,7 +59,7 @@ module.exports = app => {
       // 把 token 放在浏览器的cookie 上 ，浏览器每次请求都会自动携带token
       const expires = new Date();
       expires.setTime(expires.getTime() + 1000 * 60 * 60 * 24); // 一天有效
-      ctx.cookies.set("token", token, {
+      ctx.cookies.set('token', token, {
         expires,
         httpOnly: true // 只有http可修改 （防止前端通过document.cookie获取）
       });
@@ -85,18 +85,18 @@ module.exports = app => {
 
       // 检查 rejected 数组
       if (Array.isArray(rejected) && rejected.length > 0) {
-        this.fail(ctx, {}, "发送验证码失败");
+        this.fail(ctx, {}, '发送验证码失败');
       }
 
-      this.success(ctx, {}, "发送验证码成功");
+      this.success(ctx, {}, '发送验证码成功');
     }
 
     // 登出
     async logout(ctx) {
       // 清空cookie // 设置过期时间为当前时间 让cookie失效
-      ctx.cookies.set("token", "", { expires: new Date(0) });
+      ctx.cookies.set('token', '', { expires: new Date(0) });
       ctx.status = 302;
-      ctx.redirect("/");
+      ctx.redirect('/');
       this.success(ctx);
     }
   };

@@ -1,4 +1,4 @@
-import router from "./index";
+import router from './index';
 
 router.beforeEach((to, from, next) => {
   // 如果存在 跳转的地方存在query参数path 就说明path是要去的路由

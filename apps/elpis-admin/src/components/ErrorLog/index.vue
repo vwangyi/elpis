@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: "ErrorLog",
+  name: 'ErrorLog',
   data() {
     return {
       dialogTableVisible: false
@@ -60,7 +60,7 @@ export default {
   methods: {
     clearAll() {
       this.dialogTableVisible = false;
-      this.$store.dispatch("errorLog/clearErrorLog");
+      this.$store.dispatch('errorLog/clearErrorLog');
     }
   }
 };

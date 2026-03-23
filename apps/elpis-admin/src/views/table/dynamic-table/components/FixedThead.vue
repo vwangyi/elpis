@@ -20,27 +20,27 @@
 </template>
 
 <script>
-const defaultFormThead = ["apple", "banana"];
+const defaultFormThead = ['apple', 'banana'];
 
 export default {
   data() {
     return {
       tableData: [
         {
-          name: "fruit-1",
-          apple: "apple-10",
-          banana: "banana-10",
-          orange: "orange-10"
+          name: 'fruit-1',
+          apple: 'apple-10',
+          banana: 'banana-10',
+          orange: 'orange-10'
         },
         {
-          name: "fruit-2",
-          apple: "apple-20",
-          banana: "banana-20",
-          orange: "orange-20"
+          name: 'fruit-2',
+          apple: 'apple-20',
+          banana: 'banana-20',
+          orange: 'orange-20'
         }
       ],
       key: 1, // table key
-      formTheadOptions: ["apple", "banana", "orange"],
+      formTheadOptions: ['apple', 'banana', 'orange'],
       checkboxVal: defaultFormThead, // checkboxVal
       formThead: defaultFormThead // 默认表头 Default header
     };

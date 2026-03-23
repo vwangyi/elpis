@@ -15,11 +15,11 @@ module.exports = app => {
       const { status, message, detail } = error;
 
       app.logger.info(JSON.stringify(error));
-      app.logger.error("[-- exception --]: ", error);
-      app.logger.error("[-- exception --]: ", status, message, detail);
+      app.logger.error('[-- exception --]: ', error);
+      app.logger.error('[-- exception --]: ', status, message, detail);
 
       // 请求有 页面请求和API请求 两种; 当用户访问一个不存在的页面时候 应该重定向到首页
-      if (message && message.indexOf("template not found") > -1) {
+      if (message && message.indexOf('template not found') > -1) {
         ctx.status = 302; // 临时重定向  一般不会用 301永久重定向
         ctx.redirect(`${app.project?.homePage}`);
         return;
@@ -28,7 +28,7 @@ module.exports = app => {
       const resBody = {
         success: false,
         code: 50000,
-        message: "网络异常 请稍后重试"
+        message: '网络异常 请稍后重试'
       };
       ctx.status = 200;
       ctx.body = resBody;

@@ -1,23 +1,23 @@
 <script setup>
-import { nextTick, onMounted, ref, useTemplateRef } from "vue";
+import { nextTick, onMounted, ref, useTemplateRef } from 'vue';
 
-const editor = useTemplateRef("editor");
-const inp = useTemplateRef("inp");
+const editor = useTemplateRef('editor');
+const inp = useTemplateRef('inp');
 
-const cursorId = "sdfsfsf"; // crypto.randomUUID();
+const cursorId = 'sdfsfsf'; // crypto.randomUUID();
 
 // 渲染行内 Markdown
 const renderInlineMarkdown = text => {
   return text
-    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.*?)\*/g, "<em>$1</em>")
-    .replace(/`(.*?)`/g, "<code>$1</code>")
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code>$1</code>')
     .replace(/!\[(.*?)\]\((.*?)\)/g, '<img src="$2" alt="$1" class="inline-image">')
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" class="inline-link" contenteditable="false">$1</a>');
 };
 // HTML 转义
 const escapeHtml = text => {
-  const div = document.createElement("div");
+  const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 };
@@ -67,11 +67,11 @@ function insertCursorMarker() {
   const selection = window.getSelection();
   if (selection.rangeCount === 0) return null;
   const range = selection.getRangeAt(0);
-  const span = document.createElement("span");
+  const span = document.createElement('span');
   // 创建一个唯一的ID
   const id = `cursor-${crypto.randomUUID()}`;
 
-  console.log("id", id);
+  console.log('id', id);
 
   span.id = id;
   span.style.cssText = `
@@ -83,7 +83,7 @@ function insertCursorMarker() {
     pointer-events: none;
     position: absolute;
   `;
-  span.setAttribute("data-cursor-marker", "true");
+  span.setAttribute('data-cursor-marker', 'true');
 
   // 插入标记
   range.insertNode(span);
@@ -92,7 +92,7 @@ function insertCursorMarker() {
 }
 
 function createMarkerElement(id) {
-  const marker = document.createElement("span");
+  const marker = document.createElement('span');
   marker.id = id;
 
   // 关键样式：完全隐藏且不影响布局
@@ -115,11 +115,11 @@ function createMarkerElement(id) {
         `;
 
   // 添加识别属性
-  marker.setAttribute("data-cursor-marker", "true");
-  marker.setAttribute("data-marker-type", "basic");
+  marker.setAttribute('data-cursor-marker', 'true');
+  marker.setAttribute('data-marker-type', 'basic');
 
   // 插入零宽空格，确保元素存在
-  marker.textContent = "\u200B"; // 零宽空格
+  marker.textContent = '\u200B'; // 零宽空格
 
   return marker;
 }
@@ -164,16 +164,16 @@ function handleCursor(html) {
   const selection = window.getSelection();
 
   /* case1: 没有光标 */
-  if (selection.type === "None" && selection.rangeCount === 0) {
+  if (selection.type === 'None' && selection.rangeCount === 0) {
   }
   /* case2: 存在光标且没有选中文本 */
-  if (selection.type === "Caret" && selection.rangeCount === 1) {
+  if (selection.type === 'Caret' && selection.rangeCount === 1) {
     const range = selection.getRangeAt(0);
     /*  */
     if (range.startContainer === range.endContainer && range.startOffset === range.endOffset) {
-      console.log("光标位置在 ", html, range.startContainer, range.startOffset);
+      console.log('光标位置在 ', html, range.startContainer, range.startOffset);
 
-      const span = document.createElement("span");
+      const span = document.createElement('span');
       span.id = cursorId;
       // span.className = "cursor-marker";
       // span.setAttribute("data-cursor-marker", "true");
@@ -183,15 +183,15 @@ function handleCursor(html) {
       const oldMarker = document.getElementById(cursorId);
       if (oldMarker) {
         oldMarker.remove();
-        console.log("通过ID移除了旧标记");
+        console.log('通过ID移除了旧标记');
       }
       // 添加标记
-      console.log("把dom插入到光标位置");
+      console.log('把dom插入到光标位置');
       range.insertNode(span); // 把dom插入到光标位置
     }
   }
   /* case3: 光标选中文本 */
-  if (selection.type === "Range" && selection.rangeCount > 0) {
+  if (selection.type === 'Range' && selection.rangeCount > 0) {
   }
 
   const saveCursor = () => {};
@@ -232,12 +232,12 @@ function moveToMarker(markerId) {
   marker.remove();
 
   // 可选：滚动到光标位置
-  marker.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  marker.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 function handleInput(event) {
-  let html = "";
+  let html = '';
 
-  if (!editor.value.innerHTML.includes("<div>")) {
+  if (!editor.value.innerHTML.includes('<div>')) {
     html = `<div>${editor.value.innerHTML}</div>`;
   } else {
     html = `<div><div>${editor.value.innerHTML.replace(/<div>/, `</div><div>`)}</div>`;
@@ -251,47 +251,47 @@ function handleInput(event) {
   const selection = window.getSelection();
   const span = document.getElementById(cursorId);
   const range = document.createRange();
-  console.log("找到光标", cursorId);
+  console.log('找到光标', cursorId);
   console.log(span);
   if (span) {
     range.selectNode(span);
     selection.addRange(range);
   }
-  console.log("html", html);
+  console.log('html', html);
 
   return;
 
   // console.dir(event.target.innerText);
-  const lines = event.target.innerText.split("\n\n");
+  const lines = event.target.innerText.split('\n\n');
   // console.log(editor.value.innerHTML);
 
-  console.log("HTML格式字符串:", JSON.stringify(event.target.innerHTML));
-  console.log("文本内容格式字符串:", JSON.stringify(event.target.textContent));
+  console.log('HTML格式字符串:', JSON.stringify(event.target.innerHTML));
+  console.log('文本内容格式字符串:', JSON.stringify(event.target.textContent));
 
-  let renderedHtml = "";
+  let renderedHtml = '';
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
     // 处理空行
-    if (line.trim() === "") {
+    if (line.trim() === '') {
       renderedHtml += '<div class="empty-line"><br></div>';
       continue;
     }
 
     // 处理代码块开始
-    if (line.trim().startsWith("```")) {
-      const language = line.trim().substring(3).trim() || "";
-      let codeContent = "";
+    if (line.trim().startsWith('```')) {
+      const language = line.trim().substring(3).trim() || '';
+      let codeContent = '';
       i++;
-      while (i < lines.length && !lines[i].trim().startsWith("```")) {
-        codeContent += lines[i] + "\n";
+      while (i < lines.length && !lines[i].trim().startsWith('```')) {
+        codeContent += lines[i] + '\n';
         i++;
       }
       renderedHtml += `
         <div class="code-block" contenteditable="false">
           <div class="code-header">
-            <span class="language">${language || "text"}</span>
+            <span class="language">${language || 'text'}</span>
             <button class="copy-btn" onclick="copyCode(this)">复制</button>
           </div>
           <pre><code>${escapeHtml(codeContent)}</code></pre>
@@ -325,7 +325,7 @@ function handleInput(event) {
     }
 
     // 引用
-    if (line.startsWith("> ")) {
+    if (line.startsWith('> ')) {
       const content = line.substring(2);
       renderedHtml += `<blockquote class="live-quote">${renderInlineMarkdown(content)}</blockquote>`;
       continue;
@@ -344,7 +344,7 @@ function handleInput(event) {
   // 1. 记录光标位置
   const markerId = saveCursor();
 
-  console.log("记录光标位置", markerId, renderedHtml);
+  console.log('记录光标位置', markerId, renderedHtml);
 
   // 2. 更新内容
   editor.value.innerHTML = renderedHtml;
@@ -358,13 +358,13 @@ function handleInput(event) {
   // console.log('恢复光标位置', markerId)
 }
 
-const textInput = ref("");
+const textInput = ref('');
 function handleInput1(e) {
   console.log(JSON.stringify(e.target.value));
   textInput.value = e.target.value;
 }
 
-const text = ref("13123");
+const text = ref('13123');
 
 onMounted(() => {});
 </script>

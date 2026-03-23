@@ -6,14 +6,14 @@
 </template>
 
 <script>
-import { getToken } from "@/api/qiniu";
+import { getToken } from '@/api/qiniu';
 // 获取七牛token 后端通过Access Key,Secret Key,bucket等生成token
 // 七牛官方sdk https://developer.qiniu.com/sdk#official-sdk
 
 export default {
   data() {
     return {
-      dataObj: { token: "", key: "" },
+      dataObj: { token: '', key: '' },
       image_uri: [],
       fileList: []
     };

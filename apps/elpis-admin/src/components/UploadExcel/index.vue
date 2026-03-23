@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import XLSX from "xlsx";
+import XLSX from 'xlsx';
 
 export default {
   props: {
@@ -39,13 +39,13 @@ export default {
       if (this.loading) return;
       const files = e.dataTransfer.files;
       if (files.length !== 1) {
-        this.$message.error("Only support uploading one file!");
+        this.$message.error('Only support uploading one file!');
         return;
       }
       const rawFile = files[0]; // only use files[0]
 
       if (!this.isExcel(rawFile)) {
-        this.$message.error("Only supports upload .xlsx, .xls, .csv suffix files");
+        this.$message.error('Only supports upload .xlsx, .xls, .csv suffix files');
         return false;
       }
       this.upload(rawFile);
@@ -55,10 +55,10 @@ export default {
     handleDragover(e) {
       e.stopPropagation();
       e.preventDefault();
-      e.dataTransfer.dropEffect = "copy";
+      e.dataTransfer.dropEffect = 'copy';
     },
     handleUpload() {
-      this.$refs["excel-upload-input"].click();
+      this.$refs['excel-upload-input'].click();
     },
     handleClick(e) {
       const files = e.target.files;
@@ -67,7 +67,7 @@ export default {
       this.upload(rawFile);
     },
     upload(rawFile) {
-      this.$refs["excel-upload-input"].value = null; // fix can't select the same excel
+      this.$refs['excel-upload-input'].value = null; // fix can't select the same excel
 
       if (!this.beforeUpload) {
         this.readerData(rawFile);
@@ -84,7 +84,7 @@ export default {
         const reader = new FileReader();
         reader.onload = e => {
           const data = e.target.result;
-          const workbook = XLSX.read(data, { type: "array" });
+          const workbook = XLSX.read(data, { type: 'array' });
           const firstSheetName = workbook.SheetNames[0];
           const worksheet = workbook.Sheets[firstSheetName];
           const header = this.getHeaderRow(worksheet);
@@ -98,7 +98,7 @@ export default {
     },
     getHeaderRow(sheet) {
       const headers = [];
-      const range = XLSX.utils.decode_range(sheet["!ref"]);
+      const range = XLSX.utils.decode_range(sheet['!ref']);
       let C;
       const R = range.s.r;
       /* start in the first row */
@@ -106,7 +106,7 @@ export default {
         /* walk every column in the range */
         const cell = sheet[XLSX.utils.encode_cell({ c: C, r: R })];
         /* find the cell in the first row */
-        let hdr = "UNKNOWN " + C; // <-- replace with your desired default
+        let hdr = 'UNKNOWN ' + C; // <-- replace with your desired default
         if (cell && cell.t) hdr = XLSX.utils.format_cell(cell);
         headers.push(hdr);
       }

@@ -1,20 +1,20 @@
-const assert = require("assert");
-const supertest = require("supertest");
-const md5 = require("md5");
-const elpisCore = require("../../elpis-core");
-const signKey = "klx05hb3n1c9ujp8uhx4bs2ikk5io6wp212";
+const assert = require('assert');
+const supertest = require('supertest');
+const md5 = require('md5');
+const elpisCore = require('../../elpis-core');
+const signKey = 'klx05hb3n1c9ujp8uhx4bs2ikk5io6wp212';
 const st = Date.now();
 
-describe("测试 project 相关接口", function () {
+describe('测试 project 相关接口', function () {
   this.timeout(600000);
 
   let modelList;
   const projectList = [];
   let request;
 
-  it("启动服务", async () => {
+  it('启动服务', async () => {
     const app = await elpisCore.start();
-    modelList = require("../../model/index.js")(app);
+    modelList = require('../../model/index.js')(app);
     modelList.forEach(item => {
       const { project } = item;
       for (const pKey in project) {
@@ -30,10 +30,10 @@ describe("测试 project 相关接口", function () {
    * res.body.code 应该是 442
    * res.body.message 应该包含 request validate fail: 这句话
    */
-  it("GET /api/project without proj_key", async () => {
-    let tmpRequest = request.get("/api/project");
-    tmpRequest = tmpRequest.set("s_t", st);
-    tmpRequest = tmpRequest.set("s_sign", md5(`${signKey}_${st}`));
+  it('GET /api/project without proj_key', async () => {
+    let tmpRequest = request.get('/api/project');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
     const res = await tmpRequest;
     assert(res.body.success === false);
     const resBody = res.body;
@@ -47,19 +47,19 @@ describe("测试 project 相关接口", function () {
    * res.body.code 应该是 50000
    * res.body.message 应该是 获取项目异常
    */
-  it("GET /api/project fail", async () => {
-    let tmpRequest = request.get("/api/project");
-    tmpRequest = tmpRequest.set("s_t", st);
-    tmpRequest = tmpRequest.set("s_sign", md5(`${signKey}_${st}`));
+  it('GET /api/project fail', async () => {
+    let tmpRequest = request.get('/api/project');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
     tmpRequest = tmpRequest.query({
-      proj_key: "xxxxxxxxxxxxx"
+      proj_key: 'xxxxxxxxxxxxx'
     });
     const res = await tmpRequest;
 
     assert(res.body.success === false);
     const resBody = res.body;
     assert(resBody.code === 50000);
-    assert(resBody.message === "获取项目异常");
+    assert(resBody.message === '获取项目异常');
   });
 
   /**
@@ -68,12 +68,12 @@ describe("测试 project 相关接口", function () {
    * res.body.code 应该是 50000
    * res.body.message 应该是 获取项目异常
    */
-  it("GET /api/project with proj_key", async () => {
+  it('GET /api/project with proj_key', async () => {
     const checkModule = menuItem => {
       const { moduleType } = menuItem;
       assert(moduleType);
 
-      if (moduleType === "side") {
+      if (moduleType === 'side') {
         const { sideConfig } = menuItem;
         assert(sideConfig);
         assert(sideConfig.menu);
@@ -81,17 +81,17 @@ describe("测试 project 相关接口", function () {
           checkMenuItem(sideMenuItem);
         });
       }
-      if (moduleType === "iframe") {
+      if (moduleType === 'iframe') {
         const { iframeConfig } = menuItem;
         assert(iframeConfig);
         assert(iframeConfig.path !== void 0);
       }
-      if (moduleType === "custom") {
+      if (moduleType === 'custom') {
         const { customConfig } = menuItem;
         assert(customConfig);
         assert(customConfig.path !== void 0);
       }
-      if (moduleType === "schema") {
+      if (moduleType === 'schema') {
         const { schemaConfig } = menuItem;
         assert(schemaConfig);
         assert(schemaConfig.path !== void 0);
@@ -99,18 +99,18 @@ describe("测试 project 相关接口", function () {
     };
 
     const checkMenuItem = menuItem => {
-      console.log("--------", menuItem.key);
+      console.log('--------', menuItem.key);
       assert(menuItem.key);
       assert(menuItem.name);
       assert(menuItem.menuType);
 
-      if (menuItem.menuType === "group") {
+      if (menuItem.menuType === 'group') {
         assert(menuItem.subMenu !== void 0);
         menuItem.subMenu.forEach(item => {
           checkMenuItem(item);
         });
       }
-      if (menuItem.menuType === "module") {
+      if (menuItem.menuType === 'module') {
         checkModule(menuItem);
       }
     };
@@ -118,9 +118,9 @@ describe("测试 project 相关接口", function () {
     for (let i = 0; i < projectList.length; ++i) {
       // const index = Math.floor(Math.random() * projectList.length); // 一个随机下标
       const { key: projKey } = projectList[i];
-      let tmpRequest = request.get("/api/project");
-      tmpRequest = tmpRequest.set("s_t", st);
-      tmpRequest = tmpRequest.set("s_sign", md5(`${signKey}_${st}`));
+      let tmpRequest = request.get('/api/project');
+      tmpRequest = tmpRequest.set('s_t', st);
+      tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
       tmpRequest = tmpRequest.query({
         proj_key: projKey
       });
@@ -141,10 +141,10 @@ describe("测试 project 相关接口", function () {
     }
   });
 
-  it("GET /api/project/list without proj_key", async () => {
-    let tmpRequest = request.get("/api/project/list");
-    tmpRequest = tmpRequest.set("s_t", st);
-    tmpRequest = tmpRequest.set("s_sign", md5(`${signKey}_${st}`));
+  it('GET /api/project/list without proj_key', async () => {
+    let tmpRequest = request.get('/api/project/list');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
     const res = await tmpRequest;
 
     // 断言 res.body.success 应该是为true 否则就报错
@@ -165,14 +165,14 @@ describe("测试 project 相关接口", function () {
       assert(item.home !== undefined);
     }
   });
-  it("GET /api/project/list with proj_key", async () => {
+  it('GET /api/project/list with proj_key', async () => {
     const index = Math.floor(Math.random() * projectList.length); // 一个随机下标
     const { key: projKey } = projectList[index];
     const { modelKey } = projectList.find(item => item.key === projKey);
 
-    let tmpRequest = request.get("/api/project/list");
-    tmpRequest = tmpRequest.set("s_t", st);
-    tmpRequest = tmpRequest.set("s_sign", md5(`${signKey}_${st}`));
+    let tmpRequest = request.get('/api/project/list');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
     tmpRequest = tmpRequest.query({
       proj_key: projKey
     });
@@ -197,10 +197,10 @@ describe("测试 project 相关接口", function () {
     }
   });
 
-  it("GET /api/project/model/list", async () => {
-    let tmpRequest = request.get("/api/project/model/list");
-    tmpRequest = tmpRequest.set("s_t", st);
-    tmpRequest = tmpRequest.set("s_sign", md5(`${signKey}_${st}`));
+  it('GET /api/project/model/list', async () => {
+    let tmpRequest = request.get('/api/project/model/list');
+    tmpRequest = tmpRequest.set('s_t', st);
+    tmpRequest = tmpRequest.set('s_sign', md5(`${signKey}_${st}`));
     const res = await tmpRequest;
 
     assert(res.body.success === true); // 相当于 if (res.body.success === true) 不满足就报错

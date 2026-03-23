@@ -60,20 +60,20 @@
 </template>
 
 <script>
-import { toggleClass } from "@/utils";
-import "@/assets/custom-theme/index.css"; // the theme changed version element-ui css
+import { toggleClass } from '@/utils';
+import '@/assets/custom-theme/index.css'; // the theme changed version element-ui css
 
 export default {
-  name: "Theme",
+  name: 'Theme',
   data() {
     return {
       theme: false,
       tags: [
-        { name: "Tag One", type: "" },
-        { name: "Tag Two", type: "info" },
-        { name: "Tag Three", type: "success" },
-        { name: "Tag Four", type: "warning" },
-        { name: "Tag Five", type: "danger" }
+        { name: 'Tag One', type: '' },
+        { name: 'Tag Two', type: 'info' },
+        { name: 'Tag Three', type: 'success' },
+        { name: 'Tag Four', type: 'warning' },
+        { name: 'Tag Five', type: 'danger' }
       ],
       slideValue: 50,
       radio: 3
@@ -81,7 +81,7 @@ export default {
   },
   watch: {
     theme() {
-      toggleClass(document.body, "custom-theme");
+      toggleClass(document.body, 'custom-theme');
     }
   }
 };

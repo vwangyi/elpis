@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import Tinymce from "@/components/Tinymce";
+import Tinymce from '@/components/Tinymce';
 
 export default {
-  name: "TinymceDemo",
+  name: 'TinymceDemo',
   components: { Tinymce },
   data() {
     return {

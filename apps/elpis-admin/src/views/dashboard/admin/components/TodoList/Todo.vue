@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "Todo",
+  name: 'Todo',
   directives: {
     focus(el, { value }, { context }) {
       if (value) {
@@ -44,13 +44,13 @@ export default {
   },
   methods: {
     deleteTodo(todo) {
-      this.$emit("deleteTodo", todo);
+      this.$emit('deleteTodo', todo);
     },
     editTodo({ todo, value }) {
-      this.$emit("editTodo", { todo, value });
+      this.$emit('editTodo', { todo, value });
     },
     toggleTodo(todo) {
-      this.$emit("toggleTodo", todo);
+      this.$emit('toggleTodo', todo);
     },
     doneEdit(e) {
       const value = e.target.value.trim();
