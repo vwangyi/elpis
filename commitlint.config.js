@@ -36,14 +36,14 @@ export default {
       { value: 'feat', name: '✨ 新功能: 新增功能' },
       { value: 'fix', name: '🐛 修复: 修复缺陷' },
       { value: 'docs', name: '📚 文档: 更新文档' },
-      { value: 'refactor', name: '📦 重构: 代码重构（不新增功能也不修复 bug）' },
+      { value: 'refactor', name: '📦 重构: 代码重构(不新增功能也不修复bug)' },
       { value: 'perf', name: '🚀 性能: 提升性能' },
       { value: 'test', name: '🧪 测试: 添加测试' },
       { value: 'chore', name: '🔧 工具: 更改构建流程或辅助工具' },
       { value: 'revert', name: '⏪ 回滚: 代码回滚' },
       { value: 'style', name: '🎨 样式: 格式调整（不影响代码运行）' }
     ],
-    scopes: ['root', 'backend', 'frontend', 'components', 'utils'],
+    scopes: ['root', 'vue', 'koa', 'docs', 'nest', 'admin', 'cli', 'disign', 'utils'],
     allowCustomScopes: true,
     skipQuestions: ['body', 'footerPrefix', 'footer', 'breaking'], // 跳过“详细描述”和“底部信息”
     messages: {

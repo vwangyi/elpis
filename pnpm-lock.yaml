@@ -851,6 +851,9 @@ importers:
       file-loader:
         specifier: ^6.2.0
         version: 6.2.0(webpack@5.105.4)
+      fork-ts-checker-webpack-plugin:
+        specifier: ^9.1.0
+        version: 9.1.0(typescript@5.9.3)(webpack@5.105.4)
       fs-extra:
         specifier: ^11.3.4
         version: 11.3.4
@@ -899,6 +902,9 @@ importers:
       terser-webpack-plugin:
         specifier: ^5.4.0
         version: 5.4.0(esbuild@0.27.4)(webpack@5.105.4)
+      ts-loader:
+        specifier: ^9.5.4
+        version: 9.5.4(typescript@5.9.3)(webpack@5.105.4)
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
@@ -17489,7 +17495,9 @@ snapshots:
       source-map: 0.6.1
       string-length: 2.0.0
     transitivePeerDependencies:
+      - bufferutil
       - supports-color
+      - utf-8-validate
 
   '@jest/reporters@30.3.0':
     dependencies:
@@ -17566,7 +17574,9 @@ snapshots:
       jest-runner: 24.9.0
       jest-runtime: 24.9.0
     transitivePeerDependencies:
+      - bufferutil
       - supports-color
+      - utf-8-validate
 
   '@jest/test-sequencer@30.3.0':
     dependencies:
@@ -24153,6 +24163,23 @@ snapshots:
       tapable: 2.3.0
       typescript: 5.9.3
       webpack: 5.104.1(esbuild@0.27.4)
+
+  fork-ts-checker-webpack-plugin@9.1.0(typescript@5.9.3)(webpack@5.105.4):
+    dependencies:
+      '@babel/code-frame': 7.29.0
+      chalk: 4.1.2
+      chokidar: 4.0.3
+      cosmiconfig: 8.3.6(typescript@5.9.3)
+      deepmerge: 4.3.1
+      fs-extra: 10.1.0
+      memfs: 3.5.3
+      minimatch: 3.1.5
+      node-abort-controller: 3.1.1
+      schema-utils: 3.3.0
+      semver: 7.7.4
+      tapable: 2.3.0
+      typescript: 5.9.3
+      webpack: 5.105.4(esbuild@0.27.4)(webpack-cli@7.0.2)
 
   form-data@2.3.3:
     dependencies:
@@ -31468,6 +31495,16 @@ snapshots:
       source-map: 0.7.6
       typescript: 5.9.3
       webpack: 5.105.4(esbuild@0.27.4)
+
+  ts-loader@9.5.4(typescript@5.9.3)(webpack@5.105.4):
+    dependencies:
+      chalk: 4.1.2
+      enhanced-resolve: 5.20.1
+      micromatch: 4.0.8
+      semver: 7.7.4
+      source-map: 0.7.6
+      typescript: 5.9.3
+      webpack: 5.105.4(esbuild@0.27.4)(webpack-cli@7.0.2)
 
   ts-node@10.9.2(@types/node@22.19.15)(typescript@5.9.3):
     dependencies:

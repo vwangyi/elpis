@@ -2,6 +2,10 @@
  * Created by PanJiaChen on 16/11/18.
  */
 
+export function randomUUID() {
+  return crypto.randomUUID().replace(/-/g, '');
+}
+
 /**
  * Parse the time to string
  * @param {(Object|string|number)} time

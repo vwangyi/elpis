@@ -3,15 +3,37 @@ const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const rootPath = process.cwd(); // 项目根路径 启动命令的路径
-
 /**
  * webpack 基础配置
  */
 module.exports = {
-  entry: './src/main.js',
+  entry: './src/main.ts',
   module: {
     rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        use: [
+          {
+            loader: 'babel-loader'
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              // transpileOnly: true 表示 让 ts-loader 只处理编译，不进行类型检查 提高编译速度
+              // 类型检查交给 ForkTsCheckerWebpackPlugin
+              transpileOnly: true,
+              // 支持 .vue 文件中的 TypeScript/TSX
+              appendTsSuffixTo: [/\.vue$/],
+              appendTsxSuffixTo: [/\.vue$/],
+              // 配置项
+              configFile: path.resolve(rootPath, 'tsconfig.json')
+            }
+          }
+        ],
+        exclude: /node_modules/
+      },
       {
         test: /\.vue$/,
         use: { loader: 'vue-loader' }
@@ -76,7 +98,7 @@ module.exports = {
   // 配置模块解析的具体行为 方便开发便捷性
   resolve: {
     // 这里配置了后缀 import 导入文件时 不用写后缀
-    extensions: ['.js', '.vue', '.jsx', '.scss', '.less', '.css'],
+    extensions: ['.ts', '.tsx', '.js', '.vue', '.jsx', '.scss', '.less', '.css'],
     // 配置路径别名 映射 import xx from '$pages/xx/xx';
     alias: {
       '@': path.resolve(rootPath, './src')
@@ -84,6 +106,12 @@ module.exports = {
   },
   // 配置webpack插件  可以自己封装自己的webpack插件（class）
   plugins: [
+    new ForkTsCheckerWebpackPlugin({
+      typescript: {
+        configFile: path.resolve(rootPath, 'tsconfig.json')
+      },
+      async: process.env.NODE_ENV === 'development'
+    }),
     new MiniCssExtractPlugin({
       filename: 'css/[name]_[contenthash:8].css'
     }),

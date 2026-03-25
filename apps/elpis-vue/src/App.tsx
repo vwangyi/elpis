@@ -1,4 +1,3 @@
-
 function setup() {
   return () => <router-view />
 }
