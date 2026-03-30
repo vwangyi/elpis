@@ -36,7 +36,7 @@ const activeTabbar = ref('home');
 const componentMapTabbar = {
   home: CardList,
   publish: ElpisEditor,
-  publish: RichEditor, 
+  publish: RichEditor,
   messages: CardList,
   profile: CardList
 };

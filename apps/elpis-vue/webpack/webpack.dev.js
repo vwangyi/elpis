@@ -1,5 +1,5 @@
-const path = require('path'); 
-const {merge} = require('webpack-merge'); 
+const path = require('path');
+const { merge } = require('webpack-merge');
 const express = require('express');
 const consoler = require('consoler');
 const webpack = require('webpack');

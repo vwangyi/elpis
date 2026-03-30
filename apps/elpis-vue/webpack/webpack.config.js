@@ -1,5 +1,5 @@
 const path = require('path');
-const os = require("os");
+const os = require('os');
 const webpack = require('webpack');
 const { VueLoaderPlugin } = require('vue-loader');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -7,7 +7,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); //  将 CSS 从
 const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin'); // 压缩css
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const cpu = os.cpus().length - 1; 
+const cpu = os.cpus().length - 1;
 const rootPath = process.cwd(); // 项目根路径 启动命令的路径
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 /**
@@ -111,14 +111,14 @@ module.exports = {
   },
   // 配置webpack插件  可以自己封装自己的webpack插件（class）
   plugins: [
-  //   new BundleAnalyzerPlugin({
-  //   // 生成一个静态的 HTML 报告文件，而不是启动一个服务器
-  //   analyzerMode: 'static',
-  //   // 报告文件的名称
-  //   reportFilename: 'bundle-report.html',
-  //   // 生成报告后是否自动在浏览器中打开
-  //   openAnalyzer: true,
-  // }),
+    //   new BundleAnalyzerPlugin({
+    //   // 生成一个静态的 HTML 报告文件，而不是启动一个服务器
+    //   analyzerMode: 'static',
+    //   // 报告文件的名称
+    //   reportFilename: 'bundle-report.html',
+    //   // 生成报告后是否自动在浏览器中打开
+    //   openAnalyzer: true,
+    // }),
     new ForkTsCheckerWebpackPlugin({
       typescript: {
         configFile: path.resolve(rootPath, 'tsconfig.json')
@@ -143,7 +143,7 @@ module.exports = {
       lodash: 'lodash'
     }),
     /**
-     * webpack.DefinePlugin  是用来定义 全局变量的 
+     * webpack.DefinePlugin  是用来定义 全局变量的
      * 通过 window.__VUE_OPTIONS_API__访问
      * 编译之后（打包之后）的代码就不存在这个变量了 按照指定的判断条件执行了不同情况的代码
      */
@@ -156,7 +156,7 @@ module.exports = {
       /**
        * __VUE_PROD_DEVTOOLS__ 表示 Vue 3: 生产环境是否启用 DevTools Vue调试工具
        * 开发环境默认为 true，生产环境应设为 false 以提升性能
-       */ 
+       */
       __VUE_PROD_DEVTOOLS__: 'false',
       /**
        * 渲染（Rendering）是 生成DOM结构的过程
@@ -167,7 +167,7 @@ module.exports = {
        * __VUE_PROD_HYDRATION_MISMATCH_DETAILS__ 表示
        * 生产环境 发生水合错误时 是否显示详细信息  生产环境为false以减小体积并避免暴露内部细节  
        */
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false',
+      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: 'false'
       /**
        * Node.js 风格的环境变量（很多工具库依赖这个）
        * 值必须使用 JSON.stringify包裹 才是一个字符串
@@ -215,22 +215,22 @@ module.exports = {
      */
     splitChunks: {
       // chunks: 'async', 表示 import() 异步引入
-      chunks: 'all', // 对同步模块和异步模块都进行分割 
+      chunks: 'all', // 对同步模块和异步模块都进行分割
       maxAsyncRequests: 10, // 每次异步加载的最大并行请求数
       maxInitialRequests: 10, // 入口点最大并行请求数
       cacheGroups: {
-        // 第三方 wangeditor 
+        // 第三方 wangeditor
         // 专门给 wangeditor 设立的分组  把wangeditor踢出vendor分组
         // wangeditor: {
         //   name: 'chunk-wangeditor', // 打包后的文件名会包含这个名字
-        //   test: /[\\/]node_modules[\\/](@wangeditor|wangeditor)/, // 正则匹配包名 
+        //   test: /[\\/]node_modules[\\/](@wangeditor|wangeditor)/, // 正则匹配包名
         //   priority: 50,    // 【非常重要】优先级必须比 vendor 高！
         //   // enforce: true,   // 强制生效，即使体积很小也单独打包
         //   // 指定为异步 配合 import()  重要 重要 重要 重要 重要 重要 重要 重要   index.html中不会直接引入当前js
         //   // 没有import() 此模块就相当于没有配置
-        //   chunks: 'async', 
+        //   chunks: 'async',
         //   reuseExistingChunk: true // 允许复用
-        // }, 
+        // },
 
         // 第三方依赖库
         vendor: {
@@ -240,7 +240,7 @@ module.exports = {
           priority: 20, // 优先级 数字越大 优先级越高
           priority: 10, // 优先级 数字越大 优先级越高
           // enforce: true, // 为true 强制执行 表示 忽略 import的分割
-          // enforce: false, // 为false，允许其他规则介入 
+          // enforce: false, // 为false，允许其他规则介入
           reuseExistingChunk: true // 复用已有的公共 chunk
         },
         /**
@@ -265,7 +265,7 @@ module.exports = {
       name: entrypoint => `runtime_${entrypoint.name}` // 指定输出到 runtime 文件夹
     },
     minimizer: [
-      new CssMinimizerWebpackPlugin(), // 压缩css 
+      new CssMinimizerWebpackPlugin(), // 压缩css
       // 压缩js
       new TerserWebpackPlugin({
         test: /\.js(\?.*)?$/i, // 匹配需要压缩的文件
@@ -279,7 +279,7 @@ module.exports = {
         // cache: true, // 使用缓存 加速构建过程  webpack5 已经移除了 会报错
         // 多进程并行压缩
         parallel: true, // 默认： true表示 ${os.cpus().length - 1} 个进程 用多少个进程应该随着项目规模调整 因为每个线程初始化启动需要耗时
-        parallel: cpu,   
+        parallel: cpu,
 
         // 提取注释到单独文件
         extractComments: true, // 将注释提取到 LICENSE 文件
@@ -293,7 +293,7 @@ module.exports = {
           banner: licenseFile => {
             return `License information can be found in ${licenseFile}`;
           }
-        }, 
+        },
         // Terser 压缩选项
         terserOptions: {
           sourceMap: true, // 启用 source map
