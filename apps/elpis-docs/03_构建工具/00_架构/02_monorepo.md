@@ -1,5 +1,12 @@
 
-# monorepo
+# monorepo / turborepo
+Turborepo 是一个专为 JavaScript 和 TypeScript 项目设计的高性能构建系统。它使用 Rust 语言编写，旨在优化 Monorepo（单体仓库）的开发体验，通过智能的任务调度和缓存机制，显著提升构建速度。
+简单来说，你可以把它理解为一个“智能任务调度器 + 缓存引擎”。它不直接打包你的代码，而是负责调度和优化你项目中已有的构建、测试、Lint 等任务。
+✨ 核心特性
+Turborepo 的核心价值在于解决 Monorepo 中日益增长的构建复杂度和缓慢的构建速度问题。
+
+
+
 
 monorepo 解决什么问题
 

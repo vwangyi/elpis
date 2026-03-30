@@ -1,5 +1,5 @@
-const path = require('path');
-const merge = require('webpack-merge');
+const path = require('path'); 
+const {merge} = require('webpack-merge'); 
 const express = require('express');
 const consoler = require('consoler');
 const webpack = require('webpack');
@@ -25,7 +25,7 @@ const rootPath = process.cwd(); // 项目根路径 启动命令的路径
 
 // 继承基础配置 并重写部分配置
 const url = `http://${HOST}:${PORT}/${HMR_PATH}&timeout=${TIMEOUT}&reload=true`; // 开发阶段的 entry 配置需要加入hmr
-const webpackConfig = merge.merge(baseConfig, {
+const webpackConfig = merge(baseConfig, {
   mode: 'development', // 指定为 开发环境
   devtool: 'cheap-module-source-map',
   entry: [

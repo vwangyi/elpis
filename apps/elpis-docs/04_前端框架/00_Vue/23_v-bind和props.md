@@ -293,3 +293,71 @@ emits('update:xxx', 传值)
 
 
 
+### v-bind: | : 
+> 单向数据绑定 从数据到视图
+```js
+
+// 传参 参数名是id 参数值是 string类型的hello
+<div id="hello"></div>
+// 传参 参数名是id 参数值是this上的id变量 this.id
+<div v-bind:id="id"></div>
+<div :id="id"></div> 
+// 传递的参数名 是一个变量
+<div :[id]="id"></div> 
+
+ 
+
+   
+ 我突然发现一个问题    v-bind也可以传入函数，那么v-on有锤子用  emit 也没用    ？？？？
+
+  暂时理解 v-bind传入函数 先不用管  用的时候再说
+ 
+ 
+> 注意：v-bind 和 v-model 的底层原理是 MVVM
+~~~vue
+<template> 
+    <!-- 完整语法 -->
+    <a v-bind:href="url">...</a>
+
+    <!-- 缩写 -->
+    <a :href="url">...</a>
+
+    <!-- 动态参数的缩写 (2.6.0+) -->
+    <a :[key]="url"> ... </a>
+</template>
+~~~
+
+
+> 给组件实例对象 传递属性 传递参数 组件内部用props接收 props相当于函数的形参 形参也可以是函数哟
+ 
+
+## v-bind的修饰符   
+
+  <my-div :haha.prop="xxx" />
+  // .prop - 作为一个 DOM property 绑定而不是作为 attribute 绑定。(差别在哪里？)
+  
+  <my-div :haha.camel="xxx" />
+  // .camel - (2.1.0+) 将 kebab-case attribute 名转换为 camelCase。(从 2.1.0 开始支持)
+
+
+        <my-div :haha.sync="xxx" /> 
+ 
+        .sync (2.3.0+) 语法糖，会扩展成一个更新父组件绑定值的 v-on 侦听器。
+
+        也就是说  :haha.sync="xxx"  >>> 相当于 >>>   :haha="xxx" @update:haha="xxx = $event"
+
+        组件内部 同样是 props接收v-bind this.$emit('update:xxx') 触发事件 和v-model类似
+
+        
+        v-bind="object"    >>> 相当于 >>>  v-bind:属性名="对象.属性名"  
+    
+        给v-bind传一个对象 对象的所有键值对都会被解析成这样 
+
+        v-bind.sync="object"  给v-bind传一个对象  并且给这个对象的每一个属性都加上.sync修饰符 
+
+        注意 传递对象 这个对象不支持字面量 v-bind="{a:1,b:2}"  这样写是不行的
+
+ 
+
+```
+

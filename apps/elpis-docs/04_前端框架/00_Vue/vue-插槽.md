@@ -1,5 +1,8 @@
 
 # 插槽
+ 
+- https://cn.vuejs.org/guide/components/slots.html#slots
+
 
 传插槽 其实就是传递一个函数 
 
@@ -59,7 +62,3 @@
 <!-- slot标签 和 $slots 来接收插槽  -->
 ```
 
-
-
-## 其他
-- https://cn.vuejs.org/guide/components/slots.html#slots

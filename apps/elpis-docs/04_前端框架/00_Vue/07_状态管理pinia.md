@@ -1,7 +1,4 @@
-
-
-# store 
-
+ 
 ## Pinia
 
 ### 定义 store（推荐）
@@ -182,5 +179,4 @@ pinia源码解析 https://www.jianshu.com/p/552ab71d7823
 
 
 
-
-## Vuex 
+ 

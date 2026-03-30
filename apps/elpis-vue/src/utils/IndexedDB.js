@@ -17,6 +17,16 @@ export default class IndexedDB {
   }
 
   /**
+   * 关闭数据库连接
+   */
+  close() {
+    if (this.db) {
+      this.db.close();
+      this.db = null;
+    }
+  }
+
+  /**
    * 创建一张表
    * @param {*} db 数据库
    * @param {*} table 表名
@@ -155,14 +165,4 @@ export default class IndexedDB {
   //               resolve(result);
   //             }
   //   };
-
-  /**
-   * 关闭数据库连接
-   */
-  close() {
-    if (this.db) {
-      this.db.close();
-      this.db = null;
-    }
-  }
 }

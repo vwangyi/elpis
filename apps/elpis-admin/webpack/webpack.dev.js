@@ -19,8 +19,7 @@ module.exports = {
     clean: true,
     chunkFilename: 'js/[name]_[chunkhash:8].chunk.js',
     assetModuleFilename: 'assets/[name]_[hash:8][ext][query]',
-    // publicPath: "./dist",
-
+    // publicPath: "./dist", 
     crossOriginLoading: 'anonymous'
   },
 

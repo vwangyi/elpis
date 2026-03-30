@@ -1,24 +1,48 @@
 <script setup>
 /* 富文本编辑器 */
-import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue';
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue';
-import '@wangeditor/editor/dist/css/style.css'; // 引入 css
-const mode = 'default'; // 编辑器模式，支持 'default' 和 'simple'
-
 import { Boot } from '@wangeditor/editor';
 import module from '@wangeditor/plugin-md';
+// const { Editor, Toolbar, Boot, module } = await importWangeditor(); // import()懒加载
+import { onBeforeUnmount, ref, shallowRef, onMounted } from 'vue';
+import '@wangeditor/editor/dist/css/style.css'; // 引入 css
+
+// const EditorComp = shallowRef(null);
+// const ToolbarComp = shallowRef(null);
+const EditorComp = shallowRef(Editor);
+const ToolbarComp = shallowRef(Toolbar);
 // 注册 markdown 插件
-Boot.registerModule(module);
+// Boot.registerModule(module);
+async function importWangeditor() {
+  const [{ Editor, Toolbar }, { Boot }, module] = await Promise.all([
+    import(/* webpackChunkName: "@wangeditor/editor-for-vue" */ '@wangeditor/editor-for-vue'),
+    import(/* webpackChunkName: "@wangeditor/editor" */ '@wangeditor/editor'),
+    import(/* webpackChunkName: "@wangeditor/plugin-md" */ '@wangeditor/plugin-md')
+  ]);
+  // 注册 markdown 插件
+  Boot.registerModule(module);
+  console.log('懒加载成功了');
+  EditorComp.value = Editor;
+  ToolbarComp.value = Toolbar;
+  return { Editor, Toolbar, Boot, module };
+}
+const mode = 'default'; // 编辑器模式，支持 'default' 和 'simple'
+
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef();
 // 内容 HTML
 const valueHtml = ref('<p>hello</p>');
 
 // 模拟 ajax 异步获取内容
-onMounted(() => {
+onMounted(async () => {
   setTimeout(() => {
     valueHtml.value = '<p>模拟 Ajax 异步设置内容</p>';
   }, 1500);
+});
+
+console.log('懒加载前');
+onMounted(() => {
+  // importWangeditor();
 });
 
 const toolbarConfig = {};
@@ -57,8 +81,15 @@ const handleCreated = editor => {
 <template>
   <div class="rich-editor">
     <div style="border: 1px solid #ccc">
-      <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
-      <Editor
+      <ToolbarComp
+        v-if="ToolbarComp"
+        style="border-bottom: 1px solid #ccc"
+        :editor="editorRef"
+        :defaultConfig="toolbarConfig"
+        :mode="mode"
+      />
+      <EditorComp
+        v-if="EditorComp"
         style="height: 500px; overflow-y: hidden"
         v-model="valueHtml"
         :defaultConfig="editorConfig"

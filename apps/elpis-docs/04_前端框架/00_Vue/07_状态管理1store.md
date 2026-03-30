@@ -1,3 +1,25 @@
+# store 
+- 状态管理: https://cn.vuejs.org/guide/scaling-up/state-management.html#state-management
+
+
+
+
+什么是状态管理？
+
+状态：驱动整个应用的数据源；
+视图：对状态的一种声明式映射；
+交互：状态根据用户在视图中的输入而作出相应变更的可能方式。
+
+
+
+## 方案1 pinia / vuex
+- 大型项目 通用解决方案  pinia / vuex
+ 
+
+## 方案2
+- 小项目 单独建一个文件 用 reactive 就行  
+- 项目太小 数据太少 没必要引入pinia vuex等库
+ 
 # DO、BO、DTO、VO 全面梳理
 
 

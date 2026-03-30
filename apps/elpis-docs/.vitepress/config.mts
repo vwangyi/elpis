@@ -273,6 +273,15 @@ export default defineConfig({
               link: "/04_前端框架/00_Vue/06_异步组件.md"
             }
           ]
+        }, 
+        {
+          text: "Nuxt",
+          items: [
+            {
+              text: "简介",
+              link: "/04_前端框架/03_Nuxt/index.md"
+            }, 
+          ]
         }
       ],
       "/06_业务/": [
@@ -396,6 +405,6 @@ export default defineConfig({
         }
       ]
     },
-    socialLinks: [{ icon: "github", link: "https://github.com/vuejs/vitepress" }]
+    socialLinks: [{ icon: "github", link: "https://github.com/vwangyi" }]
   }
 });

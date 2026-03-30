@@ -1,50 +1,19 @@
 const path = require('path');
-const merge = require('webpack-merge');
-const os = require('os');
-const HappyPack = require('happypack');
-const baseConfig = require('./webpack.config.js'); // 基础配置
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const CssMinimizerWebpackPlugin = require('css-minimizer-webpack-plugin');
-const HtmlWebpackInjectAttributesPlugin = require('html-webpack-inject-attributes-plugin');
-const TerserWebpackPlugin = require('terser-webpack-plugin');
+const webpack = require('webpack') 
+const {merge} = require('webpack-merge'); 
+const baseConfig = require('./webpack.config.js'); // 基础配置 
+const HtmlWebpackInjectAttributesPlugin = require('html-webpack-inject-attributes-plugin'); 
 const rootPath = process.cwd(); // 项目根路径 启动命令的路径
-
-// 多线程 build 设置
-const happyPackCommonConfig = {
-  debug: false,
-  threadPool: HappyPack.ThreadPool({ size: os.cpus().length })
-};
+ 
 
 // 继承了基础配置
-const webpackConfig = merge.smart(baseConfig, {
-  mode: 'production', // 指定为 生产环境
-  // 开发环境的 output 配置
+const webpackConfig = merge(baseConfig, {
+  mode: 'production', // 指定为 生产环境  
   output: {
     filename: 'js/[name]_[chunkhash:8].bundle.js',
-    path: path.join(rootPath, './app/public/dist/prod/'),
-    publicPath: '/dist/prod/',
+    path: path.resolve(rootPath, './dist/'), // 输出文件路径 
+    globalObject: 'this', // globalObject指向this
     crossOriginLoading: 'anonymous'
-  },
-
-  //
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, 'happypack/loader?id=css']
-      },
-      {
-        test: /\.jsx?$/,
-        include: [path.resolve(rootPath, './src/')],
-        use: ['happypack/loader?id=js']
-      },
-      {
-        test: /\.jsx?$/,
-        include: [path.resolve(rootPath, './src/')],
-        use: { loader: 'babel-loader' }
-      }
-    ]
   },
   /**
    * webpack 不会有大量的 hints 信息 默认为 waring
@@ -52,69 +21,26 @@ const webpackConfig = merge.smart(baseConfig, {
   performance: {
     hints: false
   },
-  plugins: [
-    // 每次 build 生产新的dist目录之前 删除之前的dist目录
-    new CleanWebpackPlugin(['public/dist'], {
-      root: path.resolve(rootPath, './app/'),
-      exclude: [],
-      verbose: true,
-      dry: false
-    }),
-
-    // 提取 css 的公共部分 有效利用缓存 （非公共部分使用 inline）
-    new MiniCssExtractPlugin({
-      chunkFilename: 'css/[name]_[contenthash:8].bundle.css'
-    }),
-
-    // 优化并压缩 css 资源
-    new CssMinimizerWebpackPlugin(),
-
-    // 多线程打包 JS 加快打包速度
-    new HappyPack({
-      ...happyPackCommonConfig,
-      id: 'js',
-      loaders: [
-        `babel-loader?${JSON.stringify({
-          presets: ['@babel/preset-env'],
-          plugins: ['@babel/plugin-transform-runtime']
-        })}`
-      ]
-    }),
-
-    // 多线程打包 css 加快打包速度
-    new HappyPack({
-      ...happyPackCommonConfig,
-      id: 'css',
-      loaders: [
-        {
-          path: 'css-loader',
-          options: {
-            importLoaders: 1
-          }
-        }
-      ]
-    }),
-
+  plugins: [ 
     // 浏览器在请求资源时 不发送用户的身份凭证
     new HtmlWebpackInjectAttributesPlugin({
       crossOrigin: 'anonymous'
     })
-  ],
-  optimization: {
-    // 使用 TerserPlugin 的并发和缓存 提升压缩阶段的性能
-    minimize: true,
-    minimizer: [
-      new TerserWebpackPlugin({
-        cache: true, // 使用缓存 加速构建过程
-        parallel: true, // 使用多核 cpu 加速压缩速度
-        terserOptions: {
-          compress: {
-            drop_console: true // 删除console.log 因为console.log会让变量保持引用 从而导致 内存泄露
-          }
-        }
-      })
-    ]
-  }
+  ], 
 });
 
-module.exports = webpackConfig;
+webpack(webpackConfig, (err, stats) => {
+  if (err) {
+    console.log(err)
+    return
+  }
+  const config = {
+    colors: true, // 控制台输出色彩信息
+    modules: false, // 不显示每个模块的打包信息
+    children: false, // 不显示子编译任务的信息
+    chunks: false, // 不显示每个代码块的信息
+    chunkModules: true, // 显示代码块中模块的信息
+  }
+  process.stdout.write(`${stats.toString(config)}\n`)
+})
+ 

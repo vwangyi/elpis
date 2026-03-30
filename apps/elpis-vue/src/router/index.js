@@ -10,12 +10,12 @@ const routes = [
   {
     path: '/demo',
     name: 'Demo',
-    component: () => import('@/pages/DemoView/DemoView.vue')
+    component: () => import(/* webpackChunkName: "DemoView" */ '@/pages/DemoView/DemoView.vue')
   },
   {
     path: '/user-agreement',
     name: 'UserAgreement',
-    component: () => import('@/pages/UserAgreement/UserAgreement.vue')
+    component: () => import(/* webpackChunkName: "UserAgreement" */ '@/pages/UserAgreement/UserAgreement.vue')
   }
 ];
 

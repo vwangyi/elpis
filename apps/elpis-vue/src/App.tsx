@@ -1,4 +1,4 @@
 function setup() {
-  return () => <router-view />
+  return () => <router-view />;
 }
-export default { setup }
+export default { setup };

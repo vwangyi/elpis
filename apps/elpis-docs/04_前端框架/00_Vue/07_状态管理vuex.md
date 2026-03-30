@@ -1,4 +1,6 @@
-
+ 
+## Vuex 
+# vuex
 
 ## 应用场景
 ```javascript
@@ -232,9 +234,4 @@ state的值 可以 赋值 给 data中的变量
 但不能直接 data() {return { hehe: this.$store.state.xxx }}  data中变量初始值不能直接写state的值
 但 props接收的值 可以直接 写到 data中的变量 作为初始值因为 props比data先初始化
  
-```
-
- 
-```
-
-## 
+``` 
