@@ -73,3 +73,40 @@ module.exports = {};
 - devServer 监控能力 用webpack-dev-middleware 中间件实现 监控业务文件是否修改
 - devServer 通知能力 用webpack-hot-middleware 中间件实现 通知页面重新请求最新的资源
 - 内存：不会物理输出到磁盘 而是在内存中（更新内存 比 更新磁盘更快）
+
+
+
+
+
+
+
+  // devServer: {
+  //   static: {
+  //     directory: path.join(__dirname, "../app/public"),
+  //   },
+  //   compress: true,
+  //   port: 8081,
+  //   open: true,
+  //   hot: true,
+  //   historyApiFallback: true, // 支持HTML5 History API
+  //   client: {
+  //     progress: true,
+  //     overlay: {
+  //       errors: true,
+  //       warnings: false,
+  //     },
+  //   },
+  //   onListening(devServer) {
+  //     setTimeout(() => {
+  //       console.clear();
+  //       const port = devServer.server.address().port;
+  //       console.log("\n");
+  //       console.log("  App running at:");
+  //       console.log(`  - Local:   \x1b[36mhttp://localhost:${port}/\x1b[0m`);
+  //       console.log(
+  //         `  - Network: \x1b[36mhttp://${ip.address()}:${port}/\x1b[0m`,
+  //       );
+  //       console.log("\n");
+  //     }, 5000 * 2);
+  //   },
+  // },

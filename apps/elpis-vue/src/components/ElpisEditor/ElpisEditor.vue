@@ -1,23 +1,40 @@
 <script setup>
 /* Vditor 富文本编辑器 */
 import { message } from 'ant-design-vue';
-import { onMounted, ref } from 'vue';
+import {
+  onMounted,
+  ref
+} from 'vue';
 import Vditor from 'vditor';
 import 'vditor/src/assets/less/index'; // 引入样式
 import { useEventListener } from '@/hooks/useEventListener.js';
 import { useNoteStore } from '@/stores/note.js';
 
+import { isArray } from '@/utils/index.js';
+console.log(
+  'isArray',
+  isArray([1, 2, 3])
+);
 const props = defineProps({
-  type: { type: String, default: '' }, // create | update // create表示新增 update表示修改
-  data: { type: Object, default: () => ({}) }
+  type: {
+    type: String,
+    default: ''
+  }, // create | update // create表示新增 update表示修改
+  data: {
+    type: Object,
+    default: () => ({})
+  }
 });
 
-const noteStore = useNoteStore();
-const contentEditor = ref(null);
+const noteStore =
+  useNoteStore();
+const contentEditor =
+  ref(null);
 const editorOptions = ref({
   mode: 'ir', // wysiwyg所见即所得 | sv分屏渲染 | ir即时渲染
   theme: 'dark', // light | dark | auto
-  height: window.innerHeight - 72,
+  height:
+    window.innerHeight - 72,
   outline: {
     enable: true, // 启用大纲
     position: 'right' // 位置：left | 'right'
@@ -45,31 +62,54 @@ const editorOptions = ref({
   after: () => {
     // 当前是update模式 且content有值 就设置 Markdown 内容
 
-    console.log('props.type', props.type, props.data.content);
-    if (props.type === 'update' && props.data.content) {
-      contentEditor.value.setValue(props.data.content);
+    console.log(
+      'props.type',
+      props.type,
+      props.data.content
+    );
+    if (
+      props.type ===
+        'update' &&
+      props.data.content
+    ) {
+      contentEditor.value.setValue(
+        props.data.content
+      );
     }
   },
   lineNumber: true
 });
 
 /* 监听键盘按下事件 */
-function handleKeyDown(event) {
+function handleKeyDown(
+  event
+) {
   // 监听保存快捷键 ctrl+s 或 cmd+s
-  if ((event.metaKey || event.ctrlKey) && event.key === 's') {
+  if (
+    (event.metaKey ||
+      event.ctrlKey) &&
+    event.key === 's'
+  ) {
     event.preventDefault();
     saveContent();
   }
 
   /* 保存文章到服务器 */
   async function saveContent() {
-    console.log('saveContent');
-    const mdContent = contentEditor.value.getValue(); // 获取 Markdown 内容
-    const htmlContent = contentEditor.value.getHTML(); // 获取 HTML 内容
+    console.log(
+      'saveContent'
+    );
+    const mdContent =
+      contentEditor.value.getValue(); // 获取 Markdown 内容
+    const htmlContent =
+      contentEditor.value.getHTML(); // 获取 HTML 内容
 
     // 验证内容
     if (!mdContent.trim()) {
-      console.log('文章内容不能为空', 'error');
+      console.log(
+        '文章内容不能为空',
+        'error'
+      );
       return;
     }
 
@@ -78,10 +118,19 @@ function handleKeyDown(event) {
       time: +new Date()
     };
 
-    console.log('props.type', props.type);
-    if (props.type === 'create') {
-      await noteStore.create(data);
-      console.log('数据创建成功');
+    console.log(
+      'props.type',
+      props.type
+    );
+    if (
+      props.type === 'create'
+    ) {
+      await noteStore.create(
+        data
+      );
+      console.log(
+        '数据创建成功'
+      );
     } else if (false) {
     }
 
@@ -91,8 +140,16 @@ function handleKeyDown(event) {
 
 /* 页面初始化挂载 执行 */
 function init() {
-  contentEditor.value = new Vditor('editor', editorOptions.value);
-  useEventListener(document, 'keydown', handleKeyDown);
+  contentEditor.value =
+    new Vditor(
+      'editor',
+      editorOptions.value
+    );
+  useEventListener(
+    document,
+    'keydown',
+    handleKeyDown
+  );
 }
 
 onMounted(init);

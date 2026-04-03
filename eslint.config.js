@@ -17,10 +17,12 @@ const ignores = [
   'apps/elpis-demo',
   'apps/elpis-nest',
   'apps/elpis-vue',
-  'scripts'
+  'scripts',
+  'apps/demo'
 ];
 const rules = {
-  '@typescript-eslint/no-require-imports': 'off', // 使用require函数
+  '@typescript-eslint/no-require-imports':
+    'off', // 使用require函数
   '@typescript-eslint/no-unused-vars': 0, // 未使用的变量
   'no-unreachable': 0, // 无法访问的代码 比如 return后面的代码
   // 不能使用var
@@ -30,7 +32,8 @@ const rules = {
   // 要求使用 isNaN() 检查 NaN
   'use-isnan': 'error',
   // 强制数组方法的回调函数中有 return 语句
-  'array-callback-return': 'error',
+  'array-callback-return':
+    'error',
   // 要求 switch 语句中有 default 分支
   'default-case': 'error',
   // 强制在任何允许的时候使用点号
@@ -50,17 +53,20 @@ const rules = {
   // 禁止在 return 语句中使用赋值语句
   'no-return-assign': 'error',
   // 禁止出现未使用过的表达式
-  'no-unused-expressions': 'error',
+  'no-unused-expressions':
+    'error',
   // 禁止不必要的 .call() 和 .apply()
   'no-useless-call': 'error',
   // 禁用未声明的变量，除非它们在 /global / 注释中被提到
   'no-undef': 'off',
   // 不允许在变量定义之前使用它们
-  'no-use-before-define': 'error',
+  'no-use-before-define':
+    'error',
   // 强制在逗号前后使用一致的空格
   'comma-spacing': 'error',
   // 强制数组方括号中使用一致的空格
-  'array-bracket-spacing': 'error',
+  'array-bracket-spacing':
+    'error',
   // 强制在单行代码块中使用一致的空格
   'block-spacing': 'error',
   // 强制在代码块中使用一致的大括号风格
@@ -76,19 +82,29 @@ const rules = {
   // 要求构造函数首字母大写
   'new-cap': 'off',
   // 要求方法链中每个调用都有一个换行符
-  'newline-per-chained-call': 'error',
+  'newline-per-chained-call':
+    'error',
   // 不允许多个空行
-  'no-multiple-empty-lines': 'error',
+  'no-multiple-empty-lines':
+    'error',
   // 禁用行尾空格
-  'no-trailing-spaces': 'error',
+  'no-trailing-spaces':
+    'error',
   // 强制在花括号中使用一致的空格
-  'object-curly-spacing': ['error', 'always'],
+  'object-curly-spacing': [
+    'error',
+    'always'
+  ],
   // 强制分号之前和之后使用一致的空格
   'semi-spacing': 'error',
   // 强制在块之前使用一致的空格
-  'space-before-blocks': 'error',
+  'space-before-blocks':
+    'error',
   // 强制在圆括号内使用一致的空格
-  'space-in-parens': ['error', 'never'],
+  'space-in-parens': [
+    'error',
+    'never'
+  ],
   // 要求操作符周围有空格
   'space-infix-ops': 'error',
   // 强制在注释中 // 或 /* 使用一致的空格
@@ -100,53 +116,80 @@ const rules = {
 
   // vue部分
   // vue组件标签不能为一个单词
-  'vue/multi-word-component-names': 'off',
+  'vue/multi-word-component-names':
+    'off',
   // vue在watch中不能用箭头函数
-  'vue/no-arrow-functions-in-watch': 'error',
+  'vue/no-arrow-functions-in-watch':
+    'error',
   // vue在computed中不能用async/await
-  'vue/no-async-in-computed-properties': 'error',
+  'vue/no-async-in-computed-properties':
+    'error',
   // vue不能使用一样的key
   'vue/no-dupe-keys': 'error',
   // vue子组件不能改变父组件的属性
-  'vue/no-mutating-props': 'error',
+  'vue/no-mutating-props':
+    'error',
   // vue不能使用自带的属性/方法
-  'vue/no-reserved-keys': 'error',
+  'vue/no-reserved-keys':
+    'error',
   // vue的data必须是一个函数
-  'vue/no-shared-component-data': 'error',
+  'vue/no-shared-component-data':
+    'error',
   // vue的computed不能有副作用
-  'vue/no-side-effects-in-computed-properties': 'error',
+  'vue/no-side-effects-in-computed-properties':
+    'error',
   // vue中template不能使用key
-  'vue/no-template-key': 'error',
+  'vue/no-template-key':
+    'error',
   // vue中不能调用computed
-  'vue/no-use-computed-property-like-method': 'error',
+  'vue/no-use-computed-property-like-method':
+    'error',
   // vue中不能和v-for一起使用v-if
-  'vue/no-use-v-if-with-v-for': 'error',
+  'vue/no-use-v-if-with-v-for':
+    'error',
   // vue中不能给template添加无用属性
-  'vue/no-useless-template-attributes': 'error',
+  'vue/no-useless-template-attributes':
+    'error',
   // vue中props中的属性必须有类型
-  'vue/require-prop-type-constructor': 'error',
+  'vue/require-prop-type-constructor':
+    'error',
   // vue中v-for必须有key
-  'vue/require-v-for-key': 'error',
+  'vue/require-v-for-key':
+    'error',
   // vue中computed必须有返回值
-  'vue/return-in-computed-property': 'error',
+  'vue/return-in-computed-property':
+    'error',
   // vue中不能使用无效的nextTick
-  'vue/valid-next-tick': 'error',
+  'vue/valid-next-tick':
+    'error',
   // vue标签换行
-  'vue/singleline-html-element-content-newline': 'off',
+  'vue/singleline-html-element-content-newline':
+    'off',
   // vue属性顺序
-  'vue/attributes-order': 'off',
+  'vue/attributes-order':
+    'off',
   // vue方法顺序
-  'vue/order-in-components': 'off',
+  'vue/order-in-components':
+    'off',
   // v-html
   'vue/no-v-html': 'off',
   // template中不止可以有一个标签
-  'vue/valid-template-root': 'off',
+  'vue/valid-template-root':
+    'off',
   // template中的缩进
-  'vue/html-indent': ['error', 2],
+  'vue/html-indent': [
+    'error',
+    2
+  ],
   // template中的引号
-  'vue/html-quotes': ['error', 'double', { avoidEscape: false }],
+  'vue/html-quotes': [
+    'error',
+    'double',
+    { avoidEscape: false }
+  ],
   // 插值表达式
-  'vue/mustache-interpolation-spacing': ['error', 'always'],
+  'vue/mustache-interpolation-spacing':
+    ['error', 'always'],
   // template中的空格
   'vue/no-multi-spaces': [
     'error',
@@ -154,10 +197,14 @@ const rules = {
       ignoreProperties: false
     }
   ],
-  'vue/no-v-text-v-html-on-component': 'off',
+  'vue/no-v-text-v-html-on-component':
+    'off',
 
   // 换行符
-  'linebreak-style': [2, 'unix'],
+  'linebreak-style': [
+    2,
+    'unix'
+  ],
   // 取消jsdoc注释
   'require-jsdoc': 'off',
   // 正常for..in..
@@ -172,9 +219,16 @@ export default defineConfig([
   {
     ignores, // 忽略项
     // 继承规则
-    extends: [eslint.configs.recommended, ...tseslint.configs.recommended, eslintConfigPrettier],
+    extends: [
+      eslint.configs
+        .recommended,
+      ...tseslint.configs
+        .recommended,
+      eslintConfigPrettier
+    ],
     plugins: {
-      prettier: eslintPluginPrettier
+      prettier:
+        eslintPluginPrettier
     },
     languageOptions: {
       ecmaVersion: 'latest', // ecma语法支持版本
@@ -193,8 +247,17 @@ export default defineConfig([
   /* vue项目 */
   {
     ignores,
-    files: ['apps/elpis-vue/**/*.{ts,js,tsx,jsx,vue}', 'packages/elpis-design/**/*.{ts,js,tsx,jsx,vue}'],
-    extends: [...eslintPluginVue.configs['flat/recommended'], eslintConfigPrettier],
+    files: [
+      'apps/elpis-vue/**/*.{ts,js,tsx,jsx,vue}',
+      'packages/elpis-design/**/*.{ts,js,tsx,jsx,vue}'
+    ],
+    extends: [
+      ...eslintPluginVue
+        .configs[
+        'flat/recommended'
+      ],
+      eslintConfigPrettier
+    ],
     languageOptions: {
       globals: {
         ...globals.browser
@@ -205,7 +268,9 @@ export default defineConfig([
   /* koa项目 */
   {
     ignores,
-    files: ['apps/elpis-koa/**/*.{ts,js}'],
+    files: [
+      'apps/elpis-koa/**/*.{ts,js}'
+    ],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -215,7 +280,8 @@ export default defineConfig([
       }
     },
     rules: {
-      '@typescript-eslint/no-require-imports': 'off', // 使用require函数
+      '@typescript-eslint/no-require-imports':
+        'off', // 使用require函数
       '@typescript-eslint/no-unused-vars': 0, // 未使用的变量
       'no-unreachable': 0, // 无法访问的代码 比如 return后面的代码
 
@@ -225,7 +291,8 @@ export default defineConfig([
       'prefer-const': [
         'error',
         {
-          destructuring: 'any', // 解构时也检查
+          destructuring:
+            'any', // 解构时也检查
           ignoreReadBeforeAssign: false // 赋值前读取的变量也检查
         }
       ]
@@ -234,14 +301,17 @@ export default defineConfig([
 
   /* cli 项目 */
   {
-    files: ['packages/elpis-cli/**/*.js'],
+    files: [
+      'packages/elpis-cli/**/*.js'
+    ],
     languageOptions: {
       globals: {
         ...globals.node // 添加 Node.js 全局变量
       }
     },
     rules: {
-      '@typescript-eslint/no-require-imports': 'off' // 允许使用require函数
+      '@typescript-eslint/no-require-imports':
+        'off' // 允许使用require函数
     }
   }
 ]);
