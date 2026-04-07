@@ -1,5 +1,8 @@
 <template>
-  <component :is="type" v-bind="linkProps(to)">
+  <component
+    :is="type"
+    v-bind="linkProps(to)"
+  >
     <slot />
   </component>
 </template>
@@ -16,7 +19,9 @@ export default {
   },
   computed: {
     isExternal() {
-      return isExternal(this.to);
+      return isExternal(
+        this.to
+      );
     },
     type() {
       if (this.isExternal) {

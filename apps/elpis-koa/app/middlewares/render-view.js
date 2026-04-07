@@ -9,11 +9,21 @@ const koaStatic = require('koa-static'); // 静态文件中间件
  * koa-nunjucks-2 则是 让前端拿到 html
  */
 module.exports = app => {
-  app.use(koaStatic(path.resolve(process.cwd(), './public'))); // src="/dist/xxx.js" /public/dist.xxx.js
+  app.use(
+    koaStatic(
+      path.resolve(
+        process.cwd(),
+        './public'
+      )
+    )
+  ); // src="/dist/xxx.js" /public/dist.xxx.js
   app.use(
     koaNunjucks({
       ext: 'html',
-      path: path.resolve(process.cwd(), './public/'), // 前端打包后的产物位置 app/public/xx.html
+      path: path.resolve(
+        process.cwd(),
+        './public/'
+      ), // 前端打包后的产物位置 app/public/xx.html
       nunjucksConfig: {
         noCache: true,
         trimABlocks: true

@@ -1,6 +1,14 @@
 <template>
-  <div style="display: inline-block">
-    <label class="radio-label" style="padding-left: 0">Filename: </label>
+  <div
+    style="
+      display: inline-block;
+    "
+  >
+    <label
+      class="radio-label"
+      style="padding-left: 0"
+      >Filename:
+    </label>
     <el-input
       v-model="filename"
       placeholder="Please enter the file name (default excel-list)"
@@ -24,7 +32,10 @@ export default {
         return this.value;
       },
       set(val) {
-        this.$emit('input', val);
+        this.$emit(
+          'input',
+          val
+        );
       }
     }
   }

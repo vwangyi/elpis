@@ -1,8 +1,27 @@
 <template>
-  <div :class="{ fullscreen: fullscreen }" class="tinymce-container" :style="{ width: containerWidth }">
-    <textarea :id="tinymceId" class="tinymce-textarea" />
-    <div class="editor-custom-btn-container">
-      <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" />
+  <div
+    :class="{
+      fullscreen: fullscreen
+    }"
+    class="tinymce-container"
+    :style="{
+      width: containerWidth
+    }"
+  >
+    <textarea
+      :id="tinymceId"
+      class="tinymce-textarea"
+    />
+    <div
+      class="editor-custom-btn-container"
+    >
+      <editorImage
+        color="#1890ff"
+        class="editor-upload-btn"
+        @successCBK="
+          imageSuccessCBK
+        "
+      />
     </div>
   </div>
 </template>
@@ -18,7 +37,8 @@ import toolbar from './toolbar';
 import load from './dynamicLoadScript';
 
 // why use this cdn, detail see https://github.com/PanJiaChen/tinymce-all-in-one
-const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/tinymce.min.js';
+const tinymceCDN =
+  'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.3/tinymce.min.js';
 
 export default {
   name: 'Tinymce',
@@ -27,7 +47,15 @@ export default {
     id: {
       type: String,
       default: function () {
-        return 'vue-tinymce-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '');
+        return (
+          'vue-tinymce-' +
+          +new Date() +
+          ((
+            Math.random() *
+            1000
+          ).toFixed(0) +
+            '')
+        );
       }
     },
     value: {
@@ -43,7 +71,8 @@ export default {
     },
     menubar: {
       type: String,
-      default: 'file edit insert view format table'
+      default:
+        'file edit insert view format table'
     },
     height: {
       type: [Number, String],
@@ -72,8 +101,13 @@ export default {
   },
   computed: {
     containerWidth() {
-      const width = this.width;
-      if (/^[\d]+(\.[\d]+)?$/.test(width)) {
+      const width =
+        this.width;
+      if (
+        /^[\d]+(\.[\d]+)?$/.test(
+          width
+        )
+      ) {
         // matches `100`, `'100'`
         return `${width}px`;
       }
@@ -82,8 +116,19 @@ export default {
   },
   watch: {
     value(val) {
-      if (!this.hasChange && this.hasInit) {
-        this.$nextTick(() => window.tinymce.get(this.tinymceId).setContent(val || ''));
+      if (
+        !this.hasChange &&
+        this.hasInit
+      ) {
+        this.$nextTick(() =>
+          window.tinymce
+            .get(
+              this.tinymceId
+            )
+            .setContent(
+              val || ''
+            )
+        );
       }
     }
   },
@@ -104,49 +149,84 @@ export default {
   methods: {
     init() {
       // dynamic load tinymce from cdn
-      load(tinymceCDN, err => {
-        if (err) {
-          this.$message.error(err.message);
-          return;
+      load(
+        tinymceCDN,
+        err => {
+          if (err) {
+            this.$message.error(
+              err.message
+            );
+            return;
+          }
+          this.initTinymce();
         }
-        this.initTinymce();
-      });
+      );
     },
     initTinymce() {
       const _this = this;
       window.tinymce.init({
         selector: `#${this.tinymceId}`,
-        language: this.languageTypeList['en'],
+        language:
+          this
+            .languageTypeList[
+            'en'
+          ],
         height: this.height,
-        body_class: 'panel-body ',
+        body_class:
+          'panel-body ',
         object_resizing: false,
-        toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
+        toolbar:
+          this.toolbar
+            .length > 0
+            ? this.toolbar
+            : toolbar,
         menubar: this.menubar,
         plugins: plugins,
         end_container_on_empty_block: true,
-        powerpaste_word_import: 'clean',
+        powerpaste_word_import:
+          'clean',
         code_dialog_height: 450,
         code_dialog_width: 1000,
-        advlist_bullet_styles: 'square',
-        advlist_number_styles: 'default',
-        imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-        default_link_target: '_blank',
+        advlist_bullet_styles:
+          'square',
+        advlist_number_styles:
+          'default',
+        imagetools_cors_hosts:
+          [
+            'www.tinymce.com',
+            'codepen.io'
+          ],
+        default_link_target:
+          '_blank',
         link_title: false,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
-        init_instance_callback: editor => {
-          if (_this.value) {
-            editor.setContent(_this.value);
-          }
-          _this.hasInit = true;
-          editor.on('NodeChange Change KeyUp SetContent', () => {
-            this.hasChange = true;
-            this.$emit('input', editor.getContent());
-          });
-        },
+        init_instance_callback:
+          editor => {
+            if (_this.value) {
+              editor.setContent(
+                _this.value
+              );
+            }
+            _this.hasInit = true;
+            editor.on(
+              'NodeChange Change KeyUp SetContent',
+              () => {
+                this.hasChange = true;
+                this.$emit(
+                  'input',
+                  editor.getContent()
+                );
+              }
+            );
+          },
         setup(editor) {
-          editor.on('FullscreenStateChanged', e => {
-            _this.fullscreen = e.state;
-          });
+          editor.on(
+            'FullscreenStateChanged',
+            e => {
+              _this.fullscreen =
+                e.state;
+            }
+          );
         },
         // it will try to keep these URLs intact
         // https://www.tiny.cloud/docs-3x/reference/configuration/Configuration3x@convert_urls/
@@ -188,9 +268,14 @@ export default {
       });
     },
     destroyTinymce() {
-      const tinymce = window.tinymce.get(this.tinymceId);
+      const tinymce =
+        window.tinymce.get(
+          this.tinymceId
+        );
       if (this.fullscreen) {
-        tinymce.execCommand('mceFullScreen');
+        tinymce.execCommand(
+          'mceFullScreen'
+        );
       }
 
       if (tinymce) {
@@ -198,13 +283,23 @@ export default {
       }
     },
     setContent(value) {
-      window.tinymce.get(this.tinymceId).setContent(value);
+      window.tinymce
+        .get(this.tinymceId)
+        .setContent(value);
     },
     getContent() {
-      window.tinymce.get(this.tinymceId).getContent();
+      window.tinymce
+        .get(this.tinymceId)
+        .getContent();
     },
     imageSuccessCBK(arr) {
-      arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`));
+      arr.forEach(v =>
+        window.tinymce
+          .get(this.tinymceId)
+          .insertContent(
+            `<img class="wscnph" src="${v.url}" >`
+          )
+      );
     }
   }
 };
@@ -236,7 +331,8 @@ export default {
   /*z-index: 2005;*/
 }
 
-.fullscreen .editor-custom-btn-container {
+.fullscreen
+  .editor-custom-btn-container {
   z-index: 10000;
   position: fixed;
 }

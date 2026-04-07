@@ -1,13 +1,18 @@
-const { notEmpty } = require('../utils.js');
+const {
+  notEmpty
+} = require('../utils.js');
 
 module.exports = {
-  description: 'generate store',
+  description:
+    'generate store',
   prompts: [
     {
       type: 'input',
       name: 'name',
-      message: 'store name please',
-      validate: notEmpty('name')
+      message:
+        'store name please',
+      validate:
+        notEmpty('name')
     },
     {
       type: 'checkbox',
@@ -31,7 +36,14 @@ module.exports = {
         }
       ],
       validate(value) {
-        if (!value.includes('state') || !value.includes('mutations')) {
+        if (
+          !value.includes(
+            'state'
+          ) ||
+          !value.includes(
+            'mutations'
+          )
+        ) {
           return 'store require at least state and mutations';
         }
         return true;
@@ -41,7 +53,10 @@ module.exports = {
   actions(data) {
     const name = '{{name}}';
     const { blocks } = data;
-    const options = ['state', 'mutations'];
+    const options = [
+      'state',
+      'mutations'
+    ];
     const joinFlag = `,
   `;
     if (blocks.length === 3) {
@@ -52,12 +67,25 @@ module.exports = {
       {
         type: 'add',
         path: `src/store/modules/${name}.js`,
-        templateFile: 'plop-templates/store/index.hbs',
+        templateFile:
+          'plop-templates/store/index.hbs',
         data: {
-          options: options.join(joinFlag),
-          state: blocks.includes('state'),
-          mutations: blocks.includes('mutations'),
-          actions: blocks.includes('actions')
+          options:
+            options.join(
+              joinFlag
+            ),
+          state:
+            blocks.includes(
+              'state'
+            ),
+          mutations:
+            blocks.includes(
+              'mutations'
+            ),
+          actions:
+            blocks.includes(
+              'actions'
+            )
         }
       }
     ];

@@ -1,11 +1,24 @@
 <template>
-  <div class="components-container">
+  <div
+    class="components-container"
+  >
     <aside>
       drag-list base on
-      <a href="https://github.com/SortableJS/Vue.Draggable" target="_blank">Vue.Draggable</a>
+      <a
+        href="https://github.com/SortableJS/Vue.Draggable"
+        target="_blank"
+        >Vue.Draggable</a
+      >
     </aside>
-    <div class="editor-container">
-      <dnd-list :list1="list1" :list2="list2" list1-title="List" list2-title="Article pool" />
+    <div
+      class="editor-container"
+    >
+      <dnd-list
+        :list1="list1"
+        :list2="list2"
+        list1-title="List"
+        list2-title="Article pool"
+      />
     </div>
   </div>
 </template>
@@ -29,10 +42,17 @@ export default {
   methods: {
     getData() {
       this.listLoading = true;
-      fetchList().then(response => {
-        this.list1 = response.data.items.splice(0, 5);
-        this.list2 = response.data.items;
-      });
+      fetchList().then(
+        response => {
+          this.list1 =
+            response.data.items.splice(
+              0,
+              5
+            );
+          this.list2 =
+            response.data.items;
+        }
+      );
     }
   }
 };

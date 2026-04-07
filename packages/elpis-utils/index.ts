@@ -1,3 +1,5 @@
-export function isArray(value) {
+export function isArray(
+  value
+) {
   return Array.isArray(value);
 }

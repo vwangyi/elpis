@@ -12,7 +12,8 @@ module.exports = app =>
 
     constructor() {
       this.app = app;
-      this.config = app.config;
+      this.config =
+        app.config;
       this.curl = superagent;
     }
   };

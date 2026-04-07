@@ -1,9 +1,32 @@
 <template>
-  <li :class="{ completed: todo.done, editing: editing }" class="todo">
+  <li
+    :class="{
+      completed: todo.done,
+      editing: editing
+    }"
+    class="todo"
+  >
     <div class="view">
-      <input :checked="todo.done" class="toggle" type="checkbox" @change="toggleTodo(todo)" />
-      <label @dblclick="editing = true" v-text="todo.text" />
-      <button class="destroy" @click="deleteTodo(todo)" />
+      <input
+        :checked="todo.done"
+        class="toggle"
+        type="checkbox"
+        @change="
+          toggleTodo(todo)
+        "
+      />
+      <label
+        @dblclick="
+          editing = true
+        "
+        v-text="todo.text"
+      />
+      <button
+        class="destroy"
+        @click="
+          deleteTodo(todo)
+        "
+      />
     </div>
     <input
       v-show="editing"
@@ -21,11 +44,17 @@
 export default {
   name: 'Todo',
   directives: {
-    focus(el, { value }, { context }) {
+    focus(
+      el,
+      { value },
+      { context }
+    ) {
       if (value) {
-        context.$nextTick(() => {
-          el.focus();
-        });
+        context.$nextTick(
+          () => {
+            el.focus();
+          }
+        );
       }
     }
   },
@@ -44,22 +73,37 @@ export default {
   },
   methods: {
     deleteTodo(todo) {
-      this.$emit('deleteTodo', todo);
+      this.$emit(
+        'deleteTodo',
+        todo
+      );
     },
-    editTodo({ todo, value }) {
-      this.$emit('editTodo', { todo, value });
+    editTodo({
+      todo,
+      value
+    }) {
+      this.$emit('editTodo', {
+        todo,
+        value
+      });
     },
     toggleTodo(todo) {
-      this.$emit('toggleTodo', todo);
+      this.$emit(
+        'toggleTodo',
+        todo
+      );
     },
     doneEdit(e) {
-      const value = e.target.value.trim();
+      const value =
+        e.target.value.trim();
       const { todo } = this;
       if (!value) {
         this.deleteTodo({
           todo
         });
-      } else if (this.editing) {
+      } else if (
+        this.editing
+      ) {
         this.editTodo({
           todo,
           value
@@ -68,7 +112,8 @@ export default {
       }
     },
     cancelEdit(e) {
-      e.target.value = this.todo.text;
+      e.target.value =
+        this.todo.text;
       this.editing = false;
     }
   }

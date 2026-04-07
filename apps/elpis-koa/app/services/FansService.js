@@ -1,6 +1,9 @@
 /* fans表 粉丝模块 */
 module.exports = app => {
-  const BaseService = require('./BaseService')(app);
+  const BaseService =
+    require('./BaseService')(
+      app
+    );
 
   return class FansService extends BaseService {
     /* 获取列表（分页） */

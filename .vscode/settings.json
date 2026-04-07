@@ -3,5 +3,12 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit" // 或 "always"
   },
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "html"]
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html"
+  ]
 }

@@ -1,6 +1,8 @@
 <template>
   <div class="json-editor">
-    <textarea ref="textarea" />
+    <textarea
+      ref="textarea"
+    />
   </div>
 </template>
 
@@ -25,26 +27,56 @@ export default {
   },
   watch: {
     value(value) {
-      const editorValue = this.jsonEditor.getValue();
-      if (value !== editorValue) {
-        this.jsonEditor.setValue(JSON.stringify(this.value, null, 2));
+      const editorValue =
+        this.jsonEditor.getValue();
+      if (
+        value !== editorValue
+      ) {
+        this.jsonEditor.setValue(
+          JSON.stringify(
+            this.value,
+            null,
+            2
+          )
+        );
       }
     }
   },
   mounted() {
-    this.jsonEditor = CodeMirror.fromTextArea(this.$refs.textarea, {
-      lineNumbers: true,
-      mode: 'application/json',
-      gutters: ['CodeMirror-lint-markers'],
-      theme: 'rubyblue',
-      lint: true
-    });
+    this.jsonEditor =
+      CodeMirror.fromTextArea(
+        this.$refs.textarea,
+        {
+          lineNumbers: true,
+          mode: 'application/json',
+          gutters: [
+            'CodeMirror-lint-markers'
+          ],
+          theme: 'rubyblue',
+          lint: true
+        }
+      );
 
-    this.jsonEditor.setValue(JSON.stringify(this.value, null, 2));
-    this.jsonEditor.on('change', cm => {
-      this.$emit('changed', cm.getValue());
-      this.$emit('input', cm.getValue());
-    });
+    this.jsonEditor.setValue(
+      JSON.stringify(
+        this.value,
+        null,
+        2
+      )
+    );
+    this.jsonEditor.on(
+      'change',
+      cm => {
+        this.$emit(
+          'changed',
+          cm.getValue()
+        );
+        this.$emit(
+          'input',
+          cm.getValue()
+        );
+      }
+    );
   },
   methods: {
     getValue() {
@@ -69,7 +101,8 @@ export default {
       min-height: 300px;
     }
 
-    .cm-s-rubyblue span.cm-string {
+    .cm-s-rubyblue
+      span.cm-string {
       color: #f08047;
     }
   }

@@ -8,11 +8,12 @@ export default {
     };
   },
   mounted() {
-    this.$_resizeHandler = debounce(() => {
-      if (this.chart) {
-        this.chart.resize();
-      }
-    }, 100);
+    this.$_resizeHandler =
+      debounce(() => {
+        if (this.chart) {
+          this.chart.resize();
+        }
+      }, 100);
     this.$_initResizeEvent();
     this.$_initSidebarResizeEvent();
   },
@@ -34,22 +35,46 @@ export default {
     // use $_ for mixins properties
     // https://vuejs.org/v2/style-guide/index.html#Private-property-names-essential
     $_initResizeEvent() {
-      window.addEventListener('resize', this.$_resizeHandler);
+      window.addEventListener(
+        'resize',
+        this.$_resizeHandler
+      );
     },
     $_destroyResizeEvent() {
-      window.removeEventListener('resize', this.$_resizeHandler);
+      window.removeEventListener(
+        'resize',
+        this.$_resizeHandler
+      );
     },
-    $_sidebarResizeHandler(e) {
-      if (e.propertyName === 'width') {
+    $_sidebarResizeHandler(
+      e
+    ) {
+      if (
+        e.propertyName ===
+        'width'
+      ) {
         this.$_resizeHandler();
       }
     },
     $_initSidebarResizeEvent() {
-      this.$_sidebarElm = document.getElementsByClassName('sidebar-container')[0];
-      this.$_sidebarElm && this.$_sidebarElm.addEventListener('transitionend', this.$_sidebarResizeHandler);
+      this.$_sidebarElm =
+        document.getElementsByClassName(
+          'sidebar-container'
+        )[0];
+      this.$_sidebarElm &&
+        this.$_sidebarElm.addEventListener(
+          'transitionend',
+          this
+            .$_sidebarResizeHandler
+        );
     },
     $_destroySidebarResizeEvent() {
-      this.$_sidebarElm && this.$_sidebarElm.removeEventListener('transitionend', this.$_sidebarResizeHandler);
+      this.$_sidebarElm &&
+        this.$_sidebarElm.removeEventListener(
+          'transitionend',
+          this
+            .$_sidebarResizeHandler
+        );
     }
   }
 };

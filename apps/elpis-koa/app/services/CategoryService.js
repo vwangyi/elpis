@@ -1,6 +1,9 @@
 /* category表 分类模块 */
 module.exports = app => {
-  const BaseService = require('./BaseService')(app);
+  const BaseService =
+    require('./BaseService')(
+      app
+    );
 
   return class CategoryService extends BaseService {
     /* 获取列表（分页） */

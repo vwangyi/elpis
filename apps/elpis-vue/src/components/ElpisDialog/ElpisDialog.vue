@@ -2,10 +2,17 @@
 /**
  *
  */
-import { onMounted, ref, useTemplateRef, watch } from 'vue';
+import {
+  onMounted,
+  ref,
+  useTemplateRef,
+  watch
+} from 'vue';
 import { message } from 'ant-design-vue';
 
-const dialog = useTemplateRef('dialog');
+const dialog = useTemplateRef(
+  'dialog'
+);
 
 const props = defineProps({
   // 弹窗是否打开
@@ -34,14 +41,20 @@ const props = defineProps({
     default: false
   }
 });
-const emit = defineEmits(['update:open']);
+const emit = defineEmits([
+  'update:open'
+]);
 /* ============================================================= 方法 ========================================================= */
 const show = () => {
   if (props.mask) {
-    console.log('模态方式打开');
+    console.log(
+      '模态方式打开'
+    );
     dialog.value.showModal(); // 模态方式打开
   } else {
-    console.log('非模态方式打开');
+    console.log(
+      '非模态方式打开'
+    );
     dialog.value.show(); // 非模态方式打开
   }
 };
@@ -58,10 +71,12 @@ const confirm = () => {
 };
 
 // 监听关闭事件
-const handleClose = event => {};
+const handleClose =
+  event => {};
 
 // 监听取消事件（按 ESC 键）
-const handleCancel = event => {};
+const handleCancel =
+  event => {};
 
 // 点击蒙层触发
 function handleClickMask() {
@@ -76,7 +91,10 @@ onMounted(init);
 watch(
   () => props.open,
   open => {
-    console.log('watch open', open);
+    console.log(
+      'watch open',
+      open
+    );
     if (open) {
       show();
     } else {
@@ -87,8 +105,17 @@ watch(
 </script>
 
 <template>
-  <dialog ref="dialog" class="dialog" @click.stop="handleClickMask">
-    <div class="dialog-content" @click.stop>
+  <dialog
+    ref="dialog"
+    class="dialog"
+    @click.stop="
+      handleClickMask
+    "
+  >
+    <div
+      class="dialog-content"
+      @click.stop
+    >
       <slot></slot>
     </div>
   </dialog>
@@ -110,7 +137,12 @@ watch(
   background: transparent;
   /* 隐藏对话框的默认背景 */
   &::backdrop {
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(
+      0,
+      0,
+      0,
+      0.7
+    );
     // background: transparent;
   }
 }
@@ -119,7 +151,10 @@ watch(
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(
+    -50%,
+    -50%
+  );
   border-radius: 8px;
   overflow: hidden;
 }

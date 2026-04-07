@@ -22,7 +22,15 @@ export default {
       type: String,
       required: false,
       default() {
-        return 'markdown-editor-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '');
+        return (
+          'markdown-editor-' +
+          +new Date() +
+          ((
+            Math.random() *
+            1000
+          ).toFixed(0) +
+            '')
+        );
       }
     },
     options: {
@@ -53,17 +61,35 @@ export default {
   },
   computed: {
     editorOptions() {
-      const options = Object.assign({}, defaultOptions, this.options);
-      options.initialEditType = this.mode;
-      options.height = this.height;
-      options.language = this.language;
+      const options =
+        Object.assign(
+          {},
+          defaultOptions,
+          this.options
+        );
+      options.initialEditType =
+        this.mode;
+      options.height =
+        this.height;
+      options.language =
+        this.language;
       return options;
     }
   },
   watch: {
-    value(newValue, preValue) {
-      if (newValue !== preValue && newValue !== this.editor.getValue()) {
-        this.editor.setValue(newValue);
+    value(
+      newValue,
+      preValue
+    ) {
+      if (
+        newValue !==
+          preValue &&
+        newValue !==
+          this.editor.getValue()
+      ) {
+        this.editor.setValue(
+          newValue
+        );
       }
     },
     language(val) {
@@ -71,10 +97,14 @@ export default {
       this.initEditor();
     },
     height(newValue) {
-      this.editor.height(newValue);
+      this.editor.height(
+        newValue
+      );
     },
     mode(newValue) {
-      this.editor.changeMode(newValue);
+      this.editor.changeMode(
+        newValue
+      );
     }
   },
   mounted() {
@@ -85,30 +115,49 @@ export default {
   },
   methods: {
     initEditor() {
-      this.editor = new Editor({
-        el: document.getElementById(this.id),
-        ...this.editorOptions
-      });
+      this.editor =
+        new Editor({
+          el: document.getElementById(
+            this.id
+          ),
+          ...this
+            .editorOptions
+        });
       if (this.value) {
-        this.editor.setValue(this.value);
+        this.editor.setValue(
+          this.value
+        );
       }
-      this.editor.on('change', () => {
-        this.$emit('input', this.editor.getValue());
-      });
+      this.editor.on(
+        'change',
+        () => {
+          this.$emit(
+            'input',
+            this.editor.getValue()
+          );
+        }
+      );
     },
     destroyEditor() {
-      if (!this.editor) return;
-      this.editor.off('change');
+      if (!this.editor)
+        return;
+      this.editor.off(
+        'change'
+      );
       this.editor.remove();
     },
     setValue(value) {
-      this.editor.setValue(value);
+      this.editor.setValue(
+        value
+      );
     },
     getValue() {
       return this.editor.getValue();
     },
     setHtml(value) {
-      this.editor.setHtml(value);
+      this.editor.setHtml(
+        value
+      );
     },
     getHtml() {
       return this.editor.getHtml();

@@ -1,6 +1,11 @@
 <template>
-  <div class="chart-container">
-    <chart height="100%" width="100%" />
+  <div
+    class="chart-container"
+  >
+    <chart
+      height="100%"
+      width="100%"
+    />
   </div>
 </template>
 

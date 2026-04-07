@@ -3,10 +3,16 @@
   font-family: 'iconfont logo';
   src: url('https://at.alicdn.com/t/font_985780_km7mi63cihi.eot?t=1545807318834');
   src:
-    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.eot?t=1545807318834#iefix') format('embedded-opentype'),
-    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.woff?t=1545807318834') format('woff'),
-    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.ttf?t=1545807318834') format('truetype'),
-    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.svg?t=1545807318834#iconfont') format('svg');
+    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.eot?t=1545807318834#iefix')
+      format(
+        'embedded-opentype'
+      ),
+    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.woff?t=1545807318834')
+      format('woff'),
+    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.ttf?t=1545807318834')
+      format('truetype'),
+    url('https://at.alicdn.com/t/font_985780_km7mi63cihi.svg?t=1545807318834#iconfont')
+      format('svg');
 }
 
 .logo {
@@ -32,7 +38,8 @@
 }
 
 #tabs {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid
+    #eee;
 }
 
 #tabs li {
@@ -42,7 +49,8 @@
   line-height: 40px;
   text-align: center;
   font-size: 16px;
-  border-bottom: 2px solid transparent;
+  border-bottom: 2px solid
+    transparent;
   position: relative;
   z-index: 1;
   margin-bottom: -1px;
@@ -295,7 +303,8 @@
 .markdown blockquote {
   font-size: 90%;
   color: #999;
-  border-left: 4px solid #e9e9e9;
+  border-left: 4px solid
+    #e9e9e9;
   padding-left: 0.8em;
   margin: 1em 0;
 }
@@ -306,7 +315,8 @@
 
 .markdown .anchor {
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.3s
+    ease;
   margin-left: 8px;
 }
 
@@ -409,7 +419,10 @@ pre[class*='language-'] {
   color: black;
   background: none;
   text-shadow: 0 1px white;
-  font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  font-family:
+    Consolas, Monaco,
+    'Andale Mono',
+    'Ubuntu Mono', monospace;
   text-align: left;
   white-space: pre;
   word-spacing: normal;
@@ -428,17 +441,21 @@ pre[class*='language-'] {
 }
 
 pre[class*='language-']::-moz-selection,
-pre[class*='language-'] ::-moz-selection,
+pre[class*='language-']
+  ::-moz-selection,
 code[class*='language-']::-moz-selection,
-code[class*='language-'] ::-moz-selection {
+code[class*='language-']
+  ::-moz-selection {
   text-shadow: none;
   background: #b3d4fc;
 }
 
 pre[class*='language-']::selection,
-pre[class*='language-'] ::selection,
+pre[class*='language-']
+  ::selection,
 code[class*='language-']::selection,
-code[class*='language-'] ::selection {
+code[class*='language-']
+  ::selection {
   text-shadow: none;
   background: #b3d4fc;
 }
@@ -457,13 +474,15 @@ pre[class*='language-'] {
   overflow: auto;
 }
 
-:not(pre) > code[class*='language-'],
+:not(pre)
+  > code[class*='language-'],
 pre[class*='language-'] {
   background: #f5f2f0;
 }
 
 /* Inline code */
-:not(pre) > code[class*='language-'] {
+:not(pre)
+  > code[class*='language-'] {
   padding: 0.1em;
   border-radius: 0.3em;
   white-space: normal;
@@ -509,7 +528,12 @@ pre[class*='language-'] {
 .language-css .token.string,
 .style .token.string {
   color: #9a6e3a;
-  background: hsla(0, 0%, 100%, 0.5);
+  background: hsla(
+    0,
+    0%,
+    100%,
+    0.5
+  );
 }
 
 .token.atrule,

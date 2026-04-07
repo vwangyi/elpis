@@ -18,7 +18,9 @@
 }
 
 .light-blue-btn {
-  @include colorBtn($light-blue);
+  @include colorBtn(
+    $light-blue
+  );
 }
 
 .red-btn {
@@ -58,7 +60,8 @@
     &:before,
     &:after {
       width: 100%;
-      transition: 600ms ease all;
+      transition: 600ms ease
+        all;
     }
   }
 

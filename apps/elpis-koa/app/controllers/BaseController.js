@@ -6,7 +6,8 @@ module.exports = app =>
      */
     constructor() {
       this.app = app;
-      this.config = app.config;
+      this.config =
+        app.config;
       // this.service = app.service;
     }
 
@@ -16,7 +17,11 @@ module.exports = app =>
      * @params { object } data 核心数据
      * @params { object } metadata 附加数据
      */
-    success(ctx, data = {}, message = '操作成功') {
+    success(
+      ctx,
+      data = {},
+      message = '操作成功'
+    ) {
       ctx.status = 200;
       ctx.body = {
         success: true,
@@ -31,7 +36,11 @@ module.exports = app =>
      * @params { object } message 错误信息
      * @params { object } code 错误码
      */
-    fail(ctx, code, message = '操作失败') {
+    fail(
+      ctx,
+      code,
+      message = '操作失败'
+    ) {
       ctx.body = {
         code,
         success: false,

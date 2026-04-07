@@ -1,26 +1,41 @@
 const Mock = require('mockjs');
-const { deepClone } = require('../utils');
-const { asyncRoutes, constantRoutes } = require('./routes.js');
+const {
+  deepClone
+} = require('../utils');
+const {
+  asyncRoutes,
+  constantRoutes
+} = require('./routes.js');
 
-const routes = deepClone([...constantRoutes, ...asyncRoutes]);
+const routes = deepClone([
+  ...constantRoutes,
+  ...asyncRoutes
+]);
 
 const roles = [
   {
     key: 'admin',
     name: 'admin',
-    description: 'Super Administrator. Have access to view all pages.',
+    description:
+      'Super Administrator. Have access to view all pages.',
     routes: routes
   },
   {
     key: 'editor',
     name: 'editor',
-    description: 'Normal Editor. Can see all pages except permission page',
-    routes: routes.filter(i => i.path !== '/permission') // just a mock
+    description:
+      'Normal Editor. Can see all pages except permission page',
+    routes: routes.filter(
+      i =>
+        i.path !==
+        '/permission'
+    ) // just a mock
   },
   {
     key: 'visitor',
     name: 'visitor',
-    description: 'Just a visitor. Can only see the home page and the document page',
+    description:
+      'Just a visitor. Can only see the home page and the document page',
     routes: [
       {
         path: '',
@@ -29,7 +44,11 @@ const roles = [
           {
             path: 'dashboard',
             name: 'Dashboard',
-            meta: { title: 'dashboard', icon: 'dashboard' }
+            meta: {
+              title:
+                'dashboard',
+              icon: 'dashboard'
+            }
           }
         ]
       }
@@ -69,7 +88,9 @@ module.exports = [
     response: {
       code: 20000,
       data: {
-        key: Mock.mock('@integer(300, 5000)')
+        key: Mock.mock(
+          '@integer(300, 5000)'
+        )
       }
     }
   },

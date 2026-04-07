@@ -23,13 +23,23 @@ module.exports = app => {
     '/api/auth/login/by_email_code'
   ];
 
-  return async (ctx, next) => {
-    if (whiteList.includes(ctx.path)) {
+  return async (
+    ctx,
+    next
+  ) => {
+    if (
+      whiteList.includes(
+        ctx.path
+      )
+    ) {
       await next();
       return;
     }
     let isLogin = true;
-    ctx.token = ctx.cookies.get('token'); // 拿到token
+    ctx.token =
+      ctx.cookies.get(
+        'token'
+      ); // 拿到token
 
     if (!ctx.token) {
       isLogin = false;
@@ -37,9 +47,16 @@ module.exports = app => {
     // token有效
     else {
       try {
-        const { jwtSecreKey } = app.config;
-        const decoded = jwt.verify(ctx.token, jwtSecreKey);
-        ctx.userId = decoded.userId;
+        const {
+          jwtSecreKey
+        } = app.config;
+        const decoded =
+          jwt.verify(
+            ctx.token,
+            jwtSecreKey
+          );
+        ctx.userId =
+          decoded.userId;
       } catch (err) {
         isLogin = false;
       }
@@ -47,15 +64,26 @@ module.exports = app => {
 
     // 若没有登录
     if (!isLogin) {
-      ctx.cookies.set('token', '', { expires: new Date(0) });
+      ctx.cookies.set(
+        'token',
+        '',
+        {
+          expires: new Date(0)
+        }
+      );
 
       // 处理api请求：api请求就没办法重定向了
-      if (ctx.url.startsWith('/api/')) {
+      if (
+        ctx.url.startsWith(
+          '/api/'
+        )
+      ) {
         // 校验token后 提示重新登录
         ctx.body = {
           success: false,
           code: 50000,
-          message: 'token已过期，请重新登录'
+          message:
+            'token已过期，请重新登录'
         };
       }
       // 处理页面请求 就可以重定向

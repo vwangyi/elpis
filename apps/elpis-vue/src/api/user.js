@@ -5,8 +5,13 @@ import request from '@/utils/request';
  * @param {*} condition
  * @returns
  */
-export function findAll(condition = {}) {
-  return request.get('/api/user/list', condition);
+export function findAll(
+  condition = {}
+) {
+  return request.get(
+    '/api/user/list',
+    condition
+  );
 }
 
 /**
@@ -14,5 +19,7 @@ export function findAll(condition = {}) {
  * @returns
  */
 export function findUserInfo() {
-  return request.get('/api/user/info');
+  return request.get(
+    '/api/user/info'
+  );
 }

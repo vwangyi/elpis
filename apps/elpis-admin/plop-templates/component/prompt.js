@@ -1,13 +1,18 @@
-const { notEmpty } = require('../utils.js');
+const {
+  notEmpty
+} = require('../utils.js');
 
 module.exports = {
-  description: 'generate vue component',
+  description:
+    'generate vue component',
   prompts: [
     {
       type: 'input',
       name: 'name',
-      message: 'component name please',
-      validate: notEmpty('name')
+      message:
+        'component name please',
+      validate:
+        notEmpty('name')
     },
     {
       type: 'checkbox',
@@ -31,7 +36,14 @@ module.exports = {
         }
       ],
       validate(value) {
-        if (value.indexOf('script') === -1 && value.indexOf('template') === -1) {
+        if (
+          value.indexOf(
+            'script'
+          ) === -1 &&
+          value.indexOf(
+            'template'
+          ) === -1
+        ) {
           return 'Components require at least a <script> or <template> tag.';
         }
         return true;
@@ -39,17 +51,28 @@ module.exports = {
     }
   ],
   actions: data => {
-    const name = '{{properCase name}}';
+    const name =
+      '{{properCase name}}';
     const actions = [
       {
         type: 'add',
         path: `src/components/${name}/index.vue`,
-        templateFile: 'plop-templates/component/index.hbs',
+        templateFile:
+          'plop-templates/component/index.hbs',
         data: {
           name: name,
-          template: data.blocks.includes('template'),
-          script: data.blocks.includes('script'),
-          style: data.blocks.includes('style')
+          template:
+            data.blocks.includes(
+              'template'
+            ),
+          script:
+            data.blocks.includes(
+              'script'
+            ),
+          style:
+            data.blocks.includes(
+              'style'
+            )
         }
       }
     ];

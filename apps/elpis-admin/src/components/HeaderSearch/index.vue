@@ -1,10 +1,19 @@
 <template>
-  <div :class="{ show: show }" class="header-search">
-    <svg-icon class-name="search-icon" icon-class="search" @click.stop="click" />
+  <div
+    :class="{ show: show }"
+    class="header-search"
+  >
+    <svg-icon
+      class-name="search-icon"
+      icon-class="search"
+      @click.stop="click"
+    />
     <el-select
       ref="headerSearchSelect"
       v-model="search"
-      :remote-method="querySearch"
+      :remote-method="
+        querySearch
+      "
       filterable
       default-first-option
       remote
@@ -12,7 +21,16 @@
       class="header-search-select"
       @change="change"
     >
-      <el-option v-for="item in options" :key="item.path" :value="item" :label="item.title.join(' > ')" />
+      <el-option
+        v-for="item in options"
+        :key="item.path"
+        :value="item"
+        :label="
+          item.title.join(
+            ' > '
+          )
+        "
+      />
     </el-select>
   </div>
 </template>
@@ -36,41 +54,61 @@ export default {
   },
   computed: {
     routes() {
-      return this.$store.getters.permission_routes;
+      return this.$store
+        .getters
+        .permission_routes;
     }
   },
   watch: {
     routes() {
-      this.searchPool = this.generateRoutes(this.routes);
+      this.searchPool =
+        this.generateRoutes(
+          this.routes
+        );
     },
     searchPool(list) {
       this.initFuse(list);
     },
     show(value) {
       if (value) {
-        document.body.addEventListener('click', this.close);
+        document.body.addEventListener(
+          'click',
+          this.close
+        );
       } else {
-        document.body.removeEventListener('click', this.close);
+        document.body.removeEventListener(
+          'click',
+          this.close
+        );
       }
     }
   },
   mounted() {
-    this.searchPool = this.generateRoutes(this.routes);
+    this.searchPool =
+      this.generateRoutes(
+        this.routes
+      );
   },
   methods: {
     click() {
       this.show = !this.show;
       if (this.show) {
-        this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.focus();
+        this.$refs
+          .headerSearchSelect &&
+          this.$refs.headerSearchSelect.focus();
       }
     },
     close() {
-      this.$refs.headerSearchSelect && this.$refs.headerSearchSelect.blur();
+      this.$refs
+        .headerSearchSelect &&
+        this.$refs.headerSearchSelect.blur();
       this.options = [];
       this.show = false;
     },
     change(val) {
-      this.$router.push(val.path);
+      this.$router.push(
+        val.path
+      );
       this.search = '';
       this.options = [];
       this.$nextTick(() => {
@@ -78,28 +116,35 @@ export default {
       });
     },
     initFuse(list) {
-      this.fuse = new Fuse(list, {
-        shouldSort: true,
-        threshold: 0.4,
-        location: 0,
-        distance: 100,
-        maxPatternLength: 32,
-        minMatchCharLength: 1,
-        keys: [
-          {
-            name: 'title',
-            weight: 0.7
-          },
-          {
-            name: 'path',
-            weight: 0.3
-          }
-        ]
-      });
+      this.fuse = new Fuse(
+        list,
+        {
+          shouldSort: true,
+          threshold: 0.4,
+          location: 0,
+          distance: 100,
+          maxPatternLength: 32,
+          minMatchCharLength: 1,
+          keys: [
+            {
+              name: 'title',
+              weight: 0.7
+            },
+            {
+              name: 'path',
+              weight: 0.3
+            }
+          ]
+        }
+      );
     },
     // Filter out the routes that can be displayed in the sidebar
     // And generate the internationalized title
-    generateRoutes(routes, basePath = '/', prefixTitle = []) {
+    generateRoutes(
+      routes,
+      basePath = '/',
+      prefixTitle = []
+    ) {
       let res = [];
 
       for (const router of routes) {
@@ -109,14 +154,28 @@ export default {
         }
 
         const data = {
-          path: path.resolve(basePath, router.path),
-          title: [...prefixTitle]
+          path: path.resolve(
+            basePath,
+            router.path
+          ),
+          title: [
+            ...prefixTitle
+          ]
         };
 
-        if (router.meta && router.meta.title) {
-          data.title = [...data.title, router.meta.title];
+        if (
+          router.meta &&
+          router.meta.title
+        ) {
+          data.title = [
+            ...data.title,
+            router.meta.title
+          ];
 
-          if (router.redirect !== 'noRedirect') {
+          if (
+            router.redirect !==
+            'noRedirect'
+          ) {
             // only push the routes with title
             // special case: need to exclude parent router without redirect
             res.push(data);
@@ -125,9 +184,20 @@ export default {
 
         // recursive child routes
         if (router.children) {
-          const tempRoutes = this.generateRoutes(router.children, data.path, data.title);
-          if (tempRoutes.length >= 1) {
-            res = [...res, ...tempRoutes];
+          const tempRoutes =
+            this.generateRoutes(
+              router.children,
+              data.path,
+              data.title
+            );
+          if (
+            tempRoutes.length >=
+            1
+          ) {
+            res = [
+              ...res,
+              ...tempRoutes
+            ];
           }
         }
       }
@@ -135,7 +205,10 @@ export default {
     },
     querySearch(query) {
       if (query !== '') {
-        this.options = this.fuse.search(query);
+        this.options =
+          this.fuse.search(
+            query
+          );
       } else {
         this.options = [];
       }
@@ -164,13 +237,15 @@ export default {
     display: inline-block;
     vertical-align: middle;
 
-    ::v-deep .el-input__inner {
+    ::v-deep
+      .el-input__inner {
       border-radius: 0;
       border: 0;
       padding-left: 0;
       padding-right: 0;
       box-shadow: none !important;
-      border-bottom: 1px solid #d9d9d9;
+      border-bottom: 1px solid
+        #d9d9d9;
       vertical-align: middle;
     }
   }

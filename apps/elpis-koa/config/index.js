@@ -5,13 +5,35 @@ module.exports = app => {
   // 获取 default.config 和 env.config
   let defaultConfig = {},
     envConfig = {};
-  const configPath = path.resolve(process.cwd(), `.${sep}config`);
+  const configPath =
+    path.resolve(
+      process.cwd(),
+      `.${sep}config`
+    );
   try {
-    defaultConfig = require(path.resolve(configPath, `.${sep}config.default.js`));
-    envConfig = require(path.resolve(configPath, `.${sep}config.${app.env.get()}.js`));
+    defaultConfig = require(
+      path.resolve(
+        configPath,
+        `.${sep}config.default.js`
+      )
+    );
+    envConfig = require(
+      path.resolve(
+        configPath,
+        `.${sep}config.${app.env.get()}.js`
+      )
+    );
   } catch (err) {
-    console.error(`-- [exception] there is no config file --`);
+    console.error(
+      `-- [exception] there is no config file --`
+    );
   }
-  app.config = Object.assign({}, defaultConfig, envConfig);
-  console.info(`-- [init] load config done --`);
+  app.config = Object.assign(
+    {},
+    defaultConfig,
+    envConfig
+  );
+  console.info(
+    `-- [init] load config done --`
+  );
 };

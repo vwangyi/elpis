@@ -1,5 +1,11 @@
 <template>
-  <div :class="className" :style="{ height: height, width: width }" />
+  <div
+    :class="className"
+    :style="{
+      height: height,
+      width: width
+    }"
+  />
 </template>
 
 <script>
@@ -58,13 +64,30 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons');
-      this.setOptions(this.chartData);
+      this.chart =
+        echarts.init(
+          this.$el,
+          'macarons'
+        );
+      this.setOptions(
+        this.chartData
+      );
     },
-    setOptions({ expectedData, actualData } = {}) {
+    setOptions({
+      expectedData,
+      actualData
+    } = {}) {
       this.chart.setOption({
         xAxis: {
-          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          data: [
+            'Mon',
+            'Tue',
+            'Wed',
+            'Thu',
+            'Fri',
+            'Sat',
+            'Sun'
+          ],
           boundaryGap: false,
           axisTick: {
             show: false
@@ -90,16 +113,21 @@ export default {
           }
         },
         legend: {
-          data: ['expected', 'actual']
+          data: [
+            'expected',
+            'actual'
+          ]
         },
         series: [
           {
             name: 'expected',
             itemStyle: {
               normal: {
-                color: '#FF005A',
+                color:
+                  '#FF005A',
                 lineStyle: {
-                  color: '#FF005A',
+                  color:
+                    '#FF005A',
                   width: 2
                 }
               }
@@ -108,7 +136,8 @@ export default {
             type: 'line',
             data: expectedData,
             animationDuration: 2800,
-            animationEasing: 'cubicInOut'
+            animationEasing:
+              'cubicInOut'
           },
           {
             name: 'actual',
@@ -116,19 +145,23 @@ export default {
             type: 'line',
             itemStyle: {
               normal: {
-                color: '#3888fa',
+                color:
+                  '#3888fa',
                 lineStyle: {
-                  color: '#3888fa',
+                  color:
+                    '#3888fa',
                   width: 2
                 },
                 areaStyle: {
-                  color: '#f3f8ff'
+                  color:
+                    '#f3f8ff'
                 }
               }
             },
             data: actualData,
             animationDuration: 2800,
-            animationEasing: 'quadraticOut'
+            animationEasing:
+              'quadraticOut'
           }
         ]
       });
