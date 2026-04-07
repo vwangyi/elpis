@@ -46,7 +46,7 @@ export default defineConfig({
       },
       {
         text: "运维部署",
-        link: "/08_运维/部署.md",
+        link: "/08_运维/环境/mac.md",
         activeMatch: "^/08_运维/"
       },
       {
@@ -273,14 +273,14 @@ export default defineConfig({
               link: "/04_前端框架/00_Vue/06_异步组件.md"
             }
           ]
-        }, 
+        },
         {
           text: "Nuxt",
           items: [
             {
               text: "简介",
               link: "/04_前端框架/03_Nuxt/index.md"
-            }, 
+            },
           ]
         }
       ],
@@ -291,7 +291,7 @@ export default defineConfig({
             {
               text: "业务sense",
               link: "/06_业务/00_业务sense/index.md"
-            } 
+            }
           ]
         },
         {
@@ -401,6 +401,21 @@ export default defineConfig({
               text: "观察者模式",
               link: "/09_常见算法/02_设计模式/index.md"
             }
+          ]
+        }
+      ],
+      "/08_运维/": [
+        {
+          text: "环境",
+          items: [
+            {
+              text: "mac",
+              link: "/08_运维/环境/mac.md"
+            },
+            {
+              text: "windows",
+              link: "/08_运维/环境/windows.md"
+            },
           ]
         }
       ]
