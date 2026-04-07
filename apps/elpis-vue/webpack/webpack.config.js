@@ -157,6 +157,10 @@ module.exports = {
           filename:
             'assets/[hash][ext][query]'
         }
+      },
+      {
+        test: /\.bpmn$/,
+        type: 'asset/source' // Webpack 5 内置，将文件内容作为字符串导出
       }
     ]
   },

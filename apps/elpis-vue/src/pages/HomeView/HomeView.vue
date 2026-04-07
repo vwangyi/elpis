@@ -13,7 +13,6 @@ const list = ref([]);
 function handleClickBtn(
   item: RouteRecordRaw
 ) {
-  console.log('124');
   router.push(item.path);
 }
 </script>
@@ -38,5 +37,10 @@ function handleClickBtn(
 <style scoped>
 .home {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  > * {
+    margin: 4px;
+  }
 }
 </style>
