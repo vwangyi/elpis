@@ -61,6 +61,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "bpmn-js": "^18.14.0",
     "lodash": "^4.17.23",
     "mitt": "^3.0.1"
   }

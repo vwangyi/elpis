@@ -1,12 +1,28 @@
 <script setup lang="ts">
-// pnpm i bpmn-js
-import bpmn from 'bpmn-js/lib/Modeler';
+// import BpmnJS from 'bpmn-js/lib/Modeler';
 
-function initBpmn() {
-  new bpmn();
-}
+// const xml = '...'; // my BPMN 2.0 xml
+// const viewer = new BpmnJS({
+//   container: 'body'
+// });
+
+// try {
+//   const { warnings } =
+//     await viewer.importXML(
+//       xml
+//     );
+
+//   console.log('rendered');
+// } catch (err) {
+//   console.log(
+//     'error rendering',
+//     err
+//   );
+// }
 </script>
 
 <template>
-  <div class="workflow">工作流 审批是 流程中的一种 权限： 会员 审批： 流程：</div>
+  <div class="work-flow">
+    工作流
+  </div>
 </template>

@@ -2,12 +2,22 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>预售许可证审批系统 - 演示版</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>
+      预售许可证审批系统 -
+      演示版
+    </title>
     <style>
       * {
         box-sizing: border-box;
-        font-family: system-ui, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        font-family:
+          system-ui,
+          'Segoe UI', Roboto,
+          'Helvetica Neue',
+          sans-serif;
       }
 
       body {
@@ -27,7 +37,8 @@
         border-radius: 16px;
         padding: 16px 24px;
         margin-bottom: 24px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 2px 8px
+          rgba(0, 0, 0, 0.05);
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -62,7 +73,8 @@
       .role-btn.active {
         background: #1e466e;
         color: white;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 6px
+          rgba(0, 0, 0, 0.1);
       }
 
       .role-btn.applicant-active {
@@ -80,14 +92,16 @@
         background: white;
         border-radius: 24px;
         padding: 24px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 4px 12px
+          rgba(0, 0, 0, 0.08);
       }
 
       .section-title {
         font-size: 1.3rem;
         font-weight: 600;
         margin-bottom: 20px;
-        border-left: 5px solid #1e466e;
+        border-left: 5px solid
+          #1e466e;
         padding-left: 15px;
         color: #1e2a3a;
       }
@@ -142,7 +156,8 @@
       }
 
       .application-card {
-        border: 1px solid #e2e8f0;
+        border: 1px solid
+          #e2e8f0;
         border-radius: 20px;
         padding: 18px;
         margin-bottom: 16px;
@@ -199,7 +214,10 @@
 
       .card-detail {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(200px, 1fr)
+        );
         gap: 8px;
         margin: 12px 0;
         font-size: 0.9rem;
@@ -216,7 +234,8 @@
 
       .reject-reason {
         background: #fff0f0;
-        border-left: 3px solid #c44536;
+        border-left: 3px solid
+          #c44536;
         padding: 8px 12px;
         margin-top: 10px;
         font-size: 0.85rem;
@@ -237,7 +256,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(
+          0,
+          0,
+          0,
+          0.5
+        );
         display: flex;
         justify-content: center;
         align-items: center;
@@ -268,7 +292,8 @@
       .form-control {
         width: 100%;
         padding: 10px 12px;
-        border: 1px solid #cbd5e1;
+        border: 1px solid
+          #cbd5e1;
         border-radius: 12px;
         font-size: 0.95rem;
       }
@@ -317,14 +342,27 @@
 
   <body>
     <div id="app">
-      <div class="app-container">
+      <div
+        class="app-container"
+      >
         <!-- 头部角色切换 -->
         <div class="header">
           <div class="logo">
-            <h1>🏢 预售许可证审批系统</h1>
-            <small style="color: #5e7a93">地产审批 · MVP演示版</small>
+            <h1>
+              🏢
+              预售许可证审批系统
+            </h1>
+            <small
+              style="
+                color: #5e7a93;
+              "
+              >地产审批 ·
+              MVP演示版</small
+            >
           </div>
-          <div class="role-switch">
+          <div
+            class="role-switch"
+          >
             <button
               class="role-btn"
               :class="{ active: currentRole === 'applicant', 'applicant-active': currentRole === 'applicant' }"
@@ -343,34 +381,109 @@
         </div>
 
         <!-- 主要内容区 -->
-        <div class="main-panel">
+        <div
+          class="main-panel"
+        >
           <!-- 申请人面板 -->
-          <div v-if="currentRole === 'applicant'">
-            <div class="toolbar">
-              <div class="section-title">我的申请单</div>
-              <button class="btn btn-primary" @click="openCreateModal">+ 新建申请（草稿）</button>
+          <div
+            v-if="currentRole === 'applicant'"
+          >
+            <div
+              class="toolbar"
+            >
+              <div
+                class="section-title"
+              >
+                我的申请单
+              </div>
+              <button
+                class="btn btn-primary"
+                @click="openCreateModal"
+              >
+                +
+                新建申请（草稿）
+              </button>
             </div>
-            <div v-if="myApplications.length === 0" class="empty-tip">暂无申请，点击上方按钮创建</div>
-            <div v-for="app in myApplications" :key="app.id" class="application-card">
-              <div class="card-header">
-                <span class="project-name">{{ app.projectName }}</span>
-                <span class="status-badge" :class="'status-'+app.status">{{ statusText(app.status) }}</span>
-              </div>
-              <div class="card-detail">
-                <div>🏢 开发企业：{{ app.developer }}</div>
-                <div>🏠 预售楼栋：{{ app.buildingNo }}</div>
-                <div>📐 面积：{{ app.area }} ㎡</div>
-                <div>💰 均价：{{ formatMoney(app.avgPrice) }} 元/㎡</div>
-              </div>
-              <div v-if="app.attachments && app.attachments.length" class="attachments">
-                📎 附件：<span v-for="(file,idx) in app.attachments" :key="idx" class="file-tag"
-                  >{{ file.name || file }}</span
+            <div
+              v-if="myApplications.length === 0"
+              class="empty-tip"
+            >
+              暂无申请，点击上方按钮创建
+            </div>
+            <div
+              v-for="app in myApplications"
+              :key="app.id"
+              class="application-card"
+            >
+              <div
+                class="card-header"
+              >
+                <span
+                  class="project-name"
+                  >{{
+                  app.projectName
+                  }}</span
+                >
+                <span
+                  class="status-badge"
+                  :class="'status-'+app.status"
+                  >{{
+                  statusText(app.status)
+                  }}</span
                 >
               </div>
-              <div v-if="app.status === 'rejected' && app.rejectReason" class="reject-reason">
-                ❌ 驳回理由：{{ app.rejectReason }}
+              <div
+                class="card-detail"
+              >
+                <div>
+                  🏢
+                  开发企业：{{
+                  app.developer
+                  }}
+                </div>
+                <div>
+                  🏠
+                  预售楼栋：{{
+                  app.buildingNo
+                  }}
+                </div>
+                <div>
+                  📐 面积：{{
+                  app.area }}
+                  ㎡
+                </div>
+                <div>
+                  💰 均价：{{
+                  formatMoney(app.avgPrice)
+                  }} 元/㎡
+                </div>
               </div>
-              <div class="card-actions">
+              <div
+                v-if="app.attachments && app.attachments.length"
+                class="attachments"
+              >
+                📎 附件：<span
+                  v-for="(file,idx) in app.attachments"
+                  :key="idx"
+                  class="file-tag"
+                  >{{
+                  file.name ||
+                  file
+                  }}</span
+                >
+              </div>
+              <div
+                v-if="app.status === 'rejected' && app.rejectReason"
+                class="reject-reason"
+              >
+                ❌
+                驳回理由：{{
+                app.rejectReason
+                }}
+              </div>
+              <div
+                class="card-actions"
+              >
                 <button
                   class="btn btn-sm"
                   @click="openEditModal(app)"
@@ -385,47 +498,167 @@
                 >
                   📤 提交申请
                 </button>
-                <button class="btn btn-sm" @click="viewDetail(app)">🔍 查看详情</button>
+                <button
+                  class="btn btn-sm"
+                  @click="viewDetail(app)"
+                >
+                  🔍 查看详情
+                </button>
               </div>
             </div>
           </div>
 
           <!-- 审批人面板 -->
           <div v-else>
-            <div class="section-title">📋 待审批申请（submitted / approving）</div>
-            <div v-if="pendingApplications.length === 0" class="empty-tip">暂无待审批申请</div>
-            <div v-for="app in pendingApplications" :key="app.id" class="application-card">
-              <div class="card-header">
-                <span class="project-name">{{ app.projectName }}</span>
-                <span class="status-badge" :class="'status-'+app.status">{{ statusText(app.status) }}</span>
-              </div>
-              <div class="card-detail">
-                <div>🏢 开发企业：{{ app.developer }}</div>
-                <div>🏠 预售楼栋：{{ app.buildingNo }}</div>
-                <div>📐 面积：{{ app.area }} ㎡</div>
-                <div>💰 均价：{{ formatMoney(app.avgPrice) }} 元/㎡</div>
-                <div>👤 申请人ID：{{ app.userId === 1 ? '申请人' : '未知' }}</div>
-              </div>
-              <div v-if="app.attachments && app.attachments.length" class="attachments">
-                📎 附件：<span v-for="(file,idx) in app.attachments" :key="idx" class="file-tag"
-                  >{{ file.name || file }}</span
+            <div
+              class="section-title"
+            >
+              📋
+              待审批申请（submitted
+              / approving）
+            </div>
+            <div
+              v-if="pendingApplications.length === 0"
+              class="empty-tip"
+            >
+              暂无待审批申请
+            </div>
+            <div
+              v-for="app in pendingApplications"
+              :key="app.id"
+              class="application-card"
+            >
+              <div
+                class="card-header"
+              >
+                <span
+                  class="project-name"
+                  >{{
+                  app.projectName
+                  }}</span
+                >
+                <span
+                  class="status-badge"
+                  :class="'status-'+app.status"
+                  >{{
+                  statusText(app.status)
+                  }}</span
                 >
               </div>
-              <div class="card-actions">
-                <button class="btn btn-sm btn-success" @click="approveStep(app.id)">✅ 通过</button>
-                <button class="btn btn-sm btn-danger" @click="openRejectModal(app.id)">❌ 驳回</button>
-                <button class="btn btn-sm" @click="viewDetail(app)">🔍 查看详情</button>
+              <div
+                class="card-detail"
+              >
+                <div>
+                  🏢
+                  开发企业：{{
+                  app.developer
+                  }}
+                </div>
+                <div>
+                  🏠
+                  预售楼栋：{{
+                  app.buildingNo
+                  }}
+                </div>
+                <div>
+                  📐 面积：{{
+                  app.area }}
+                  ㎡
+                </div>
+                <div>
+                  💰 均价：{{
+                  formatMoney(app.avgPrice)
+                  }} 元/㎡
+                </div>
+                <div>
+                  👤
+                  申请人ID：{{
+                  app.userId
+                  === 1 ?
+                  '申请人' :
+                  '未知' }}
+                </div>
+              </div>
+              <div
+                v-if="app.attachments && app.attachments.length"
+                class="attachments"
+              >
+                📎 附件：<span
+                  v-for="(file,idx) in app.attachments"
+                  :key="idx"
+                  class="file-tag"
+                  >{{
+                  file.name ||
+                  file
+                  }}</span
+                >
+              </div>
+              <div
+                class="card-actions"
+              >
+                <button
+                  class="btn btn-sm btn-success"
+                  @click="approveStep(app.id)"
+                >
+                  ✅ 通过
+                </button>
+                <button
+                  class="btn btn-sm btn-danger"
+                  @click="openRejectModal(app.id)"
+                >
+                  ❌ 驳回
+                </button>
+                <button
+                  class="btn btn-sm"
+                  @click="viewDetail(app)"
+                >
+                  🔍 查看详情
+                </button>
               </div>
             </div>
             <hr />
-            <div class="section-title">📜 其他已审批历史（供参考）</div>
-            <div v-for="app in otherApprovedApplications" :key="app.id" class="application-card" style="opacity: 0.8">
-              <div class="card-header">
-                <span class="project-name">{{ app.projectName }}</span>
-                <span class="status-badge" :class="'status-'+app.status">{{ statusText(app.status) }}</span>
+            <div
+              class="section-title"
+            >
+              📜
+              其他已审批历史（供参考）
+            </div>
+            <div
+              v-for="app in otherApprovedApplications"
+              :key="app.id"
+              class="application-card"
+              style="
+                opacity: 0.8;
+              "
+            >
+              <div
+                class="card-header"
+              >
+                <span
+                  class="project-name"
+                  >{{
+                  app.projectName
+                  }}</span
+                >
+                <span
+                  class="status-badge"
+                  :class="'status-'+app.status"
+                  >{{
+                  statusText(app.status)
+                  }}</span
+                >
               </div>
-              <div class="card-detail">
-                <div>楼栋：{{ app.buildingNo }} | 面积：{{ app.area }}㎡</div>
+              <div
+                class="card-detail"
+              >
+                <div>
+                  楼栋：{{
+                  app.buildingNo
+                  }} |
+                  面积：{{
+                  app.area
+                  }}㎡
+                </div>
               </div>
             </div>
           </div>
@@ -433,360 +666,818 @@
       </div>
 
       <!-- 模态框：新建/编辑申请 -->
-      <div v-if="modalVisible" class="modal-mask" @click.self="closeModal">
-        <div class="modal-container">
-          <h3>{{ isEditMode ? (editingApp.status === 'rejected' ? '修改后重新提交' : '编辑申请') : '新建申请' }}</h3>
-          <div class="form-group">
-            <label>项目名称 *</label>
-            <input class="form-control" v-model="formData.projectName" placeholder="例如：滨江御府一期" />
+      <div
+        v-if="modalVisible"
+        class="modal-mask"
+        @click.self="closeModal"
+      >
+        <div
+          class="modal-container"
+        >
+          <h3>
+            {{ isEditMode ?
+            (editingApp.status
+            === 'rejected' ?
+            '修改后重新提交' :
+            '编辑申请') :
+            '新建申请' }}
+          </h3>
+          <div
+            class="form-group"
+          >
+            <label
+              >项目名称
+              *</label
+            >
+            <input
+              class="form-control"
+              v-model="formData.projectName"
+              placeholder="例如：滨江御府一期"
+            />
           </div>
-          <div class="form-group">
-            <label>开发企业 *</label>
-            <input class="form-control" v-model="formData.developer" placeholder="xx房地产开发有限公司" />
+          <div
+            class="form-group"
+          >
+            <label
+              >开发企业
+              *</label
+            >
+            <input
+              class="form-control"
+              v-model="formData.developer"
+              placeholder="xx房地产开发有限公司"
+            />
           </div>
-          <div class="form-group">
-            <label>预售楼栋 *</label>
-            <input class="form-control" v-model="formData.buildingNo" placeholder="3#、5#楼" />
+          <div
+            class="form-group"
+          >
+            <label
+              >预售楼栋
+              *</label
+            >
+            <input
+              class="form-control"
+              v-model="formData.buildingNo"
+              placeholder="3#、5#楼"
+            />
           </div>
-          <div class="form-group">
-            <label>面积 (㎡) *</label>
-            <input type="number" class="form-control" v-model.number="formData.area" step="0.01" />
+          <div
+            class="form-group"
+          >
+            <label
+              >面积 (㎡)
+              *</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model.number="formData.area"
+              step="0.01"
+            />
           </div>
-          <div class="form-group">
-            <label>均价 (元/㎡) *</label>
-            <input type="number" class="form-control" v-model.number="formData.avgPrice" step="1" />
+          <div
+            class="form-group"
+          >
+            <label
+              >均价 (元/㎡)
+              *</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              v-model.number="formData.avgPrice"
+              step="1"
+            />
           </div>
-          <div class="form-group">
-            <label>附件上传（模拟路径/文件名）</label>
-            <input type="file" multiple @change="handleFileChange" accept=".pdf,.jpg,.png,.doc" />
-            <div class="file-list" v-if="formData.attachments.length">
-              <span v-for="(file, idx) in formData.attachments" :key="idx" class="file-tag">
-                {{ file.name || file }}
-                <span style="cursor: pointer; margin-left: 6px" @click="removeAttachment(idx)">✖</span>
+          <div
+            class="form-group"
+          >
+            <label
+              >附件上传（模拟路径/文件名）</label
+            >
+            <input
+              type="file"
+              multiple
+              @change="handleFileChange"
+              accept=".pdf,.jpg,.png,.doc"
+            />
+            <div
+              class="file-list"
+              v-if="formData.attachments.length"
+            >
+              <span
+                v-for="(file, idx) in formData.attachments"
+                :key="idx"
+                class="file-tag"
+              >
+                {{ file.name
+                || file }}
+                <span
+                  style="
+                    cursor: pointer;
+                    margin-left: 6px;
+                  "
+                  @click="removeAttachment(idx)"
+                  >✖</span
+                >
               </span>
             </div>
-            <div style="font-size: 12px; color: #6c757d; margin-top: 5px">※ 模拟存储：仅记录文件名/路径，无需后端</div>
+            <div
+              style="
+                font-size: 12px;
+                color: #6c757d;
+                margin-top: 5px;
+              "
+            >
+              ※
+              模拟存储：仅记录文件名/路径，无需后端
+            </div>
           </div>
-          <div class="modal-footer">
-            <button class="btn" @click="closeModal">取消</button>
-            <button class="btn btn-primary" @click="saveApplication">保存草稿</button>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="btn"
+              @click="closeModal"
+            >
+              取消
+            </button>
+            <button
+              class="btn btn-primary"
+              @click="saveApplication"
+            >
+              保存草稿
+            </button>
             <!-- 如果是驳回状态或草稿，可提供直接提交按钮？但提交单独做，这里只保存 -->
           </div>
         </div>
       </div>
 
       <!-- 详情模态框 -->
-      <div v-if="detailModalVisible" class="modal-mask" @click.self="detailModalVisible=false">
-        <div class="modal-container">
+      <div
+        v-if="detailModalVisible"
+        class="modal-mask"
+        @click.self="detailModalVisible=false"
+      >
+        <div
+          class="modal-container"
+        >
           <h3>申请详情</h3>
-          <div><strong>项目名称：</strong> {{ detailApp.projectName }}</div>
-          <div><strong>开发企业：</strong> {{ detailApp.developer }}</div>
-          <div><strong>预售楼栋：</strong> {{ detailApp.buildingNo }}</div>
-          <div><strong>面积：</strong> {{ detailApp.area }} ㎡</div>
-          <div><strong>均价：</strong> {{ formatMoney(detailApp.avgPrice) }} 元/㎡</div>
-          <div><strong>状态：</strong> {{ statusText(detailApp.status) }}</div>
           <div>
-            <strong>附件：</strong>
+            <strong
+              >项目名称：</strong
+            >
+            {{
+            detailApp.projectName
+            }}
+          </div>
+          <div>
+            <strong
+              >开发企业：</strong
+            >
+            {{
+            detailApp.developer
+            }}
+          </div>
+          <div>
+            <strong
+              >预售楼栋：</strong
+            >
+            {{
+            detailApp.buildingNo
+            }}
+          </div>
+          <div>
+            <strong
+              >面积：</strong
+            >
+            {{ detailApp.area
+            }} ㎡
+          </div>
+          <div>
+            <strong
+              >均价：</strong
+            >
+            {{
+            formatMoney(detailApp.avgPrice)
+            }} 元/㎡
+          </div>
+          <div>
+            <strong
+              >状态：</strong
+            >
+            {{
+            statusText(detailApp.status)
+            }}
+          </div>
+          <div>
+            <strong
+              >附件：</strong
+            >
             <span
               v-for="f in detailApp.attachments"
-              style="display: inline-block; background: #eef2ff; margin: 4px; padding: 2px 8px; border-radius: 12px"
-              >{{ f.name || f }}</span
+              style="
+                display: inline-block;
+                background: #eef2ff;
+                margin: 4px;
+                padding: 2px
+                  8px;
+                border-radius: 12px;
+              "
+              >{{ f.name || f
+              }}</span
             >
           </div>
-          <div v-if="detailApp.rejectReason"><strong>驳回理由：</strong> {{ detailApp.rejectReason }}</div>
-          <div class="modal-footer">
-            <button class="btn" @click="detailModalVisible=false">关闭</button>
+          <div
+            v-if="detailApp.rejectReason"
+          >
+            <strong
+              >驳回理由：</strong
+            >
+            {{
+            detailApp.rejectReason
+            }}
+          </div>
+          <div
+            class="modal-footer"
+          >
+            <button
+              class="btn"
+              @click="detailModalVisible=false"
+            >
+              关闭
+            </button>
           </div>
         </div>
       </div>
     </div>
 
     <script>
-      const { createApp, ref, computed, onMounted } = Vue;
+      const {
+        createApp,
+        ref,
+        computed,
+        onMounted
+      } = Vue;
 
       // 模拟初始数据 (死数据 + 内存数组)
       let nextId = 4;
-      const initialApplications = [
-        {
-          id: 1,
-          projectName: '翡翠湾花园',
-          developer: '嘉业地产',
-          buildingNo: '2#、3#',
-          area: 12500,
-          avgPrice: 18500,
-          attachments: [{ name: '施工进度证明.pdf' }],
-          status: 'approved',
-          rejectReason: '',
-          userId: 1
-        },
-        {
-          id: 2,
-          projectName: '滨江云庭',
-          developer: '滨江集团',
-          buildingNo: '5#',
-          area: 8700,
-          avgPrice: 22000,
-          attachments: [{ name: '预售方案.pdf' }],
-          status: 'submitted',
-          rejectReason: '',
-          userId: 1
-        },
-        {
-          id: 3,
-          projectName: '学府雅苑',
-          developer: '诚达置业',
-          buildingNo: '1#、4#',
-          area: 15200,
-          avgPrice: 16800,
-          attachments: [],
-          status: 'draft',
-          rejectReason: '',
-          userId: 1
-        }
-      ];
+      const initialApplications =
+        [
+          {
+            id: 1,
+            projectName:
+              '翡翠湾花园',
+            developer:
+              '嘉业地产',
+            buildingNo:
+              '2#、3#',
+            area: 12500,
+            avgPrice: 18500,
+            attachments: [
+              {
+                name: '施工进度证明.pdf'
+              }
+            ],
+            status:
+              'approved',
+            rejectReason: '',
+            userId: 1
+          },
+          {
+            id: 2,
+            projectName:
+              '滨江云庭',
+            developer:
+              '滨江集团',
+            buildingNo: '5#',
+            area: 8700,
+            avgPrice: 22000,
+            attachments: [
+              {
+                name: '预售方案.pdf'
+              }
+            ],
+            status:
+              'submitted',
+            rejectReason: '',
+            userId: 1
+          },
+          {
+            id: 3,
+            projectName:
+              '学府雅苑',
+            developer:
+              '诚达置业',
+            buildingNo:
+              '1#、4#',
+            area: 15200,
+            avgPrice: 16800,
+            attachments: [],
+            status: 'draft',
+            rejectReason: '',
+            userId: 1
+          }
+        ];
 
       createApp({
         setup() {
-          const currentRole = ref('applicant'); // 'applicant' or 'approver'
-          const applications = ref([...initialApplications]);
+          const currentRole =
+            ref('applicant'); // 'applicant' or 'approver'
+          const applications =
+            ref([
+              ...initialApplications
+            ]);
 
           // 模态框相关
-          const modalVisible = ref(false);
-          const isEditMode = ref(false);
-          const editingAppId = ref(null);
-          const formData = ref({
-            projectName: '',
-            developer: '',
-            buildingNo: '',
-            area: 0,
-            avgPrice: 0,
-            attachments: [] // 存储 { name, ... } 或者字符串
-          });
-
-          const detailModalVisible = ref(false);
-          const detailApp = ref({});
-
-          // 驳回弹窗
-          let rejectTargetId = null;
-
-          // 辅助函数
-          const saveToLocal = () => {
-            // 模拟持久化，保持内存即可，无需localStorage，但为了刷新数据保留可以加，简单起见直接内存操作
-          };
-
-          const generateId = () => {
-            return Date.now() + Math.floor(Math.random() * 10000);
-          };
-
-          // 申请人自己的申请 (userId固定为1，代表当前登录申请人)
-          const myApplications = computed(() => {
-            return applications.value.filter(app => app.userId === 1).sort((a, b) => b.id - a.id);
-          });
-
-          // 待审批申请（submitted / approving）
-          const pendingApplications = computed(() => {
-            return applications.value.filter(
-              app => (app.status === 'submitted' || app.status === 'approving') && app.userId !== undefined
-            );
-          });
-
-          // 其他已审批（approved/rejected 非待审批，供审批人参考）
-          const otherApprovedApplications = computed(() => {
-            return applications.value.filter(app => app.status !== 'submitted' && app.status !== 'approving');
-          });
-
-          const statusText = status => {
-            const map = {
-              draft: '草稿',
-              submitted: '已提交',
-              approving: '审批中',
-              approved: '已通过',
-              rejected: '已驳回'
-            };
-            return map[status] || status;
-          };
-
-          const formatMoney = val => {
-            return val ? val.toLocaleString() : '0';
-          };
-
-          // 角色切换
-          const switchRole = role => {
-            currentRole.value = role;
-          };
-
-          // 打开新建模态框
-          const openCreateModal = () => {
-            isEditMode.value = false;
-            editingAppId.value = null;
-            formData.value = {
+          const modalVisible =
+            ref(false);
+          const isEditMode =
+            ref(false);
+          const editingAppId =
+            ref(null);
+          const formData =
+            ref({
               projectName: '',
               developer: '',
               buildingNo: '',
               area: 0,
               avgPrice: 0,
-              attachments: []
+              attachments: [] // 存储 { name, ... } 或者字符串
+            });
+
+          const detailModalVisible =
+            ref(false);
+          const detailApp =
+            ref({});
+
+          // 驳回弹窗
+          let rejectTargetId =
+            null;
+
+          // 辅助函数
+          const saveToLocal =
+            () => {
+              // 模拟持久化，保持内存即可，无需localStorage，但为了刷新数据保留可以加，简单起见直接内存操作
             };
-            modalVisible.value = true;
-          };
+
+          const generateId =
+            () => {
+              return (
+                Date.now() +
+                Math.floor(
+                  Math.random() *
+                    10000
+                )
+              );
+            };
+
+          // 申请人自己的申请 (userId固定为1，代表当前登录申请人)
+          const myApplications =
+            computed(() => {
+              return applications.value
+                .filter(
+                  app =>
+                    app.userId ===
+                    1
+                )
+                .sort(
+                  (a, b) =>
+                    b.id -
+                    a.id
+                );
+            });
+
+          // 待审批申请（submitted / approving）
+          const pendingApplications =
+            computed(() => {
+              return applications.value.filter(
+                app =>
+                  (app.status ===
+                    'submitted' ||
+                    app.status ===
+                      'approving') &&
+                  app.userId !==
+                    undefined
+              );
+            });
+
+          // 其他已审批（approved/rejected 非待审批，供审批人参考）
+          const otherApprovedApplications =
+            computed(() => {
+              return applications.value.filter(
+                app =>
+                  app.status !==
+                    'submitted' &&
+                  app.status !==
+                    'approving'
+              );
+            });
+
+          const statusText =
+            status => {
+              const map = {
+                draft: '草稿',
+                submitted:
+                  '已提交',
+                approving:
+                  '审批中',
+                approved:
+                  '已通过',
+                rejected:
+                  '已驳回'
+              };
+              return (
+                map[status] ||
+                status
+              );
+            };
+
+          const formatMoney =
+            val => {
+              return val
+                ? val.toLocaleString()
+                : '0';
+            };
+
+          // 角色切换
+          const switchRole =
+            role => {
+              currentRole.value =
+                role;
+            };
+
+          // 打开新建模态框
+          const openCreateModal =
+            () => {
+              isEditMode.value = false;
+              editingAppId.value =
+                null;
+              formData.value =
+                {
+                  projectName:
+                    '',
+                  developer:
+                    '',
+                  buildingNo:
+                    '',
+                  area: 0,
+                  avgPrice: 0,
+                  attachments:
+                    []
+                };
+              modalVisible.value = true;
+            };
 
           // 编辑
-          const openEditModal = app => {
-            if (app.status !== 'draft' && app.status !== 'rejected') {
-              alert('只有草稿或驳回状态的申请可编辑');
-              return;
-            }
-            isEditMode.value = true;
-            editingAppId.value = app.id;
-            formData.value = {
-              projectName: app.projectName,
-              developer: app.developer,
-              buildingNo: app.buildingNo,
-              area: app.area,
-              avgPrice: app.avgPrice,
-              attachments: [...(app.attachments || [])]
+          const openEditModal =
+            app => {
+              if (
+                app.status !==
+                  'draft' &&
+                app.status !==
+                  'rejected'
+              ) {
+                alert(
+                  '只有草稿或驳回状态的申请可编辑'
+                );
+                return;
+              }
+              isEditMode.value = true;
+              editingAppId.value =
+                app.id;
+              formData.value =
+                {
+                  projectName:
+                    app.projectName,
+                  developer:
+                    app.developer,
+                  buildingNo:
+                    app.buildingNo,
+                  area: app.area,
+                  avgPrice:
+                    app.avgPrice,
+                  attachments:
+                    [
+                      ...(app.attachments ||
+                        [])
+                    ]
+                };
+              modalVisible.value = true;
             };
-            modalVisible.value = true;
-          };
 
           // 处理文件上传（模拟存储路径/文件名）
-          const handleFileChange = e => {
-            const files = Array.from(e.target.files);
-            const newFiles = files.map(f => ({
-              name: f.name,
-              size: f.size,
-              type: f.type,
-              lastModified: f.lastModified
-            }));
-            // 追加而不是替换，为了演示简单，直接替换（更符合表单习惯）
-            formData.value.attachments = [...formData.value.attachments, ...newFiles];
-            // 清空input的value以便重复上传同文件
-            e.target.value = '';
-          };
+          const handleFileChange =
+            e => {
+              const files =
+                Array.from(
+                  e.target
+                    .files
+                );
+              const newFiles =
+                files.map(
+                  f => ({
+                    name: f.name,
+                    size: f.size,
+                    type: f.type,
+                    lastModified:
+                      f.lastModified
+                  })
+                );
+              // 追加而不是替换，为了演示简单，直接替换（更符合表单习惯）
+              formData.value.attachments =
+                [
+                  ...formData
+                    .value
+                    .attachments,
+                  ...newFiles
+                ];
+              // 清空input的value以便重复上传同文件
+              e.target.value =
+                '';
+            };
 
-          const removeAttachment = idx => {
-            formData.value.attachments.splice(idx, 1);
-          };
+          const removeAttachment =
+            idx => {
+              formData.value.attachments.splice(
+                idx,
+                1
+              );
+            };
 
           // 保存申请（草稿）
-          const saveApplication = () => {
-            if (
-              !formData.value.projectName ||
-              !formData.value.developer ||
-              !formData.value.buildingNo ||
-              formData.value.area <= 0 ||
-              formData.value.avgPrice <= 0
-            ) {
-              alert('请完整填写项目名称、开发企业、楼栋、面积和均价');
-              return;
-            }
-            if (isEditMode.value) {
-              // 更新现有申请
-              const index = applications.value.findIndex(a => a.id === editingAppId.value);
-              if (index !== -1) {
-                const oldApp = applications.value[index];
-                // 只有 draft 或 rejected 可编辑保存
-                if (oldApp.status !== 'draft' && oldApp.status !== 'rejected') {
-                  alert('当前状态不可编辑');
-                  closeModal();
-                  return;
-                }
-                applications.value[index] = {
-                  ...oldApp,
-                  projectName: formData.value.projectName,
-                  developer: formData.value.developer,
-                  buildingNo: formData.value.buildingNo,
-                  area: formData.value.area,
-                  avgPrice: formData.value.avgPrice,
-                  attachments: formData.value.attachments,
-                  // 如果原来是驳回状态且保存了，不清空理由，但可以保留理由，用户提交后会清除理由？逻辑: 重新提交时应清除理由并变为submitted
-                  rejectReason:
-                    oldApp.status === 'rejected' && oldApp.rejectReason
-                      ? oldApp.rejectReason
-                      : oldApp.rejectReason || ''
-                };
+          const saveApplication =
+            () => {
+              if (
+                !formData
+                  .value
+                  .projectName ||
+                !formData
+                  .value
+                  .developer ||
+                !formData
+                  .value
+                  .buildingNo ||
+                formData.value
+                  .area <=
+                  0 ||
+                formData.value
+                  .avgPrice <=
+                  0
+              ) {
+                alert(
+                  '请完整填写项目名称、开发企业、楼栋、面积和均价'
+                );
+                return;
               }
-            } else {
-              // 新建草稿
-              const newApp = {
-                id: generateId(),
-                projectName: formData.value.projectName,
-                developer: formData.value.developer,
-                buildingNo: formData.value.buildingNo,
-                area: formData.value.area,
-                avgPrice: formData.value.avgPrice,
-                attachments: formData.value.attachments,
-                status: 'draft',
-                rejectReason: '',
-                userId: 1
-              };
-              applications.value.unshift(newApp);
-            }
-            closeModal();
-          };
+              if (
+                isEditMode.value
+              ) {
+                // 更新现有申请
+                const index =
+                  applications.value.findIndex(
+                    a =>
+                      a.id ===
+                      editingAppId.value
+                  );
+                if (
+                  index !== -1
+                ) {
+                  const oldApp =
+                    applications
+                      .value[
+                      index
+                    ];
+                  // 只有 draft 或 rejected 可编辑保存
+                  if (
+                    oldApp.status !==
+                      'draft' &&
+                    oldApp.status !==
+                      'rejected'
+                  ) {
+                    alert(
+                      '当前状态不可编辑'
+                    );
+                    closeModal();
+                    return;
+                  }
+                  applications.value[
+                    index
+                  ] = {
+                    ...oldApp,
+                    projectName:
+                      formData
+                        .value
+                        .projectName,
+                    developer:
+                      formData
+                        .value
+                        .developer,
+                    buildingNo:
+                      formData
+                        .value
+                        .buildingNo,
+                    area: formData
+                      .value
+                      .area,
+                    avgPrice:
+                      formData
+                        .value
+                        .avgPrice,
+                    attachments:
+                      formData
+                        .value
+                        .attachments,
+                    // 如果原来是驳回状态且保存了，不清空理由，但可以保留理由，用户提交后会清除理由？逻辑: 重新提交时应清除理由并变为submitted
+                    rejectReason:
+                      oldApp.status ===
+                        'rejected' &&
+                      oldApp.rejectReason
+                        ? oldApp.rejectReason
+                        : oldApp.rejectReason ||
+                          ''
+                  };
+                }
+              } else {
+                // 新建草稿
+                const newApp =
+                  {
+                    id: generateId(),
+                    projectName:
+                      formData
+                        .value
+                        .projectName,
+                    developer:
+                      formData
+                        .value
+                        .developer,
+                    buildingNo:
+                      formData
+                        .value
+                        .buildingNo,
+                    area: formData
+                      .value
+                      .area,
+                    avgPrice:
+                      formData
+                        .value
+                        .avgPrice,
+                    attachments:
+                      formData
+                        .value
+                        .attachments,
+                    status:
+                      'draft',
+                    rejectReason:
+                      '',
+                    userId: 1
+                  };
+                applications.value.unshift(
+                  newApp
+                );
+              }
+              closeModal();
+            };
 
           // 提交申请 (草稿 -> submitted)
-          const submitApplication = appId => {
-            const app = applications.value.find(a => a.id === appId);
-            if (!app) return;
-            if (app.status !== 'draft') {
-              alert('只有草稿状态的申请可以提交');
-              return;
-            }
-            // 简单校验
-            if (!app.projectName || !app.developer) {
-              alert('请完善申请信息');
-              return;
-            }
-            app.status = 'submitted';
-            // 如果之前是驳回后重新提交，清除驳回理由
-            if (app.rejectReason) app.rejectReason = '';
-            alert('提交成功，等待审批');
-            // 刷新视图
-          };
+          const submitApplication =
+            appId => {
+              const app =
+                applications.value.find(
+                  a =>
+                    a.id ===
+                    appId
+                );
+              if (!app)
+                return;
+              if (
+                app.status !==
+                'draft'
+              ) {
+                alert(
+                  '只有草稿状态的申请可以提交'
+                );
+                return;
+              }
+              // 简单校验
+              if (
+                !app.projectName ||
+                !app.developer
+              ) {
+                alert(
+                  '请完善申请信息'
+                );
+                return;
+              }
+              app.status =
+                'submitted';
+              // 如果之前是驳回后重新提交，清除驳回理由
+              if (
+                app.rejectReason
+              )
+                app.rejectReason =
+                  '';
+              alert(
+                '提交成功，等待审批'
+              );
+              // 刷新视图
+            };
 
           // 审批人通过（流转规则： submitted -> approving ; approving -> approved）
-          const approveStep = appId => {
-            const app = applications.value.find(a => a.id === appId);
-            if (!app) return;
-            if (app.status === 'submitted') {
-              app.status = 'approving';
-              alert('已通过初审，进入审批中状态');
-            } else if (app.status === 'approving') {
-              app.status = 'approved';
-              alert('审批完成，预售许可证已核发');
-            } else {
-              alert('当前状态无法通过');
-            }
-          };
+          const approveStep =
+            appId => {
+              const app =
+                applications.value.find(
+                  a =>
+                    a.id ===
+                    appId
+                );
+              if (!app)
+                return;
+              if (
+                app.status ===
+                'submitted'
+              ) {
+                app.status =
+                  'approving';
+                alert(
+                  '已通过初审，进入审批中状态'
+                );
+              } else if (
+                app.status ===
+                'approving'
+              ) {
+                app.status =
+                  'approved';
+                alert(
+                  '审批完成，预售许可证已核发'
+                );
+              } else {
+                alert(
+                  '当前状态无法通过'
+                );
+              }
+            };
 
           // 打开驳回模态框（简单使用prompt风格，但为了符合驳回理由输入框样式，使用自定义？为了方便，用window.prompt但也可以做模态，为了体验，用prompt）
-          const openRejectModal = appId => {
-            const reason = prompt('请输入补正意见（驳回理由）:');
-            if (reason && reason.trim()) {
-              const app = applications.value.find(a => a.id === appId);
-              if (app && (app.status === 'submitted' || app.status === 'approving')) {
-                app.status = 'rejected';
-                app.rejectReason = reason.trim();
-                alert(`已驳回申请，理由：${reason}`);
-              } else {
-                alert('状态已变更，无法驳回');
+          const openRejectModal =
+            appId => {
+              const reason =
+                prompt(
+                  '请输入补正意见（驳回理由）:'
+                );
+              if (
+                reason &&
+                reason.trim()
+              ) {
+                const app =
+                  applications.value.find(
+                    a =>
+                      a.id ===
+                      appId
+                  );
+                if (
+                  app &&
+                  (app.status ===
+                    'submitted' ||
+                    app.status ===
+                      'approving')
+                ) {
+                  app.status =
+                    'rejected';
+                  app.rejectReason =
+                    reason.trim();
+                  alert(
+                    `已驳回申请，理由：${reason}`
+                  );
+                } else {
+                  alert(
+                    '状态已变更，无法驳回'
+                  );
+                }
+              } else if (
+                reason === ''
+              ) {
+                alert(
+                  '请填写驳回理由'
+                );
               }
-            } else if (reason === '') {
-              alert('请填写驳回理由');
-            }
-          };
+            };
 
-          const viewDetail = app => {
-            detailApp.value = { ...app };
-            detailModalVisible.value = true;
-          };
+          const viewDetail =
+            app => {
+              detailApp.value =
+                { ...app };
+              detailModalVisible.value = true;
+            };
 
-          const closeModal = () => {
-            modalVisible.value = false;
-            isEditMode.value = false;
-            editingAppId.value = null;
-          };
+          const closeModal =
+            () => {
+              modalVisible.value = false;
+              isEditMode.value = false;
+              editingAppId.value =
+                null;
+            };
 
           // 提供外部刷新（无需）
           return {

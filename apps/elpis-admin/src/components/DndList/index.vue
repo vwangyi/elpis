@@ -86,9 +86,7 @@
               pushEle(element)
             "
           >
-            {{
-              element.id
-            }}
+            {{ element.id }}
             [{{
               element.author
             }}]

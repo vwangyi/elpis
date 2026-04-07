@@ -122,18 +122,76 @@ export const routes = [
     meta: {
       title: '屏保'
     }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: () =>
+      import(
+        /* webpackChunkName: "SettingsView" */ '@/pages/SettingsView/SettingsView.vue'
+      ),
+    meta: {
+      title: '设置'
+    }
+  },
+  {
+    path: '/user-agreement',
+    name: 'UserAgreement',
+    component: () =>
+      import(
+        /* webpackChunkName: "UserAgreement" */ '@/pages/UserAgreement/UserAgreement.vue'
+      ),
+    meta: {
+      title: '用户协议'
+    }
+  },
+  {
+    path: '/demo-view',
+    name: 'DemoView',
+    component: () =>
+      import(
+        /* webpackChunkName: "DemoView" */ '@/pages/DemoView/DemoView.vue'
+      ),
+    meta: {
+      title: 'demo'
+    }
+  },
+  {
+    path: '/work-flow',
+    name: 'WorkFlow',
+    component: () =>
+      import(
+        /* webpackChunkName: "WorkFlow" */
+        '@/pages/WorkFlow/WorkFlow.vue'
+      ),
+    meta: {
+      title: '流程/工作流'
+    }
+  },
+  {
+    path: '/approval-process',
+    name: 'ApprovalProcess',
+    component: () =>
+      import(
+        /* webpackChunkName: "ApprovalProcess" */
+        '@/pages/ApprovalProcess/ApprovalProcess.vue'
+      ),
+    meta: {
+      title: '审批/审批流'
+    }
+  },
+  {
+    path: '/permission-setting',
+    name: 'PermissionSetting',
+    component: () =>
+      import(
+        /* webpackChunkName: "PermissionSetting" */
+        '@/pages/PermissionSetting/PermissionSetting.vue'
+      ),
+    meta: {
+      title: '权限设置'
+    }
   }
-
-  // {
-  //   path: '/demo',
-  //   name: 'Demo',
-  //   component: () => import(/* webpackChunkName: "DemoView" */ '@/pages/DemoView/DemoView.vue')
-  // },
-  // {
-  //   path: '/user-agreement',
-  //   name: 'UserAgreement',
-  //   component: () => import(/* webpackChunkName: "UserAgreement" */ '@/pages/UserAgreement/UserAgreement.vue')
-  // }
 ];
 
 const router = createRouter({
