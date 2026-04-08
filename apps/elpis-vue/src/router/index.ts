@@ -191,6 +191,19 @@ export const routes = [
     meta: {
       title: '权限设置'
     }
+  },
+  {
+    path: '/web-socket',
+    name: 'WebSocket',
+    component: () =>
+      import(
+        /* webpackChunkName: "WebSocket" */
+        '@/pages/WebSocket/WebSocket.vue'
+      ),
+    meta: {
+      title:
+        'WebSocket / http轮询'
+    }
   }
 ];
 

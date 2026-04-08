@@ -420,10 +420,37 @@ export default defineConfig({
         },
         {
           text: "nvm命令",
-          text: "nvm命令",
           link: "/08_运维/nvm/nvm命令.md"
-
-        }
+        },
+        {
+          text: "nginx",
+          link: "/08_运维/nginx/nginx.md"
+        },
+        {
+          text: "版本控制",
+          items: [
+            {
+              text: "git",
+              link: "/08_运维/版本控制/git.md"
+            },
+            {
+              text: "svn",
+              link: "/08_运维/版本控制/svn.md"
+            }
+          ]
+        },
+        {
+          text: "adb",
+          link: "/08_运维/adb/adb.md"
+        },
+        {
+          text: "linux",
+          link: "/08_运维/linux/linux.md"
+        },
+        {
+          text: "部署",
+          link: "/08_运维/部署.md"
+        },
       ]
     },
     socialLinks: [{ icon: "github", link: "https://github.com/vwangyi" }]

@@ -37,7 +37,8 @@ git --version
 ```
 
 
-## brew 
+## homebrew 
+- brew 是mac的软件管家
 - 使用中科大镜像安装 Homebrew 命令行输入下面命令
 ```sh
 /bin/bash -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
@@ -70,6 +71,19 @@ nvm install 18.19.1
 ## pnpm 
 ```sh
 npm i pnpm -g
+```
+
+## pm2 
+```sh
+npm install pm2 -g
+
+# 用 PM2 启动你的 Node.js 应用（例如 app.js）
+pm2 start app.js
+
+# 常用命令
+pm2 list        # 列出所有应用
+pm2 logs        # 查看日志
+pm2 stop app    # 停止应用
 ```
 
 ## vscode
@@ -141,9 +155,27 @@ show databases; # 查看所有数据库  这是 sql命令
 ## 清理软件 cleaner
 
 
-## nginx
-- 安装nginx
+## nginx 
+```sh
 
+# 使用 Homebrew 安装 Nginx  使用nginx部署前端静态文件
+brew install nginx
+
+# 启动 Nginx
+nginx
+
+# 重启 Nginx
+nginx -s reload
+
+# 停止 Nginx
+nginx -s stop
+```
+
+## Docker
+- docker并不是部署的必要条件，但docker解决了 环境不一致问题 和 依赖管理复杂问题 
+- docker就是把 运行项目需要的所有东西 都打包成一个容器 
+- 只要docker上可以跑，docker就保证可以在 任何安装docker的电脑上运行项目。
+- 总结：Docker 不是必须的，但它是一个“环境管理神器”，能让你的开发、协作、部署更顺畅，减少“环境不一致”带来的痛苦。
 
 ## Mac系统本地部署
 
