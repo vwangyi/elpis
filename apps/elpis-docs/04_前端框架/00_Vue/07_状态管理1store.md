@@ -54,8 +54,8 @@ import { store } from './store.js'
 
 
 ## 业务层controller层 BO（Business Object）
-- 业务层，封装业务逻辑，可组合多个DO
-- ✅ 聚合多个DO的数据
+- 业务层，封装业务逻辑，可组合多个数据层
+- ✅ 聚合多个数据层DO 的数据
 - ✅ 包含业务逻辑和方法
 - ✅ 领域驱动设计（DDD）中的实体
 - ✅ 内部使用，不直接暴露
@@ -63,8 +63,8 @@ import { store } from './store.js'
 ## 传输层 DTO（Data Transfer Object）
 - 传输层，前后端数据传输
 - ✅ 用于接口参数和返回值
-- ✅ 可能包含多个BO/DO的聚合数据
-- ✅ 字段根据需要裁剪（可能比DO少 比如 没有password）
+- ✅ 可能包含多个 数据层/业务层 BO/DO 的聚合数据
+- ✅ 字段根据需要裁剪（可能比数据层DO少 比如 没有password）
 - ✅ 包含数据验证注解
 - ✅ 字段名更友好，可能重命名
 
