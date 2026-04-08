@@ -41,6 +41,7 @@
     "mocha": "^11.7.5",
     "postcss-loader": "^8.2.1",
     "postcss-px-to-viewport-8-plugin": "^1.2.5",
+    "raw-loader": "^4.0.2",
     "sass": "^1.98.0",
     "sass-loader": "^16.0.7",
     "style-loader": "^4.0.0",

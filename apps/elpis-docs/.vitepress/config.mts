@@ -417,6 +417,12 @@ export default defineConfig({
               link: "/08_运维/环境/windows.md"
             },
           ]
+        },
+        {
+          text: "nvm命令",
+          text: "nvm命令",
+          link: "/08_运维/nvm/nvm命令.md"
+
         }
       ]
     },

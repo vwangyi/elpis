@@ -973,6 +973,9 @@ importers:
       postcss-px-to-viewport-8-plugin:
         specifier: ^1.2.5
         version: 1.2.5
+      raw-loader:
+        specifier: ^4.0.2
+        version: 4.0.2(webpack@5.105.4)
       sass:
         specifier: ^1.98.0
         version: 1.98.0
@@ -13209,6 +13212,12 @@ packages:
 
   raw-loader@0.5.1:
     resolution: {integrity: sha512-sf7oGoLuaYAScB4VGr0tzetsYlS8EJH6qnTCfQ/WVEa89hALQ4RQfCKt5xCyPQKPDUbVUAIP1QsxAwfAjlDp7Q==}
+
+  raw-loader@4.0.2:
+    resolution: {integrity: sha512-ZnScIV3ag9A4wPX/ZayxL/jZH+euYb6FcUinPcgiQW0+UBtEv0O6Q3lGd3cqJ+GHH+rksEv3Pj99oxJ3u3VIKA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      webpack: ^4.0.0 || ^5.0.0
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -27142,9 +27151,7 @@ snapshots:
       pretty-format: 24.9.0
       throat: 4.1.0
     transitivePeerDependencies:
-      - bufferutil
       - supports-color
-      - utf-8-validate
 
   jest-leak-detector@24.9.0:
     dependencies:
@@ -30946,6 +30953,12 @@ snapshots:
       unpipe: 1.0.0
 
   raw-loader@0.5.1: {}
+
+  raw-loader@4.0.2(webpack@5.105.4):
+    dependencies:
+      loader-utils: 2.0.4
+      schema-utils: 3.3.0
+      webpack: 5.105.4(esbuild@0.27.4)(webpack-cli@7.0.2)
 
   react-is@16.13.1: {}
 

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" 
+    xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" 
+    xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+    xmlns:di="http://www.omg.org/spec/DD/20100524/DI" 
+    id="sample-definitions" 
+    targetNamespace="http://bpmn.io/schema/bpmn" 
+    exporter="bpmn-js" 
+    exporterVersion="17.9.0"
+>
+  <bpmn2:process id="ApprovalProcess" name="通用审批流程" isExecutable="true">
+    <!-- 开始事件 -->
+    <bpmn2:startEvent id="StartEvent" name="开始">
+      <bpmn2:outgoing>Flow_Start_Apply</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    
+    <!-- 填写申请单 -->
+    <bpmn2:userTask id="Task_Apply" name="填写申请单">
+      <bpmn2:incoming>Flow_Start_Apply</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Apply_Dept</bpmn2:outgoing>
+    </bpmn2:userTask>
+    
+    <!-- 部门审批 -->
+    <bpmn2:userTask id="Task_DeptApprove" name="部门审批">
+      <bpmn2:incoming>Flow_Apply_Dept</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Dept_Reject_Gateway</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Dept_Approve_Gateway</bpmn2:outgoing>
+    </bpmn2:userTask>
+    
+    <!-- 领导审批 -->
+    <bpmn2:userTask id="Task_LeaderApprove" name="领导审批">
+      <bpmn2:incoming>Flow_Leader_Incoming</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Leader_Reject_Gateway</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Leader_Approve_End</bpmn2:outgoing>
+    </bpmn2:userTask>
+    
+    <!-- 结束事件 -->
+    <bpmn2:endEvent id="EndEvent" name="结束">
+      <bpmn2:incoming>Flow_Leader_Approve_End</bpmn2:incoming>
+      <bpmn2:incoming>Flow_Dept_Approve_End</bpmn2:incoming>
+    </bpmn2:endEvent>
+    
+    <!-- 部门审批后的排他网关：根据审批结果决定走向 -->
+    <bpmn2:exclusiveGateway id="Gateway_DeptDecision" name="部门审批结果">
+      <bpmn2:incoming>Flow_Dept_Approve_Gateway</bpmn2:incoming>
+      <bpmn2:incoming>Flow_Dept_Reject_Gateway</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Dept_Approved_To_Leader</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Dept_Rejected_To_Apply</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    
+    <!-- 领导审批后的排他网关 -->
+    <bpmn2:exclusiveGateway id="Gateway_LeaderDecision" name="领导审批结果">
+      <bpmn2:incoming>Flow_Leader_Approve_End</bpmn2:incoming>
+      <bpmn2:incoming>Flow_Leader_Reject_Gateway</bpmn2:incoming>
+      <bpmn2:outgoing>Flow_Leader_Approved_To_End</bpmn2:outgoing>
+      <bpmn2:outgoing>Flow_Leader_Rejected_To_Dept</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    
+    <!-- 连线定义 -->
+    <bpmn2:sequenceFlow id="Flow_Start_Apply" sourceRef="StartEvent" targetRef="Task_Apply" />
+    <bpmn2:sequenceFlow id="Flow_Apply_Dept" sourceRef="Task_Apply" targetRef="Task_DeptApprove" />
+    
+    <bpmn2:sequenceFlow id="Flow_Dept_Approve_Gateway" sourceRef="Task_DeptApprove" targetRef="Gateway_DeptDecision" />
+    <bpmn2:sequenceFlow id="Flow_Dept_Reject_Gateway" sourceRef="Task_DeptApprove" targetRef="Gateway_DeptDecision" />
+    
+    <bpmn2:sequenceFlow id="Flow_Dept_Approved_To_Leader" sourceRef="Gateway_DeptDecision" targetRef="Task_LeaderApprove" name="同意">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${approved == true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_Dept_Rejected_To_Apply" sourceRef="Gateway_DeptDecision" targetRef="Task_Apply" name="驳回">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${approved == false}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    
+    <bpmn2:sequenceFlow id="Flow_Leader_Incoming" sourceRef="Gateway_DeptDecision" targetRef="Task_LeaderApprove" />
+    
+    <bpmn2:sequenceFlow id="Flow_Leader_Approve_End" sourceRef="Task_LeaderApprove" targetRef="Gateway_LeaderDecision" />
+    <bpmn2:sequenceFlow id="Flow_Leader_Reject_Gateway" sourceRef="Task_LeaderApprove" targetRef="Gateway_LeaderDecision" />
+    
+    <bpmn2:sequenceFlow id="Flow_Leader_Approved_To_End" sourceRef="Gateway_LeaderDecision" targetRef="EndEvent" name="同意">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${approved == true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="Flow_Leader_Rejected_To_Dept" sourceRef="Gateway_LeaderDecision" targetRef="Task_DeptApprove" name="驳回">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${approved == false}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    
+    <!-- 补充：部门同意后直接到领导，无需重复网关连线，上面已经覆盖 -->
+    <bpmn2:sequenceFlow id="Flow_Dept_Approve_End" sourceRef="Gateway_DeptDecision" targetRef="EndEvent" name="直接结束（可选）" />
+  </bpmn2:process>
+  
+  <!-- 图形布局信息（bpmndi） -->
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ApprovalProcess">
+      <bpmndi:BPMNShape id="StartEvent_di" bpmnElement="StartEvent">
+        <dc:Bounds x="150" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_Apply_di" bpmnElement="Task_Apply">
+        <dc:Bounds x="250" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_DeptApprove_di" bpmnElement="Task_DeptApprove">
+        <dc:Bounds x="410" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_DeptDecision_di" bpmnElement="Gateway_DeptDecision">
+        <dc:Bounds x="580" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_LeaderApprove_di" bpmnElement="Task_LeaderApprove">
+        <dc:Bounds x="700" y="160" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_LeaderDecision_di" bpmnElement="Gateway_LeaderDecision">
+        <dc:Bounds x="870" y="175" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_di" bpmnElement="EndEvent">
+        <dc:Bounds x="990" y="180" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      
+      <!-- 连线图形 -->
+      <bpmndi:BPMNEdge id="Flow_Start_Apply_di" bpmnElement="Flow_Start_Apply" sourceElement="StartEvent_di" targetElement="Task_Apply_di">
+        <di:waypoint x="186" y="198" />
+        <di:waypoint x="250" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Apply_Dept_di" bpmnElement="Flow_Apply_Dept" sourceElement="Task_Apply_di" targetElement="Task_DeptApprove_di">
+        <di:waypoint x="350" y="198" />
+        <di:waypoint x="410" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dept_Approve_Gateway_di" bpmnElement="Flow_Dept_Approve_Gateway" sourceElement="Task_DeptApprove_di" targetElement="Gateway_DeptDecision_di">
+        <di:waypoint x="510" y="198" />
+        <di:waypoint x="580" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dept_Approved_To_Leader_di" bpmnElement="Flow_Dept_Approved_To_Leader" sourceElement="Gateway_DeptDecision_di" targetElement="Task_LeaderApprove_di">
+        <di:waypoint x="630" y="198" />
+        <di:waypoint x="700" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Dept_Rejected_To_Apply_di" bpmnElement="Flow_Dept_Rejected_To_Apply" sourceElement="Gateway_DeptDecision_di" targetElement="Task_Apply_di">
+        <di:waypoint x="605" y="225" />
+        <di:waypoint x="605" y="280" />
+        <di:waypoint x="300" y="280" />
+        <di:waypoint x="300" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Leader_Incoming_di" bpmnElement="Flow_Leader_Incoming" sourceElement="Gateway_DeptDecision_di" targetElement="Task_LeaderApprove_di">
+        <di:waypoint x="605" y="198" />
+        <di:waypoint x="700" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Leader_Approve_End_di" bpmnElement="Flow_Leader_Approve_End" sourceElement="Task_LeaderApprove_di" targetElement="Gateway_LeaderDecision_di">
+        <di:waypoint x="800" y="198" />
+        <di:waypoint x="870" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Leader_Approved_To_End_di" bpmnElement="Flow_Leader_Approved_To_End" sourceElement="Gateway_LeaderDecision_di" targetElement="EndEvent_di">
+        <di:waypoint x="920" y="198" />
+        <di:waypoint x="990" y="198" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_Leader_Rejected_To_Dept_di" bpmnElement="Flow_Leader_Rejected_To_Dept" sourceElement="Gateway_LeaderDecision_di" targetElement="Task_DeptApprove_di">
+        <di:waypoint x="895" y="225" />
+        <di:waypoint x="895" y="280" />
+        <di:waypoint x="460" y="280" />
+        <di:waypoint x="460" y="240" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

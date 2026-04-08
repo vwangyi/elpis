@@ -139,3 +139,12 @@ show databases; # 查看所有数据库  这是 sql命令
 - https://pixpin.cn/
 
 ## 清理软件 cleaner
+
+
+## nginx
+- 安装nginx
+
+
+## Mac系统本地部署
+
+
