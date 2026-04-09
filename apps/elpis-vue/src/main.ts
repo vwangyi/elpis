@@ -16,6 +16,10 @@ import App from './App';
 import '@/styles/index.scss';
 import '@/assets/iconfont/iconfont.css';
 import '@/router/permission.js';
+
+import VxeUITable from 'vxe-table';
+import 'vxe-table/es/style.css';
+
 // import '@/utils/check-update';
 const pinia: Pinia =
   createPinia();
@@ -26,6 +30,7 @@ app.component(
   'vue-echarts',
   echarts
 );
+app.use(VxeUITable);
 app.use(Antd);
 app.use(pinia);
 app.use(router);

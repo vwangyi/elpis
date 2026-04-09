@@ -204,6 +204,18 @@ export const routes = [
       title:
         'WebSocket / http轮询'
     }
+  },
+  {
+    path: '/draggable-table',
+    name: 'DraggableTable',
+    component: () =>
+      import(
+        /* webpackChunkName: "DraggableTable" */
+        '@/pages/DraggableTable/DraggableTable.vue'
+      ),
+    meta: {
+      title: '拖拽生成表格'
+    }
   }
 ];
 

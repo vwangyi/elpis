@@ -62,8 +62,11 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "bpmn-js": "^18.14.0",
     "lodash": "^4.17.23",
-    "mitt": "^3.0.1"
+    "mitt": "^3.0.1",
+    "vxe-table": "^4.18.10",
+    "xe-utils": "^3.9.1"
   }
 }
