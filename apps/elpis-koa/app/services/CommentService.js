@@ -1,9 +1,6 @@
 /* comment表 评论模块 */
 module.exports = app => {
-  const BaseService =
-    require('./BaseService')(
-      app
-    );
+  const BaseService = require('./BaseService')(app);
 
   return class CommentService extends BaseService {
     /* 获取列表（分页） */

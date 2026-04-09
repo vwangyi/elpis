@@ -3,11 +3,7 @@
   "compilerOptions": {
     "target": "ES2020",
     "module": "ESNext",
-    "lib": [
-      "ESNext",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "jsx": "preserve",
     "jsxImportSource": "vue",
     "strict": true,
@@ -28,8 +24,5 @@
     "noEmit": true
   },
   "include": ["src"],
-  "exclude": [
-    "../../node_modules",
-    "../../dist"
-  ]
+  "exclude": ["../../node_modules", "../../dist"]
 }

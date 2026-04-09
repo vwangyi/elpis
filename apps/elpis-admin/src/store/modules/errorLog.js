@@ -3,10 +3,7 @@ const state = {
 };
 
 const mutations = {
-  ADD_ERROR_LOG: (
-    state,
-    log
-  ) => {
+  ADD_ERROR_LOG: (state, log) => {
     state.logs.push(log);
   },
   CLEAR_ERROR_LOG: state => {
@@ -15,14 +12,8 @@ const mutations = {
 };
 
 const actions = {
-  addErrorLog(
-    { commit },
-    log
-  ) {
-    commit(
-      'ADD_ERROR_LOG',
-      log
-    );
+  addErrorLog({ commit }, log) {
+    commit('ADD_ERROR_LOG', log);
   },
   clearErrorLog({ commit }) {
     commit('CLEAR_ERROR_LOG');

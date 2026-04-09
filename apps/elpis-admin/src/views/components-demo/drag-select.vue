@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="components-container"
-  >
+  <div class="components-container">
     <el-drag-select
       v-model="value"
       style="width: 500px"
@@ -16,16 +14,8 @@
       />
     </el-drag-select>
 
-    <div
-      style="margin-top: 30px"
-    >
-      <el-tag
-        v-for="item of value"
-        :key="item"
-        style="
-          margin-right: 15px;
-        "
-      >
+    <div style="margin-top: 30px">
+      <el-tag v-for="item of value" :key="item" style="margin-right: 15px">
         {{ item }}
       </el-tag>
     </div>
@@ -42,11 +32,7 @@ export default {
   },
   data() {
     return {
-      value: [
-        'Apple',
-        'Banana',
-        'Orange'
-      ],
+      value: ['Apple', 'Banana', 'Orange'],
       options: [
         {
           value: 'Apple',

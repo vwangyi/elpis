@@ -1,31 +1,13 @@
 /** @type {import('cz-git').UserConfig} */
 export default {
-  extends: [
-    '@commitlint/config-conventional'
-  ],
+  extends: ['@commitlint/config-conventional'],
   rules: {
     // @see: https://commitlint.js.org/#/reference-rules
-    'body-leading-blank': [
-      2,
-      'always'
-    ],
-    'footer-leading-blank': [
-      1,
-      'always'
-    ],
-    'header-max-length': [
-      2,
-      'always',
-      108
-    ],
-    'subject-empty': [
-      2,
-      'never'
-    ],
-    'type-empty': [
-      2,
-      'never'
-    ],
+    'body-leading-blank': [2, 'always'],
+    'footer-leading-blank': [1, 'always'],
+    'header-max-length': [2, 'always', 108],
+    'subject-empty': [2, 'never'],
+    'type-empty': [2, 'never'],
     'subject-case': [0],
     'type-enum': [
       2,
@@ -100,23 +82,14 @@ export default {
       'utils'
     ],
     allowCustomScopes: true,
-    skipQuestions: [
-      'body',
-      'footerPrefix',
-      'footer',
-      'breaking'
-    ], // 跳过“详细描述”和“底部信息”
+    skipQuestions: ['body', 'footerPrefix', 'footer', 'breaking'], // 跳过“详细描述”和“底部信息”
     messages: {
       type: '📌 请选择提交类型:',
-      scope:
-        '🎯 请选择影响范围 (可选):',
-      subject:
-        '📝 请简要描述更改:',
+      scope: '🎯 请选择影响范围 (可选):',
+      subject: '📝 请简要描述更改:',
       body: '🔍 详细描述 (可选):',
-      footer:
-        '🔗 关联的 ISSUE 或 BREAKING CHANGE (可选):',
-      confirmCommit:
-        '✅ 确认提交?'
+      footer: '🔗 关联的 ISSUE 或 BREAKING CHANGE (可选):',
+      confirmCommit: '✅ 确认提交?'
     }
   }
 };

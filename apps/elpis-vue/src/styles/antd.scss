@@ -3,15 +3,9 @@
 /* 在全局样式文件中添加（如 src/assets/styles/global.css） */
 /* 使用 ID 选择器 + !important 获得最高优先级 */
 
-#root
-  [class*='css-dev-only-do-not-override'].ant-modal
-  .ant-modal-content,
-#app
-  [class*='css-dev-only-do-not-override'].ant-modal
-  .ant-modal-content,
-body
-  [class*='css-dev-only-do-not-override'].ant-modal
-  .ant-modal-content {
+#root [class*='css-dev-only-do-not-override'].ant-modal .ant-modal-content,
+#app [class*='css-dev-only-do-not-override'].ant-modal .ant-modal-content,
+body [class*='css-dev-only-do-not-override'].ant-modal .ant-modal-content {
   // background-color: #181818 !important; /* 天蓝色示例 */
   // background-image: none !important;
   // color: #fff;

@@ -1,33 +1,21 @@
 <script setup lang="ts">
-import {
-  computed,
-  ref
-} from 'vue';
+import { computed, ref } from 'vue';
 
 const list = ref([]);
 const inputValue = ref('');
 
-const calcList = computed(
-  () =>
-    list.value.map(
-      (item, index) => ({
-        id: index,
-        ...item
-      })
-    )
+const calcList = computed(() =>
+  list.value.map((item, index) => ({
+    id: index,
+    ...item
+  }))
 );
 
 function handleInputEnter(e) {
-  if (e.key !== 'Enter')
-    return;
-  console.log(
-    'enter',
-    e.target.value,
-    inputValue.value
-  );
+  if (e.key !== 'Enter') return;
+  console.log('enter', e.target.value, inputValue.value);
 
-  inputValue.value =
-    e.target.value;
+  inputValue.value = e.target.value;
   list.value.unshift({
     text: e.target.value
   });
@@ -37,25 +25,10 @@ function handleInputEnter(e) {
 
 <template>
   <div class="todo-list">
-    <input
-      type="text"
-      :value="inputValue"
-      @keydown="
-        handleInputEnter
-      "
-    />
-    <div
-      v-for="{
-        id,
-        text
-      } in calcList"
-      :key="id"
-      class="list"
-    >
+    <input type="text" :value="inputValue" @keydown="handleInputEnter" />
+    <div v-for="{ id, text } in calcList" :key="id" class="list">
       <div>id: {{ id }}</div>
-      <div>
-        text: {{ text }}
-      </div>
+      <div>text: {{ text }}</div>
     </div>
   </div>
 </template>

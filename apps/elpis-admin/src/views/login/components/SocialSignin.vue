@@ -1,36 +1,14 @@
 <template>
-  <div
-    class="social-signup-container"
-  >
-    <div
-      class="sign-btn"
-      @click="
-        wechatHandleClick(
-          'wechat'
-        )
-      "
-    >
-      <span
-        class="wx-svg-container"
-        ><svg-icon
-          icon-class="wechat"
-          class="icon"
+  <div class="social-signup-container">
+    <div class="sign-btn" @click="wechatHandleClick('wechat')">
+      <span class="wx-svg-container"
+        ><svg-icon icon-class="wechat" class="icon"
       /></span>
       WeChat
     </div>
-    <div
-      class="sign-btn"
-      @click="
-        tencentHandleClick(
-          'tencent'
-        )
-      "
-    >
-      <span
-        class="qq-svg-container"
-        ><svg-icon
-          icon-class="qq"
-          class="icon"
+    <div class="sign-btn" @click="tencentHandleClick('tencent')">
+      <span class="qq-svg-container"
+        ><svg-icon icon-class="qq" class="icon"
       /></span>
       QQ
     </div>
@@ -43,9 +21,7 @@
 export default {
   name: 'SocialSignin',
   methods: {
-    wechatHandleClick(
-      thirdpart
-    ) {
+    wechatHandleClick(thirdpart) {
       alert('ok');
       // this.$store.commit('SET_AUTH_TYPE', thirdpart)
       // const appid = 'xxxxx'
@@ -53,9 +29,7 @@ export default {
       // const url = 'https://open.weixin.qq.com/connect/qrconnect?appid=' + appid + '&redirect_uri=' + redirect_uri + '&response_type=code&scope=snsapi_login#wechat_redirect'
       // openWindow(url, thirdpart, 540, 540)
     },
-    tencentHandleClick(
-      thirdpart
-    ) {
+    tencentHandleClick(thirdpart) {
       alert('ok');
       // this.$store.commit('SET_AUTH_TYPE', thirdpart)
       // const client_id = 'xxxxx'

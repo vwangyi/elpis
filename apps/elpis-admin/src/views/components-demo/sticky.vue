@@ -1,36 +1,16 @@
 <template>
   <div>
-    <sticky
-      :z-index="10"
-      class-name="sub-navbar"
-    >
-      <el-dropdown
-        trigger="click"
-      >
+    <sticky :z-index="10" class-name="sub-navbar">
+      <el-dropdown trigger="click">
         <el-button plain>
-          Platform<i
-            class="el-icon-caret-bottom el-icon--right"
-          />
+          Platform<i class="el-icon-caret-bottom el-icon--right" />
         </el-button>
-        <el-dropdown-menu
-          slot="dropdown"
-          class="no-border"
-        >
-          <el-checkbox-group
-            v-model="
-              platforms
-            "
-            style="
-              padding: 5px
-                15px;
-            "
-          >
+        <el-dropdown-menu slot="dropdown" class="no-border">
+          <el-checkbox-group v-model="platforms" style="padding: 5px 15px">
             <el-checkbox
               v-for="item in platformsOptions"
               :key="item.key"
-              :label="
-                item.key
-              "
+              :label="item.key"
             >
               {{ item.name }}
             </el-checkbox>
@@ -38,35 +18,22 @@
         </el-dropdown-menu>
       </el-dropdown>
 
-      <el-dropdown
-        trigger="click"
-      >
+      <el-dropdown trigger="click">
         <el-button plain>
-          Link<i
-            class="el-icon-caret-bottom el-icon--right"
-          />
+          Link<i class="el-icon-caret-bottom el-icon--right" />
         </el-button>
         <el-dropdown-menu
           slot="dropdown"
           class="no-padding no-border"
           style="width: 300px"
         >
-          <el-input
-            v-model="url"
-            placeholder="Please enter the content"
-          >
-            <template
-              slot="prepend"
-            >
-              Url
-            </template>
+          <el-input v-model="url" placeholder="Please enter the content">
+            <template slot="prepend"> Url </template>
           </el-input>
         </el-dropdown-menu>
       </el-dropdown>
 
-      <div
-        class="time-container"
-      >
+      <div class="time-container">
         <el-date-picker
           v-model="time"
           type="datetime"
@@ -75,25 +42,13 @@
         />
       </div>
 
-      <el-button
-        style="
-          margin-left: 10px;
-        "
-        type="success"
-      >
-        publish
-      </el-button>
+      <el-button style="margin-left: 10px" type="success"> publish </el-button>
     </sticky>
 
-    <div
-      class="components-container"
-    >
+    <div class="components-container">
       <aside>
-        Sticky header, When
-        the page is scrolled
-        to the preset position
-        will be sticky on the
-        top.
+        Sticky header, When the page is scrolled to the preset position will be
+        sticky on the top.
       </aside>
       <div>placeholder</div>
       <div>placeholder</div>
@@ -108,14 +63,8 @@
       <div>placeholder</div>
       <div>placeholder</div>
       <div>placeholder</div>
-      <sticky
-        :sticky-top="200"
-      >
-        <el-button
-          type="primary"
-        >
-          placeholder</el-button
-        >
+      <sticky :sticky-top="200">
+        <el-button type="primary"> placeholder</el-button>
       </sticky>
       <div>placeholder</div>
       <div>placeholder</div>
@@ -169,9 +118,7 @@ export default {
     return {
       time: '',
       url: '',
-      platforms: [
-        'a-platform'
-      ],
+      platforms: ['a-platform'],
       platformsOptions: [
         {
           key: 'a-platform',
@@ -188,10 +135,7 @@ export default {
       ],
       pickerOptions: {
         disabledDate(time) {
-          return (
-            time.getTime() >
-            Date.now()
-          );
+          return time.getTime() > Date.now();
         }
       }
     };

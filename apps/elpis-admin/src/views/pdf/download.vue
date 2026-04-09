@@ -1,34 +1,23 @@
 <template>
   <div
-    v-loading.fullscreen.lock="
-      fullscreenLoading
-    "
+    v-loading.fullscreen.lock="fullscreenLoading"
     class="main-article"
     element-loading-text="Efforts to generate PDF"
   >
-    <div
-      class="article__heading"
-    >
-      <div
-        class="article__heading__title"
-      >
+    <div class="article__heading">
+      <div class="article__heading__title">
         {{ article.title }}
       </div>
     </div>
     <div style="color: #ccc">
-      This article is from
-      Evan You on
+      This article is from Evan You on
       <a
         target="_blank"
         href="https://medium.com/the-vue-point/plans-for-the-next-iteration-of-vue-js-777ffea6fabf"
         >medium</a
       >
     </div>
-    <div
-      ref="content"
-      class="node-article-content"
-      v-html="article.content"
-    />
+    <div ref="content" class="node-article-content" v-html="article.content" />
   </div>
 </template>
 
@@ -45,24 +34,17 @@ export default {
   },
   methods: {
     fetchData() {
-      import('./content.js').then(
-        data => {
-          const { title } =
-            data.default;
-          document.title =
-            title;
-          this.article =
-            data.default;
-          setTimeout(() => {
-            this.fullscreenLoading = false;
-            this.$nextTick(
-              () => {
-                window.print();
-              }
-            );
-          }, 3000);
-        }
-      );
+      import('./content.js').then(data => {
+        const { title } = data.default;
+        document.title = title;
+        this.article = data.default;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+          this.$nextTick(() => {
+            window.print();
+          });
+        }, 3000);
+      });
     }
   }
 };
@@ -121,10 +103,7 @@ export default {
   line-height: 28px;
   margin-bottom: 30px;
   font-family:
-    medium-content-serif-font,
-    Georgia, Cambria,
-    'Times New Roman', Times,
-    serif;
+    medium-content-serif-font, Georgia, Cambria, 'Times New Roman', Times, serif;
 
   & > :last-child {
     margin-bottom: 0;
@@ -177,18 +156,12 @@ export default {
       rgba(0, 0, 0, 0) 0
     );
     background-size: 1px 1px;
-    background-position: 0
-      calc(1em + 1px);
+    background-position: 0 calc(1em + 1px);
     padding: 0 6px;
   }
 
   code {
-    background: rgba(
-      0,
-      0,
-      0,
-      0.05
-    );
+    background: rgba(0, 0, 0, 0.05);
     padding: 3px 4px;
     margin: 0 2px;
     font-size: 16px;
@@ -208,18 +181,15 @@ export default {
     --x-height-multiplier: 0.375;
     --baseline-multiplier: 0.17;
     font-family:
-      medium-content-serif-font,
-      Georgia, Cambria,
-      'Times New Roman',
-      Times, serif;
+      medium-content-serif-font, Georgia, Cambria, 'Times New Roman', Times,
+      serif;
     letter-spacing: 0.01rem;
     font-weight: 400;
     font-style: italic;
     font-size: 21px;
     line-height: 1.58;
     letter-spacing: -0.003em;
-    border-left: 3px solid
-      rgba(0, 0, 0, 0.84);
+    border-left: 3px solid rgba(0, 0, 0, 0.84);
     padding-left: 20px;
     margin-left: -23px;
     padding-bottom: 2px;

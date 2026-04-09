@@ -50,22 +50,15 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart =
-        echarts.init(
-          document.getElementById(
-            this.id
-          )
-        );
+      this.chart = echarts.init(document.getElementById(this.id));
 
       this.chart.setOption({
-        backgroundColor:
-          '#394056',
+        backgroundColor: '#394056',
         title: {
           top: 20,
           text: 'Requests',
           textStyle: {
-            fontWeight:
-              'normal',
+            fontWeight: 'normal',
             fontSize: 16,
             color: '#F1F1F3'
           },
@@ -85,11 +78,7 @@ export default {
           itemWidth: 14,
           itemHeight: 5,
           itemGap: 13,
-          data: [
-            'CMCC',
-            'CTCC',
-            'CUCC'
-          ],
+          data: ['CMCC', 'CTCC', 'CUCC'],
           right: '4%',
           textStyle: {
             fontSize: 12,
@@ -109,8 +98,7 @@ export default {
             boundaryGap: false,
             axisLine: {
               lineStyle: {
-                color:
-                  '#57617B'
+                color: '#57617B'
               }
             },
             data: [
@@ -138,8 +126,7 @@ export default {
             },
             axisLine: {
               lineStyle: {
-                color:
-                  '#57617B'
+                color: '#57617B'
               }
             },
             axisLabel: {
@@ -150,8 +137,7 @@ export default {
             },
             splitLine: {
               lineStyle: {
-                color:
-                  '#57617B'
+                color: '#57617B'
               }
             }
           }
@@ -171,46 +157,35 @@ export default {
             },
             areaStyle: {
               normal: {
-                color:
-                  new echarts.graphic.LinearGradient(
-                    0,
-                    0,
-                    0,
-                    1,
-                    [
-                      {
-                        offset: 0,
-                        color:
-                          'rgba(137, 189, 27, 0.3)'
-                      },
-                      {
-                        offset: 0.8,
-                        color:
-                          'rgba(137, 189, 27, 0)'
-                      }
-                    ],
-                    false
-                  ),
-                shadowColor:
-                  'rgba(0, 0, 0, 0.1)',
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: 'rgba(137, 189, 27, 0.3)'
+                    },
+                    {
+                      offset: 0.8,
+                      color: 'rgba(137, 189, 27, 0)'
+                    }
+                  ],
+                  false
+                ),
+                shadowColor: 'rgba(0, 0, 0, 0.1)',
                 shadowBlur: 10
               }
             },
             itemStyle: {
               normal: {
-                color:
-                  'rgb(137,189,27)',
-                borderColor:
-                  'rgba(137,189,2,0.27)',
+                color: 'rgb(137,189,27)',
+                borderColor: 'rgba(137,189,2,0.27)',
                 borderWidth: 12
               }
             },
-            data: [
-              220, 182, 191,
-              134, 150, 120,
-              110, 125, 145,
-              122, 165, 122
-            ]
+            data: [220, 182, 191, 134, 150, 120, 110, 125, 145, 122, 165, 122]
           },
           {
             name: 'CTCC',
@@ -226,46 +201,35 @@ export default {
             },
             areaStyle: {
               normal: {
-                color:
-                  new echarts.graphic.LinearGradient(
-                    0,
-                    0,
-                    0,
-                    1,
-                    [
-                      {
-                        offset: 0,
-                        color:
-                          'rgba(0, 136, 212, 0.3)'
-                      },
-                      {
-                        offset: 0.8,
-                        color:
-                          'rgba(0, 136, 212, 0)'
-                      }
-                    ],
-                    false
-                  ),
-                shadowColor:
-                  'rgba(0, 0, 0, 0.1)',
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: 'rgba(0, 136, 212, 0.3)'
+                    },
+                    {
+                      offset: 0.8,
+                      color: 'rgba(0, 136, 212, 0)'
+                    }
+                  ],
+                  false
+                ),
+                shadowColor: 'rgba(0, 0, 0, 0.1)',
                 shadowBlur: 10
               }
             },
             itemStyle: {
               normal: {
-                color:
-                  'rgb(0,136,212)',
-                borderColor:
-                  'rgba(0,136,212,0.2)',
+                color: 'rgb(0,136,212)',
+                borderColor: 'rgba(0,136,212,0.2)',
                 borderWidth: 12
               }
             },
-            data: [
-              120, 110, 125,
-              145, 122, 165,
-              122, 220, 182,
-              191, 134, 150
-            ]
+            data: [120, 110, 125, 145, 122, 165, 122, 220, 182, 191, 134, 150]
           },
           {
             name: 'CUCC',
@@ -281,46 +245,35 @@ export default {
             },
             areaStyle: {
               normal: {
-                color:
-                  new echarts.graphic.LinearGradient(
-                    0,
-                    0,
-                    0,
-                    1,
-                    [
-                      {
-                        offset: 0,
-                        color:
-                          'rgba(219, 50, 51, 0.3)'
-                      },
-                      {
-                        offset: 0.8,
-                        color:
-                          'rgba(219, 50, 51, 0)'
-                      }
-                    ],
-                    false
-                  ),
-                shadowColor:
-                  'rgba(0, 0, 0, 0.1)',
+                color: new echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: 'rgba(219, 50, 51, 0.3)'
+                    },
+                    {
+                      offset: 0.8,
+                      color: 'rgba(219, 50, 51, 0)'
+                    }
+                  ],
+                  false
+                ),
+                shadowColor: 'rgba(0, 0, 0, 0.1)',
                 shadowBlur: 10
               }
             },
             itemStyle: {
               normal: {
-                color:
-                  'rgb(219,50,51)',
-                borderColor:
-                  'rgba(219,50,51,0.2)',
+                color: 'rgb(219,50,51)',
+                borderColor: 'rgba(219,50,51,0.2)',
                 borderWidth: 12
               }
             },
-            data: [
-              220, 182, 125,
-              145, 122, 191,
-              134, 150, 120,
-              110, 165, 122
-            ]
+            data: [220, 182, 125, 145, 122, 191, 134, 150, 120, 110, 165, 122]
           }
         ]
       });

@@ -50,11 +50,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart =
-        echarts.init(
-          this.$el,
-          'macarons'
-        );
+      this.chart = echarts.init(this.$el, 'macarons');
 
       this.chart.setOption({
         tooltip: {
@@ -74,15 +70,7 @@ export default {
         xAxis: [
           {
             type: 'category',
-            data: [
-              'Mon',
-              'Tue',
-              'Wed',
-              'Thu',
-              'Fri',
-              'Sat',
-              'Sun'
-            ],
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
             axisTick: {
               alignWithLabel: true
             }
@@ -102,11 +90,7 @@ export default {
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',
-            data: [
-              79, 52, 200,
-              334, 390, 330,
-              220
-            ],
+            data: [79, 52, 200, 334, 390, 330, 220],
             animationDuration
           },
           {
@@ -114,11 +98,7 @@ export default {
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',
-            data: [
-              80, 52, 200,
-              334, 390, 330,
-              220
-            ],
+            data: [80, 52, 200, 334, 390, 330, 220],
             animationDuration
           },
           {
@@ -126,11 +106,7 @@ export default {
             type: 'bar',
             stack: 'vistors',
             barWidth: '60%',
-            data: [
-              30, 52, 200,
-              334, 390, 330,
-              220
-            ],
+            data: [30, 52, 200, 334, 390, 330, 220],
             animationDuration
           }
         ]

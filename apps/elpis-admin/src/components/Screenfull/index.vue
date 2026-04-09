@@ -1,11 +1,7 @@
 <template>
   <div>
     <svg-icon
-      :icon-class="
-        isFullscreen
-          ? 'exit-fullscreen'
-          : 'fullscreen'
-      "
+      :icon-class="isFullscreen ? 'exit-fullscreen' : 'fullscreen'"
       @click="click"
     />
   </div>
@@ -29,12 +25,9 @@ export default {
   },
   methods: {
     click() {
-      if (
-        !screenfull.enabled
-      ) {
+      if (!screenfull.enabled) {
         this.$message({
-          message:
-            'you browser can not work',
+          message: 'you browser can not work',
           type: 'warning'
         });
         return false;
@@ -42,27 +35,16 @@ export default {
       screenfull.toggle();
     },
     change() {
-      this.isFullscreen =
-        screenfull.isFullscreen;
+      this.isFullscreen = screenfull.isFullscreen;
     },
     init() {
-      if (
-        screenfull.enabled
-      ) {
-        screenfull.on(
-          'change',
-          this.change
-        );
+      if (screenfull.enabled) {
+        screenfull.on('change', this.change);
       }
     },
     destroy() {
-      if (
-        screenfull.enabled
-      ) {
-        screenfull.off(
-          'change',
-          this.change
-        );
+      if (screenfull.enabled) {
+        screenfull.off('change', this.change);
       }
     }
   }

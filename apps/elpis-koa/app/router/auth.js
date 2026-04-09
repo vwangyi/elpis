@@ -1,31 +1,18 @@
-module.exports = (
-  app,
-  router
-) => {
-  const { AuthController } =
-    app.controllers;
+module.exports = (app, router) => {
+  const { AuthController } = app.controllers;
   // router.post(
   //     '/api/auth/login',
   //     AuthController.login.bind(AuthController)
   // )
-  router.get(
-    '/api/auth/logout',
-    AuthController.logout.bind(
-      AuthController
-    )
-  );
+  router.get('/api/auth/logout', AuthController.logout.bind(AuthController));
 
   router.get(
     '/api/auth/send_email_code',
-    AuthController.sendEmailCode.bind(
-      AuthController
-    )
+    AuthController.sendEmailCode.bind(AuthController)
   );
   router.post(
     '/api/auth/login/by_email_code',
-    AuthController.loginByEmailCode.bind(
-      AuthController
-    )
+    AuthController.loginByEmailCode.bind(AuthController)
   );
 };
 

@@ -5,10 +5,7 @@ module.exports = app =>
     /* 渲染页面 */
     async renderView(ctx) {
       // 打印页面请求的query和params
-      const {
-        query,
-        params
-      } = ctx.request;
+      const { query, params } = ctx.request;
       // app.logger.info(`[ViewController] ctx: ${JSON.stringify(ctx)}`);
       // app.logger.info(`[ViewController] query: ${JSON.stringify(query)}`);
       // app.logger.info(`[ViewController] params: ${JSON.stringify(params)}`);
@@ -23,16 +20,10 @@ module.exports = app =>
         // `dist/entry.${ctx.params.page}`,
         `dist/${app.env.get()}/index`,
         {
-          projKey:
-            ctx.query
-              ?.proj_key,
-          name: app.options
-            ?.name,
+          projKey: ctx.query?.proj_key,
+          name: app.options?.name,
           env: app.env.get(),
-          options:
-            JSON.stringify(
-              app.options
-            )
+          options: JSON.stringify(app.options)
         }
       );
     }

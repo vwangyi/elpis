@@ -8,62 +8,30 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column
-        align="center"
-        label="ID"
-        width="80"
-      >
-        <template
-          slot-scope="scope"
-        >
+      <el-table-column align="center" label="ID" width="80">
+        <template slot-scope="scope">
+          <span>{{ scope.row.id }}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column width="180px" align="center" label="Date">
+        <template slot-scope="scope">
           <span>{{
-            scope.row.id
+            scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')
           }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column
-        width="180px"
-        align="center"
-        label="Date"
-      >
-        <template
-          slot-scope="scope"
-        >
-          <span>{{
-            scope.row
-              .timestamp
-              | parseTime(
-                '{y}-{m}-{d} {h}:{i}'
-              )
-          }}</span>
+      <el-table-column width="120px" align="center" label="Author">
+        <template slot-scope="scope">
+          <span>{{ scope.row.author }}</span>
         </template>
       </el-table-column>
 
-      <el-table-column
-        width="120px"
-        align="center"
-        label="Author"
-      >
-        <template
-          slot-scope="scope"
-        >
-          <span>{{
-            scope.row.author
-          }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column
-        width="100px"
-        label="Importance"
-      >
-        <template
-          slot-scope="scope"
-        >
+      <el-table-column width="100px" label="Importance">
+        <template slot-scope="scope">
           <svg-icon
-            v-for="n in +scope
-              .row.importance"
+            v-for="n in +scope.row.importance"
             :key="n"
             icon-class="star"
             class="meta-item__icon"
@@ -71,65 +39,26 @@
         </template>
       </el-table-column>
 
-      <el-table-column
-        class-name="status-col"
-        label="Status"
-        width="110"
-      >
-        <template
-          slot-scope="{ row }"
-        >
-          <el-tag
-            :type="
-              row.status
-                | statusFilter
-            "
-          >
+      <el-table-column class-name="status-col" label="Status" width="110">
+        <template slot-scope="{ row }">
+          <el-tag :type="row.status | statusFilter">
             {{ row.status }}
           </el-tag>
         </template>
       </el-table-column>
 
-      <el-table-column
-        min-width="300px"
-        label="Title"
-      >
-        <template
-          slot-scope="{ row }"
-        >
-          <router-link
-            :to="
-              '/example/edit/' +
-              row.id
-            "
-            class="link-type"
-          >
-            <span>{{
-              row.title
-            }}</span>
+      <el-table-column min-width="300px" label="Title">
+        <template slot-scope="{ row }">
+          <router-link :to="'/example/edit/' + row.id" class="link-type">
+            <span>{{ row.title }}</span>
           </router-link>
         </template>
       </el-table-column>
 
-      <el-table-column
-        align="center"
-        label="Actions"
-        width="120"
-      >
-        <template
-          slot-scope="scope"
-        >
-          <router-link
-            :to="
-              '/example/edit/' +
-              scope.row.id
-            "
-          >
-            <el-button
-              type="primary"
-              size="small"
-              icon="el-icon-edit"
-            >
+      <el-table-column align="center" label="Actions" width="120">
+        <template slot-scope="scope">
+          <router-link :to="'/example/edit/' + scope.row.id">
+            <el-button type="primary" size="small" icon="el-icon-edit">
               Edit
             </el-button>
           </router-link>
@@ -140,12 +69,8 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="
-        listQuery.page
-      "
-      :limit.sync="
-        listQuery.limit
-      "
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
       @pagination="getList"
     />
   </div>
@@ -165,9 +90,7 @@ export default {
         draft: 'info',
         deleted: 'danger'
       };
-      return statusMap[
-        status
-      ];
+      return statusMap[status];
     }
   },
   data() {
@@ -187,13 +110,9 @@ export default {
   methods: {
     getList() {
       this.listLoading = true;
-      fetchList(
-        this.listQuery
-      ).then(response => {
-        this.list =
-          response.data.items;
-        this.total =
-          response.data.total;
+      fetchList(this.listQuery).then(response => {
+        this.list = response.data.items;
+        this.total = response.data.total;
         this.listLoading = false;
       });
     }

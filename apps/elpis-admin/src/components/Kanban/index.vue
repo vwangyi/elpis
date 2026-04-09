@@ -1,8 +1,6 @@
 <template>
   <div class="board-column">
-    <div
-      class="board-column-header"
-    >
+    <div class="board-column-header">
       {{ headerText }}
     </div>
     <draggable
@@ -11,11 +9,7 @@
       class="board-column-content"
       :set-data="setData"
     >
-      <div
-        v-for="element in list"
-        :key="element.id"
-        class="board-item"
-      >
+      <div v-for="element in list" :key="element.id" class="board-item">
         {{ element.name }}
         {{ element.id }}
       </div>
@@ -53,10 +47,7 @@ export default {
     setData(dataTransfer) {
       // to avoid Firefox bug
       // Detail see : https://github.com/RubaXa/Sortable/issues/1012
-      dataTransfer.setData(
-        'Text',
-        ''
-      );
+      dataTransfer.setData('Text', '');
     }
   }
 };
@@ -84,8 +75,7 @@ export default {
   .board-column-content {
     height: auto;
     overflow: hidden;
-    border: 10px solid
-      transparent;
+    border: 10px solid transparent;
     min-height: 60px;
     display: flex;
     justify-content: flex-start;
@@ -102,8 +92,7 @@ export default {
       line-height: 54px;
       padding: 5px 10px;
       box-sizing: border-box;
-      box-shadow: 0px 1px 3px
-        0 rgba(0, 0, 0, 0.2);
+      box-shadow: 0px 1px 3px 0 rgba(0, 0, 0, 0.2);
     }
   }
 }

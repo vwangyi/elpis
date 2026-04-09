@@ -1,8 +1,5 @@
 <script setup>
-import {
-  ref,
-  useAttrs
-} from 'vue';
+import { ref, useAttrs } from 'vue';
 import { omit } from 'lodash-es'; // omit($attrs, 'onClick')  用于排除对象的onclick属性
 const loading = ref(false);
 
@@ -27,9 +24,7 @@ async function handleClick() {
 
 <template>
   <el-button
-    v-bind="
-      omit($attrs, 'onClick')
-    "
+    v-bind="omit($attrs, 'onClick')"
     :loading="loading"
     @click="handleClick"
   >

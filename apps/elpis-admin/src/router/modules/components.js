@@ -14,8 +14,7 @@ const componentsRouter = {
   children: [
     {
       path: 'tinymce',
-      component: () =>
-        import('@/views/components-demo/tinymce'),
+      component: () => import('@/views/components-demo/tinymce'),
       name: 'TinymceDemo',
       meta: {
         title: 'Tinymce'
@@ -23,8 +22,7 @@ const componentsRouter = {
     },
     {
       path: 'markdown',
-      component: () =>
-        import('@/views/components-demo/markdown'),
+      component: () => import('@/views/components-demo/markdown'),
       name: 'MarkdownDemo',
       meta: {
         title: 'Markdown'
@@ -32,8 +30,7 @@ const componentsRouter = {
     },
     {
       path: 'json-editor',
-      component: () =>
-        import('@/views/components-demo/json-editor'),
+      component: () => import('@/views/components-demo/json-editor'),
       name: 'JsonEditorDemo',
       meta: {
         title: 'JSON Editor'
@@ -41,8 +38,7 @@ const componentsRouter = {
     },
     {
       path: 'split-pane',
-      component: () =>
-        import('@/views/components-demo/split-pane'),
+      component: () => import('@/views/components-demo/split-pane'),
       name: 'SplitpaneDemo',
       meta: {
         title: 'SplitPane'
@@ -50,8 +46,7 @@ const componentsRouter = {
     },
     {
       path: 'avatar-upload',
-      component: () =>
-        import('@/views/components-demo/avatar-upload'),
+      component: () => import('@/views/components-demo/avatar-upload'),
       name: 'AvatarUploadDemo',
       meta: {
         title: 'Upload'
@@ -59,8 +54,7 @@ const componentsRouter = {
     },
     {
       path: 'dropzone',
-      component: () =>
-        import('@/views/components-demo/dropzone'),
+      component: () => import('@/views/components-demo/dropzone'),
       name: 'DropzoneDemo',
       meta: {
         title: 'Dropzone'
@@ -68,8 +62,7 @@ const componentsRouter = {
     },
     {
       path: 'sticky',
-      component: () =>
-        import('@/views/components-demo/sticky'),
+      component: () => import('@/views/components-demo/sticky'),
       name: 'StickyDemo',
       meta: {
         title: 'Sticky'
@@ -77,8 +70,7 @@ const componentsRouter = {
     },
     {
       path: 'count-to',
-      component: () =>
-        import('@/views/components-demo/count-to'),
+      component: () => import('@/views/components-demo/count-to'),
       name: 'CountToDemo',
       meta: {
         title: 'Count To'
@@ -86,18 +78,15 @@ const componentsRouter = {
     },
     {
       path: 'mixin',
-      component: () =>
-        import('@/views/components-demo/mixin'),
+      component: () => import('@/views/components-demo/mixin'),
       name: 'ComponentMixinDemo',
       meta: {
-        title:
-          'Component Mixin'
+        title: 'Component Mixin'
       }
     },
     {
       path: 'back-to-top',
-      component: () =>
-        import('@/views/components-demo/back-to-top'),
+      component: () => import('@/views/components-demo/back-to-top'),
       name: 'BackToTopDemo',
       meta: {
         title: 'Back To Top'
@@ -105,8 +94,7 @@ const componentsRouter = {
     },
     {
       path: 'drag-dialog',
-      component: () =>
-        import('@/views/components-demo/drag-dialog'),
+      component: () => import('@/views/components-demo/drag-dialog'),
       name: 'DragDialogDemo',
       meta: {
         title: 'Drag Dialog'
@@ -114,8 +102,7 @@ const componentsRouter = {
     },
     {
       path: 'drag-select',
-      component: () =>
-        import('@/views/components-demo/drag-select'),
+      component: () => import('@/views/components-demo/drag-select'),
       name: 'DragSelectDemo',
       meta: {
         title: 'Drag Select'
@@ -123,8 +110,7 @@ const componentsRouter = {
     },
     {
       path: 'dnd-list',
-      component: () =>
-        import('@/views/components-demo/dnd-list'),
+      component: () => import('@/views/components-demo/dnd-list'),
       name: 'DndListDemo',
       meta: {
         title: 'Dnd List'
@@ -132,8 +118,7 @@ const componentsRouter = {
     },
     {
       path: 'drag-kanban',
-      component: () =>
-        import('@/views/components-demo/drag-kanban'),
+      component: () => import('@/views/components-demo/drag-kanban'),
       name: 'DragKanbanDemo',
       meta: {
         title: 'Drag Kanban'

@@ -1,12 +1,6 @@
 <script setup>
 /* 富文本编辑器 */
-import {
-  onMounted,
-  ref,
-  computed,
-  useTemplateRef,
-  inject
-} from 'vue';
+import { onMounted, ref, computed, useTemplateRef, inject } from 'vue';
 
 import { useAuthStore } from '@/stores/auth.js';
 import { useCategoryStore } from '@/stores/category.js';
@@ -21,76 +15,45 @@ import ElpisEditor from '@/components/ElpisEditor/ElpisEditor.vue';
 
 import ElpisDialog from '@/components/ElpisDialog/ElpisDialog.vue';
 
-const authStore =
-  useAuthStore();
-const categoryStore =
-  useCategoryStore();
-const noteStore =
-  useNoteStore();
-const categoryList = computed(
-  () =>
-    categoryStore.categoryList
-);
+const authStore = useAuthStore();
+const categoryStore = useCategoryStore();
+const noteStore = useNoteStore();
+const categoryList = computed(() => categoryStore.categoryList);
 const categoryItem = ref({});
 const openDialog = ref(false);
 
-const activeCategoryIndex =
-  ref(0); // 当前选中的分类索引
+const activeCategoryIndex = ref(0); // 当前选中的分类索引
 
-function handleSelectCategory(
-  item,
-  index
-) {
-  activeCategoryIndex.value =
-    index;
+function handleSelectCategory(item, index) {
+  activeCategoryIndex.value = index;
 }
-const xxx =
-  useTemplateRef('title');
+const xxx = useTemplateRef('title');
 
-function handleClickCard(
-  item
-) {
+function handleClickCard(item) {
   categoryItem.value = item;
   // 打开详情 弹窗
   openDialog.value = true;
-  console.log(
-    '点击card',
-    categoryItem.value
-  );
+  console.log('点击card', categoryItem.value);
 }
 
-const { test } =
-  inject('haha');
+const { test } = inject('haha');
 onMounted(() => {
   noteStore.findAll();
 });
 </script>
 
 <template>
-  <div
-    class="main-content hide-scrollbar"
-  >
+  <div class="main-content hide-scrollbar">
     <!-- 导航栏 -->
-    <div
-      class="navbar hide-scrollbar"
-    >
+    <div class="navbar hide-scrollbar">
       <div
-        v-for="(
-          item, index
-        ) in categoryList"
+        v-for="(item, index) in categoryList"
         :key="item"
         class="nav"
         :class="{
-          active:
-            index ===
-            activeCategoryIndex
+          active: index === activeCategoryIndex
         }"
-        @click="
-          handleSelectCategory(
-            item,
-            index
-          )
-        "
+        @click="handleSelectCategory(item, index)"
       >
         {{ item.title }}
       </div>
@@ -99,35 +62,23 @@ onMounted(() => {
     <div class="content">
       <div class="list">
         <div
-          v-for="(
-            item, index
-          ) in noteStore.list"
+          v-for="(item, index) in noteStore.list"
           :key="item"
           class="card"
           :style="{
             backgroundImage: `url(https://picsum.photos/300/417?${index})`
             // backgroundImage: `url(https://source.unsplash.com/featured/300x417?nature)`
           }"
-          @click="
-            handleClickCard(
-              item
-            )
-          "
+          @click="handleClickCard(item)"
         ></div>
       </div>
     </div>
 
-    <elpis-dialog
-      v-model:open="
-        openDialog
-      "
-    >
+    <elpis-dialog v-model:open="openDialog">
       <div
         style="
           width: 1100px;
-          height: calc(
-            100vh - 40px
-          );
+          height: calc(100vh - 40px);
           background-color: aliceblue;
           color: red;
         "
@@ -155,12 +106,7 @@ onMounted(() => {
   align-items: center;
   width: var(--feeds-width);
   height: 72px;
-  color: rgba(
-    255,
-    255,
-    255,
-    0.8
-  );
+  color: rgba(255, 255, 255, 0.8);
   white-space: nowrap;
   font-size: 16px;
   overflow-x: auto;
@@ -198,8 +144,7 @@ onMounted(() => {
   flex-wrap: wrap;
   justify-content: flex-start;
   align-items: center;
-  gap: var(--verticalGapPx)
-    var(--horizontalGapPx);
+  gap: var(--verticalGapPx) var(--horizontalGapPx);
   // background-color: #fff;
 
   .list {
@@ -208,19 +153,14 @@ onMounted(() => {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-items: center;
-    gap: var(--verticalGapPx)
-      var(--horizontalGapPx);
+    gap: var(--verticalGapPx) var(--horizontalGapPx);
     padding-bottom: 72px;
 
     .card {
-      width: var(
-        --columnWidth
-      );
+      width: var(--columnWidth);
       height: 417px;
       background-color: #828a92;
-      border-radius: var(
-        --note-card-corner-radius
-      );
+      border-radius: var(--note-card-corner-radius);
       align-self: flex-start;
       cursor: pointer;
       // background-image: url(https://picsum.photos/300/417);

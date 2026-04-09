@@ -50,38 +50,18 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart =
-        echarts.init(
-          document.getElementById(
-            this.id
-          )
-        );
+      this.chart = echarts.init(document.getElementById(this.id));
 
       const xAxisData = [];
       const data = [];
       const data2 = [];
-      for (
-        let i = 0;
-        i < 50;
-        i++
-      ) {
+      for (let i = 0; i < 50; i++) {
         xAxisData.push(i);
-        data.push(
-          (Math.sin(i / 5) *
-            (i / 5 - 10) +
-            i / 6) *
-            5
-        );
-        data2.push(
-          (Math.sin(i / 5) *
-            (i / 5 + 10) +
-            i / 6) *
-            3
-        );
+        data.push((Math.sin(i / 5) * (i / 5 - 10) + i / 6) * 5);
+        data2.push((Math.sin(i / 5) * (i / 5 + 10) + i / 6) * 3);
       }
       this.chart.setOption({
-        backgroundColor:
-          '#08263a',
+        backgroundColor: '#08263a',
         grid: {
           left: '5%',
           right: '5%'
@@ -142,8 +122,7 @@ export default {
                 opacity: 0.4,
                 barBorderRadius: 5,
                 shadowBlur: 3,
-                shadowColor:
-                  '#111'
+                shadowColor: '#111'
               }
             }
           },
@@ -154,22 +133,18 @@ export default {
             z: 2,
             showSymbol: false,
             animationDelay: 0,
-            animationEasing:
-              'linear',
+            animationEasing: 'linear',
             animationDuration: 1200,
             lineStyle: {
               normal: {
-                color:
-                  'transparent'
+                color: 'transparent'
               }
             },
             areaStyle: {
               normal: {
-                color:
-                  '#08263a',
+                color: '#08263a',
                 shadowBlur: 50,
-                shadowColor:
-                  '#000'
+                shadowColor: '#000'
               }
             }
           },
@@ -186,16 +161,12 @@ export default {
             }
           }
         ],
-        animationEasing:
-          'elasticOut',
-        animationEasingUpdate:
-          'elasticOut',
+        animationEasing: 'elasticOut',
+        animationEasingUpdate: 'elasticOut',
         animationDelay(idx) {
           return idx * 20;
         },
-        animationDelayUpdate(
-          idx
-        ) {
+        animationDelayUpdate(idx) {
           return idx * 20;
         }
       });

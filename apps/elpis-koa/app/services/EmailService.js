@@ -1,87 +1,43 @@
 module.exports = app => {
   // 存储验证码（生产环境建议使用 Redis）
-  const verificationCodes =
-    new Map();
-  const BaseService =
-    require('./BaseService')(
-      app
-    );
+  const verificationCodes = new Map();
+  const BaseService = require('./BaseService')(app);
   return class EmailService extends BaseService {
     /* 验证邮箱验证码 */
-    async verifyEmailCode({
-      email,
-      code
-    }) {
+    async verifyEmailCode({ email, code }) {
       if (!email || !code) {
-        return Promise.reject(
-          '验证码和邮箱不能为空'
-        );
+        return Promise.reject('验证码和邮箱不能为空');
       }
-      const storedData =
-        verificationCodes.get(
-          email
-        );
+      const storedData = verificationCodes.get(email);
       if (!storedData) {
-        return Promise.reject(
-          '验证码不存在或已过期'
-        );
+        return Promise.reject('验证码不存在或已过期');
       }
       // 检查是否过期
-      if (
-        Date.now() >
-        storedData.expiresAt
-      ) {
-        verificationCodes.delete(
-          email
-        );
-        return Promise.reject(
-          '验证码已过期'
-        );
+      if (Date.now() > storedData.expiresAt) {
+        verificationCodes.delete(email);
+        return Promise.reject('验证码已过期');
       }
       // 验证码是否正确
-      if (
-        storedData.code !==
-        code
-      ) {
-        return Promise.reject(
-          '验证码错误'
-        );
+      if (storedData.code !== code) {
+        return Promise.reject('验证码错误');
       }
       // 验证成功，删除验证码
-      verificationCodes.delete(
-        email
-      );
+      verificationCodes.delete(email);
     }
 
     // 发送验证码邮件
-    async sendVerificationCode({
-      email,
-      code,
-      expiresAt
-    }) {
-      const {
-        email: emailConfig
-      } = app.config;
+    async sendVerificationCode({ email, code, expiresAt }) {
+      const { email: emailConfig } = app.config;
 
-      console.log(
-        ' email Service 发送验证码到邮箱:',
-        email,
-        '验证码:',
-        code
-      );
-      const info =
-        await app.email.sendMail(
-          {
-            from: {
-              name: 'WANGYI', // 显示的发件人名称
-              address:
-                emailConfig
-                  .auth.user // 必须和上面auth.user一致
-            },
-            to: email,
-            subject:
-              'WANGYI验证码', // 主题
-            html: ` 
+      console.log(' email Service 发送验证码到邮箱:', email, '验证码:', code);
+      const info = await app.email.sendMail({
+        from: {
+          name: 'WANGYI', // 显示的发件人名称
+          address: emailConfig.auth.user // 必须和上面auth.user一致
+        },
+        to: email,
+        subject: 'WANGYI验证码', // 主题
+        html: ` 
           <div
             style="
               font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -157,19 +113,15 @@ module.exports = app => {
             </div>
           </div>
         `,
-            // 纯文本内容（备用）
-            text: `您的验证码是：${code}，该验证码5分钟内有效。`
-          }
-        );
+        // 纯文本内容（备用）
+        text: `您的验证码是：${code}，该验证码5分钟内有效。`
+      });
 
       // 存储验证码（key: email, value: {code, expiresAt}）
-      verificationCodes.set(
-        email,
-        {
-          code: code,
-          expiresAt: expiresAt
-        }
-      );
+      verificationCodes.set(email, {
+        code: code,
+        expiresAt: expiresAt
+      });
 
       return info;
     }

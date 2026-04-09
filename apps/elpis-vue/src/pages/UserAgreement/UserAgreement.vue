@@ -1,26 +1,14 @@
 <template>
-  <div
-    class="protocol-container"
-  >
-    <div
-      class="protocol-header"
-    >
+  <div class="protocol-container">
+    <div class="protocol-header">
       <h1>用户协议</h1>
       <div class="meta">
-        <p>
-          最后更新日期:
-          2026年1月1日
-        </p>
-        <p>
-          生效日期:
-          2026年1月1日
-        </p>
+        <p>最后更新日期: 2026年1月1日</p>
+        <p>生效日期: 2026年1月1日</p>
       </div>
     </div>
 
-    <div
-      class="protocol-content"
-    >
+    <div class="protocol-content">
       <div class="section">
         <p>
           欢迎使用我们的服务！请在使用前仔细阅读本用户协议（以下简称"本协议"）。
@@ -31,9 +19,7 @@
       </div>
 
       <div class="section">
-        <h2>
-          一、协议的范围
-        </h2>
+        <h2>一、协议的范围</h2>
         <p>
           1.1
           本协议是您与我们之间关于使用我们提供的产品、服务及相关软件（以下简称"本服务"）所订立的协议。
@@ -45,9 +31,7 @@
       </div>
 
       <div class="section">
-        <h2>
-          二、账号注册与使用
-        </h2>
+        <h2>二、账号注册与使用</h2>
 
         <h3>2.1 注册资格</h3>
         <p>
@@ -55,47 +39,26 @@
         </p>
 
         <h3>2.2 账号安全</h3>
-        <p>
-          您有责任妥善保管您的账号及密码信息。您同意：
-        </p>
+        <p>您有责任妥善保管您的账号及密码信息。您同意：</p>
         <ul>
-          <li>
-            不对账号进行转让、出借、赠与、继承等任何形式的处分；
-          </li>
-          <li>
-            及时更新您的个人信息，确保信息的真实性和有效性；
-          </li>
-          <li>
-            如发现任何未经授权使用您账号的情况，应立即通知我们。
-          </li>
+          <li>不对账号进行转让、出借、赠与、继承等任何形式的处分；</li>
+          <li>及时更新您的个人信息，确保信息的真实性和有效性；</li>
+          <li>如发现任何未经授权使用您账号的情况，应立即通知我们。</li>
         </ul>
 
         <h3>2.3 禁止行为</h3>
-        <p>
-          您在使用本服务时，不得从事以下行为：
-        </p>
+        <p>您在使用本服务时，不得从事以下行为：</p>
         <ul>
-          <li>
-            发布、传播违反法律法规的内容；
-          </li>
-          <li>
-            侵犯他人知识产权、隐私权等合法权益；
-          </li>
-          <li>
-            干扰、破坏本服务的正常运行；
-          </li>
-          <li>
-            利用本服务进行任何非法活动。
-          </li>
+          <li>发布、传播违反法律法规的内容；</li>
+          <li>侵犯他人知识产权、隐私权等合法权益；</li>
+          <li>干扰、破坏本服务的正常运行；</li>
+          <li>利用本服务进行任何非法活动。</li>
         </ul>
       </div>
 
       <div class="section">
         <h2>三、服务内容</h2>
-        <p>
-          3.1
-          我们为您提供以下服务：[请在此处简单描述你的产品/服务]
-        </p>
+        <p>3.1 我们为您提供以下服务：[请在此处简单描述你的产品/服务]</p>
         <p>
           3.2
           我们有权根据实际情况调整服务内容，并不时提供新的服务。除非另有说明，新增的服务内容同样受本协议约束。
@@ -140,34 +103,18 @@
           6.1
           本服务按"现状"和"可用"的基础提供。我们不对服务的适用性、可靠性、准确性、完整性作任何明示或暗示的保证。
         </p>
-        <p>
-          6.2
-          由于以下原因造成的服务中断或数据丢失，我们不承担责任：
-        </p>
+        <p>6.2 由于以下原因造成的服务中断或数据丢失，我们不承担责任：</p>
         <ul>
-          <li>
-            不可抗力因素，如自然灾害、战争等；
-          </li>
-          <li>
-            基础电信运营商的原因；
-          </li>
-          <li>
-            您的原因或第三方的原因；
-          </li>
-          <li>
-            其他非我们所能控制的原因。
-          </li>
+          <li>不可抗力因素，如自然灾害、战争等；</li>
+          <li>基础电信运营商的原因；</li>
+          <li>您的原因或第三方的原因；</li>
+          <li>其他非我们所能控制的原因。</li>
         </ul>
-        <p>
-          6.3
-          您理解并同意，使用本服务可能存在的风险将由您自行承担。
-        </p>
+        <p>6.3 您理解并同意，使用本服务可能存在的风险将由您自行承担。</p>
       </div>
 
       <div class="section">
-        <h2>
-          七、协议的变更与终止
-        </h2>
+        <h2>七、协议的变更与终止</h2>
         <p>
           7.1
           我们有权随时修改本协议。修改后的协议将在网站公布后立即生效。您应定期查看本协议。
@@ -176,19 +123,13 @@
           7.2
           如果您违反本协议，我们有权暂停或终止向您提供服务，且无需承担任何责任。
         </p>
-        <p>
-          7.3
-          您有权随时停止使用本服务，但已经产生的费用（如有）不予退还。
-        </p>
+        <p>7.3 您有权随时停止使用本服务，但已经产生的费用（如有）不予退还。</p>
       </div>
 
       <div class="section">
-        <h2>
-          八、法律适用与争议解决
-        </h2>
+        <h2>八、法律适用与争议解决</h2>
         <p>
-          8.1
-          本协议的订立、执行和解释及争议的解决均应适用中华人民共和国法律。
+          8.1 本协议的订立、执行和解释及争议的解决均应适用中华人民共和国法律。
         </p>
         <p>
           8.2
@@ -196,26 +137,13 @@
         </p>
       </div>
 
-      <div
-        class="contact-info"
-      >
+      <div class="contact-info">
         <h3>联系我们</h3>
-        <p>
-          如果您对本协议有任何疑问、意见或建议，请通过以下方式联系我们：
-        </p>
-        <ul
-          style="margin: 16px"
-        >
-          <li>
-            邮箱：codewy@qq.com
-          </li>
-          <li>
-            客服时间：工作日
-            9:00-18:00
-          </li>
-          <li>
-            我们将在收到您的联系后15个工作日内回复
-          </li>
+        <p>如果您对本协议有任何疑问、意见或建议，请通过以下方式联系我们：</p>
+        <ul style="margin: 16px">
+          <li>邮箱：codewy@qq.com</li>
+          <li>客服时间：工作日 9:00-18:00</li>
+          <li>我们将在收到您的联系后15个工作日内回复</li>
         </ul>
       </div>
     </div>
@@ -231,11 +159,8 @@
 
 body {
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI', Roboto,
-    'Helvetica Neue', Arial,
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, sans-serif;
   line-height: 1.6;
   color: #333;
   background-color: #f8f9fa;
@@ -247,17 +172,12 @@ body {
   margin: 8px auto;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 4px 20px
-    rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   overflow: hidden;
 }
 
 .protocol-header {
-  background: linear-gradient(
-    135deg,
-    #667eea 0%,
-    #764ba2 100%
-  );
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   padding: 40px;
   text-align: center;
@@ -288,8 +208,7 @@ body {
   color: #2c3e50;
   margin-bottom: 20px;
   padding-bottom: 10px;
-  border-bottom: 2px solid
-    #f0f0f0;
+  border-bottom: 2px solid #f0f0f0;
   font-weight: 600;
 }
 
@@ -325,8 +244,7 @@ body {
 
 .contact-info {
   background: #f8f9fa;
-  border-left: 4px solid
-    #1890ff;
+  border-left: 4px solid #1890ff;
   padding: 20px;
   margin: 30px 0;
   border-radius: 4px;
@@ -337,8 +255,7 @@ body {
 }
 
 .protocol-footer {
-  border-top: 1px solid
-    #f0f0f0;
+  border-top: 1px solid #f0f0f0;
   padding: 30px 40px;
   text-align: center;
   background: #fafafa;

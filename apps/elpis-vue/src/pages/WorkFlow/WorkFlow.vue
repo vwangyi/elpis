@@ -22,7 +22,5 @@
 </script>
 
 <template>
-  <div class="work-flow">
-    工作流
-  </div>
+  <div class="work-flow">工作流</div>
 </template>

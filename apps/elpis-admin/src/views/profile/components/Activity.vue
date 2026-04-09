@@ -9,50 +9,25 @@
             avatarPrefix
           "
         />
-        <span
-          class="username text-muted"
-          >Iron Man</span
-        >
-        <span
-          class="description"
-          >Shared publicly -
-          7:30 PM today</span
-        >
+        <span class="username text-muted">Iron Man</span>
+        <span class="description">Shared publicly - 7:30 PM today</span>
       </div>
       <p>
-        Lorem ipsum represents
-        a long-held tradition
-        for designers,
-        typographers and the
-        like. Some people hate
-        it and argue for its
-        demise, but others
-        ignore the hate as
-        they create awesome
-        tools to help create
-        filler text for
-        everyone from bacon
-        lovers to Charlie
-        Sheen fans.
+        Lorem ipsum represents a long-held tradition for designers, typographers
+        and the like. Some people hate it and argue for its demise, but others
+        ignore the hate as they create awesome tools to help create filler text
+        for everyone from bacon lovers to Charlie Sheen fans.
       </p>
       <ul class="list-inline">
         <li>
-          <span
-            class="link-black text-sm"
-          >
-            <i
-              class="el-icon-share"
-            />
+          <span class="link-black text-sm">
+            <i class="el-icon-share" />
             Share
           </span>
         </li>
         <li>
-          <span
-            class="link-black text-sm"
-          >
-            <svg-icon
-              icon-class="like"
-            />
+          <span class="link-black text-sm">
+            <svg-icon icon-class="like" />
             Like
           </span>
         </li>
@@ -67,51 +42,25 @@
             avatarPrefix
           "
         />
-        <span
-          class="username text-muted"
-          >Captain
-          American</span
-        >
-        <span
-          class="description"
-          >Sent you a message
-          - yesterday</span
-        >
+        <span class="username text-muted">Captain American</span>
+        <span class="description">Sent you a message - yesterday</span>
       </div>
       <p>
-        Lorem ipsum represents
-        a long-held tradition
-        for designers,
-        typographers and the
-        like. Some people hate
-        it and argue for its
-        demise, but others
-        ignore the hate as
-        they create awesome
-        tools to help create
-        filler text for
-        everyone from bacon
-        lovers to Charlie
-        Sheen fans.
+        Lorem ipsum represents a long-held tradition for designers, typographers
+        and the like. Some people hate it and argue for its demise, but others
+        ignore the hate as they create awesome tools to help create filler text
+        for everyone from bacon lovers to Charlie Sheen fans.
       </p>
       <ul class="list-inline">
         <li>
-          <span
-            class="link-black text-sm"
-          >
-            <i
-              class="el-icon-share"
-            />
+          <span class="link-black text-sm">
+            <i class="el-icon-share" />
             Share
           </span>
         </li>
         <li>
-          <span
-            class="link-black text-sm"
-          >
-            <svg-icon
-              icon-class="like"
-            />
+          <span class="link-black text-sm">
+            <svg-icon icon-class="like" />
             Like
           </span>
         </li>
@@ -126,54 +75,25 @@
             avatarPrefix
           "
         />
-        <span class="username"
-          >Spider Man</span
-        >
-        <span
-          class="description"
-          >Posted 4 photos - 2
-          days ago</span
-        >
+        <span class="username">Spider Man</span>
+        <span class="description">Posted 4 photos - 2 days ago</span>
       </div>
-      <div
-        class="user-images"
-      >
-        <el-carousel
-          :interval="6000"
-          type="card"
-          height="220px"
-        >
-          <el-carousel-item
-            v-for="item in carouselImages"
-            :key="item"
-          >
-            <img
-              :src="
-                item +
-                carouselPrefix
-              "
-              class="image"
-            />
+      <div class="user-images">
+        <el-carousel :interval="6000" type="card" height="220px">
+          <el-carousel-item v-for="item in carouselImages" :key="item">
+            <img :src="item + carouselPrefix" class="image" />
           </el-carousel-item>
         </el-carousel>
       </div>
       <ul class="list-inline">
         <li>
-          <span
-            class="link-black text-sm"
-            ><i
-              class="el-icon-share"
-            />
-            Share</span
+          <span class="link-black text-sm"
+            ><i class="el-icon-share" /> Share</span
           >
         </li>
         <li>
-          <span
-            class="link-black text-sm"
-          >
-            <svg-icon
-              icon-class="like"
-            />
+          <span class="link-black text-sm">
+            <svg-icon icon-class="like" />
             Like</span
           >
         </li>
@@ -183,10 +103,8 @@
 </template>
 
 <script>
-const avatarPrefix =
-  '?imageView2/1/w/80/h/80';
-const carouselPrefix =
-  '?imageView2/2/h/440';
+const avatarPrefix = '?imageView2/1/w/80/h/80';
+const carouselPrefix = '?imageView2/2/h/440';
 
 export default {
   data() {
@@ -238,8 +156,7 @@ export default {
 
   .post {
     font-size: 14px;
-    border-bottom: 1px solid
-      #d2d6de;
+    border-bottom: 1px solid #d2d6de;
     margin-bottom: 15px;
     padding-bottom: 15px;
     color: #666;

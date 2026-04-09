@@ -1,8 +1,5 @@
 <template>
-  <div
-    :class="computedClasses"
-    class="material-input__component"
-  >
+  <div :class="computedClasses" class="material-input__component">
     <div
       :class="{
         iconClass: icon
@@ -10,70 +7,48 @@
     >
       <i
         v-if="icon"
-        :class="[
-          'el-icon-' + icon
-        ]"
+        :class="['el-icon-' + icon]"
         class="el-input__icon material-input__icon"
       />
       <input
-        v-if="
-          type === 'email'
-        "
+        v-if="type === 'email'"
         v-model="currentValue"
         :name="name"
-        :placeholder="
-          fillPlaceHolder
-        "
+        :placeholder="fillPlaceHolder"
         :readonly="readonly"
         :disabled="disabled"
-        :autocomplete="
-          autoComplete
-        "
+        :autocomplete="autoComplete"
         :required="required"
         type="email"
         class="material-input"
         @focus="handleMdFocus"
         @blur="handleMdBlur"
-        @input="
-          handleModelInput
-        "
+        @input="handleModelInput"
       />
       <input
         v-if="type === 'url'"
         v-model="currentValue"
         :name="name"
-        :placeholder="
-          fillPlaceHolder
-        "
+        :placeholder="fillPlaceHolder"
         :readonly="readonly"
         :disabled="disabled"
-        :autocomplete="
-          autoComplete
-        "
+        :autocomplete="autoComplete"
         :required="required"
         type="url"
         class="material-input"
         @focus="handleMdFocus"
         @blur="handleMdBlur"
-        @input="
-          handleModelInput
-        "
+        @input="handleModelInput"
       />
       <input
-        v-if="
-          type === 'number'
-        "
+        v-if="type === 'number'"
         v-model="currentValue"
         :name="name"
-        :placeholder="
-          fillPlaceHolder
-        "
+        :placeholder="fillPlaceHolder"
         :step="step"
         :readonly="readonly"
         :disabled="disabled"
-        :autocomplete="
-          autoComplete
-        "
+        :autocomplete="autoComplete"
         :max="max"
         :min="min"
         :minlength="minlength"
@@ -83,24 +58,16 @@
         class="material-input"
         @focus="handleMdFocus"
         @blur="handleMdBlur"
-        @input="
-          handleModelInput
-        "
+        @input="handleModelInput"
       />
       <input
-        v-if="
-          type === 'password'
-        "
+        v-if="type === 'password'"
         v-model="currentValue"
         :name="name"
-        :placeholder="
-          fillPlaceHolder
-        "
+        :placeholder="fillPlaceHolder"
         :readonly="readonly"
         :disabled="disabled"
-        :autocomplete="
-          autoComplete
-        "
+        :autocomplete="autoComplete"
         :max="max"
         :min="min"
         :required="required"
@@ -108,43 +75,31 @@
         class="material-input"
         @focus="handleMdFocus"
         @blur="handleMdBlur"
-        @input="
-          handleModelInput
-        "
+        @input="handleModelInput"
       />
       <input
         v-if="type === 'tel'"
         v-model="currentValue"
         :name="name"
-        :placeholder="
-          fillPlaceHolder
-        "
+        :placeholder="fillPlaceHolder"
         :readonly="readonly"
         :disabled="disabled"
-        :autocomplete="
-          autoComplete
-        "
+        :autocomplete="autoComplete"
         :required="required"
         type="tel"
         class="material-input"
         @focus="handleMdFocus"
         @blur="handleMdBlur"
-        @input="
-          handleModelInput
-        "
+        @input="handleModelInput"
       />
       <input
         v-if="type === 'text'"
         v-model="currentValue"
         :name="name"
-        :placeholder="
-          fillPlaceHolder
-        "
+        :placeholder="fillPlaceHolder"
         :readonly="readonly"
         :disabled="disabled"
-        :autocomplete="
-          autoComplete
-        "
+        :autocomplete="autoComplete"
         :minlength="minlength"
         :maxlength="maxlength"
         :required="required"
@@ -152,16 +107,10 @@
         class="material-input"
         @focus="handleMdFocus"
         @blur="handleMdBlur"
-        @input="
-          handleModelInput
-        "
+        @input="handleModelInput"
       />
-      <span
-        class="material-input-bar"
-      />
-      <label
-        class="material-label"
-      >
+      <span class="material-input-bar" />
+      <label class="material-label">
         <slot />
       </label>
     </div>
@@ -205,8 +154,7 @@ export default {
   },
   data() {
     return {
-      currentValue:
-        this.value,
+      currentValue: this.value,
       focus: false,
       fillPlaceHolder: null
     };
@@ -214,89 +162,42 @@ export default {
   computed: {
     computedClasses() {
       return {
-        'material--active':
-          this.focus,
-        'material--disabled':
-          this.disabled,
-        'material--raised':
-          Boolean(
-            this.focus ||
-            this.currentValue
-          ) // has value
+        'material--active': this.focus,
+        'material--disabled': this.disabled,
+        'material--raised': Boolean(this.focus || this.currentValue) // has value
       };
     }
   },
   watch: {
     value(newValue) {
-      this.currentValue =
-        newValue;
+      this.currentValue = newValue;
     }
   },
   methods: {
     handleModelInput(event) {
-      const value =
-        event.target.value;
-      this.$emit(
-        'input',
-        value
-      );
-      if (
-        this.$parent.$options
-          .componentName ===
-        'ElFormItem'
-      ) {
-        if (
-          this.validateEvent
-        ) {
-          this.$parent.$emit(
-            'el.form.change',
-            [value]
-          );
+      const value = event.target.value;
+      this.$emit('input', value);
+      if (this.$parent.$options.componentName === 'ElFormItem') {
+        if (this.validateEvent) {
+          this.$parent.$emit('el.form.change', [value]);
         }
       }
-      this.$emit(
-        'change',
-        value
-      );
+      this.$emit('change', value);
     },
     handleMdFocus(event) {
       this.focus = true;
-      this.$emit(
-        'focus',
-        event
-      );
-      if (
-        this.placeholder &&
-        this.placeholder !==
-          ''
-      ) {
-        this.fillPlaceHolder =
-          this.placeholder;
+      this.$emit('focus', event);
+      if (this.placeholder && this.placeholder !== '') {
+        this.fillPlaceHolder = this.placeholder;
       }
     },
     handleMdBlur(event) {
       this.focus = false;
-      this.$emit(
-        'blur',
-        event
-      );
-      this.fillPlaceHolder =
-        null;
-      if (
-        this.$parent.$options
-          .componentName ===
-        'ElFormItem'
-      ) {
-        if (
-          this.validateEvent
-        ) {
-          this.$parent.$emit(
-            'el.form.blur',
-            [
-              this
-                .currentValue
-            ]
-          );
+      this.$emit('blur', event);
+      this.fillPlaceHolder = null;
+      if (this.$parent.$options.componentName === 'ElFormItem') {
+        if (this.validateEvent) {
+          this.$parent.$emit('el.form.blur', [this.currentValue]);
         }
       }
     }
@@ -336,10 +237,7 @@ $color-black: black;
 
 // Mixins:
 @mixin slided-top() {
-  top: -(
-      $font-size-base +
-        $spacer
-    );
+  top: -($font-size-base + $spacer);
   left: 0;
   font-size: $font-size-base;
   font-weight: $font-weight-bold;
@@ -374,9 +272,7 @@ $color-black: black;
   }
   .material-input {
     font-size: $font-size-base;
-    padding: $spacer $spacer
-      $spacer - $apixel * 10
-      $spacer / 2;
+    padding: $spacer $spacer $spacer - $apixel * 10 $spacer / 2;
     display: block;
     width: 100%;
     border: none;
@@ -385,8 +281,7 @@ $color-black: black;
     &:focus {
       outline: none;
       border: none;
-      border-bottom: 1px solid
-        transparent; // fixes the height issue
+      border-bottom: 1px solid transparent; // fixes the height issue
     }
   }
   .material-label {
@@ -440,8 +335,7 @@ $color-black: black;
     background: none;
     color: $color-black;
     text-indent: $index;
-    border-bottom: 1px solid
-      $color-grey-light;
+    border-bottom: 1px solid $color-grey-light;
   }
   .material-label {
     color: $color-grey;
@@ -460,8 +354,7 @@ $color-black: black;
   }
   // Errors:
   &.material--has-errors {
-    &.material--active
-      .material-label {
+    &.material--active .material-label {
       color: $color-red;
     }
     .material-input-bar {

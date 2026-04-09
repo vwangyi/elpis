@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="components-container board"
-  >
+  <div class="components-container board">
     <Kanban
       :key="1"
       :list="list1"
