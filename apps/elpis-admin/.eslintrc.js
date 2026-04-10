@@ -9,31 +9,24 @@ module.exports = {
     node: true,
     es6: true
   },
-  extends: [
-    'plugin:vue/recommended',
-    'eslint:recommended'
-  ],
+  extends: ['plugin:vue/recommended', 'eslint:recommended'],
 
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
-    'vue/max-attributes-per-line':
-      [
-        2,
-        {
-          singleline: 10,
-          multiline: {
-            max: 1,
-            allowFirstLine: false
-          }
+    'vue/max-attributes-per-line': [
+      2,
+      {
+        singleline: 10,
+        multiline: {
+          max: 1,
+          allowFirstLine: false
         }
-      ],
-    'vue/singleline-html-element-content-newline':
-      'off',
-    'vue/multiline-html-element-content-newline':
-      'off',
-    'vue/name-property-casing':
-      ['error', 'PascalCase'],
+      }
+    ],
+    'vue/singleline-html-element-content-newline': 'off',
+    'vue/multiline-html-element-content-newline': 'off',
+    'vue/name-property-casing': ['error', 'PascalCase'],
     'vue/no-v-html': 'off',
     'accessor-pairs': 2,
     'arrow-spacing': [
@@ -43,10 +36,7 @@ module.exports = {
         after: true
       }
     ],
-    'block-spacing': [
-      2,
-      'always'
-    ],
+    'block-spacing': [2, 'always'],
     'brace-style': [
       2,
       '1tbs',
@@ -60,10 +50,7 @@ module.exports = {
         properties: 'always'
       }
     ],
-    'comma-dangle': [
-      2,
-      'never'
-    ],
+    'comma-dangle': [2, 'never'],
     'comma-spacing': [
       2,
       {
@@ -71,34 +58,20 @@ module.exports = {
         after: true
       }
     ],
-    'comma-style': [
-      2,
-      'last'
-    ],
+    'comma-style': [2, 'last'],
     'constructor-super': 2,
     curly: [2, 'multi-line'],
-    'dot-location': [
-      2,
-      'property'
-    ],
+    'dot-location': [2, 'property'],
     'eol-last': 2,
-    eqeqeq: [
-      'error',
-      'always',
-      { null: 'ignore' }
-    ],
-    'generator-star-spacing':
-      [
-        2,
-        {
-          before: true,
-          after: true
-        }
-      ],
-    'handle-callback-err': [
+    eqeqeq: ['error', 'always', { null: 'ignore' }],
+    'generator-star-spacing': [
       2,
-      '^(err|error)$'
+      {
+        before: true,
+        after: true
+      }
     ],
+    'handle-callback-err': [2, '^(err|error)$'],
     indent: [
       2,
       2,
@@ -106,10 +79,7 @@ module.exports = {
         SwitchCase: 1
       }
     ],
-    'jsx-quotes': [
-      2,
-      'prefer-single'
-    ],
+    'jsx-quotes': [2, 'prefer-single'],
     'key-spacing': [
       2,
       {
@@ -151,18 +121,12 @@ module.exports = {
     'no-extend-native': 2,
     'no-extra-bind': 2,
     'no-extra-boolean-cast': 2,
-    'no-extra-parens': [
-      2,
-      'functions'
-    ],
+    'no-extra-parens': [2, 'functions'],
     'no-fallthrough': 2,
     'no-floating-decimal': 2,
     'no-func-assign': 2,
     'no-implied-eval': 2,
-    'no-inner-declarations': [
-      2,
-      'functions'
-    ],
+    'no-inner-declarations': [2, 'functions'],
     'no-invalid-regexp': 2,
     'no-irregular-whitespace': 2,
     'no-iterator': 2,
@@ -178,13 +142,12 @@ module.exports = {
     'no-mixed-spaces-and-tabs': 2,
     'no-multi-spaces': 2,
     'no-multi-str': 2,
-    'no-multiple-empty-lines':
-      [
-        2,
-        {
-          max: 1
-        }
-      ],
+    'no-multiple-empty-lines': [
+      2,
+      {
+        max: 1
+      }
+    ],
     'no-native-reassign': 2,
     'no-negated-in-lhs': 2,
     'no-new-object': 2,
@@ -198,10 +161,7 @@ module.exports = {
     'no-proto': 2,
     'no-redeclare': 2,
     'no-regex-spaces': 2,
-    'no-return-assign': [
-      2,
-      'except-parens'
-    ],
+    'no-return-assign': [2, 'except-parens'],
     'no-self-assign': 2,
     'no-self-compare': 2,
     'no-sequences': 2,
@@ -252,10 +212,7 @@ module.exports = {
         }
       }
     ],
-    'padded-blocks': [
-      2,
-      'never'
-    ],
+    'padded-blocks': [2, 'never'],
     quotes: [
       2,
       'single',
@@ -272,16 +229,9 @@ module.exports = {
         after: true
       }
     ],
-    'space-before-blocks': [
-      2,
-      'always'
-    ],
-    'space-before-function-paren':
-      [2, 'never'],
-    'space-in-parens': [
-      2,
-      'never'
-    ],
+    'space-before-blocks': [2, 'always'],
+    'space-before-function-paren': [2, 'never'],
+    'space-in-parens': [2, 'never'],
     'space-infix-ops': 2,
     'space-unary-ops': [
       2,
@@ -305,22 +255,14 @@ module.exports = {
         ]
       }
     ],
-    'template-curly-spacing':
-      [2, 'never'],
+    'template-curly-spacing': [2, 'never'],
     'use-isnan': 2,
     'valid-typeof': 2,
     'wrap-iife': [2, 'any'],
-    'yield-star-spacing': [
-      2,
-      'both'
-    ],
+    'yield-star-spacing': [2, 'both'],
     yoda: [2, 'never'],
     'prefer-const': 2,
-    'no-debugger':
-      process.env.NODE_ENV ===
-      'production'
-        ? 2
-        : 0,
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'object-curly-spacing': [
       2,
       'always',
@@ -328,9 +270,6 @@ module.exports = {
         objectsInObjects: false
       }
     ],
-    'array-bracket-spacing': [
-      2,
-      'never'
-    ]
+    'array-bracket-spacing': [2, 'never']
   }
 };

@@ -16,10 +16,7 @@ $error-color: #f5222d;
 
 // 字体系统
 $font-family-base:
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI', Roboto,
-  sans-serif;
+  -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 $font-size-base: 14px;
 $line-height-base: 1.5;
 
@@ -42,12 +39,9 @@ $breakpoint-lg: 992px;
 $breakpoint-xl: 1200px;
 
 // 阴影
-$shadow-sm: 0 1px 2px
-  rgba(0, 0, 0, 0.05);
-$shadow-md: 0 4px 6px
-  rgba(0, 0, 0, 0.1);
-$shadow-lg: 0 10px 15px
-  rgba(0, 0, 0, 0.1);
+$shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+$shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 
 // 边框圆角
 $border-radius-sm: 4px;

@@ -1,16 +1,8 @@
 <template>
-  <a
-    :class="className"
-    class="link--mallki"
-    href="#"
-  >
+  <a :class="className" class="link--mallki" href="#">
     {{ text }}
-    <span
-      :data-letters="text"
-    />
-    <span
-      :data-letters="text"
-    />
+    <span :data-letters="text" />
+    <span :data-letters="text" />
   </a>
 </template>
 
@@ -23,8 +15,7 @@ export default {
     },
     text: {
       type: String,
-      default:
-        'vue-element-admin'
+      default: 'vue-element-admin'
     }
   }
 };
@@ -36,10 +27,8 @@ export default {
 .link--mallki {
   font-weight: 800;
   color: #4dd9d5;
-  font-family:
-    'Dosis', sans-serif;
-  -webkit-transition: color
-    0.5s 0.25s;
+  font-family: 'Dosis', sans-serif;
+  -webkit-transition: color 0.5s 0.25s;
   transition: color 0.5s 0.25s;
   overflow: hidden;
   position: relative;
@@ -64,44 +53,17 @@ export default {
   position: absolute;
   left: 0;
   top: 50%;
-  -webkit-transform: translate3d(
-    -100%,
-    0,
-    0
-  );
-  transform: translate3d(
-    -100%,
-    0,
-    0
-  );
-  -webkit-transition: -webkit-transform
-    0.4s;
+  -webkit-transform: translate3d(-100%, 0, 0);
+  transform: translate3d(-100%, 0, 0);
+  -webkit-transition: -webkit-transform 0.4s;
   transition: transform 0.4s;
-  -webkit-transition-timing-function: cubic-bezier(
-    0.7,
-    0,
-    0.3,
-    1
-  );
-  transition-timing-function: cubic-bezier(
-    0.7,
-    0,
-    0.3,
-    1
-  );
+  -webkit-transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.7, 0, 0.3, 1);
 }
 
 .link--mallki:hover::before {
-  -webkit-transform: translate3d(
-    100%,
-    0,
-    0
-  );
-  transform: translate3d(
-    100%,
-    0,
-    0
-  );
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
 }
 
 .link--mallki span {
@@ -120,71 +82,32 @@ export default {
   left: 0;
   width: 100%;
   color: #3888fa;
-  -webkit-transition: -webkit-transform
-    0.5s;
+  -webkit-transition: -webkit-transform 0.5s;
   transition: transform 0.5s;
 }
 
-.link--mallki
-  span:nth-child(2) {
+.link--mallki span:nth-child(2) {
   top: 50%;
 }
 
-.link--mallki
-  span:first-child::before {
+.link--mallki span:first-child::before {
   top: 0;
-  -webkit-transform: translate3d(
-    0,
-    100%,
-    0
-  );
-  transform: translate3d(
-    0,
-    100%,
-    0
-  );
+  -webkit-transform: translate3d(0, 100%, 0);
+  transform: translate3d(0, 100%, 0);
 }
 
-.link--mallki
-  span:nth-child(2)::before {
+.link--mallki span:nth-child(2)::before {
   bottom: 0;
-  -webkit-transform: translate3d(
-    0,
-    -100%,
-    0
-  );
-  transform: translate3d(
-    0,
-    -100%,
-    0
-  );
+  -webkit-transform: translate3d(0, -100%, 0);
+  transform: translate3d(0, -100%, 0);
 }
 
-.link--mallki:hover
-  span::before {
+.link--mallki:hover span::before {
   -webkit-transition-delay: 0.3s;
   transition-delay: 0.3s;
-  -webkit-transform: translate3d(
-    0,
-    0,
-    0
-  );
-  transform: translate3d(
-    0,
-    0,
-    0
-  );
-  -webkit-transition-timing-function: cubic-bezier(
-    0.2,
-    1,
-    0.3,
-    1
-  );
-  transition-timing-function: cubic-bezier(
-    0.2,
-    1,
-    0.3,
-    1
-  );
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
+  transition-timing-function: cubic-bezier(0.2, 1, 0.3, 1);
 }
 </style>

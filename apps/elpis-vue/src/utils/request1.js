@@ -8,39 +8,26 @@ const service = axios.create({
 
 service.interceptors.request.use(
   config => {
-    config.headers.Authorization =
-      localStorage.getItem(
-        'HRM_TOKEN'
-      );
+    config.headers.Authorization = localStorage.getItem('HRM_TOKEN');
     return config;
   },
   error => {
-    return Promise.reject(
-      error
-    );
+    return Promise.reject(error);
   }
 );
 
 service.interceptors.response.use(
   res => res,
   error => {
-    switch (
-      error.response.status
-    ) {
+    switch (error.response.status) {
       case 401:
-        if (
-          router.history
-            .current.name ===
-          'login'
-        ) {
+        if (router.history.current.name === 'login') {
           return;
         }
         router.push({
           path: '/login',
           query: {
-            redirect:
-              router.history
-                .current.path
+            redirect: router.history.current.path
           }
         });
         break;
@@ -54,9 +41,7 @@ service.interceptors.response.use(
       type: 'error',
       duration: 2 * 1000
     });
-    return Promise.reject(
-      error
-    );
+    return Promise.reject(error);
   }
 );
 

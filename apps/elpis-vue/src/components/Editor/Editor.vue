@@ -1,10 +1,5 @@
 <script setup>
-import {
-  ref,
-  computed,
-  watch,
-  onMounted
-} from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 
@@ -90,324 +85,201 @@ const toolbarButtons = [
 ];
 
 // 统计信息
-const wordCount = computed(
-  () => {
-    const text =
-      markdownText.value.trim();
-    return text
-      ? text.split(/\s+/)
-          .length
-      : 0;
-  }
-);
+const wordCount = computed(() => {
+  const text = markdownText.value.trim();
+  return text ? text.split(/\s+/).length : 0;
+});
 
-const charCount = computed(
-  () =>
-    markdownText.value.length
-);
+const charCount = computed(() => markdownText.value.length);
 
-const lineCount = computed(
-  () =>
-    markdownText.value.split(
-      '\n'
-    ).length
-);
+const lineCount = computed(() => markdownText.value.split('\n').length);
 
 // 渲染后的 HTML
-const renderedHtml = computed(
-  () => {
-    if (
-      !markdownText.value.trim()
-    ) {
-      return '<p class="empty-preview">内容为空，请输入 Markdown 内容...</p>';
-    }
-
-    try {
-      const rawHtml =
-        marked.parse(
-          markdownText.value
-        );
-      // 使用 DOMPurify 清理 HTML，防止 XSS 攻击
-      const a =
-        DOMPurify.sanitize(
-          rawHtml,
-          {
-            ALLOWED_TAGS: [
-              'h1',
-              'h2',
-              'h3',
-              'h4',
-              'h5',
-              'h6',
-              'p',
-              'br',
-              'hr',
-              'strong',
-              'em',
-              'b',
-              'i',
-              'u',
-              's',
-              'blockquote',
-              'code',
-              'pre',
-              'ul',
-              'ol',
-              'li',
-              'table',
-              'thead',
-              'tbody',
-              'tr',
-              'th',
-              'td',
-              'a',
-              'img',
-              'div',
-              'span'
-            ],
-            ALLOWED_ATTR: [
-              'href',
-              'target',
-              'src',
-              'alt',
-              'title',
-              'class',
-              'id'
-            ]
-          }
-        );
-      console.log(
-        markdownText.value
-      );
-      console.dir(
-        textareaRef.value
-          .value
-      );
-      console.log(a);
-      return a;
-    } catch (error) {
-      return `<div class="error">渲染错误: ${error.message}</div>`;
-    }
+const renderedHtml = computed(() => {
+  if (!markdownText.value.trim()) {
+    return '<p class="empty-preview">内容为空，请输入 Markdown 内容...</p>';
   }
-);
+
+  try {
+    const rawHtml = marked.parse(markdownText.value);
+    // 使用 DOMPurify 清理 HTML，防止 XSS 攻击
+    const a = DOMPurify.sanitize(rawHtml, {
+      ALLOWED_TAGS: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'p',
+        'br',
+        'hr',
+        'strong',
+        'em',
+        'b',
+        'i',
+        'u',
+        's',
+        'blockquote',
+        'code',
+        'pre',
+        'ul',
+        'ol',
+        'li',
+        'table',
+        'thead',
+        'tbody',
+        'tr',
+        'th',
+        'td',
+        'a',
+        'img',
+        'div',
+        'span'
+      ],
+      ALLOWED_ATTR: ['href', 'target', 'src', 'alt', 'title', 'class', 'id']
+    });
+    console.log(markdownText.value);
+    console.dir(textareaRef.value.value);
+    console.log(a);
+    return a;
+  } catch (error) {
+    return `<div class="error">渲染错误: ${error.message}</div>`;
+  }
+});
 
 // 处理 Tab 键缩进
 const handleTab = event => {
   event.preventDefault();
-  const textarea =
-    textareaRef.value;
-  const start =
-    textarea.selectionStart;
-  const end =
-    textarea.selectionEnd;
+  const textarea = textareaRef.value;
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
 
   // 插入两个空格作为缩进
-  const text =
-    markdownText.value;
-  const newText =
-    text.substring(0, start) +
-    '  ' +
-    text.substring(end);
+  const text = markdownText.value;
+  const newText = text.substring(0, start) + '  ' + text.substring(end);
 
-  markdownText.value =
-    newText;
+  markdownText.value = newText;
 
   // 恢复光标位置
   setTimeout(() => {
-    textarea.selectionStart =
-      textarea.selectionEnd =
-        start + 2;
+    textarea.selectionStart = textarea.selectionEnd = start + 2;
   }, 0);
 };
 
 // 插入 Markdown 语法
-const insertMarkdown =
-  type => {
-    const textarea =
-      textareaRef.value;
-    const start =
-      textarea.selectionStart;
-    const end =
-      textarea.selectionEnd;
-    const selectedText =
-      markdownText.value.substring(
-        start,
-        end
-      );
-    const text =
-      markdownText.value;
+const insertMarkdown = type => {
+  const textarea = textareaRef.value;
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  const selectedText = markdownText.value.substring(start, end);
+  const text = markdownText.value;
 
-    let insertText = '';
-    let cursorOffset = 0;
+  let insertText = '';
+  let cursorOffset = 0;
 
-    switch (type) {
-      case 'h1':
-        insertText = `# ${selectedText}`;
-        cursorOffset =
-          selectedText
-            ? 0
-            : 2;
-        break;
-      case 'h2':
-        insertText = `## ${selectedText}`;
-        cursorOffset =
-          selectedText
-            ? 0
-            : 3;
-        break;
-      case 'bold':
-        insertText = `**${selectedText}**`;
-        cursorOffset =
-          selectedText
-            ? 0
-            : 2;
-        break;
-      case 'italic':
-        insertText = `*${selectedText}*`;
-        cursorOffset =
-          selectedText
-            ? 0
-            : 1;
-        break;
-      case 'link':
-        insertText = `[${selectedText || '链接文字'}](https://example.com)`;
-        cursorOffset =
-          selectedText
-            ? 0
-            : 1;
-        break;
-      case 'image':
-        insertText = `![${selectedText || '图片描述'}](https://picsum.photos/400/300)`;
-        cursorOffset =
-          selectedText
-            ? 0
-            : 2;
-        break;
-      case 'code':
-        if (
-          selectedText.includes(
-            '\n'
-          )
-        ) {
-          insertText = `\`\`\`\n${selectedText}\n\`\`\``;
-          cursorOffset = 3;
-        } else {
-          insertText = `\`${selectedText}\``;
-          cursorOffset =
-            selectedText
-              ? 0
-              : 1;
-        }
-        break;
-      case 'list':
-        insertText =
-          selectedText
-            ? selectedText
-                .split('\n')
-                .map(
-                  line =>
-                    `- ${line}`
-                )
-                .join('\n')
-            : '- ';
-        cursorOffset = 2;
-        break;
-      case 'olist':
-        insertText =
-          selectedText
-            ? selectedText
-                .split('\n')
-                .map(
-                  (line, i) =>
-                    `${i + 1}. ${line}`
-                )
-                .join('\n')
-            : '1. ';
+  switch (type) {
+    case 'h1':
+      insertText = `# ${selectedText}`;
+      cursorOffset = selectedText ? 0 : 2;
+      break;
+    case 'h2':
+      insertText = `## ${selectedText}`;
+      cursorOffset = selectedText ? 0 : 3;
+      break;
+    case 'bold':
+      insertText = `**${selectedText}**`;
+      cursorOffset = selectedText ? 0 : 2;
+      break;
+    case 'italic':
+      insertText = `*${selectedText}*`;
+      cursorOffset = selectedText ? 0 : 1;
+      break;
+    case 'link':
+      insertText = `[${selectedText || '链接文字'}](https://example.com)`;
+      cursorOffset = selectedText ? 0 : 1;
+      break;
+    case 'image':
+      insertText = `![${selectedText || '图片描述'}](https://picsum.photos/400/300)`;
+      cursorOffset = selectedText ? 0 : 2;
+      break;
+    case 'code':
+      if (selectedText.includes('\n')) {
+        insertText = `\`\`\`\n${selectedText}\n\`\`\``;
         cursorOffset = 3;
-        break;
-      case 'quote':
-        insertText =
-          selectedText
-            ? selectedText
-                .split('\n')
-                .map(
-                  line =>
-                    `> ${line}`
-                )
-                .join('\n')
-            : '> ';
-        cursorOffset = 2;
-        break;
-      case 'hr':
-        insertText =
-          '\n---\n';
-        cursorOffset = 1;
-        break;
-      case 'table':
-        insertText = `| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |\n| Cell 3   | Cell 4   |`;
-        cursorOffset = 0;
-        break;
-    }
-
-    const newText =
-      text.substring(
-        0,
-        start
-      ) +
-      insertText +
-      text.substring(end);
-    markdownText.value =
-      newText;
-
-    // 设置新的光标位置
-    setTimeout(() => {
-      if (selectedText) {
-        textarea.selectionStart =
-          start;
-        textarea.selectionEnd =
-          start +
-          insertText.length;
       } else {
-        textarea.selectionStart =
-          textarea.selectionEnd =
-            start +
-            cursorOffset;
+        insertText = `\`${selectedText}\``;
+        cursorOffset = selectedText ? 0 : 1;
       }
-      textarea.focus();
-    }, 0);
-  };
+      break;
+    case 'list':
+      insertText = selectedText
+        ? selectedText
+            .split('\n')
+            .map(line => `- ${line}`)
+            .join('\n')
+        : '- ';
+      cursorOffset = 2;
+      break;
+    case 'olist':
+      insertText = selectedText
+        ? selectedText
+            .split('\n')
+            .map((line, i) => `${i + 1}. ${line}`)
+            .join('\n')
+        : '1. ';
+      cursorOffset = 3;
+      break;
+    case 'quote':
+      insertText = selectedText
+        ? selectedText
+            .split('\n')
+            .map(line => `> ${line}`)
+            .join('\n')
+        : '> ';
+      cursorOffset = 2;
+      break;
+    case 'hr':
+      insertText = '\n---\n';
+      cursorOffset = 1;
+      break;
+    case 'table':
+      insertText = `| Header 1 | Header 2 |\n|----------|----------|\n| Cell 1   | Cell 2   |\n| Cell 3   | Cell 4   |`;
+      cursorOffset = 0;
+      break;
+  }
+
+  const newText = text.substring(0, start) + insertText + text.substring(end);
+  markdownText.value = newText;
+
+  // 设置新的光标位置
+  setTimeout(() => {
+    if (selectedText) {
+      textarea.selectionStart = start;
+      textarea.selectionEnd = start + insertText.length;
+    } else {
+      textarea.selectionStart = textarea.selectionEnd = start + cursorOffset;
+    }
+    textarea.focus();
+  }, 0);
+};
 
 // 手动渲染
 const manualRender = () => {
-  const preview =
-    document.querySelector(
-      '.preview-content'
-    );
-  preview.style.display =
-    'block';
+  const preview = document.querySelector('.preview-content');
+  preview.style.display = 'block';
 };
 
 // 导出内容
 const exportContent = () => {
-  const blob = new Blob(
-    [markdownText.value],
-    { type: 'text/markdown' }
-  );
-  const url =
-    URL.createObjectURL(blob);
-  const a =
-    document.createElement(
-      'a'
-    );
+  const blob = new Blob([markdownText.value], { type: 'text/markdown' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
   a.href = url;
   a.download = `markdown-${new Date().getTime()}.md`;
-  document.body.appendChild(
-    a
-  );
+  document.body.appendChild(a);
   a.click();
-  document.body.removeChild(
-    a
-  );
+  document.body.removeChild(a);
   URL.revokeObjectURL(url);
 };
 
@@ -419,37 +291,18 @@ onMounted(() => {
 });
 </script>
 <template>
-  <div
-    class="markdown-editor"
-  >
-    <div
-      class="editor-container"
-    >
+  <div class="markdown-editor">
+    <div class="editor-container">
       <!-- 编辑区 -->
-      <div
-        class="editor-section"
-      >
-        <div
-          v-if="false"
-          class="section-header"
-        >
+      <div class="editor-section">
+        <div v-if="false" class="section-header">
           <h3>编辑</h3>
-          <div
-            class="toolbar"
-          >
+          <div class="toolbar">
             <button
               v-for="btn in toolbarButtons"
-              :key="
-                btn.action
-              "
-              @click="
-                insertMarkdown(
-                  btn.action
-                )
-              "
-              :title="
-                btn.title
-              "
+              :key="btn.action"
+              @click="insertMarkdown(btn.action)"
+              :title="btn.title"
               class="toolbar-btn"
             >
               {{ btn.text }}
@@ -458,89 +311,42 @@ onMounted(() => {
         </div>
         <textarea
           ref="textareaRef"
-          v-model="
-            markdownText
-          "
+          v-model="markdownText"
           class="editor-textarea"
           placeholder="请输入 Markdown 内容..."
           @input="handleInput"
-          @keydown.tab.prevent="
-            handleTab
-          "
+          @keydown.tab.prevent="handleTab"
         ></textarea>
       </div>
 
       <!-- 预览区 -->
-      <div
-        class="preview-section"
-      >
-        <div
-          v-if="false"
-          class="section-header"
-        >
+      <div class="preview-section">
+        <div v-if="false" class="section-header">
           <h3>预览</h3>
-          <div
-            class="preview-controls"
-          >
+          <div class="preview-controls">
             <label>
-              <input
-                type="checkbox"
-                v-model="
-                  autoRender
-                "
-              />
+              <input type="checkbox" v-model="autoRender" />
               自动渲染
             </label>
-            <button
-              @click="
-                exportContent
-              "
-              class="export-btn"
-            >
-              导出
-            </button>
+            <button @click="exportContent" class="export-btn">导出</button>
           </div>
         </div>
         <div
           class="preview-content"
-          v-html="
-            renderedHtml
-          "
+          v-html="renderedHtml"
           v-show="autoRender"
         ></div>
-        <div
-          v-show="!autoRender"
-          class="render-prompt"
-        >
-          <button
-            @click="
-              manualRender
-            "
-            class="render-btn"
-          >
-            点击渲染
-          </button>
+        <div v-show="!autoRender" class="render-prompt">
+          <button @click="manualRender" class="render-btn">点击渲染</button>
         </div>
       </div>
     </div>
 
     <!-- 字数统计 -->
     <div class="stats">
-      <span
-        >字数：{{
-          wordCount
-        }}</span
-      >
-      <span
-        >字符数：{{
-          charCount
-        }}</span
-      >
-      <span
-        >行数：{{
-          lineCount
-        }}</span
-      >
+      <span>字数：{{ wordCount }}</span>
+      <span>字符数：{{ charCount }}</span>
+      <span>行数：{{ lineCount }}</span>
     </div>
   </div>
 </template>
@@ -572,8 +378,7 @@ onMounted(() => {
 }
 
 .editor-section {
-  border-right: 1px solid
-    #e0e0e0;
+  border-right: 1px solid #e0e0e0;
 }
 
 .section-header {
@@ -582,8 +387,7 @@ onMounted(() => {
   align-items: center;
   padding: 12px 16px;
   background: #f8f9fa;
-  border-bottom: 1px solid
-    #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .section-header h3 {
@@ -641,9 +445,7 @@ onMounted(() => {
   padding: 16px;
   border: none;
   resize: none;
-  font-family:
-    'Monaco', 'Menlo',
-    'Ubuntu Mono', monospace;
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
   font-size: 14px;
   line-height: 1.6;
   outline: none;
@@ -654,10 +456,7 @@ onMounted(() => {
   padding: 16px;
   overflow-y: auto;
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI', Roboto,
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
 }
 
@@ -673,8 +472,7 @@ onMounted(() => {
 .stats {
   padding: 12px 16px;
   background: #f8f9fa;
-  border-top: 1px solid
-    #e0e0e0;
+  border-top: 1px solid #e0e0e0;
   display: flex;
   gap: 20px;
   font-size: 12px;
@@ -685,16 +483,14 @@ onMounted(() => {
 .preview-content :deep(h1) {
   font-size: 2em;
   margin: 0.67em 0;
-  border-bottom: 2px solid
-    #eee;
+  border-bottom: 2px solid #eee;
   padding-bottom: 0.3em;
 }
 
 .preview-content :deep(h2) {
   font-size: 1.5em;
   margin: 0.75em 0;
-  border-bottom: 1px solid
-    #eee;
+  border-bottom: 1px solid #eee;
   padding-bottom: 0.3em;
 }
 
@@ -711,9 +507,7 @@ onMounted(() => {
   background: #f6f8fa;
   padding: 2px 4px;
   border-radius: 3px;
-  font-family:
-    'SFMono-Regular',
-    Consolas, monospace;
+  font-family: 'SFMono-Regular', Consolas, monospace;
   font-size: 0.9em;
 }
 
@@ -725,34 +519,29 @@ onMounted(() => {
   border: 1px solid #e1e4e8;
 }
 
-.preview-content
-  :deep(pre code) {
+.preview-content :deep(pre code) {
   background: none;
   padding: 0;
 }
 
-.preview-content
-  :deep(blockquote) {
+.preview-content :deep(blockquote) {
   border-left: 4px solid #ddd;
   margin: 1em 0;
   padding-left: 1em;
   color: #666;
 }
 
-.preview-content
-  :deep(ul, ol) {
+.preview-content :deep(ul, ol) {
   padding-left: 2em;
 }
 
-.preview-content
-  :deep(table) {
+.preview-content :deep(table) {
   border-collapse: collapse;
   width: 100%;
   margin: 1em 0;
 }
 
-.preview-content
-  :deep(th, td) {
+.preview-content :deep(th, td) {
   border: 1px solid #ddd;
   padding: 8px 12px;
   text-align: left;
@@ -768,8 +557,7 @@ onMounted(() => {
   text-decoration: none;
 }
 
-.preview-content
-  :deep(a:hover) {
+.preview-content :deep(a:hover) {
   text-decoration: underline;
 }
 
@@ -801,8 +589,7 @@ onMounted(() => {
 
   .editor-section {
     border-right: none;
-    border-bottom: 1px solid
-      #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
     height: 50%;
   }
 

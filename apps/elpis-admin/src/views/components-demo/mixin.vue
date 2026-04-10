@@ -1,85 +1,38 @@
 <template>
-  <div
-    class="mixin-components-container"
-  >
+  <div class="mixin-components-container">
     <el-row>
-      <el-card
-        class="box-card"
-      >
-        <div
-          slot="header"
-          class="clearfix"
-        >
+      <el-card class="box-card">
+        <div slot="header" class="clearfix">
           <span>Buttons</span>
         </div>
-        <div
-          style="
-            margin-bottom: 50px;
-          "
-        >
-          <el-col
-            :span="4"
-            class="text-center"
-          >
-            <router-link
-              class="pan-btn blue-btn"
-              to="/documentation/index"
-            >
+        <div style="margin-bottom: 50px">
+          <el-col :span="4" class="text-center">
+            <router-link class="pan-btn blue-btn" to="/documentation/index">
               Documentation
             </router-link>
           </el-col>
-          <el-col
-            :span="4"
-            class="text-center"
-          >
-            <router-link
-              class="pan-btn light-blue-btn"
-              to="/icon/index"
-            >
+          <el-col :span="4" class="text-center">
+            <router-link class="pan-btn light-blue-btn" to="/icon/index">
               Icons
             </router-link>
           </el-col>
-          <el-col
-            :span="4"
-            class="text-center"
-          >
-            <router-link
-              class="pan-btn pink-btn"
-              to="/excel/export-excel"
-            >
+          <el-col :span="4" class="text-center">
+            <router-link class="pan-btn pink-btn" to="/excel/export-excel">
               Excel
             </router-link>
           </el-col>
-          <el-col
-            :span="4"
-            class="text-center"
-          >
-            <router-link
-              class="pan-btn green-btn"
-              to="/table/complex-table"
-            >
+          <el-col :span="4" class="text-center">
+            <router-link class="pan-btn green-btn" to="/table/complex-table">
               Table
             </router-link>
           </el-col>
-          <el-col
-            :span="4"
-            class="text-center"
-          >
-            <router-link
-              class="pan-btn tiffany-btn"
-              to="/example/create"
-            >
+          <el-col :span="4" class="text-center">
+            <router-link class="pan-btn tiffany-btn" to="/example/create">
               Form
             </router-link>
           </el-col>
-          <el-col
-            :span="4"
-            class="text-center"
-          >
-            <router-link
-              class="pan-btn yellow-btn"
-              to="/theme/index"
-            >
+          <el-col :span="4" class="text-center">
+            <router-link class="pan-btn yellow-btn" to="/theme/index">
               Theme
             </router-link>
           </el-col>
@@ -87,41 +40,17 @@
       </el-card>
     </el-row>
 
-    <el-row
-      :gutter="20"
-      style="margin-top: 50px"
-    >
+    <el-row :gutter="20" style="margin-top: 50px">
       <el-col :span="6">
-        <el-card
-          class="box-card"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
-            <span
-              >Material Design
-              的input</span
-            >
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>Material Design 的input</span>
           </div>
-          <div
-            style="
-              height: 100px;
-            "
-          >
-            <el-form
-              :model="demo"
-              :rules="
-                demoRules
-              "
-            >
-              <el-form-item
-                prop="title"
-              >
+          <div style="height: 100px">
+            <el-form :model="demo" :rules="demoRules">
+              <el-form-item prop="title">
                 <md-input
-                  v-model="
-                    demo.title
-                  "
+                  v-model="demo.title"
                   icon="el-icon-search"
                   name="title"
                   placeholder="输入标题"
@@ -135,20 +64,11 @@
       </el-col>
 
       <el-col :span="6">
-        <el-card
-          class="box-card"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
-            <span
-              >图片hover效果</span
-            >
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>图片hover效果</span>
           </div>
-          <div
-            class="component-item"
-          >
+          <div class="component-item">
             <pan-thumb
               width="100px"
               height="100px"
@@ -161,83 +81,38 @@
       </el-col>
 
       <el-col :span="6">
-        <el-card
-          class="box-card"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
-            <span
-              >水波纹 waves
-              v-directive</span
-            >
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>水波纹 waves v-directive</span>
           </div>
-          <div
-            class="component-item"
-          >
-            <el-button
-              v-waves
-              type="primary"
-            >
-              水波纹效果
-            </el-button>
+          <div class="component-item">
+            <el-button v-waves type="primary"> 水波纹效果 </el-button>
           </div>
         </el-card>
       </el-col>
 
       <el-col :span="6">
-        <el-card
-          class="box-card"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
-            <span
-              >hover
-              text</span
-            >
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>hover text</span>
           </div>
-          <div
-            class="component-item"
-          >
-            <mallki
-              class-name="mallki-text"
-              text="vue-element-admin"
-            />
+          <div class="component-item">
+            <mallki class-name="mallki-text" text="vue-element-admin" />
           </div>
         </el-card>
       </el-col>
     </el-row>
 
-    <el-row
-      :gutter="20"
-      style="margin-top: 50px"
-    >
+    <el-row :gutter="20" style="margin-top: 50px">
       <el-col :span="8">
-        <el-card
-          class="box-card"
-        >
-          <div
-            slot="header"
-            class="clearfix"
-          >
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
             <span>Share</span>
           </div>
-          <div
-            class="component-item"
-            style="
-              height: 420px;
-            "
-          >
+          <div class="component-item" style="height: 420px">
             <dropdown-menu
-              :items="
-                articleList
-              "
-              style="
-                margin: 0 auto;
-              "
+              :items="articleList"
+              style="margin: 0 auto"
               title="系列文章"
             />
           </div>
@@ -266,19 +141,9 @@ export default {
     waves
   },
   data() {
-    const validate = (
-      rule,
-      value,
-      callback
-    ) => {
-      if (
-        value.length !== 6
-      ) {
-        callback(
-          new Error(
-            '请输入六个字符'
-          )
-        );
+    const validate = (rule, value, callback) => {
+      if (value.length !== 6) {
+        callback(new Error('请输入六个字符'));
       } else {
         callback();
       }
@@ -292,8 +157,7 @@ export default {
           {
             required: true,
             trigger: 'change',
-            validator:
-              validate
+            validator: validate
           }
         ]
       },
@@ -311,8 +175,7 @@ export default {
           href: 'https://juejin.im/post/593121aa0ce4630057f70d35'
         },
         {
-          title:
-            'vue-admin-template 篇',
+          title: 'vue-admin-template 篇',
           href: 'https://juejin.im/post/595b4d776fb9a06bbe7dba56'
         },
         {
@@ -320,8 +183,7 @@ export default {
           href: 'https://juejin.im/post/5c92ff94f265da6128275a85'
         },
         {
-          title:
-            '优雅的使用 icon',
+          title: '优雅的使用 icon',
           href: 'https://juejin.im/post/59bb864b5188257e7a427c09'
         }
       ]
@@ -334,9 +196,7 @@ export default {
 .mixin-components-container {
   background-color: #f0f2f5;
   padding: 30px;
-  min-height: calc(
-    100vh - 84px
-  );
+  min-height: calc(100vh - 84px);
 }
 .component-item {
   min-height: 100px;

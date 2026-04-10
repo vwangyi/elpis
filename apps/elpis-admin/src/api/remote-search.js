@@ -1,8 +1,6 @@
 import request from '@/utils/request';
 
-export function searchUser(
-  name
-) {
+export function searchUser(name) {
   return request({
     url: '/vue-element-admin/search/user',
     method: 'get',
@@ -10,9 +8,7 @@ export function searchUser(
   });
 }
 
-export function transactionList(
-  query
-) {
+export function transactionList(query) {
   return request({
     url: '/vue-element-admin/transaction/list',
     method: 'get',

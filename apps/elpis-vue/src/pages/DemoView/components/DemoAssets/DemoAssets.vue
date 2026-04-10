@@ -7,9 +7,7 @@ import three from './img/3.png';
 // 缺点： 麻烦
 
 async function getUrl(val) {
-  await import(
-    `./img/${val}.png`
-  ); // 返回promise 所以 await
+  await import(`./img/${val}.png`); // 返回promise 所以 await
 }
 
 /*
@@ -21,18 +19,12 @@ async function getUrl(val) {
 
 */
 async function getUrl1(val) {
-  const url = new URL(
-    `./img/${val}.png`,
-    import.meta.url
-  );
+  const url = new URL(`./img/${val}.png`, import.meta.url);
 }
 </script>
 
 <template>
-  <div
-    class="test"
-    :style="`background-image: url(${getUrl(1)}) ;`"
-  >
+  <div class="test" :style="`background-image: url(${getUrl(1)}) ;`">
     <button></button>
   </div>
 </template>

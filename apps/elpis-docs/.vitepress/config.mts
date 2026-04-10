@@ -18,11 +18,10 @@ export default defineConfig({
         link: "/02_JavaScript/01_Nodejs/index.md",
         activeMatch: "^/02_JavaScript/"
       },
-      { text: "构建工具", link: "/03_构建工具/01_Webpack/00_简介.md" }, // rollup webpack vite esbuild
       {
-        text: "前端框架",
-        link: "/04_前端框架/00_Vue/00_Vue是什么.md",
-        activeMatch: "^/04_前端框架/"
+        text: "数据库",
+        link: "/01_数据库/01_mysql/04_查.md",
+        activeMatch: "^/01_数据库/"
       },
       {
         text: "后端框架",
@@ -30,9 +29,14 @@ export default defineConfig({
         activeMatch: "^/05_后端框架/"
       },
       {
-        text: "数据库",
-        link: "/01_数据库/index.md",
-        activeMatch: "^/01_数据库/"
+        text: "前端框架",
+        link: "/04_前端框架/00_Vue/00_Vue是什么.md",
+        activeMatch: "^/04_前端框架/"
+      },
+      {
+        text: "构建工具",
+        link: "/03_构建工具/01_Webpack/00_简介.md",
+        activeMatch: "^/03_构建工具/"
       },
       {
         text: "业务场景",
@@ -183,6 +187,68 @@ export default defineConfig({
           ]
         }
       ],
+      "/01_数据库/": [
+        {
+          text: 'mysql',
+          items: [
+            {
+              text: '增（给表增加一条记录）',
+              link: '/01_数据库/01_mysql/01_增.md'
+            },
+            {
+              text: '删（给表删除一条记录）',
+              link: '/01_数据库/01_mysql/02_删.md'
+            },
+            {
+              text: '改（给某条记录修改）',
+              link: '/01_数据库/01_mysql/03_改.md'
+            },
+            {
+              text: '查（查询某条记录）',
+              link: '/01_数据库/01_mysql/04_查.md'
+            }
+          ]
+        },
+        {
+          text: 'redis',
+          link: '/01_数据库/02_redis/00_index.md'
+        },
+
+      ],
+      "/05_后端框架": [
+        {
+          text: "Koa",
+          link: "/05_后端框架/01_Koa/index.md",
+        }
+      ],
+      "/04_前端框架/": [
+        {
+          text: "Vue",
+          items: [
+            {
+              text: "简介",
+              link: "/04_前端框架/00_Vue/00_Vue是什么.md"
+            },
+            {
+              text: "依赖注入 provide/inject",
+              link: "/04_前端框架/00_Vue/03_依赖注入.md"
+            },
+            {
+              text: "异步组件",
+              link: "/04_前端框架/00_Vue/06_异步组件.md"
+            }
+          ]
+        },
+        // {
+        //   text: "Nuxt",
+        //   items: [
+        //     {
+        //       text: "简介",
+        //       link: "/04_前端框架/03_Nuxt/index.md"
+        //     },
+        //   ]
+        // }
+      ],
       "/03_构建工具/": [
         {
           text: "架构",
@@ -256,34 +322,6 @@ export default defineConfig({
           ]
         }
       ],
-      "/04_前端框架/": [
-        {
-          text: "Vue",
-          items: [
-            {
-              text: "简介",
-              link: "/04_前端框架/00_Vue/00_Vue是什么.md"
-            },
-            {
-              text: "依赖注入 provide/inject",
-              link: "/04_前端框架/00_Vue/03_依赖注入.md"
-            },
-            {
-              text: "异步组件",
-              link: "/04_前端框架/00_Vue/06_异步组件.md"
-            }
-          ]
-        },
-        {
-          text: "Nuxt",
-          items: [
-            {
-              text: "简介",
-              link: "/04_前端框架/03_Nuxt/index.md"
-            },
-          ]
-        }
-      ],
       "/06_业务/": [
         {
           text: "业务sense",
@@ -329,6 +367,10 @@ export default defineConfig({
             {
               text: "webRTC",
               link: "/06_业务/02_音视频/02_webRTC.md"
+            },
+            {
+              text: "云存储",
+              link: "/06_业务/02_音视频/03_云存储.md"
             }
           ]
         },

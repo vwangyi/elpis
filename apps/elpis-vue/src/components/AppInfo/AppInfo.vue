@@ -2,16 +2,12 @@
 import { useRouter } from 'vue-router';
 const router = useRouter();
 function handleBeian() {
-  window.open(
-    'https://beian.miit.gov.cn/'
-  );
+  window.open('https://beian.miit.gov.cn/');
 }
 var a = 1;
 
 function handleBeianGongAn() {
-  window.open(
-    'https://beian.mps.gov.cn/'
-  );
+  window.open('https://beian.mps.gov.cn/');
 }
 function toHome() {
   router.push('/');
@@ -19,24 +15,12 @@ function toHome() {
 </script>
 <template>
   <div class="app-info">
-    <div @click="handleBeian">
-      蜀ICP备2025170363号
-    </div>
-    <div
-      @click="
-        handleBeianGongAn
-      "
-    >
-      粤公网安备44011102484440号
-    </div>
+    <div @click="handleBeian">蜀ICP备2025170363号</div>
+    <div @click="handleBeianGongAn">粤公网安备44011102484440号</div>
     <div>WeChat: codewy</div>
-    <div>
-      Email: codewy@qq.com
-    </div>
+    <div>Email: codewy@qq.com</div>
     <div @click="toHome">
-      Copyright© 2025-{{
-        new Date().getFullYear()
-      }}
+      Copyright© 2025-{{ new Date().getFullYear() }}
       WANGYI
     </div>
   </div>
@@ -56,8 +40,7 @@ $fontsize: 10px;
   color: #828a92;
   line-height: $fontsize;
   > div {
-    border-right: 1px solid
-      #828a92;
+    border-right: 1px solid #828a92;
     padding: 0 6px;
     cursor: pointer;
   }

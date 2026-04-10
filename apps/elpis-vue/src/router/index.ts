@@ -1,7 +1,4 @@
-import {
-  createRouter,
-  createWebHistory
-} from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/pages/HomeView/HomeView.vue';
 
 export const routes = [
@@ -201,8 +198,7 @@ export const routes = [
         '@/pages/WebSocket/WebSocket.vue'
       ),
     meta: {
-      title:
-        'WebSocket / http轮询'
+      title: 'WebSocket / http轮询'
     }
   },
   {

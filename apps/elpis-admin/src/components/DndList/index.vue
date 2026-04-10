@@ -20,42 +20,16 @@
           :key="element.id"
           class="list-complete-item"
         >
-          <div
-            class="list-complete-item-handle"
-          >
-            {{
-              element.id
-            }}[{{
-              element.author
-            }}]
-            {{
-              element.title
-            }}
+          <div class="list-complete-item-handle">
+            {{ element.id }}[{{ element.author }}]
+            {{ element.title }}
           </div>
-          <div
-            style="
-              position: absolute;
-              right: 0px;
-            "
-          >
+          <div style="position: absolute; right: 0px">
             <span
-              style="
-                float: right;
-                margin-top: -20px;
-                margin-right: 5px;
-              "
-              @click="
-                deleteEle(
-                  element
-                )
-              "
+              style="float: right; margin-top: -20px; margin-right: 5px"
+              @click="deleteEle(element)"
             >
-              <i
-                style="
-                  color: #ff4949;
-                "
-                class="el-icon-delete"
-              />
+              <i style="color: #ff4949" class="el-icon-delete" />
             </span>
           </div>
         </div>
@@ -70,29 +44,16 @@
       <h3>
         {{ list2Title }}
       </h3>
-      <draggable
-        :list="list2"
-        group="article"
-        class="dragArea"
-      >
+      <draggable :list="list2" group="article" class="dragArea">
         <div
           v-for="element in list2"
           :key="element.id"
           class="list-complete-item"
         >
-          <div
-            class="list-complete-item-handle2"
-            @click="
-              pushEle(element)
-            "
-          >
+          <div class="list-complete-item-handle2" @click="pushEle(element)">
             {{ element.id }}
-            [{{
-              element.author
-            }}]
-            {{
-              element.title
-            }}
+            [{{ element.author }}]
+            {{ element.title }}
           </div>
         </div>
       </draggable>
@@ -138,70 +99,39 @@ export default {
   },
   methods: {
     isNotInList1(v) {
-      return this.list1.every(
-        k => v.id !== k.id
-      );
+      return this.list1.every(k => v.id !== k.id);
     },
     isNotInList2(v) {
-      return this.list2.every(
-        k => v.id !== k.id
-      );
+      return this.list2.every(k => v.id !== k.id);
     },
     deleteEle(ele) {
-      for (const item of this
-        .list1) {
-        if (
-          item.id === ele.id
-        ) {
-          const index =
-            this.list1.indexOf(
-              item
-            );
-          this.list1.splice(
-            index,
-            1
-          );
+      for (const item of this.list1) {
+        if (item.id === ele.id) {
+          const index = this.list1.indexOf(item);
+          this.list1.splice(index, 1);
           break;
         }
       }
-      if (
-        this.isNotInList2(ele)
-      ) {
-        this.list2.unshift(
-          ele
-        );
+      if (this.isNotInList2(ele)) {
+        this.list2.unshift(ele);
       }
     },
     pushEle(ele) {
-      for (const item of this
-        .list2) {
-        if (
-          item.id === ele.id
-        ) {
-          const index =
-            this.list2.indexOf(
-              item
-            );
-          this.list2.splice(
-            index,
-            1
-          );
+      for (const item of this.list2) {
+        if (item.id === ele.id) {
+          const index = this.list2.indexOf(item);
+          this.list2.splice(index, 1);
           break;
         }
       }
-      if (
-        this.isNotInList1(ele)
-      ) {
+      if (this.isNotInList1(ele)) {
         this.list1.push(ele);
       }
     },
     setData(dataTransfer) {
       // to avoid Firefox bug
       // Detail see : https://github.com/RubaXa/Sortable/issues/1012
-      dataTransfer.setData(
-        'Text',
-        ''
-      );
+      dataTransfer.setData('Text', '');
     }
   }
 };

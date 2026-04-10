@@ -1,6 +1,4 @@
-const {
-  VueLoaderPlugin
-} = require('vue-loader');
+const { VueLoaderPlugin } = require('vue-loader');
 // npm i babel-loader thread-loader @babel/plugin-transform-runtime @babel/preset-env -D
 const path = require('path');
 const os = require('os');
@@ -11,50 +9,29 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const mockServer = require('../mock/mock-server.js'); // 引入 mock 服务
 
-console.log(
-  '当前环境变量：',
-  process.env.VUE_APP_BASE_API
-);
+console.log('当前环境变量：', process.env.VUE_APP_BASE_API);
 module.exports = {
   mode: 'development',
   entry: './src/main.js',
   output: {
-    path: path.resolve(
-      __dirname,
-      './dist'
-    ),
-    filename:
-      'js/[name]_[chunkhash:8].bundle.js',
+    path: path.resolve(__dirname, './dist'),
+    filename: 'js/[name]_[chunkhash:8].bundle.js',
     clean: true,
-    chunkFilename:
-      'js/[name]_[chunkhash:8].chunk.js',
-    assetModuleFilename:
-      'assets/[name]_[hash:8][ext][query]',
+    chunkFilename: 'js/[name]_[chunkhash:8].chunk.js',
+    assetModuleFilename: 'assets/[name]_[hash:8][ext][query]',
     // publicPath: "./dist",
-    crossOriginLoading:
-      'anonymous'
+    crossOriginLoading: 'anonymous'
   },
 
   resolve: {
     alias: {
-      '@': path.resolve(
-        __dirname,
-        '../src'
-      ) // 确保这行存在且路径正确
+      '@': path.resolve(__dirname, '../src') // 确保这行存在且路径正确
     },
-    extensions: [
-      '.js',
-      '.vue',
-      '.less',
-      '.css',
-      '.scss',
-      '.sass'
-    ], // 可以省略文件后缀
+    extensions: ['.js', '.vue', '.less', '.css', '.scss', '.sass'], // 可以省略文件后缀
 
     fallback: {
       path: require.resolve('path-browserify'), // 浏览器环境 使用 import path from 'path'
-      stream:
-        require.resolve('stream-browserify') // 浏览器环境 使用 import stream from 'stream'
+      stream: require.resolve('stream-browserify') // 浏览器环境 使用 import stream from 'stream'
     }
   },
   module: {
@@ -69,26 +46,21 @@ module.exports = {
         oneOf: [
           {
             test: /\.jsx?$/, // 匹配js 或 jsx 文件
-            exclude:
-              /node_modules/, // 排除 node_modules 目录下的文件
+            exclude: /node_modules/, // 排除 node_modules 目录下的文件
             use: [
               {
-                loader:
-                  'thread-loader', // 开启多线程处理babel-loader
+                loader: 'thread-loader', // 开启多线程处理babel-loader
                 options: {
                   workers: 2 // 设置线程数，默认为 require("os").cpus().length - 1
                 }
               },
               {
-                loader:
-                  'babel-loader', // 使用babel-loader处理js文件
+                loader: 'babel-loader', // 使用babel-loader处理js文件
                 options: {
                   // presets: ['@babel/preset-env'], // 预设在babel.config.js中使用了 这里就不用了
                   cacheDirectory: true, // 启用babel-loader缓存，提高构建速度
                   cacheCompression: false, // 关闭缓存文件压缩，提升性能，因为压缩需要额外的CPU资源
-                  plugins: [
-                    '@babel/plugin-transform-runtime'
-                  ] // 使用transform-runtime插件，减少冗余代码，提高性能
+                  plugins: ['@babel/plugin-transform-runtime'] // 使用transform-runtime插件，减少冗余代码，提高性能
                 }
               }
             ]
@@ -96,18 +68,11 @@ module.exports = {
 
           {
             test: /\.css$/,
-            use: [
-              MiniCssExtractPlugin.loader,
-              'css-loader'
-            ]
+            use: [MiniCssExtractPlugin.loader, 'css-loader']
           },
           {
             test: /\.less$/,
-            use: [
-              MiniCssExtractPlugin.loader,
-              'css-loader',
-              'less-loader'
-            ]
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader']
           },
           {
             test: /\.s[ac]ss$/i,
@@ -115,8 +80,7 @@ module.exports = {
               MiniCssExtractPlugin.loader, // style-loader 改为 MiniCssExtractPlugin.loader
               // "css-loader", // 将 CSS 转化成 CommonJS 模块
               {
-                loader:
-                  'css-loader',
+                loader: 'css-loader',
                 options: {
                   // ✅ 显式开启 ICSS 模式，确保 :export 能被识别为 JS 导出
                   modules: {
@@ -126,49 +90,39 @@ module.exports = {
               },
               // "sass-loader", // 将 Sass 编译成 CSS
               {
-                loader:
-                  'sass-loader',
+                loader: 'sass-loader',
                 options: {
                   //   // ✅ 核心配置：全局注入 SCSS 变量
                   //   // 路径需要根据你实际 variables.scss 的位置调整
                   //   data: `@import "@/styles/variables.scss";` // 可以在 vue的script中 import xxx from 'xxx.scss'
 
                   // ✅ 添加 sassOptions 配置
-                  sassOptions:
-                    {
-                      quietDeps: true, // 沉默依赖包 (node_modules) 中的警告
-                      // 或者完全沉默所有警告 (不推荐，会漏掉你自己的代码警告)
-                      logger:
-                        {
-                          warn: () => {}
-                        }
+                  sassOptions: {
+                    quietDeps: true, // 沉默依赖包 (node_modules) 中的警告
+                    // 或者完全沉默所有警告 (不推荐，会漏掉你自己的代码警告)
+                    logger: {
+                      warn: () => {}
                     }
+                  }
                 }
               }
             ]
           },
           {
             test: /\.styl$/,
-            use: [
-              MiniCssExtractPlugin.loader,
-              'css-loader',
-              'stylus-loader'
-            ]
+            use: [MiniCssExtractPlugin.loader, 'css-loader', 'stylus-loader']
           },
           // 处理图片 webpack5 使用内置的 asset模块处理图片资源 不需要npm i
           {
             test: /\.(png|jpg|jpeg|gif|svg|webp)$/i, // 处理 png jpg jpeg gif svg webp 等图片文件
             type: 'asset',
             parser: {
-              dataUrlCondition:
-                {
-                  maxSize:
-                    10 * 1024 // 10kb  单位是b  字节byte  乘1024 转 kb了
-                }
+              dataUrlCondition: {
+                maxSize: 10 * 1024 // 10kb  单位是b  字节byte  乘1024 转 kb了
+              }
             },
             generator: {
-              filename:
-                'img/[hash:8][ext][query]' // 把图片放到output.path里面的 img下
+              filename: 'img/[hash:8][ext][query]' // 把图片放到output.path里面的 img下
             }
           },
           // 对 字体等文件 进行解析
@@ -176,8 +130,7 @@ module.exports = {
             test: /\.(woff2?|eot|ttf|otf)(\?.+)?$/, // 匹配字体文件
             type: 'asset/resource', // Webpack5内置的Asset Modules 来处理字体文件
             generator: {
-              filename:
-                'font/[hash][ext][query]'
+              filename: 'font/[hash][ext][query]'
             }
           },
           // 视频或其他 原封不动的输出到指定地方 都放 assets
@@ -185,8 +138,7 @@ module.exports = {
             test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.+)?$/, // 匹配视频音频文件
             type: 'asset/resource', // Webpack5内置的Asset Modules 来处理字体文件
             generator: {
-              filename:
-                'assets/[hash][ext][query]'
+              filename: 'assets/[hash][ext][query]'
             }
           }
         ]
@@ -195,10 +147,7 @@ module.exports = {
   },
   devServer: {
     static: {
-      directory: path.resolve(
-        __dirname,
-        'dist'
-      )
+      directory: path.resolve(__dirname, 'dist')
     },
     compress: true, // 开启gzip压缩
     port: 8081, // 指定端口号
@@ -211,18 +160,11 @@ module.exports = {
     //   mockServer(devServer.app);  // 挂载 mock 路由
     // },
     // ✅ 新版本使用 setupMiddlewares
-    setupMiddlewares: (
-      middlewares,
-      devServer
-    ) => {
+    setupMiddlewares: (middlewares, devServer) => {
       // 挂载 mock 服务
       if (devServer) {
-        mockServer(
-          devServer.app
-        ); // 挂载 mock 路由
-        console.log(
-          '📦 [mock] Mock server mounted'
-        );
+        mockServer(devServer.app); // 挂载 mock 路由
+        console.log('📦 [mock] Mock server mounted');
       }
       return middlewares;
     },
@@ -250,16 +192,10 @@ module.exports = {
     onListening(devServer) {
       setTimeout(() => {
         console.clear();
-        const port =
-          devServer.server.address()
-            .port;
+        const port = devServer.server.address().port;
         console.log('\n');
-        console.log(
-          '  App running at:'
-        );
-        console.log(
-          `  - Local:   \x1b[36mhttp://localhost:${port}/\x1b[0m`
-        );
+        console.log('  App running at:');
+        console.log(`  - Local:   \x1b[36mhttp://localhost:${port}/\x1b[0m`);
         console
           .log
           // `  - Network: \x1b[36mhttp://${ip.address()}:${port}/\x1b[0m`
@@ -275,8 +211,7 @@ module.exports = {
       new TerserPlugin({
         test: /\.js(\?.*)?$/i, // 匹配需要压缩的文件
         include: /\/src/, // 要包含的文件夹
-        exclude:
-          /\/node_modules/, // 要排除的文件夹
+        exclude: /\/node_modules/, // 要排除的文件夹
         exclude: [
           /\/node_modules\/lodash/, // 不压缩 lodash
           /\/src\/legacy\// // 不压缩 legacy 目录
@@ -291,16 +226,13 @@ module.exports = {
 
         // 或者自定义注释提取
         extractComments: {
-          condition:
-            /^\**!|@preserve|@license|@cc_on/i,
-          filename:
-            fileData => {
-              return `${fileData.filename}.LICENSE.txt`;
-            },
-          banner:
-            licenseFile => {
-              return `License information can be found in ${licenseFile}`;
-            }
+          condition: /^\**!|@preserve|@license|@cc_on/i,
+          filename: fileData => {
+            return `${fileData.filename}.LICENSE.txt`;
+          },
+          banner: licenseFile => {
+            return `License information can be found in ${licenseFile}`;
+          }
         },
 
         // Terser 压缩选项
@@ -312,9 +244,7 @@ module.exports = {
           compress: {
             drop_console: true, // 移除 console.log
             drop_debugger: true, // 移除 debugger
-            pure_funcs: [
-              'console.log'
-            ], // 移除指定函数
+            pure_funcs: ['console.log'], // 移除指定函数
             passes: 2, // 多次压缩优化
 
             sequences: true, // 连续声明变量
@@ -378,10 +308,7 @@ module.exports = {
     // }),
 
     new HtmlWebpackPlugin({
-      template: path.resolve(
-        __dirname,
-        '../public/index.html'
-      ),
+      template: path.resolve(__dirname, '../public/index.html'),
       filename: 'index.html',
       // ✅ 传递 BASE_URL 变量
       BASE_URL: '/', // 或者你的 CDN 域名
@@ -396,18 +323,10 @@ module.exports = {
     new webpack.DefinePlugin({
       // 这里定义后。就可以在 前端代码中 通过 process.env.NODE_ENV 来访问这个环境变量了
       'process.env': {
-        NODE_ENV:
-          JSON.stringify(
-            process.env
-              .NODE_ENV ||
-              'development'
-          ),
-        VUE_APP_BASE_API:
-          JSON.stringify(
-            process.env
-              .VUE_APP_BASE_API ||
-              '/dev-api'
-          )
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
+        VUE_APP_BASE_API: JSON.stringify(
+          process.env.VUE_APP_BASE_API || '/dev-api'
+        )
         // 添加其他需要的环境变量
       }
       // 下面的写法 等价上面

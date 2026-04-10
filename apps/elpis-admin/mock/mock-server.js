@@ -3,87 +3,43 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 const path = require('path');
 const Mock = require('mockjs');
-const mockDir = path.join(
-  process.cwd(),
-  'mock'
-);
+const mockDir = path.join(process.cwd(), 'mock');
 
 function registerRoutes(app) {
   let mockLastIndex;
-  const {
-    mocks
-  } = require('./index.js');
-  const mocksForServer =
-    mocks.map(route => {
-      return responseFake(
-        route.url,
-        route.type,
-        route.response
-      );
-    });
+  const { mocks } = require('./index.js');
+  const mocksForServer = mocks.map(route => {
+    return responseFake(route.url, route.type, route.response);
+  });
   for (const mock of mocksForServer) {
-    app[mock.type](
-      mock.url,
-      mock.response
-    );
-    mockLastIndex =
-      app._router.stack
-        .length;
+    app[mock.type](mock.url, mock.response);
+    mockLastIndex = app._router.stack.length;
   }
-  const mockRoutesLength =
-    Object.keys(
-      mocksForServer
-    ).length;
+  const mockRoutesLength = Object.keys(mocksForServer).length;
   return {
-    mockRoutesLength:
-      mockRoutesLength,
-    mockStartIndex:
-      mockLastIndex -
-      mockRoutesLength
+    mockRoutesLength: mockRoutesLength,
+    mockStartIndex: mockLastIndex - mockRoutesLength
   };
 }
 
 function unregisterRoutes() {
-  Object.keys(
-    require.cache
-  ).forEach(i => {
+  Object.keys(require.cache).forEach(i => {
     if (i.includes(mockDir)) {
-      delete require.cache[
-        require.resolve(i)
-      ];
+      delete require.cache[require.resolve(i)];
     }
   });
 }
 
 // for mock server
-const responseFake = (
-  url,
-  type,
-  respond
-) => {
-  console.log(
-    'npm run dev 才会执行'
-  );
+const responseFake = (url, type, respond) => {
+  console.log('npm run dev 才会执行');
   return {
-    url: new RegExp(
-      `${process.env.VUE_APP_BASE_API || '/dev-api'}${url}`
-    ),
+    url: new RegExp(`${process.env.VUE_APP_BASE_API || '/dev-api'}${url}`),
     type: type || 'get',
     response(req, res) {
-      console.log(
-        'request invoke:' +
-          req.path
-      );
+      console.log('request invoke:' + req.path);
       res.json(
-        Mock.mock(
-          respond instanceof
-            Function
-            ? respond(
-                req,
-                res
-              )
-            : respond
-        )
+        Mock.mock(respond instanceof Function ? respond(req, res) : respond)
       );
     }
   };
@@ -99,12 +55,9 @@ module.exports = app => {
     })
   );
 
-  const mockRoutes =
-    registerRoutes(app);
-  var mockRoutesLength =
-    mockRoutes.mockRoutesLength;
-  var mockStartIndex =
-    mockRoutes.mockStartIndex;
+  const mockRoutes = registerRoutes(app);
+  var mockRoutesLength = mockRoutes.mockRoutesLength;
+  var mockStartIndex = mockRoutes.mockStartIndex;
 
   // watch files, hot reload mock server
   chokidar
@@ -112,46 +65,27 @@ module.exports = app => {
       ignored: /mock-server/,
       ignoreInitial: true
     })
-    .on(
-      'all',
-      (event, path) => {
-        if (
-          event ===
-            'change' ||
-          event === 'add'
-        ) {
-          try {
-            // remove mock routes stack
-            app._router.stack.splice(
-              mockStartIndex,
-              mockRoutesLength
-            );
+    .on('all', (event, path) => {
+      if (event === 'change' || event === 'add') {
+        try {
+          // remove mock routes stack
+          app._router.stack.splice(mockStartIndex, mockRoutesLength);
 
-            // clear routes cache
-            unregisterRoutes();
+          // clear routes cache
+          unregisterRoutes();
 
-            const mockRoutes =
-              registerRoutes(
-                app
-              );
-            mockRoutesLength =
-              mockRoutes.mockRoutesLength;
-            mockStartIndex =
-              mockRoutes.mockStartIndex;
+          const mockRoutes = registerRoutes(app);
+          mockRoutesLength = mockRoutes.mockRoutesLength;
+          mockStartIndex = mockRoutes.mockStartIndex;
 
-            console.log(
-              chalk.magentaBright(
-                `\n > Mock Server hot reload success! changed  ${path}`
-              )
-            );
-          } catch (error) {
-            console.log(
-              chalk.redBright(
-                error
-              )
-            );
-          }
+          console.log(
+            chalk.magentaBright(
+              `\n > Mock Server hot reload success! changed  ${path}`
+            )
+          );
+        } catch (error) {
+          console.log(chalk.redBright(error));
         }
       }
-    );
+    });
 };

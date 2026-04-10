@@ -1,11 +1,7 @@
 <template>
-  <div
-    class="components-container"
-  >
+  <div class="components-container">
     <aside>
-      <a
-        href="https://github.com/PanJiaChen/vue-countTo"
-        target="_blank"
+      <a href="https://github.com/PanJiaChen/vue-countTo" target="_blank"
         >countTo-component</a
       >
     </aside>
@@ -21,127 +17,61 @@
       :autoplay="false"
       class="example"
     />
-    <div
-      style="
-        margin-left: 25%;
-        margin-top: 40px;
-      "
-    >
-      <label
-        class="label"
-        for="startValInput"
+    <div style="margin-left: 25%; margin-top: 40px">
+      <label class="label" for="startValInput"
         >startVal:
         <input
-          v-model.number="
-            setStartVal
-          "
+          v-model.number="setStartVal"
           type="number"
           name="startValInput"
         />
       </label>
-      <label
-        class="label"
-        for="endValInput"
+      <label class="label" for="endValInput"
         >endVal:
-        <input
-          v-model.number="
-            setEndVal
-          "
-          type="number"
-          name="endVaInput"
-        />
+        <input v-model.number="setEndVal" type="number" name="endVaInput" />
       </label>
-      <label
-        class="label"
-        for="durationInput"
+      <label class="label" for="durationInput"
         >duration:
         <input
-          v-model.number="
-            setDuration
-          "
+          v-model.number="setDuration"
           type="number"
           name="durationInput"
         />
       </label>
-      <div
-        class="startBtn example-btn"
-        @click="start"
-      >
-        Start
-      </div>
-      <div
-        class="pause-resume-btn example-btn"
-        @click="pauseResume"
-      >
+      <div class="startBtn example-btn" @click="start">Start</div>
+      <div class="pause-resume-btn example-btn" @click="pauseResume">
         pause/resume
       </div>
       <br />
-      <label
-        class="label"
-        for="decimalsInput"
+      <label class="label" for="decimalsInput"
         >decimals:
         <input
-          v-model.number="
-            setDecimals
-          "
+          v-model.number="setDecimals"
           type="number"
           name="decimalsInput"
         />
       </label>
-      <label
-        class="label"
-        for="separatorInput"
+      <label class="label" for="separatorInput"
         >separator:
-        <input
-          v-model="
-            setSeparator
-          "
-          name="separatorInput"
-        />
+        <input v-model="setSeparator" name="separatorInput" />
       </label>
-      <label
-        class="label"
-        for="prefixInput"
+      <label class="label" for="prefixInput"
         >prefix:
-        <input
-          v-model="setPrefix"
-          name="prefixInput"
-        />
+        <input v-model="setPrefix" name="prefixInput" />
       </label>
-      <label
-        class="label"
-        for="suffixInput"
+      <label class="label" for="suffixInput"
         >suffix:
-        <input
-          v-model="setSuffix"
-          name="suffixInput"
-        />
+        <input v-model="setSuffix" name="suffixInput" />
       </label>
     </div>
     <aside>
-      &lt;count-to
-      :start-val=&#x27;{{
-        _startVal
-      }}&#x27;
-      :end-val=&#x27;{{
+      &lt;count-to :start-val=&#x27;{{ _startVal }}&#x27; :end-val=&#x27;{{
         _endVal
-      }}&#x27;
-      :duration=&#x27;{{
-        _duration
-      }}&#x27;
-      :decimals=&#x27;{{
+      }}&#x27; :duration=&#x27;{{ _duration }}&#x27; :decimals=&#x27;{{
         _decimals
-      }}&#x27;
-      :separator=&#x27;{{
-        _separator
-      }}&#x27;
-      :prefix=&#x27;{{
+      }}&#x27; :separator=&#x27;{{ _separator }}&#x27; :prefix=&#x27;{{
         _prefix
-      }}&#x27;
-      :suffix=&#x27;{{
-        _suffix
-      }}&#x27;
-      :autoplay=false&gt;
+      }}&#x27; :suffix=&#x27;{{ _suffix }}&#x27; :autoplay=false&gt;
     </aside>
   </div>
 </template>
@@ -166,8 +96,7 @@ export default {
   computed: {
     _startVal() {
       if (this.setStartVal) {
-        return this
-          .setStartVal;
+        return this.setStartVal;
       } else {
         return 0;
       }
@@ -181,34 +110,24 @@ export default {
     },
     _duration() {
       if (this.setDuration) {
-        return this
-          .setDuration;
+        return this.setDuration;
       } else {
         return 100;
       }
     },
     _decimals() {
       if (this.setDecimals) {
-        if (
-          this.setDecimals <
-            0 ||
-          this.setDecimals >
-            20
-        ) {
-          alert(
-            'digits argument must be between 0 and 20'
-          );
+        if (this.setDecimals < 0 || this.setDecimals > 20) {
+          alert('digits argument must be between 0 and 20');
           return 0;
         }
-        return this
-          .setDecimals;
+        return this.setDecimals;
       } else {
         return 0;
       }
     },
     _separator() {
-      return this
-        .setSeparator;
+      return this.setSeparator;
     },
     _suffix() {
       return this.setSuffix;
@@ -238,8 +157,7 @@ export default {
   touch-action: manipulation;
   cursor: pointer;
   background-image: none;
-  border: 1px solid
-    transparent;
+  border: 1px solid transparent;
   white-space: nowrap;
   line-height: 1.5;
   padding: 4px 15px;
@@ -249,20 +167,8 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-transition: all 0.3s
-    cubic-bezier(
-      0.645,
-      0.045,
-      0.355,
-      1
-    );
-  transition: all 0.3s
-    cubic-bezier(
-      0.645,
-      0.045,
-      0.355,
-      1
-    );
+  -webkit-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
   position: relative;
   color: rgba(0, 0, 0, 0.65);
   background-color: #fff;

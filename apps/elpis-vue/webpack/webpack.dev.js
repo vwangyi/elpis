@@ -1,7 +1,5 @@
 const path = require('path');
-const {
-  merge
-} = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const express = require('express');
 const consoler = require('consoler');
 const webpack = require('webpack');
@@ -15,14 +13,8 @@ const serverConfig = {
   HMR_PATH: '__webpack_hmr', // 官方规定
   TIMEOUT: 20000
 };
-const {
-  HOST,
-  PORT,
-  HMR_PATH,
-  TIMEOUT
-} = serverConfig;
-const rootPath =
-  process.cwd(); // 项目根路径 启动命令的路径
+const { HOST, PORT, HMR_PATH, TIMEOUT } = serverConfig;
+const rootPath = process.cwd(); // 项目根路径 启动命令的路径
 
 // // 修改entry webpack-hot-middleware插件规定的
 // baseConfig.entry = [
@@ -33,40 +25,28 @@ const rootPath =
 
 // 继承基础配置 并重写部分配置
 const url = `http://${HOST}:${PORT}/${HMR_PATH}&timeout=${TIMEOUT}&reload=true`; // 开发阶段的 entry 配置需要加入hmr
-const webpackConfig = merge(
-  baseConfig,
-  {
-    mode: 'development', // 指定为 开发环境
-    devtool:
-      'cheap-module-source-map',
-    entry: [
-      // hmr 更新入口 官方指定的 hmr路径     双方通信用 eventsource 或 webSockte 都行 这里用的eventsource
-      `webpack-hot-middleware/client?path=${url}`,
-      baseConfig.entry
-    ],
-    // 开发环境 的 output 配置
-    output: {
-      filename:
-        'js/[name]_[chunkhash:8].bundle.js',
-      path: path.resolve(
-        rootPath,
-        './dist/'
-      ), // 输出文件路径
-      publicPath: `http://${HOST}:${PORT}/public/dist/`, // 外部资源公共路径 这一句决定html中的 js css等静态资源从哪里加载
-      globalObject: 'this' // globalObject指向this
-    },
+const webpackConfig = merge(baseConfig, {
+  mode: 'development', // 指定为 开发环境
+  devtool: 'cheap-module-source-map',
+  entry: [
+    // hmr 更新入口 官方指定的 hmr路径     双方通信用 eventsource 或 webSockte 都行 这里用的eventsource
+    `webpack-hot-middleware/client?path=${url}`,
+    baseConfig.entry
+  ],
+  // 开发环境 的 output 配置
+  output: {
+    filename: 'js/[name]_[chunkhash:8].bundle.js',
+    path: path.resolve(rootPath, './dist/'), // 输出文件路径
+    publicPath: `http://${HOST}:${PORT}/public/dist/`, // 外部资源公共路径 这一句决定html中的 js css等静态资源从哪里加载
+    globalObject: 'this' // globalObject指向this
+  },
 
-    plugins: [
-      // hmr
-      new webpack.HotModuleReplacementPlugin(
-        { multiStep: false }
-      )
-    ]
-  }
-);
-const compiler = webpack(
-  webpackConfig
-);
+  plugins: [
+    // hmr
+    new webpack.HotModuleReplacementPlugin({ multiStep: false })
+  ]
+});
+const compiler = webpack(webpackConfig);
 // console.log('baseConfig', JSON.stringify(baseConfig))
 // console.log('webpackConfig', JSON.stringify(webpackConfig))
 
@@ -75,14 +55,7 @@ const compiler = webpack(
 // 启动服务
 const app = express();
 // 指定静态文件目录
-app.use(
-  express.static(
-    path.join(
-      __dirname,
-      '../public/dist/'
-    )
-  )
-);
+app.use(express.static(path.join(__dirname, '../public/dist/')));
 
 // 2. 核心修改：添加 History API Fallback 中间件
 // 必须在 devMiddleware 之前使用
@@ -149,15 +122,11 @@ app.use(
       // return filePath.endsWith('.html'); // 物理输出.html文件 其他文件就放到内存中
       return true; // 物理输出所有文件
     },
-    publicPath:
-      webpackConfig.output
-        .publicPath, // 设置 资源路径 和 输出的publicPath 一致
+    publicPath: webpackConfig.output.publicPath, // 设置 资源路径 和 输出的publicPath 一致
     // 解决跨域
     headers: {
-      'Access-Control-Allow-Origin':
-        '*',
-      'Access-Control-Allow-Methods':
-        'GET, POST, DELETE, PATCH, OPTIONS',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, DELETE, PATCH, OPTIONS',
       'Access-Control-Allow-Headers':
         'X-Request-With, content-type, Authorization'
     },
@@ -178,30 +147,16 @@ app.use(
 app.use((req, res, next) => {
   // 排除 API
   // 请求有2种  api请求和页面请求  我们的nodejs服务器 都是静态资源 比如 js css png 还有 页面html
-  if (
-    req.path.startsWith(
-      '/api'
-    )
-  ) {
-    return res
-      .status(404)
-      .json({
-        error: 'API Not Found'
-      });
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({
+      error: 'API Not Found'
+    });
   }
 
   // 返回 index.html
-  res.sendFile(
-    path.join(
-      __dirname,
-      '../dist',
-      'index.html'
-    )
-  );
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
 });
 
 app.listen(PORT, () => {
-  consoler.info(
-    `请等待webpack初次构建完成提示...: ${PORT}`
-  );
+  consoler.info(`请等待webpack初次构建完成提示...: ${PORT}`);
 });

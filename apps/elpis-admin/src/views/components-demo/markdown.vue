@@ -1,16 +1,11 @@
 <template>
-  <div
-    class="components-container"
-  >
+  <div class="components-container">
     <aside>
       Markdown is based on
-      <a
-        href="https://github.com/nhnent/tui.editor"
-        target="_blank"
+      <a href="https://github.com/nhnent/tui.editor" target="_blank"
         >tui.editor</a
       >
-      ，simply wrapped with
-      Vue.
+      ，simply wrapped with Vue.
       <a
         target="_blank"
         href="https://panjiachen.github.io/vue-element-admin-site/feature/component/markdown-editor.html"
@@ -19,28 +14,13 @@
       </a>
     </aside>
 
-    <div
-      class="editor-container"
-    >
-      <el-tag
-        class="tag-title"
-      >
-        Basic:
-      </el-tag>
-      <markdown-editor
-        v-model="content1"
-        height="300px"
-      />
+    <div class="editor-container">
+      <el-tag class="tag-title"> Basic: </el-tag>
+      <markdown-editor v-model="content1" height="300px" />
     </div>
 
-    <div
-      class="editor-container"
-    >
-      <el-tag
-        class="tag-title"
-      >
-        Markdown Mode:
-      </el-tag>
+    <div class="editor-container">
+      <el-tag class="tag-title"> Markdown Mode: </el-tag>
       <markdown-editor
         ref="markdownEditor"
         v-model="content2"
@@ -52,34 +32,18 @@
       />
     </div>
 
-    <div
-      class="editor-container"
-    >
-      <el-tag
-        class="tag-title"
-      >
-        Customize Toolbar:
-      </el-tag>
+    <div class="editor-container">
+      <el-tag class="tag-title"> Customize Toolbar: </el-tag>
       <markdown-editor
         v-model="content3"
         :options="{
-          toolbarItems: [
-            'heading',
-            'bold',
-            'italic'
-          ]
+          toolbarItems: ['heading', 'bold', 'italic']
         }"
       />
     </div>
 
-    <div
-      class="editor-container"
-    >
-      <el-tag
-        class="tag-title"
-      >
-        I18n:
-      </el-tag>
+    <div class="editor-container">
+      <el-tag class="tag-title"> I18n: </el-tag>
       <el-alert
         :closable="false"
         title="You can change the language of the admin system to see the effect"
@@ -137,16 +101,12 @@ export default {
   },
   computed: {
     language() {
-      return this
-        .languageTypeList[
-        'en'
-      ];
+      return this.languageTypeList['en'];
     }
   },
   methods: {
     getHtml() {
-      this.html =
-        this.$refs.markdownEditor.getHtml();
+      this.html = this.$refs.markdownEditor.getHtml();
       console.log(this.html);
     }
   }

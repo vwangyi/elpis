@@ -1,10 +1,6 @@
 <template>
   <div class="tab-container">
-    <el-tag
-      >mounted times ：{{
-        createdTimes
-      }}</el-tag
-    >
+    <el-tag>mounted times ：{{ createdTimes }}</el-tag>
     <el-alert
       :closable="false"
       style="
@@ -16,11 +12,7 @@
       title="Tab with keep-alive"
       type="success"
     />
-    <el-tabs
-      v-model="activeName"
-      style="margin-top: 15px"
-      type="border-card"
-    >
+    <el-tabs v-model="activeName" style="margin-top: 15px" type="border-card">
       <el-tab-pane
         v-for="item in tabMapOptions"
         :key="item.key"
@@ -29,14 +21,9 @@
       >
         <keep-alive>
           <tab-pane
-            v-if="
-              activeName ==
-              item.key
-            "
+            v-if="activeName == item.key"
             :type="item.key"
-            @create="
-              showCreatedTimes
-            "
+            @create="showCreatedTimes"
           />
         </keep-alive>
       </el-tab-pane>
@@ -76,23 +63,19 @@ export default {
   },
   watch: {
     activeName(val) {
-      this.$router.push(
-        `${this.$route.path}?tab=${val}`
-      );
+      this.$router.push(`${this.$route.path}?tab=${val}`);
     }
   },
   created() {
     // init the default selected tab
-    const tab =
-      this.$route.query.tab;
+    const tab = this.$route.query.tab;
     if (tab) {
       this.activeName = tab;
     }
   },
   methods: {
     showCreatedTimes() {
-      this.createdTimes =
-        this.createdTimes + 1;
+      this.createdTimes = this.createdTimes + 1;
     }
   }
 };

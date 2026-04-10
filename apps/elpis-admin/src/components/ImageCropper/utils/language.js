@@ -2,8 +2,7 @@ export default {
   zh: {
     hint: '点击，或拖动图片至此处',
     loading: '正在上传……',
-    noSupported:
-      '浏览器不支持该功能，请使用IE10以上或其他现在浏览器！',
+    noSupported: '浏览器不支持该功能，请使用IE10以上或其他现在浏览器！',
     success: '上传成功',
     fail: '图片上传失败',
     preview: '头像预览',
@@ -15,17 +14,14 @@ export default {
     },
     error: {
       onlyImg: '仅限图片格式',
-      outOfSize:
-        '单文件大小不能超过 ',
-      lowestPx:
-        '图片最低像素为（宽*高）：'
+      outOfSize: '单文件大小不能超过 ',
+      lowestPx: '图片最低像素为（宽*高）：'
     }
   },
   'zh-tw': {
     hint: '點擊，或拖動圖片至此處',
     loading: '正在上傳……',
-    noSupported:
-      '瀏覽器不支持該功能，請使用IE10以上或其他現代瀏覽器！',
+    noSupported: '瀏覽器不支持該功能，請使用IE10以上或其他現代瀏覽器！',
     success: '上傳成功',
     fail: '圖片上傳失敗',
     preview: '頭像預覽',
@@ -37,17 +33,14 @@ export default {
     },
     error: {
       onlyImg: '僅限圖片格式',
-      outOfSize:
-        '單文件大小不能超過 ',
-      lowestPx:
-        '圖片最低像素為（寬*高）：'
+      outOfSize: '單文件大小不能超過 ',
+      lowestPx: '圖片最低像素為（寬*高）：'
     }
   },
   en: {
     hint: 'Click or drag the file here to upload',
     loading: 'Uploading…',
-    noSupported:
-      'Browser is not supported, please use IE10+ or other browsers',
+    noSupported: 'Browser is not supported, please use IE10+ or other browsers',
     success: 'Upload success',
     fail: 'Upload failed',
     preview: 'Preview',
@@ -59,10 +52,8 @@ export default {
     },
     error: {
       onlyImg: 'Image only',
-      outOfSize:
-        'Image exceeds size limit: ',
-      lowestPx:
-        "Image's size is too low. Expected at least: "
+      outOfSize: 'Image exceeds size limit: ',
+      lowestPx: "Image's size is too low. Expected at least: "
     }
   },
   ro: {
@@ -70,11 +61,9 @@ export default {
     loading: 'Se încarcă',
     noSupported:
       'Browser-ul tău nu suportă acest feature. Te rugăm încearcă cu alt browser.',
-    success:
-      'S-a încărcat cu succes',
+    success: 'S-a încărcat cu succes',
     fail: 'A apărut o problemă la încărcare',
-    preview:
-      'Previzualizează',
+    preview: 'Previzualizează',
 
     btn: {
       off: 'Anulează',
@@ -85,10 +74,8 @@ export default {
 
     error: {
       onlyImg: 'Doar imagini',
-      outOfSize:
-        'Imaginea depășește limita de: ',
-      loewstPx:
-        'Imaginea este prea mică; Minim: '
+      outOfSize: 'Imaginea depășește limita de: ',
+      loewstPx: 'Imaginea este prea mică; Minim: '
     }
   },
   ru: {
@@ -96,8 +83,7 @@ export default {
     loading: 'Загружаю……',
     noSupported:
       'Ваш браузер не поддерживается, пожалуйста, используйте IE10 + или другие браузеры',
-    success:
-      'Загрузка выполнена успешно',
+    success: 'Загрузка выполнена успешно',
     fail: 'Ошибка загрузки',
     preview: 'Предпросмотр',
     btn: {
@@ -107,21 +93,16 @@ export default {
       save: 'Сохранить'
     },
     error: {
-      onlyImg:
-        'Только изображения',
-      outOfSize:
-        'Изображение превышает предельный размер: ',
-      lowestPx:
-        'Минимальный размер изображения: '
+      onlyImg: 'Только изображения',
+      outOfSize: 'Изображение превышает предельный размер: ',
+      lowestPx: 'Минимальный размер изображения: '
     }
   },
   'pt-br': {
     hint: 'Clique ou arraste o arquivo aqui para carregar',
     loading: 'Carregando…',
-    noSupported:
-      'Browser não suportado, use o IE10+ ou outro browser',
-    success:
-      'Sucesso ao carregar imagem',
+    noSupported: 'Browser não suportado, use o IE10+ ou outro browser',
+    success: 'Sucesso ao carregar imagem',
     fail: 'Falha ao carregar imagem',
     preview: 'Pré-visualizar',
     btn: {
@@ -131,22 +112,17 @@ export default {
       save: 'Salvar'
     },
     error: {
-      onlyImg:
-        'Apenas imagens',
-      outOfSize:
-        'A imagem excede o limite de tamanho: ',
-      lowestPx:
-        'O tamanho da imagem é muito pequeno. Tamanho mínimo: '
+      onlyImg: 'Apenas imagens',
+      outOfSize: 'A imagem excede o limite de tamanho: ',
+      lowestPx: 'O tamanho da imagem é muito pequeno. Tamanho mínimo: '
     }
   },
   fr: {
     hint: 'Cliquez ou glissez le fichier ici.',
-    loading:
-      'Téléchargement…',
+    loading: 'Téléchargement…',
     noSupported:
       "Votre navigateur n'est pas supporté. Utilisez IE10 + ou un autre navigateur s'il vous plaît.",
-    success:
-      'Téléchargement réussit',
+    success: 'Téléchargement réussit',
     fail: 'Téléchargement echoué',
     preview: 'Aperçu',
     btn: {
@@ -156,12 +132,9 @@ export default {
       save: 'Enregistrer'
     },
     error: {
-      onlyImg:
-        'Image uniquement',
-      outOfSize:
-        "L'image sélectionnée dépasse la taille maximum: ",
-      lowestPx:
-        "L'image sélectionnée est trop petite. Dimensions attendues: "
+      onlyImg: 'Image uniquement',
+      outOfSize: "L'image sélectionnée dépasse la taille maximum: ",
+      lowestPx: "L'image sélectionnée est trop petite. Dimensions attendues: "
     }
   },
   nl: {
@@ -169,8 +142,7 @@ export default {
     loading: 'Uploaden…',
     noSupported:
       'Je browser wordt helaas niet ondersteund. Gebruik IE10+ of een andere browser.',
-    success:
-      'Upload succesvol',
+    success: 'Upload succesvol',
     fail: 'Upload mislukt',
     preview: 'Voorbeeld',
     btn: {
@@ -180,12 +152,9 @@ export default {
       save: 'Opslaan'
     },
     error: {
-      onlyImg:
-        'Alleen afbeeldingen',
-      outOfSize:
-        'De afbeelding is groter dan: ',
-      lowestPx:
-        'De afbeelding is te klein! Minimale afmetingen: '
+      onlyImg: 'Alleen afbeeldingen',
+      outOfSize: 'De afbeelding is groter dan: ',
+      lowestPx: 'De afbeelding is te klein! Minimale afmetingen: '
     }
   },
   tr: {
@@ -193,8 +162,7 @@ export default {
     loading: 'Yükleniyor…',
     noSupported:
       'Tarayıcı desteklenmiyor, lütfen IE10+ veya farklı tarayıcı kullanın',
-    success:
-      'Yükleme başarılı',
+    success: 'Yükleme başarılı',
     fail: 'Yüklemede hata oluştu',
     preview: 'Önizle',
     btn: {
@@ -205,10 +173,8 @@ export default {
     },
     error: {
       onlyImg: 'Sadece resim',
-      outOfSize:
-        'Resim yükleme limitini aşıyor: ',
-      lowestPx:
-        'Resmin boyutu çok küçük. En az olması gereken: '
+      outOfSize: 'Resim yükleme limitini aşıyor: ',
+      lowestPx: 'Resmin boyutu çok küçük. En az olması gereken: '
     }
   },
   'es-MX': {
@@ -216,8 +182,7 @@ export default {
     loading: 'Subiendo...',
     noSupported:
       'Tu navegador no es soportado, porfavor usa IE10+ u otros navegadores mas recientes',
-    success:
-      'Subido exitosamente',
+    success: 'Subido exitosamente',
     fail: 'Sucedió un error',
     preview: 'Vista previa',
     btn: {
@@ -227,12 +192,9 @@ export default {
       save: 'Guardar'
     },
     error: {
-      onlyImg:
-        'Unicamente imagenes',
-      outOfSize:
-        'La imagen excede el tamaño maximo:',
-      lowestPx:
-        'La imagen es demasiado pequeño. Se espera por lo menos:'
+      onlyImg: 'Unicamente imagenes',
+      outOfSize: 'La imagen excede el tamaño maximo:',
+      lowestPx: 'La imagen es demasiado pequeño. Se espera por lo menos:'
     }
   },
   de: {
@@ -240,8 +202,7 @@ export default {
     loading: 'Hochladen…',
     noSupported:
       'Browser wird nicht unterstützt, bitte verwende IE10+ oder andere Browser',
-    success:
-      'Upload erfolgreich',
+    success: 'Upload erfolgreich',
     fail: 'Upload fehlgeschlagen',
     preview: 'Vorschau',
     btn: {
@@ -252,20 +213,16 @@ export default {
     },
     error: {
       onlyImg: 'Nur Bilder',
-      outOfSize:
-        'Das Bild ist zu groß: ',
-      lowestPx:
-        'Das Bild ist zu klein. Mindestens: '
+      outOfSize: 'Das Bild ist zu groß: ',
+      lowestPx: 'Das Bild ist zu klein. Mindestens: '
     }
   },
   ja: {
     hint: 'クリック・ドラッグしてファイルをアップロード',
-    loading:
-      'アップロード中...',
+    loading: 'アップロード中...',
     noSupported:
       'このブラウザは対応されていません。IE10+かその他の主要ブラウザをお使いください。',
-    success:
-      'アップロード成功',
+    success: 'アップロード成功',
     fail: 'アップロード失敗',
     preview: 'プレビュー',
     btn: {
@@ -276,10 +233,8 @@ export default {
     },
     error: {
       onlyImg: '画像のみ',
-      outOfSize:
-        '画像サイズが上限を超えています。上限: ',
-      lowestPx:
-        '画像が小さすぎます。最小サイズ: '
+      outOfSize: '画像サイズが上限を超えています。上限: ',
+      lowestPx: '画像が小さすぎます。最小サイズ: '
     }
   }
 };

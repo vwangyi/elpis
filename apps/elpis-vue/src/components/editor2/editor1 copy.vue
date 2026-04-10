@@ -1,94 +1,50 @@
 <template>
-  <div
-    class="simple-unified-editor"
-  >
+  <div class="simple-unified-editor">
     <div
       ref="editorRef"
       class="editor-area"
       contenteditable="true"
       @input="handleInput"
-      @keydown.tab.prevent="
-        handleTab
-      "
+      @keydown.tab.prevent="handleTab"
       @paste="handlePaste"
-      :data-placeholder="
-        placeholder
-      "
+      :data-placeholder="placeholder"
     ></div>
   </div>
 </template>
 
 <script setup>
-import {
-  ref,
-  onMounted
-} from 'vue';
+import { ref, onMounted } from 'vue';
 
 const editorRef = ref(null);
-const placeholder = ref(
-  '开始输入 Markdown...'
-);
+const placeholder = ref('开始输入 Markdown...');
 const markdownText = ref('');
 
 const handleInput = () => {
-  markdownText.value =
-    editorRef.value.innerText;
+  markdownText.value = editorRef.value.innerText;
   renderInlineFormatting();
 };
 
-const renderInlineFormatting =
-  () => {
-    const html =
-      markdownText.value
-        .replace(
-          /^# (.+)$/gm,
-          '<h1>$1</h1>'
-        )
-        .replace(
-          /^## (.+)$/gm,
-          '<h2>$1</h2>'
-        )
-        .replace(
-          /\*\*(.+?)\*\*/g,
-          '<strong>$1</strong>'
-        )
-        .replace(
-          /\*(.+?)\*/g,
-          '<em>$1</em>'
-        )
-        .replace(
-          /`(.+?)`/g,
-          '<code>$1</code>'
-        )
-        .replace(
-          /\n/g,
-          '<br>'
-        );
+const renderInlineFormatting = () => {
+  const html = markdownText.value
+    .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+    .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/`(.+?)`/g, '<code>$1</code>')
+    .replace(/\n/g, '<br>');
 
-    editorRef.value.innerHTML =
-      html;
-  };
+  editorRef.value.innerHTML = html;
+};
 
 const handleTab = event => {
   event.preventDefault();
-  document.execCommand(
-    'insertText',
-    false,
-    '    '
-  );
+  document.execCommand('insertText', false, '    ');
 };
 
 const handlePaste = event => {
   event.preventDefault();
-  const text =
-    event.clipboardData.getData(
-      'text/plain'
-    );
-  document.execCommand(
-    'insertText',
-    false,
-    text
-  );
+  const text = event.clipboardData.getData('text/plain');
+  document.execCommand('insertText', false, text);
 };
 
 onMounted(() => {
@@ -114,16 +70,11 @@ onMounted(() => {
   outline: none;
   overflow-y: auto;
   font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI', Roboto,
-    sans-serif;
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 .editor-area:empty:before {
-  content: attr(
-    data-placeholder
-  );
+  content: attr(data-placeholder);
   color: #999;
 }
 
@@ -150,9 +101,7 @@ onMounted(() => {
 }
 
 .editor-area code {
-  font-family:
-    'SFMono-Regular',
-    Consolas, monospace;
+  font-family: 'SFMono-Regular', Consolas, monospace;
   background: #f6f8fa;
   padding: 2px 4px;
   border-radius: 3px;

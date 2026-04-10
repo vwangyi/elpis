@@ -21,27 +21,19 @@ module.exports = app => {
         // 日志 文件切割
         dateFile: {
           type: 'dateFile',
-          filename:
-            './logs/application.log',
-          pattern:
-            '.yyyy-MM-dd' // 以年月日切割日志
+          filename: './logs/application.log',
+          pattern: '.yyyy-MM-dd' // 以年月日切割日志
         }
       },
       categories: {
         default: {
-          appenders: [
-            'console',
-            'dateFile'
-          ],
+          appenders: ['console', 'dateFile'],
           level: 'trace'
         }
       }
     });
-    logger =
-      log4js.getLogger();
+    logger = log4js.getLogger();
   }
   app.logger = logger;
-  console.info(
-    `-- [init] load logger done --`
-  );
+  console.info(`-- [init] load logger done --`);
 };

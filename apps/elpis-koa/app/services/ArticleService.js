@@ -1,18 +1,13 @@
 /* article 文章模块 */
 module.exports = app => {
-  const BaseService =
-    require('./BaseService')(
-      app
-    );
+  const BaseService = require('./BaseService')(app);
 
   return class ArticleService extends BaseService {
     /* 获取列表（分页） */
     async getUserList() {}
 
     /* 获取详情（列表某一个的详情） */
-    async getUserDetail(
-      linkId
-    ) {}
+    async getUserDetail(linkId) {}
 
     /* 删除某一个 */
     async remove(linkIds) {}

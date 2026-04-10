@@ -4,12 +4,7 @@ import { isArray } from 'elpis-utils';
 import logo from '@/assets/logo.png';
 import light from '@/assets/light.png';
 import dark from '@/assets/dark.png';
-import {
-  ref,
-  useTemplateRef,
-  computed,
-  provide
-} from 'vue';
+import { ref, useTemplateRef, computed, provide } from 'vue';
 import { useAuthStore } from '@/stores/auth.js';
 import { useCategoryStore } from '@/stores/category.js';
 import { useUserStore } from '@/stores/user.js';
@@ -27,31 +22,16 @@ provide('haha', {
   test
 });
 
-const authStore =
-  useAuthStore();
-const userStore =
-  useUserStore();
+const authStore = useAuthStore();
+const userStore = useUserStore();
 const router = useRouter();
-const categoryStore =
-  useCategoryStore();
-const categoryList = computed(
-  () =>
-    categoryStore.categoryList
-);
-const logined = computed(
-  () =>
-    !!authStore?.userInfo
-      ?.userId
-);
-const userInfo = computed(
-  () => authStore.userInfo
-);
-const theme = computed(() =>
-  false ? dark : light
-);
+const categoryStore = useCategoryStore();
+const categoryList = computed(() => categoryStore.categoryList);
+const logined = computed(() => !!authStore?.userInfo?.userId);
+const userInfo = computed(() => authStore.userInfo);
+const theme = computed(() => (false ? dark : light));
 // 当前选中的tab  home | publish | messages | profile （主页 发布 消息 我的）
-const activeTabbar =
-  ref('home');
+const activeTabbar = ref('home');
 
 const componentMapTabbar = {
   home: CardList,
@@ -61,14 +41,9 @@ const componentMapTabbar = {
   profile: CardList
 };
 const dialogRef = ref(null);
-const email = ref(
-  'codewy@qq.com'
-);
+const email = ref('codewy@qq.com');
 const code = ref('');
-const showCode = computed(
-  () =>
-    email.value.includes('@')
-);
+const showCode = computed(() => email.value.includes('@'));
 
 // 打开弹窗 模态方式打开
 const showModal = () => {
@@ -93,115 +68,67 @@ const confirm = () => {
 
 // 监听关闭事件
 const handleClose = event => {
-  console.log(
-    'Dialog 关闭了',
-    event
-  );
+  console.log('Dialog 关闭了', event);
 };
 
 // 监听取消事件（按 ESC 键）
-const handleCancel =
-  event => {
-    console.log(
-      'Dialog 被取消了',
-      event
-    );
-  };
+const handleCancel = event => {
+  console.log('Dialog 被取消了', event);
+};
 
 function toHome() {
   router.push('/');
 }
 
 function openUserAgreements() {
-  const resolved =
-    router.resolve({
-      path: '/',
-      query: {
-        path: '/user-agreement'
-      }
-    });
-  window.open(
-    window.location.origin +
-      resolved.href,
-    '_blank'
-  );
+  const resolved = router.resolve({
+    path: '/',
+    query: {
+      path: '/user-agreement'
+    }
+  });
+  window.open(window.location.origin + resolved.href, '_blank');
 }
 
 async function sendCode() {
-  if (
-    !email.value.includes('@')
-  ) {
-    console.log(
-      '邮箱格式不对'
-    );
+  if (!email.value.includes('@')) {
+    console.log('邮箱格式不对');
     return;
   }
-  if (
-    !email.value ||
-    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-      email.value
-    )
-  ) {
-    console.log(
-      '请输入有效的邮箱地址'
-    );
+  if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+    console.log('请输入有效的邮箱地址');
     return;
   }
-  const a =
-    await authStore.sendEmailCode(
-      email.value
-    );
+  const a = await authStore.sendEmailCode(email.value);
   console.log('页面上', a);
 }
 
 async function handleLogin() {
-  await authStore.loginByEmailAndCode(
-    {
-      email: email.value,
-      code: code.value
-    }
-  );
+  await authStore.loginByEmailAndCode({
+    email: email.value,
+    code: code.value
+  });
   // 登录成功 关闭弹窗
   closeModal();
 }
 
-function handleClickPublish(
-  key
-) {
+function handleClickPublish(key) {
   activeTabbar.value = key;
-  console.log(
-    '点击了发布按钮',
-    key
-  );
+  console.log('点击了发布按钮', key);
 }
-function handleClickHome(
-  key
-) {
+function handleClickHome(key) {
   activeTabbar.value = key;
-  console.log(
-    '点击了首页按钮',
-    key
-  );
+  console.log('点击了首页按钮', key);
 }
 
-function handleClickMessages(
-  key
-) {
+function handleClickMessages(key) {
   activeTabbar.value = key;
-  console.log(
-    '点击了消息按钮',
-    key
-  );
+  console.log('点击了消息按钮', key);
 }
 
-function handleClickProfile(
-  key
-) {
+function handleClickProfile(key) {
   activeTabbar.value = key;
-  console.log(
-    '点击了我的按钮',
-    key
-  );
+  console.log('点击了我的按钮', key);
 }
 
 function openLogin() {
@@ -211,125 +138,61 @@ function openLogin() {
 
 <template>
   <div class="home">
-    <div
-      class="header-container"
-    >
+    <div class="header-container">
       <div class="left">
-        <div
-          class="logo"
-          @click="toHome"
-        >
-          <img
-            :src="logo"
-            alt="代码空间"
-          />
+        <div class="logo" @click="toHome">
+          <img :src="logo" alt="代码空间" />
         </div>
       </div>
       <div class="search">
-        <div
-          class="iconfont icon-a-huaban1fuben19 search-icon"
-        />
+        <div class="iconfont icon-a-huaban1fuben19 search-icon" />
       </div>
-      <div
-        class="right"
-      ></div>
+      <div class="right"></div>
     </div>
-    <div
-      class="main-container"
-    >
+    <div class="main-container">
       <!-- 侧边栏 -->
-      <div
-        class="sidebar-container"
-      >
+      <div class="sidebar-container">
         <div class="sidebar">
           <div
             class="sidebar-item"
             :class="{
-              active:
-                activeTabbar ===
-                'home'
+              active: activeTabbar === 'home'
             }"
-            @click="
-              handleClickHome(
-                'home'
-              )
-            "
+            @click="handleClickHome('home')"
           >
-            <div
-              class="iconfont icon-shouye sidebar-icon"
-            />
-            <div
-              class="sidebar-title"
-            >
-              首页
-            </div>
+            <div class="iconfont icon-shouye sidebar-icon" />
+            <div class="sidebar-title">首页</div>
           </div>
           <div
             class="sidebar-item"
             :class="{
-              active:
-                activeTabbar ===
-                'publish'
+              active: activeTabbar === 'publish'
             }"
-            @click="
-              handleClickPublish(
-                'publish'
-              )
-            "
+            @click="handleClickPublish('publish')"
           >
-            <div
-              class="iconfont icon-fabu sidebar-icon"
-            />
-            <div
-              class="sidebar-title"
-            >
-              发布
-            </div>
+            <div class="iconfont icon-fabu sidebar-icon" />
+            <div class="sidebar-title">发布</div>
           </div>
           <div
             class="sidebar-item"
             :class="{
-              active:
-                activeTabbar ===
-                'messages'
+              active: activeTabbar === 'messages'
             }"
-            @click="
-              handleClickMessages(
-                'messages'
-              )
-            "
+            @click="handleClickMessages('messages')"
           >
-            <div
-              class="iconfont icon-tongzhi sidebar-icon"
-            />
-            <div
-              class="sidebar-title"
-            >
-              消息
-            </div>
+            <div class="iconfont icon-tongzhi sidebar-icon" />
+            <div class="sidebar-title">消息</div>
           </div>
           <div
             v-if="logined"
             class="sidebar-item"
             :class="{
-              active:
-                activeTabbar ===
-                'profile'
+              active: activeTabbar === 'profile'
             }"
-            @click="
-              handleClickProfile(
-                'profile'
-              )
-            "
+            @click="handleClickProfile('profile')"
           >
-            <div
-              class="iconfont icon-taiyang sidebar-icon"
-            />
-            <div
-              class="sidebar-title"
-            >
-              我的
-            </div>
+            <div class="iconfont icon-taiyang sidebar-icon" />
+            <div class="sidebar-title">我的</div>
           </div>
           <div
             v-if="!logined"
@@ -340,17 +203,8 @@ function openLogin() {
           </div>
         </div>
       </div>
-      <div
-        class="card-container hide-scrollbar"
-      >
-        <component
-          :is="
-            componentMapTabbar[
-              activeTabbar
-            ]
-          "
-          type="create"
-        />
+      <div class="card-container hide-scrollbar">
+        <component :is="componentMapTabbar[activeTabbar]" type="create" />
       </div>
       <!-- <div class="theme">
         <img :src="theme" />
@@ -359,94 +213,44 @@ function openLogin() {
     <div class="tabbar"></div>
 
     <!-- 登录弹窗 -->
-    <dialog
-      ref="dialogRef"
-      class="native-dialog"
-      @click.stop="closeModal"
-    >
-      <div
-        class="dialog-context"
-        @click.stop
-      >
-        <div
-          class="login-title"
-        >
-          邮箱号登录
-        </div>
-        <div
-          class="login-input"
-        >
+    <dialog ref="dialogRef" class="native-dialog" @click.stop="closeModal">
+      <div class="dialog-context" @click.stop>
+        <div class="login-title">邮箱号登录</div>
+        <div class="login-input">
           <!-- 原生input虽然不支持 v-model 但有value属性和input事件  -->
           <input
             :value="email"
-            @input="
-              e =>
-                (email =
-                  e.target
-                    .value)
-            "
+            @input="e => (email = e.target.value)"
             type="text"
             placeholder="输入邮箱号"
           />
         </div>
-        <div
-          v-show="showCode"
-          class="login-input"
-        >
+        <div v-show="showCode" class="login-input">
           <input
             :value="code"
-            @input="
-              e =>
-                (code =
-                  e.target
-                    .value)
-            "
+            @input="e => (code = e.target.value)"
             type="text"
             placeholder="输入验证码"
           />
-          <div
-            class="code-button"
-            @click="sendCode"
-          >
-            发送验证码
-          </div>
+          <div class="code-button" @click="sendCode">发送验证码</div>
         </div>
         <div
-          v-show="
-            showCode &&
-            code.length
-          "
+          v-show="showCode && code.length"
           class="login-button"
           @click="handleLogin"
         >
           登录
         </div>
 
-        <div
-          class="user-agreements"
-        >
-          <input
-            id="agree"
-            type="checkbox"
-          />
-          <span label="agree"
-            >我已阅读并同意</span
-          >
-          <span
-            class="agreements"
-            @click="
-              openUserAgreements
-            "
-          >
+        <div class="user-agreements">
+          <input id="agree" type="checkbox" />
+          <span label="agree">我已阅读并同意</span>
+          <span class="agreements" @click="openUserAgreements">
             《用户协议》
           </span>
         </div>
 
-        <div
-          class="user-tips"
-        >
-          新用户可直接登录
-        </div>
+        <div class="user-tips">新用户可直接登录</div>
       </div>
     </dialog>
   </div>
@@ -481,9 +285,7 @@ $bgc: #0a0a0afa;
     flex: 1;
   }
 }
-.header-container
-  .left
-  .logo {
+.header-container .left .logo {
   width: 120px;
   height: 50px;
   cursor: pointer;
@@ -499,15 +301,8 @@ $bgc: #0a0a0afa;
 .header-container .search {
   flex: 1;
   height: 40px;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.04
-  );
-  border-radius: calc(
-    40px / 2
-  );
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: calc(40px / 2);
   line-height: 40px;
 }
 
@@ -532,23 +327,17 @@ $bgc: #0a0a0afa;
 .sidebar-container {
   /* 侧边栏宽度 */
   // width: var(--interaction-width)px;
-  width: calc(
-    var(--columnWidth) +
-      var(--horizontalGapPx)
-  );
+  width: calc(var(--columnWidth) + var(--horizontalGapPx));
   height: 100%;
   padding: 72px 0 0 0; // 上面margin72px 是因为 搜索框高度是72px
 }
 .card-container {
   // 因为是 怪异盒模型 所以padding算在width里面所以加上左右的padding
   width: calc(
-    var(--feeds-width) +
-      var(--horizontalGapPx) +
-      var(--horizontalGapPx)
+    var(--feeds-width) + var(--horizontalGapPx) + var(--horizontalGapPx)
   );
   height: 100%;
-  padding: 72px
-    var(--horizontalGapPx) 0px;
+  padding: 72px var(--horizontalGapPx) 0px;
 }
 .theme {
   position: absolute;
@@ -557,11 +346,8 @@ $bgc: #0a0a0afa;
   left: -180px;
   top: 340px;
   width: 656px; // 656px;
-  height: calc(
-    100vh - 72px - 20px
-  );
-  transform: scaleX(-1)
-    scale(0.4);
+  height: calc(100vh - 72px - 20px);
+  transform: scaleX(-1) scale(0.4);
   > img {
     width: 100%;
     height: 100%;
@@ -616,19 +402,12 @@ $bgc: #0a0a0afa;
     margin-left: 16px;
   }
 }
-.sidebar
-  .sidebar-item.active {
+.sidebar .sidebar-item.active {
   // background-color: $bgc;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.04
-  );
+  background: rgba(255, 255, 255, 0.04);
 }
 
-.sidebar
-  .sidebar-item.login-btn {
+.sidebar .sidebar-item.login-btn {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -654,12 +433,7 @@ $bgc: #0a0a0afa;
 
   /* 隐藏对话框的默认背景 */
   &::backdrop {
-    background: rgba(
-      0,
-      0,
-      0,
-      0.5
-    );
+    background: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -667,10 +441,7 @@ $bgc: #0a0a0afa;
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(
-    -50%,
-    -50%
-  );
+  transform: translate(-50%, -50%);
 }
 .dialog-context {
   display: flex;
