@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        background-color: #000;
+        margin: 0;
+      }
+      .chart-container {
+        width: 100vw;
+        height: 100vh;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chart-container"></div>
+
+    <script src="./lib/echarts.js"></script>
+    <script>
+      let data = [
+        {
+          name: '海门',
+          value: 9
+        },
+        {
+          name: '鄂尔多斯',
+          value: 12
+        },
+        {
+          name: '招远',
+          value: 16
+        },
+        {
+          name: '舟山',
+          value: 3
+        },
+        {
+          name: '重庆',
+          value: 21
+        },
+        {
+          name: '成都',
+          value: 12
+        }
+      ];
+
+      // 初始化图表容器
+      const chartInstance = echarts.init(
+        document.querySelector('.chart-container')
+      );
+
+      // 写配置
+      const option = {
+        color: ['#1db8ef', 'green', 'blue'],
+        xAxis: {
+          type: 'category',
+          axisLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            color: '#fff'
+          },
+          data: data.map(d => d.name)
+        },
+        yAxis: {
+          show: false,
+          type: 'value'
+        },
+        series: [
+          {
+            data: data.map(d => d.value),
+            type: 'bar',
+            showBackground: true,
+            backgroundStyle: {
+              color: '#2a4459'
+            }
+          }
+        ]
+      };
+
+      // 参照示例
+
+      // 把配置扔进实例
+      chartInstance.setOption(option);
+
+      setInterval(() => {
+        data = data.map(d => {
+          d.value = Math.floor(Math.random() * 100);
+          return d;
+        });
+        const option = {
+          color: ['#1db8ef', 'green', 'blue'],
+          xAxis: {
+            type: 'category',
+            axisLine: {
+              show: false
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              color: '#fff'
+            },
+            data: data.map(d => d.name)
+          },
+          yAxis: {
+            show: false,
+            type: 'value'
+          },
+          series: [
+            {
+              data: data.map(d => d.value),
+              type: 'bar',
+              showBackground: true,
+              backgroundStyle: {
+                color: '#2a4459'
+              }
+            }
+          ]
+        };
+        chartInstance.setOption(option);
+      }, 1000);
+    </script>
+  </body>
+</html>

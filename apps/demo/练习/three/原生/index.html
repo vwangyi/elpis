@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from './node_modules/three/src/Three.js';
+
+      // 三大件
+      // 场景
+      const scene = new THREE.Scene();
+
+      // 相机
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+
+      // 渲染器
+      const renderer = new THREE.WebGLRenderer({
+        antialias: true
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      // 创建物体
+      const geometry = new THREE.BoxGeometry(1, 1, 1);
+      const material = new THREE.MeshPhongMaterial({
+        color: 0x00ff00
+      });
+      const cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      // 位置
+      camera.position.set(5, 5, 5);
+      // 角度
+      camera.lookAt(0, 0, 0);
+
+      // 创建光
+      const light = new THREE.PointLight(0xffffff, 1);
+      light.position.set(10, 20, 30);
+      scene.add(light);
+
+      // 动画
+      function animate() {
+        requestAnimationFrame(animate);
+        // cube.rotation.y += .1; // 2 * PI 弧度制
+        renderer.render(scene, camera);
+      }
+      animate();
+    </script>
+  </body>
+</html>

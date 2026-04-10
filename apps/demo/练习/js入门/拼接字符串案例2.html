@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      var name = prompt('请输入名字');
+      var age = prompt('请输入年龄');
+
+      // 1. 加号拼接(low)
+      var result = '你是' + name + ', 你' + age + '岁了';
+
+      // 2. 模板字符串(es6)
+      var result = `你是${name}, 你${age}岁了`;
+
+      alert(result);
+    </script>
+  </body>
+</html>

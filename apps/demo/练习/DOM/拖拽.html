@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .box {
+        width: 200px;
+        height: 200px;
+        background-color: red;
+        border-radius: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="box"></div> -->
+    <img
+      class="box"
+      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAAAXNSR0IArs4c6QAAAppJREFUeF7tnDGSAWEQRnuqzAlcQyhzA4lDuIJryBGIhBNJXECmygVcQ8yWFW0tO8wutp8nZYzve/N6+0+2iIhj+MI2UAgYy/YzmIDZfAUM5ytgAdMbgOfzb7CA4Q3A42mwgOENwONpsIDhDcDjabCA4Q3A42mwgOENwONpsIDhDcDjabCA4Q3A42mwgOENwONpsIDhDcDjabCA4Q3A42mwgOENwONpsIDhDcDjabCA4Q3A42mwgOENwONpsIDhDcDjabCA/0cD7XY7qqqKVqv18h80nU5jsVi8/Hfc8gPSGNzr9WK9Xt+S6eGfWa1W0e/3H36fv7iBgBu0KOAGpdVdosF1DV1+X4Mb9KbBDUqru6Tb7cZms6n72FPeXy6XMRgMnnKv394kjcGnoJ1OJ8qyvDvzdru9eM1sNovJZHL39+12u9jv93df94oLUgFuWtDxePnfcY5GoxiPx02/NsV1AhZwigf1xx+pwfkZCvhKA45oR3R+vR3R+Rk6oh3R3xvwmAQx2xENAXkthoAFjG3AY5LHpPwPtyM6P0OPSR6TPCZhPXZEY9GegwlYwNgGPCZ5TMr/cDui8zP0mOQxyWMS1mNHNBatxyS3aLfo/Ho7ovMzdIt2i3aLxnrsiMaidYt2i3aLzq+3Izo/Q7dot2i3aKzHjmgsWrfot9iiD4dDFMUp6tfXcDiM+XyOfrzfAjCaYE04AcPpC1jA8Abg8TRYwPAG4PE0WMDwBuDxNFjA8Abg8TRYwPAG4PE0WMDwBuDxNFjA8Abg8TRYwPAG4PE0WMDwBuDxNFjA8Abg8TRYwPAG4PE0WMDwBuDxNFjA8Abg8TRYwPAG4PE0WMDwBuDxNFjA8Abg8TRYwPAG4PE0WMDwBuDxNBgO+AP9e4YQom5w2AAAAABJRU5ErkJggg=="
+      alt=""
+    />
+    <!-- img -->
+
+    <script src="../../工具函数/范围取值.js"></script>
+    <script>
+      const box = document.querySelector('.box');
+
+      let innerX = 0;
+      let innerY = 0;
+
+      /**
+       * @param { Event } e
+       */
+      function onMouseMove(e) {
+        // console.log(e.clientX, e.clientY);
+        // left, top 会引起页面元素的重排
+        // box.setAttribute('style', `left: ${ e.clientX }px; top: ${ e.clientY }px;`);
+        // css3 只重绘 不重排 (性能优化)
+        const x = e.clientX - innerX;
+        const y = e.clientY - innerY;
+        const vh = window.innerHeight; // 800多
+        const vw = window.innerWidth;
+        const boxH = box.height;
+        const boxW = box.width;
+
+        const maxY = vh - boxH;
+        const maxX = vw - boxW;
+
+        // 真实的y
+        const realY = getRangeValue(y, [0, maxY]);
+        const realX = getRangeValue(x, [0, maxX]);
+
+        box.setAttribute(
+          'style',
+          `transform: translate(${realX}px, ${realY}px);`
+        );
+      }
+
+      // 鼠标按下
+      box.addEventListener('mousedown', function (e) {
+        e.preventDefault();
+        innerX = e.offsetX;
+        innerY = e.offsetY;
+        document.addEventListener('mousemove', onMouseMove);
+      });
+
+      // 鼠标抬起
+      box.addEventListener('mouseup', function () {
+        document.removeEventListener('mousemove', onMouseMove);
+      });
+    </script>
+  </body>
+</html>

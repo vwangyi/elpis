@@ -228,6 +228,30 @@ export const routes = [
     meta: {
       title: '倒计时'
     }
+  },
+  {
+    path: '/parabola-shop',
+    name: 'ParabolaShop',
+    component: () =>
+      import(
+        /* webpackChunkName: "ParabolaShop" */
+        '@/pages/ParabolaShop/ParabolaShop.vue'
+      ),
+    meta: {
+      title: '抛物线效果'
+    }
+  },
+  {
+    path: '/lyrics-scrolling',
+    name: 'LyricsScrolling',
+    component: () =>
+      import(
+        /* webpackChunkName: "LyricsScrolling" */
+        '@/pages/LyricsScrolling/LyricsScrolling.vue'
+      ),
+    meta: {
+      title: '歌词滚动'
+    }
   }
 ];
 const router = createRouter({

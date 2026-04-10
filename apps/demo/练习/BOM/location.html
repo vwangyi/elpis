@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" />
+
+    <script>
+      // 回车跳至百度 搜索输入内容
+      document.querySelector('input').addEventListener('keyup', function (e) {
+        if (e.key === 'Enter') {
+          // 本页跳转
+          // location.href = `https://www.baidu.com/s?wd=${ this.value }`;
+          // 新tab页面
+          // 有小bug 有兼容性问题
+          open(`https://www.baidu.com/s?wd=${this.value}`);
+        }
+      });
+
+      // https://www.baidu.com/s?wd=唐山
+    </script>
+  </body>
+</html>

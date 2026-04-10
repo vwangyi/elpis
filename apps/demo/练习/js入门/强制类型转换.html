@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 字符串/数字/布尔值
+
+      // 数字
+      // 1. 数字>>字符串
+      // var num = 1;
+
+      // var numStr1 = num + '';
+      // console.log(numStr1); // '1'
+
+      // var numStr2 = String(num); // 暴力转换
+      // console.log(numStr2); // '1'
+
+      // var numStr3 = num.toString();
+      // console.log(numStr3); // '1'
+
+      // 2. 数字>>布尔值
+      // var numBoo1 = Boolean(num); // 暴力转换
+      // console.log(numBoo1);
+
+      // var numBoo2 = !!num; // !!true
+      // console.log(numBoo2); // true
+
+      // 字符串
+      // 1. 字符串>>数字
+      // var str = '123';
+
+      // var strNum1 = Number(str); // 暴力转换
+      // console.log(strNum1); // NaN: not a number
+
+      // var strNum2 = str - 0; // 强制类型转换
+      // console.log(strNum2);
+
+      // var strNum3 = +str; // 正数
+      // console.log(strNum3);
+
+      // var strNum4 = parseInt(str); // 大材小用
+      // console.log(strNum4);
+
+      // 2. 字符串>>布尔值
+      // var strBoo1 = Boolean(str);
+      // console.log(strBoo1);
+
+      // var strBoo2 = !!str;
+      // console.log(strBoo2);
+
+      // 布尔值
+      var boo = false;
+
+      // 1. 布尔值>>字符串
+      // var booStr1 = String(boo);
+      // console.log(booStr1);
+
+      // var booStr2 = boo + '';
+      // console.log(booStr2);
+
+      // var booStr3 = boo.toString();
+      // console.log(booStr3);
+
+      // 2. 布尔值>>数字
+      var booNum1 = Number(boo);
+      console.log(booNum1);
+
+      var booNum2 = boo - 0;
+      console.log(booNum2);
+
+      var booNum3 = +boo;
+      console.log(booNum3);
+
+      var booNum4 = parseInt(boo);
+      console.log(booNum4);
+
+      // console.log(abc); // Error: abc is not defined
+    </script>
+  </body>
+</html>

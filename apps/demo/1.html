@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .clock {
+        width: 200px;
+        height: 200px;
+        border: 5px solid red;
+        /* 圆角 */
+        border-radius: 50%;
+        /* 相对定位 */
+        position: relative;
+      }
+
+      /* 秒针 */
+      .second {
+        height: 70px;
+        width: 1px;
+        background-color: black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center bottom;
+        /* 每秒6度 10s就是60度 */
+        transform: translate(-50%, -100%) rotate(60deg);
+      }
+
+      /* 分针 */
+      .minute {
+        height: 50px;
+        width: 2px;
+        background-color: black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center bottom;
+        /* (4分 + 1/6分) * 6deg     （10s相当于1/6分钟 */
+        transform: translate(-50%, -100%) rotate(calc(24deg + 6deg * (10 / 60)));
+      }
+
+      /* 时针 */
+      .hour {
+        height: 50px;
+        width: 4px;
+        background-color: black;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform-origin: center bottom;
+        /* 180deg + 30deg*((4 + 1/6)/60) */
+        transform: translate(-50%, -100%)
+          rotate(calc(180deg + 30deg * ((4 + 1 / 6) / 60)));
+      }
+
+      /* 水平垂直居中 定位的固定写法 */
+      .num,
+      .hour-tick,
+      .minute-tick {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* 小时刻度 */
+      .hour-tick {
+        width: 1px;
+        height: 12px;
+        background-color: red;
+      }
+
+      /* 分钟刻度 */
+      .minute-tick {
+        width: 1px;
+        height: 8px;
+        background-color: blue;
+      }
+
+      /* 权重: 10 + 10 */
+      .nums .num:nth-of-type(1) {
+        /*
+                1. 回调-50% 为了居中
+                2. 旋转固定角度
+                3. 向上发射80px
+                4. 转回原来的角度
+            */
+        transform: translate(-50%, -50%) rotate(30deg) translateY(-80px)
+          rotate(-30deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(1) {
+        transform: translate(-50%, -50%) rotate(30deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(2) {
+        transform: translate(-50%, -50%) rotate(60deg) translateY(-80px)
+          rotate(-60deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(2) {
+        transform: translate(-50%, -50%) rotate(60deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(3) {
+        transform: translate(-50%, -50%) rotate(90deg) translateY(-80px)
+          rotate(-90deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(3) {
+        transform: translate(-50%, -50%) rotate(90deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(4) {
+        transform: translate(-50%, -50%) rotate(120deg) translateY(-80px)
+          rotate(-120deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(4) {
+        transform: translate(-50%, -50%) rotate(120deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(5) {
+        transform: translate(-50%, -50%) rotate(150deg) translateY(-80px)
+          rotate(-150deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(5) {
+        transform: translate(-50%, -50%) rotate(150deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(6) {
+        transform: translate(-50%, -50%) rotate(180deg) translateY(-80px)
+          rotate(-180deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(6) {
+        transform: translate(-50%, -50%) rotate(180deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(7) {
+        transform: translate(-50%, -50%) rotate(210deg) translateY(-80px)
+          rotate(-210deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(7) {
+        transform: translate(-50%, -50%) rotate(210deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(8) {
+        transform: translate(-50%, -50%) rotate(240deg) translateY(-80px)
+          rotate(-240deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(8) {
+        transform: translate(-50%, -50%) rotate(240deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(9) {
+        transform: translate(-50%, -50%) rotate(270deg) translateY(-80px)
+          rotate(-270deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(9) {
+        transform: translate(-50%, -50%) rotate(270deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(10) {
+        transform: translate(-50%, -50%) rotate(300deg) translateY(-80px)
+          rotate(-300deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(10) {
+        transform: translate(-50%, -50%) rotate(300deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(11) {
+        transform: translate(-50%, -50%) rotate(330deg) translateY(-80px)
+          rotate(-330deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(11) {
+        transform: translate(-50%, -50%) rotate(330deg) translateY(-94px);
+      }
+
+      .nums .num:nth-of-type(12) {
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-80px)
+          rotate(0deg);
+      }
+
+      .hour-ticks .hour-tick:nth-of-type(12) {
+        transform: translate(-50%, -50%) rotate(0deg) translateY(-94px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(1) {
+        transform: translate(-50%, -50%) rotate(6deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(2) {
+        transform: translate(-50%, -50%) rotate(12deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(3) {
+        transform: translate(-50%, -50%) rotate(18deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(4) {
+        transform: translate(-50%, -50%) rotate(24deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(5) {
+        transform: translate(-50%, -50%) rotate(36deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(6) {
+        transform: translate(-50%, -50%) rotate(42deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(7) {
+        transform: translate(-50%, -50%) rotate(48deg) translateY(-96px);
+      }
+
+      .minute-ticks .minute-tick:nth-of-type(8) {
+        transform: translate(-50%, -50%) rotate(54deg) translateY(-96px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="clock">
+      <!-- 时针 -->
+      <div class="hour"></div>
+      <!-- 分针 -->
+      <div class="minute"></div>
+      <!-- 秒针 -->
+      <div class="second"></div>
+
+      <div class="hour"></div>
+      <div class="nums">
+        <div class="num">1</div>
+        <div class="num">2</div>
+        <div class="num">3</div>
+        <div class="num">4</div>
+        <div class="num">5</div>
+        <div class="num">6</div>
+        <div class="num">7</div>
+        <div class="num">8</div>
+        <div class="num">9</div>
+        <div class="num">10</div>
+        <div class="num">11</div>
+        <div class="num">12</div>
+      </div>
+      <div class="hour-ticks">
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+        <div class="hour-tick"></div>
+      </div>
+      <div class="minute-ticks">
+        <!-- <div class="minute-tick"></div>
+            <div class="minute-tick"></div>
+            <div class="minute-tick"></div>
+            <div class="minute-tick"></div>
+
+            <div class="minute-tick"></div>
+            <div class="minute-tick"></div>
+            <div class="minute-tick"></div>
+            <div class="minute-tick"></div> -->
+      </div>
+    </div>
+
+    <script>
+      var minuteTicks = document.querySelector('.minute-ticks');
+      for (var i = 0; i < 60; i++) {
+        if (i % 5 === 0) {
+          continue;
+        }
+        // <div class="minute-tick"></div>
+        var tick = document.createElement('div');
+        tick.setAttribute('class', 'minute-tick');
+        // i: 0 >>> 跳
+
+        // i: 1 >>> 6
+        // i: 2 >>> 12
+        // i: 3 >>> 18
+        // i: 4 >>> 24
+
+        // i: 5 >>> 跳
+
+        // i: 6 >>> 36
+        // i: 7 >>> 42
+        // i: 8 >>> 48
+        // i: 9 >>> 54
+
+        var angle = i * 6;
+        tick.setAttribute(
+          'style',
+          `transform: translate(-50%, -50%) rotate(${angle}deg) translateY(-96px);`
+        );
+        minuteTicks.appendChild(tick);
+      }
+    </script>
+  </body>
+</html>

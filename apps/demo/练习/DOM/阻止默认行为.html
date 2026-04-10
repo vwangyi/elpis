@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .menu {
+        display: none;
+      }
+      .menu.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="menu">hello world</div>
+
+    <script>
+      // 点击a标签 输出'hello world'
+      // const a = document.querySelector('a');
+      // a.addEventListener('click', function (e) {
+      //     // 阻止默认行为
+      //     e.preventDefault();
+      //     console.log('hello world');
+      // });
+
+      const menu = document.querySelector('.menu');
+
+      document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+        menu.setAttribute('class', 'menu show');
+      });
+
+      document.addEventListener('click', function () {
+        menu.setAttribute('class', 'menu');
+      });
+    </script>
+  </body>
+</html>

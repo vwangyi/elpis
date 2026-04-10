@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .container {
+        height: 50vh;
+        outline: 1px solid red;
+        overflow: auto;
+      }
+
+      .box {
+        height: 9999px;
+        font-size: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+        9<br />
+      </div>
+    </div>
+
+    <script>
+      const box = document.querySelector('.box');
+      const container = document.querySelector('.container');
+
+      // 绑大爹
+      // container.addEventListener('scroll', function () {
+      //     // 用大爹
+      //     console.dir(container.scrollTop);
+      // });
+
+      // 绑大爹
+      container.addEventListener('wheel', function () {
+        // 用大爹
+        console.dir(container.scrollTop);
+      });
+    </script>
+  </body>
+</html>

@@ -9,7 +9,7 @@ import router from './router';
 import App from './App';
 import '@/styles/index.scss';
 import '@/assets/iconfont/iconfont.css';
-import '@/router/permission.js';
+import '@/router/permission';
 
 import VxeUITable from 'vxe-table';
 import 'vxe-table/es/style.css';

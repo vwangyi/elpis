@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head></head>
+  <body>
+    <h1>I'm a handsome guy.</h1>
+    <button>change</button>
+    <script>
+      var h1 = document.querySelector('h1');
+      var btn = document.querySelector('button');
+
+      // 死循环指定的时间
+      function delay(duration) {
+        var start = +new Date();
+        while (+new Date() - start < duration) {}
+      }
+
+      btn.onclick = function () {
+        h1.textContent = '我是大帅哥'; // 产生一个异步渲染任务
+        delay(3000); // 等待3秒后 页面才会渲染 说明 渲染是异步任务
+      };
+    </script>
+  </body>
+</html>

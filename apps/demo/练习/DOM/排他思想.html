@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .active {
+        background-color: pink;
+      }
+    </style>
+  </head>
+  <body>
+    <button>1</button>
+    <button>2</button>
+    <button>3</button>
+    <button>4</button>
+    <button>5</button>
+
+    <script>
+      var btnList = document.querySelectorAll('button');
+
+      // btnList[2]
+
+      for (var btn of btnList) {
+        // 立即执行函数
+        (function (b) {
+          // 每一轮函数中的b也是正确的btn
+          b.addEventListener('click', function () {
+            for (var btn of btnList) {
+              btn.removeAttribute('class');
+            }
+            b.setAttribute('class', 'active');
+          });
+        })(btn); // btn是正确的btn
+      }
+
+      console.log(btn);
+    </script>
+  </body>
+</html>

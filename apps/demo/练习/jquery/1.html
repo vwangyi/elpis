@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+      }
+      .box.on {
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">hello</div>
+
+    <script src="./jquery.js"></script>
+    <script>
+      // const box1 = document.querySelector('.box');
+      // box1.addEventListener('click', function () {
+      //     // box1.setAttribute('style', 'background: red; color: blue;');
+      //     // box1.setAttribute('class', 'box on');
+      // });
+
+      $('.box').on('click', function () {
+        // const newBox = $('<div class="box">hello</div>');
+        // $('body').append(newBox);
+        // $(this).text('hello world');
+        // $(this).html('<i>hello world</i>');
+        console.log($(this).html());
+      });
+    </script>
+  </body>
+</html>

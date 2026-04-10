@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" id="inp" />
+    <button id="insert-btn">添加</button>
+    <button id="remove-btn">删除</button>
+    <br />
+    <input type="checkbox" id="all-check" />全选
+    <ul>
+      <!-- js添加 -->
+    </ul>
+
+    <script>
+      var inp = document.querySelector('#inp');
+      var insertBtn = document.querySelector('#insert-btn');
+      var removeBtn = document.querySelector('#remove-btn');
+      var ul = document.querySelector('ul');
+
+      // 注册添加点击事件
+      insertBtn.addEventListener('click', function () {
+        // 生成id
+        var id = 'checkbox' + Date.now();
+
+        // 创建li
+        var li = document.createElement('li');
+
+        // 创建checkbox
+        var checkbox = document.createElement('input');
+        // 把checkbox的type属性设置为checkbox
+        checkbox.setAttribute('type', 'checkbox');
+        // 把checkbox的id属性设置为时间戳
+        checkbox.setAttribute('id', id);
+        // 给checkbox找爹
+        li.appendChild(checkbox);
+
+        // 创建label
+        var label = document.createElement('label');
+        // 把label的for属性设置为时间戳
+        label.setAttribute('for', id);
+        // 把label的内容设置为输入框的值
+        label.innerText = inp.value;
+        // 给label找爹
+        li.appendChild(label);
+
+        // 给li找爹
+        ul.appendChild(li);
+
+        // 清空input
+        inp.value = '';
+        // 自动让inp获取焦点
+        inp.focus();
+      });
+
+      // 注册删除点击事件
+      removeBtn.addEventListener('click', function () {
+        var liList = document.querySelectorAll('li');
+        for (var li of liList) {
+          var checkbox = li.querySelector('input');
+          if (checkbox.checked) {
+            li.remove();
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

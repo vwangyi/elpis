@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+      .chart {
+        height: 100vh;
+        width: 100vw;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 装图表的容器 -->
+    <div class="chart"></div>
+
+    <script src="./data-single.js"></script>
+    <script src="./lib/echarts.js"></script>
+    <script>
+      // 初始化echarts实例
+      const instance = echarts.init(document.querySelector('.chart'));
+
+      // 填写配置项
+      const option = {
+        color: [
+          // 从#0079f6到#06dbed的渐变色
+          {
+            type: 'linear',
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [
+              {
+                offset: 1,
+                color: '#0079f6' // 0% 处的颜色
+              },
+              {
+                offset: 0,
+                color: '#06dbed' // 100% 处的颜色
+              }
+            ],
+            global: false // 缺省为 false
+          }
+        ],
+        xAxis: {
+          type: 'category',
+          // 不显示label
+          axisLabel: {
+            show: false
+          },
+          // 不显示刻度
+          axisTick: {
+            show: false
+          },
+          // 轴线设置为特别浅灰色并加粗
+          axisLine: {
+            lineStyle: {
+              color: '#eee',
+              width: 2
+            }
+          },
+          data: data.map(d => d.name)
+        },
+        yAxis: {
+          type: 'value',
+          // 字体灰色变大
+          axisLabel: {
+            color: '#ccc',
+            fontSize: 16
+          },
+          // 网格线显示为间距较大的灰色虚线
+          splitLine: {
+            lineStyle: {
+              color: '#eee',
+              type: [10, 10]
+            }
+          }
+        },
+        series: [
+          {
+            data: data.map(d => d.value),
+            type: 'bar',
+            showBackground: true,
+            backgroundStyle: {
+              color: 'rgba(200, 210, 220, .3)'
+            },
+            itemStyle: {
+              borderRadius: 8,
+              shadowBlur: 16,
+              shadowColor: '#aaa'
+            }
+          }
+        ]
+      };
+
+      // 把配置项传入实例
+      instance.setOption(option);
+    </script>
+  </body>
+</html>

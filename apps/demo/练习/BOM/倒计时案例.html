@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button>发送短信</button>
+
+    <script>
+      const btn = document.querySelector('button');
+
+      btn.addEventListener('click', () => {
+        // 禁用自己
+        btn.disabled = true;
+        // 开启倒计时
+        let time = 3;
+        const intervalFn = () => {
+          btn.innerText = `${time--}s后可以重新发送`;
+        };
+        intervalFn();
+        const timer = setInterval(intervalFn, 1000);
+
+        // 5s后 重置
+        setTimeout(
+          () => {
+            // 解禁
+            btn.disabled = false;
+            // 解除定时器
+            clearInterval(timer);
+            // 重置文字
+            btn.innerText = '发送短信';
+          },
+          (time + 1) * 1000
+        );
+      });
+    </script>
+  </body>
+</html>

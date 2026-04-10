@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+        /* 只要改了background-color就会触发以下动画 */
+        transition: background-color 0.2s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+
+    <script>
+      var box = document.querySelector('.box');
+
+      // 开关思想
+      var on = false;
+      box.addEventListener('click', function () {
+        // if (!on) {
+        //     box.setAttribute('style', 'background-color: blue;');
+        // } else {
+        //     box.setAttribute('style', 'background-color: red;');
+        // }
+        box.setAttribute('style', `background-color: ${on ? 'red' : 'blue'};`);
+        on = !on;
+      });
+    </script>
+  </body>
+</html>

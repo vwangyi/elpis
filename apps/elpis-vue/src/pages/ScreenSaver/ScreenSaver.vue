@@ -1,66 +1,66 @@
 <script setup>
-import { onMounted, ref, onUnmounted, reactive, computed, watch } from 'vue';
-import { isPlayer } from '@/utils/remotePlayerService.js';
+// import { onMounted, ref, onUnmounted, reactive, computed, watch } from 'vue';
+// import { isPlayer } from '@/utils/remotePlayerService.js';
 
 // isShowScreenSaver 是否显示屏保
-import {
-  isShowScreenSaver,
-  handleDispatcher,
-  handleLifecycle,
-  getScreenSaverConfig,
-  startScreenSaverCountdown,
-  clearScreenSaverCountdown,
-  screenSaverData,
-  imageVisible,
-  timeRemaining,
-  activityCountdownTimer,
-  activityTimer,
-  countdownTimer,
-  carouselTimer,
-  intervalTime,
-  intervalTimeCountdown,
-  activeTime,
-  imageAnimation,
-  clearCarouselCountdown,
-  hideScreenSaver,
-  screenSaverSwitch
-} from '@/components/ScreenSaver/useScreenSaver';
+// import {
+//   isShowScreenSaver,
+//   handleDispatcher,
+//   handleLifecycle,
+//   getScreenSaverConfig,
+//   startScreenSaverCountdown,
+//   clearScreenSaverCountdown,
+//   screenSaverData,
+//   imageVisible,
+//   timeRemaining,
+//   activityCountdownTimer,
+//   activityTimer,
+//   countdownTimer,
+//   carouselTimer,
+//   intervalTime,
+//   intervalTimeCountdown,
+//   activeTime,
+//   imageAnimation,
+//   clearCarouselCountdown,
+//   hideScreenSaver,
+//   screenSaverSwitch
+// } from '@/components/ScreenSaver/useScreenSaver';
 
 /* 初始化 */
-onMounted(async () => {
-  const result = await getScreenSaverConfig();
-  console.log('擦火腿肠不活到 result', result);
-  if (result === true) {
-    // 启动进入屏保的定时器
-    startScreenSaverCountdown();
-    window.JsView?.addEventListener('dispatcher', handleDispatcher);
-    window.JsView?.addEventListener('lifecycle', handleLifecycle);
-  }
-});
+// onMounted(async () => {
+//   const result = await getScreenSaverConfig();
+//   console.log('擦火腿肠不活到 result', result);
+//   if (result === true) {
+//     // 启动进入屏保的定时器
+//     startScreenSaverCountdown();
+//     window.JsView?.addEventListener('dispatcher', handleDispatcher);
+//     window.JsView?.addEventListener('lifecycle', handleLifecycle);
+//   }
+// });
 
 /* 监听是否存在播放器 */
-watch(
-  () => isPlayer.value,
-  () => {
-    //  '搜索逻辑要一样'
-    console.log('监听是否存在播放器', isPlayer.value);
-    clearScreenSaverCountdown();
-    clearCarouselCountdown();
-    hideScreenSaver();
-    if (isPlayer.value === false) {
-      startScreenSaverCountdown();
-    }
-  }
-);
+// watch(
+//   () => isPlayer.value,
+//   () => {
+//     //  '搜索逻辑要一样'
+//     console.log('监听是否存在播放器', isPlayer.value);
+//     clearScreenSaverCountdown();
+//     clearCarouselCountdown();
+//     hideScreenSaver();
+//     if (isPlayer.value === false) {
+//       startScreenSaverCountdown();
+//     }
+//   }
+// );
 
 /* 卸载 */
-onUnmounted(() => {
-  window.JsView?.removeEventListener('dispatcher', handleDispatcher);
-  window.JsView?.removeEventListener('lifecycle', handleLifecycle);
-  hideScreenSaver(); // 隐藏屏保
-  clearScreenSaverCountdown();
-  clearCarouselCountdown();
-});
+// onUnmounted(() => {
+//   window.JsView?.removeEventListener('dispatcher', handleDispatcher);
+//   window.JsView?.removeEventListener('lifecycle', handleLifecycle);
+//   hideScreenSaver(); // 隐藏屏保
+//   clearScreenSaverCountdown();
+//   clearCarouselCountdown();
+// });
 </script>
 
 <template>

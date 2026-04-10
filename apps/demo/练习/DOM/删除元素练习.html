@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div></div>
+
+    <script>
+      /**
+       * @param parentSelector: 父选择器
+       * @param childSelector:  子选择器
+       * @param count:          个数
+       * @description 重复生成元素
+       * @author yuzelin
+       */
+      function createElements(parentSelector, childSelector, count) {
+        var parent = document.querySelector(parentSelector);
+
+        for (var i = 0; i < count; i++) {
+          var child = document.createElement(childSelector);
+          child.innerText = i;
+          parent.appendChild(child);
+        }
+      }
+
+      // 在ul中 生成100项li
+      // 输入一个索引 删除对应的li
+
+      // 创建100个li
+      // var ul = document.querySelector('ul');
+
+      // for (var i = 0; i < 100; i++) {
+      //     var li = document.createElement('li');
+      //     li.innerText = i;
+      //     ul.appendChild(li);
+      // }
+
+      createElements('ul', 'li', 10);
+
+      var index = +prompt('输入索引');
+      // 所有的li
+      var liList = document.querySelectorAll('li');
+      // 删除自己
+      liList[index].remove();
+    </script>
+  </body>
+</html>

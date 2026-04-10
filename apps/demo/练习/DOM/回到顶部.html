@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        margin: 0;
+      }
+
+      .container {
+        height: 100vh;
+        width: 100%;
+        border: 3px solid red;
+        box-sizing: border-box;
+        overflow: auto;
+      }
+
+      .content {
+        height: 9999px;
+        font-size: 100px;
+      }
+
+      .box {
+        height: 100px;
+        width: 100px;
+        background-color: beige;
+        border-radius: 50%;
+        position: fixed;
+        right: 100px;
+        bottom: 100px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <div class="box"></div>
+        hello world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />hello world<br />hello world<br />hello world<br />hello
+        world<br />
+      </div>
+    </div>
+
+    <script src="tween.js"></script>
+    <script>
+      console.log(TWEEN);
+
+      const container = document.querySelector('.container');
+      const box = document.querySelector('.box');
+
+      container.addEventListener('scroll', () => {
+        if (container.scrollTop > 100) {
+          box.setAttribute('style', 'display: block;');
+        } else {
+          box.setAttribute('style', 'display: none;');
+        }
+      });
+
+      box.addEventListener('click', () => {
+        // 帧函数
+
+        // let frame;
+        // function animate() {
+        //     // 每一帧发生的事
+        //     container.scrollTop -= 10;
+
+        //     // 如果滚动条没有到达顶部，则继续调用帧函数
+        //     if (container.scrollTop <= 0) {
+        //         // 停止帧函数
+        //         cancelAnimationFrame(frame);
+        //     } else {
+        //         // 继续帧函数
+        //         frame = requestAnimationFrame(animate);
+        //     }
+        // }
+        // animate();
+
+        const scrollInfo = { top: container.scrollTop }; // scrollInfo.top : 2000
+
+        // 必写
+        function animate(time) {
+          requestAnimationFrame(animate);
+          // 启动动画
+          TWEEN.update(time);
+        }
+        requestAnimationFrame(animate);
+
+        // 创建动画对象
+        new TWEEN.Tween(scrollInfo) // 初始值
+          .to({ top: 0 }, 1000) // 终止值, 持续时间
+          .easing(TWEEN.Easing.Linear.None) // 运动方式
+          .onUpdate(() => {
+            // 每一帧发生的事
+            container.scrollTop = scrollInfo.top;
+          })
+          .start();
+
+        box.setAttribute('style', 'display: none;');
+      });
+
+      // canvas
+    </script>
+  </body>
+</html>
