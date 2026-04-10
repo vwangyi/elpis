@@ -230,13 +230,120 @@ export default defineConfig({
               link: "/04_前端框架/00_Vue/00_Vue是什么.md"
             },
             {
+              text: "响应式数据",
+              link: "/04_前端框架/00_Vue/01_响应式数据.md"
+            },
+            {
+              text: "模版语法",
+              link: "/04_前端框架/00_Vue/02_模版语法.md"
+            }, 
+            {
               text: "依赖注入 provide/inject",
               link: "/04_前端框架/00_Vue/03_依赖注入.md"
             },
             {
+              text: "计算属性computed",
+              link: "/04_前端框架/00_Vue/04_计算属性computed.md"
+            }, 
+            {
+              text: "监听",
+              link: "/04_前端框架/00_Vue/05_监听.md"
+            },   
+            {
               text: "异步组件",
               link: "/04_前端框架/00_Vue/06_异步组件.md"
-            }
+            },
+            {
+              text: "07_状态管理1store",
+              link: "/04_前端框架/00_Vue/07_状态管理1store.md"
+            },
+            {
+              text: "07_状态管理pinia",
+              link: "/04_前端框架/00_Vue/07_状态管理pinia.md"
+            }, 
+            {
+              text: "07_状态管理vuex",
+              link: "/04_前端框架/00_Vue/07_状态管理vuex.md"
+            },
+            {
+              text: "前端路由VueRouter",
+              link: "/04_前端框架/00_Vue/08_前端路由VueRouter.md"
+            },
+            {
+              text: "09_测试",
+              link: "/04_前端框架/00_Vue/09_测试.md"
+            },  
+            {
+              text: "11_模版引用",
+              link: "/04_前端框架/00_Vue/11_模版引用.md"
+            },   
+            {
+              text: "12_生命周期",
+              link: "/04_前端框架/00_Vue/12_生命周期.md"
+            },    
+            {
+              text: "13_性能优化",
+              link: "/04_前端框架/00_Vue/13_性能优化.md"
+            },    
+            {
+              text: "14_组合式API",
+              link: "/04_前端框架/00_Vue/14_组合式API.md"
+            },      
+            {
+              text: "15_响应式系统",
+              link: "/04_前端框架/00_Vue/15_响应式系统.md"
+            },      
+            {
+              text: "16_模版渲染机制",
+              link: "/04_前端框架/00_Vue/16_模版渲染机制.md"
+            },      
+            {
+              text: "17_渲染函数",
+              link: "/04_前端框架/00_Vue/17_渲染函数.md"
+            },     
+            {
+              text: "web-components和vue-components",
+              link: "/04_前端框架/00_Vue/18_web-components和vue-components.md"
+            },       
+            {
+              text: "19_组合式函数hooks",
+              link: "/04_前端框架/00_Vue/19_组合式函数hooks.md"
+            },     
+      
+            {
+              text: "20_组件",
+              link: "/04_前端框架/00_Vue/20_组件.md"
+            },       
+            {
+              text: "21_自定义指令",
+              link: "/04_前端框架/00_Vue/21_自定义指令.md"
+            },       
+            {
+              text: "22_插件",
+              link: "/04_前端框架/00_Vue/22_插件.md"
+            },      
+
+      
+            {
+              text: "23_v-bind和props",
+              link: "/04_前端框架/00_Vue/23_v-bind和props.md"
+            },       
+            {
+              text: "24_v-on和emit",
+              link: "/04_前端框架/00_Vue/24_v-on和emit.md"
+            },       
+            {
+              text: "v-for列表渲染",
+              link: "/04_前端框架/00_Vue/25_v-for列表渲染.md"
+            },   
+            {
+              text: "24_v-on和emit",
+              link: "/04_前端框架/00_Vue/24_v-on和emit.md"
+            },       
+            {
+              text: "25_v-model",
+              link: "/04_前端框架/00_Vue/25_v-model.md"
+            },      
           ]
         },
         // {

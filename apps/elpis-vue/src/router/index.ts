@@ -1,4 +1,8 @@
-import { createRouter, createWebHistory } from 'vue-router';
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory
+} from 'vue-router';
 import HomeView from '@/pages/HomeView/HomeView.vue';
 
 export const routes = [
@@ -212,11 +216,23 @@ export const routes = [
     meta: {
       title: '拖拽生成表格'
     }
+  },
+  {
+    path: '/count-down',
+    name: 'CountDown',
+    component: () =>
+      import(
+        /* webpackChunkName: "CountDown" */
+        '@/pages/CountDown/CountDown.vue'
+      ),
+    meta: {
+      title: '倒计时'
+    }
   }
 ];
-
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(), // history模式
+  // history: createWebHashHistory(), // hash模式
   routes: routes
 });
 

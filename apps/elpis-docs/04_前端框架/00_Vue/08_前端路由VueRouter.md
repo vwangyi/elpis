@@ -1,116 +1,56 @@
+# 路由
+- vue官网：https://cn.vuejs.org/guide/scaling-up/routing.html#routing
+- vuerouter官网：https://router.vuejs.org/zh/introduction.html
 
+
+- 上次学到 https://router.vuejs.org/zh/guide/essentials/dynamic-matching.html
+
+## 客户端路由 vs 服务端路由
+
+```js
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+const router = createRouter({
+  history: createWebHistory(), // history模式
+  // history: createWebHashHistory(), // hash模式
+  routes: []
+});
+import { createMemoryHistory, createRouter } from 'vue-router'
+
+import HomeView from './HomeView.vue'
+import AboutView from './AboutView.vue'
+
+const routes = [
+  { path: '/', component: HomeView },
+  { path: '/about', component: AboutView },
+]
+
+const router = createRouter({
+  history: createMemoryHistory(),
+  history: createWebHistory(), // history模式
+  // history: createWebHashHistory(), // hash模式
+  routes,
+})
+export default router;
+```
+
+
+ 
+
+## vuerouter@4 
+```vue
+<script setup>
+import { useRoute, useRouter } from 'vue'; 
+const route = useRoute();
+const router = useRouter();  // 只能在 vue文件中 拿到router ， js文件中拿不到 是undefined
+</script>
+```
 # VueRouter 
 
 
-## hash和history区别
+## router对象
 
- hash模式history模式优缺点hash模式的好处是兼容性好 但是不支持微前端项目history的好处是更加美观、但是由于是模拟URL的变化、服务器并没有这个资源，刷新会存在404的问题，我们可以在Nginx上配置一下 找不到就返回 index.html
+```js
 
-
-
-
-// 因为单页面只有一个页面，需要实现url改变 又不能跳转其他页面 所以不能用 正常的跳转页面
-
-
-// hash模式
-window.onhashchange = function(event) {
-    var newURL = event.newURL.split('#/')[1]
-    var oldURL = event.oldURL.split('#/')[1]
-
-    var newPage = document.querySelector('.' + newURL);
-    var oldPage = document.querySelector('.' + oldURL);
-
-    // 切换显示目标页面
-    newPage.style.display = 'block';
-    oldPage.style.display = 'none';
-}
-
-
-Vue Router 是一个用于 Vue.js 应用的单页面应用（SPA）路由管理器。
-  它允许你在 Vue.js 项目中实现客户端的页面导航，而不需要刷新整个页面。
-通过 Vue Router，用户可以在不同的视图之间进行切换，浏览器的 URL 地址也会随之变化，
-  但页面本身并不会重新加载。
-单页面就是只有一个 html页面 单页面 内部跳转用 vue-router 
-多页面跳转 就是 html 跳转 html 用 window.location 
-    比如 location.repalce() 
-
-
-单页面中 一级路由都会当为页面  vue-router 跳转的就是 一级路由之间的跳转 
-
-
-
-
-
-
-
-
-
-
-## ======
-如何创建router路由器对象
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
-
-const option = { 
-  model: 'hash', // http://127.0.0.1:9601/#/system  兼容性好，不美观 (多学一招 如果是http请求 hash值不会带给服务器 #及其后面的值)
-  model: 'history', // http://127.0.0.1:9601/system  兼容性不好，美观  需要后端配合解决404问题
-  model: 'abstract',   
-  scrollBehavior (to, from, savedPosition) {y: 0}, //  
-  base: '/app', // 基础路径 默认值为 /
-  routes: [] // 路由表  注册了路由表 才可以跳转到对应的路由 
-}
-const routes = [
-    {
-        
-    }
-]
-const router = 	new VueRouter(option)
-
-// 把router对象 导出 挂在Vue实例上 或 调用API new Vue({ router: router })
-export default router 
-router 路由器对象 API
-router.app 
-router.mode // 路由器模式
-router.currentRoute // 路由器的当前显示的路由
-
-
-
-// push跳转 会把新路由追加到历史记录里面  可以用浏览器的后退按钮返回
-router.push() 
-// 路由跳转传参
-// 方式1 传query参数 常用
-router.push({
-  path: `/home/login?name=${hello}&age=${19}` // 参数少用这个
-})
-router.push({
-  path: '/home/login',
-  query: { name: hello, age: 19 } // 参数多 用这个
-}) 
-
-route.query 接收
-
-// 方式2 传params 路径参数 (不常用)
-router.push({
-  // 这里路径可以传递变量 那是因为 定义路由规则时 用了:变量名 占位 
-  // path: '/home/login/:id/:xixi/index'
-  path: `/home/login/${变量}/${变量}/index`
-})
-//  （参数传的多 用这个方便）
-router.push({ 
-  name: 'hello',   
-  params: {
-    name: hello, // 即使这里可以指定参数名 这里的key也应该和 路由表中的path里面的占位名一致  
-    age: 19
-  }
-})
-route.params 接收
-
-
-
-router.replace() // replace跳转 会把新路由替换掉最后一个历史记录 不能用浏览器的后退按钮返回
-router.go(-1)
-router.back()
-router.forward() 
 
 // 路由器的 前置守卫  to是新路由 from是之前路由 next()是放行
 router.beforeEach((to, from, next) => {}) 
@@ -148,42 +88,18 @@ route.params // 获取当前路由的params参数
 route.query // 获取当前路由的query参数
 route.fullPath // 获取当前路由的完整路径
 route.matched // 当前路由的匹配到的路由规则
+```
 
-组件内新增守卫
-组合式
-import { 
-  onBeforeRouteEnter, 
-  onBeforeRouteUpdate, 
-  onBeforeRouteLeave
-} form 'vue-router' 
-
-onBeforeRouteEnter((to, from, next) => {})
+## route对象
 
 
-选项式
-export default {
-  template: `...`,
-  beforeRouteEnter: function(to, from, next) {
-    // 在渲染该组件的对应路由被 confirm 前调用
-    // 不！能！获取组件实例 `this`
-    // 因为当守卫执行前，组件实例还没被创建
-  },
-  beforeRouteUpdate: function(to, from, next) {
-    // 在当前路由改变，但是该组件被复用时调用
-    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
-    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
-    // 可以访问组件实例 `this`
-  },
-  beforeRouteLeave: function(to, from, next) {
-    // 导航离开该组件的对应路由时调用
-    // 可以访问组件实例 `this`
-  }
-} 
 
+## RouterView 出口组件
+```js
 
+RouterView 经常配合 缓存组件keep-alive 使用
 组件内新增标签
 // router-view 路由的出口
-<router-view></router-view>
      // 对于不展示的 路由组件  默认是销毁的
     // 用 <keep-alive></keep-alive> 包裹则可以让不展示的组件不销毁 保持挂载
     // 添加 include 属性 可以指定 缓存哪个组件  
@@ -211,9 +127,9 @@ export default {
 </template>
 
 
-
-
-  
+```
+## RouterLink 组件
+```js
 
 // router-link 底层就是 a标签 
 <router-link></router-link>
@@ -229,34 +145,57 @@ export default {
 //   push函数也可以传字符串 会被 当作 path来处理
 
 router 路由器跳转 传参数
-
-需要整理
-整理
-vue-router3
-// npm i vue-router@3
-
-// 第一步 拿到VueRouter构造函数
-import VueRouter from 'vue-router'
-
-// 第二步 Vue规定插件调用use方法
-Vue.use(VueRouter) // 这是Vue规定的 调用use方法 就有乐router配置项 new Vue({ router: router })
-
-// 第三步 把类实例化为对象
-const router = new VueRouter({...})
+```
 
 
+## ======
 
-// 第四步 实例化需要的配置参数 options 
-const options = { 
-  model: 'hash', // http://127.0.0.1:9601/#/system  兼容性好，不美观 (多学一招 如果是http请求 hash值不会带给服务器 #及其后面的值)
-  model: 'history', // http://127.0.0.1:9601/system  兼容性不好，美观  需要后端配合解决404问题
-  model: 'abstract',   
-  scrollBehavior (to, from, savedPosition) {y: 0}, //  
-  base: '/app', // 基础路径 默认值为 /
-  routes: [] // 路由表
 
-  // 其他见官网
-}  
+## 组件内钩子 
+```js
+
+import { 
+  onBeforeRouteEnter, 
+  onBeforeRouteUpdate, 
+  onBeforeRouteLeave
+} form 'vue-router' 
+
+组件内新增守卫
+组合式
+
+onBeforeRouteEnter((to, from, next) => {})
+
+
+选项式
+export default {
+  template: `...`,
+  beforeRouteEnter: function(to, from, next) {
+    // 在渲染该组件的对应路由被 confirm 前调用
+    // 不！能！获取组件实例 `this`
+    // 因为当守卫执行前，组件实例还没被创建
+  },
+  beforeRouteUpdate: function(to, from, next) {
+    // 在当前路由改变，但是该组件被复用时调用
+    // 举例来说，对于一个带有动态参数的路径 /foo/:id，在 /foo/1 和 /foo/2 之间跳转的时候，
+    // 由于会渲染同样的 Foo 组件，因此组件实例会被复用。而这个钩子就会在这个情况下被调用。
+    // 可以访问组件实例 `this`
+  },
+  beforeRouteLeave: function(to, from, next) {
+    // 导航离开该组件的对应路由时调用
+    // 可以访问组件实例 `this`
+  }
+} 
+
+```
+
+
+
+
+
+
+  
+## 路由配置项
+```js
 
 const routes = [
   { 
@@ -293,28 +232,10 @@ const routes = [
 ]
 
 
-
-// 第五步 把router对象传递给Vue实例
-import router from './router'
-new Vue({ router: router })
-
-
-// 第六步  路由器实例对象router   有一些方法和属性
-import router from './router' // this.$router 
-
-
+```
  
 
  
-
-
-
-## ========
-activated deactivated
-// 路由组件激活时触发     具体应用场景不详
-activated(){}
-// 路由组件 失活时触发    具体应用场景不详
-deactivated(){}
 
 
 路由传参数方式
@@ -459,8 +380,57 @@ this.$router.push({
 })
 
 
+## 路由跳转传参
+```vue
+<script setup> 
+import { useRoute, useRouter } from 'vue';
+// 只能在vue文件中拿到router对象 js或ts中没有视图拿不到router对象 拿到的是undefined
+const router = useRouter(); 
+const route = useRoute(); 
+router.push()
+
+
+
+router.replace() // replace跳转 会把新路由替换掉最后一个历史记录 不能用浏览器的后退按钮返回
+router.go(-1)
+router.back()
+router.forward() 
+
+
+// [ route, route, route]  >>
+指针始终指向最后一个
+
+// push跳转 会把新路由追加到历史记录里面  可以用浏览器的后退按钮返回
+router.push() 
+// 路由跳转传参
+// 方式1 传query参数 常用
+router.push({
+  path: `/home/login?name=${hello}&age=${19}` // 参数少用这个
+})
+router.push({
+  path: '/home/login',
+  query: { name: hello, age: 19 } // 参数多 用这个
+}) 
+
+route.query 接收
+
+// 方式2 传params 路径参数 (不常用)
+router.push({
+  // 这里路径可以传递变量 那是因为 定义路由规则时 用了:变量名 占位   path: '/home/login/:id/:xixi/index'
+  path: `/home/login/${变量}/${变量}/index`
+})
+//  （参数传的多 用这个方便）
+router.push({ 
+  name: 'hello',   
+  params: {
+    name: hello, // 即使这里可以指定参数名 这里的key也应该和 路由表中的path里面的占位名一致  
+    age: 19
+  }
+})
+route.params 接收 
+</script>
+
 路由传参面试题
-```js
 # 路由传参指定path跳转 不能和params参数使用 但path可以和query参数使用
 
 # 如果路由已经占位接收 但不传params参数  url就会出现问题
@@ -470,4 +440,69 @@ this.$router.push({
 # 用undefined解决   `params: { keyword: '' || undefined }`
 
 # 路由组件能不能传递props数据？ 可以
+
+```
+  
+
+
+## 路由钩子
+```js
+
+ 
+activated deactivated
+// 路由组件激活时触发     具体应用场景不详
+activated(){}
+// 路由组件 失活时触发    具体应用场景不详
+deactivated(){}
+
+
+```
+
+
+## 多页面跳转
+- 单页面跳转 用 前端路由
+- 多页面html跳转 用 window.location  
+
+
+
+## 路由模式 hash和history
+
+```js
+ hash模式history模式优缺点hash模式的好处是兼容性好 但是不支持微前端项目history的好处是更加美观、但是由于是模拟URL的变化、服务器并没有这个资源，刷新会存在404的问题，我们可以在Nginx上配置一下 找不到就返回 index.html
+
+
+
+
+// 因为单页面只有一个页面，需要实现url改变 又不能跳转其他页面 所以不能用 正常的跳转页面
+
+
+// hash模式
+window.onhashchange = function(event) {
+    var newURL = event.newURL.split('#/')[1]
+    var oldURL = event.oldURL.split('#/')[1]
+
+    var newPage = document.querySelector('.' + newURL);
+    var oldPage = document.querySelector('.' + oldURL);
+
+    // 切换显示目标页面
+    newPage.style.display = 'block';
+    oldPage.style.display = 'none';
+}
+
+
+Vue Router 是一个用于 Vue.js 应用的单页面应用（SPA）路由管理器。
+  它允许你在 Vue.js 项目中实现客户端的页面导航，而不需要刷新整个页面。
+通过 Vue Router，用户可以在不同的视图之间进行切换，浏览器的 URL 地址也会随之变化，
+  但页面本身并不会重新加载。
+单页面就是只有一个 html页面 单页面 内部跳转用 vue-router 
+多页面跳转 就是 html 跳转 html 用 window.location 
+    比如 location.repalce() 
+
+
+单页面中 一级路由都会当为页面  vue-router 跳转的就是 一级路由之间的跳转 
+
+
+
+
+
 ```
