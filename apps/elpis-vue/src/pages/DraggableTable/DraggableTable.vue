@@ -1,9 +1,5 @@
 <script setup>
-import {
-  h,
-  ref,
-  reactive
-} from 'vue';
+import { h, ref, reactive } from 'vue';
 import XEUtils from 'xe-utils';
 import { Checkbox } from 'ant-design-vue';
 import {
@@ -15,9 +11,7 @@ import {
 const gridRef = ref();
 
 // 格式化金额
-const formatAmount = ({
-  cellValue
-}) => {
+const formatAmount = ({ cellValue }) => {
   if (cellValue) {
     return `￥${XEUtils.commafy(cellValue, { digits: 2 })}`;
   }
@@ -25,48 +19,25 @@ const formatAmount = ({
 };
 
 // 合并大类单元格
-function spanMethod({
-  row,
-  $rowIndex,
-  column,
-  data
-}) {
-  if (
-    column.property ===
-    'bigClass'
-  ) {
-    const prevRow =
-      data[$rowIndex - 1];
-    let nextRow =
-      data[$rowIndex + 1];
+function spanMethod({ row, $rowIndex, column, data }) {
+  if (column.property === 'bigClass') {
+    const prevRow = data[$rowIndex - 1];
+    let nextRow = data[$rowIndex + 1];
 
-    if (
-      prevRow &&
-      prevRow.bigClass ===
-        row.bigClass
-    ) {
+    if (prevRow && prevRow.bigClass === row.bigClass) {
       return {
         rowspan: 0,
         colspan: 0
       };
     } else {
       let countRowspan = 1;
-      while (
-        nextRow &&
-        nextRow.bigClass ===
-          row.bigClass
-      ) {
+      while (nextRow && nextRow.bigClass === row.bigClass) {
         countRowspan++;
-        nextRow =
-          data[
-            $rowIndex +
-              countRowspan
-          ];
+        nextRow = data[$rowIndex + countRowspan];
       }
       if (countRowspan > 1) {
         return {
-          rowspan:
-            countRowspan,
+          rowspan: countRowspan,
           colspan: 1
         };
       }
@@ -175,10 +146,7 @@ async function init() {
     //   }
     // ]
 
-    gridOptions.data =
-      handleGoodsList(
-        await getGoodsList()
-      );
+    gridOptions.data = handleGoodsList(await getGoodsList());
   }, 1000);
 }
 
@@ -211,8 +179,7 @@ const menus = ref([
     children: [
       {
         children: undefined,
-        icon: () =>
-          h(YoutubeOutlined),
+        icon: () => h(YoutubeOutlined),
         key: 'area',
         label: '区域',
         type: undefined,
@@ -235,8 +202,7 @@ const menus = ref([
       },
       {
         children: undefined,
-        icon: () =>
-          h(PieChartOutlined),
+        icon: () => h(PieChartOutlined),
         key: '13',
         label: '门店',
         type: undefined,
@@ -245,8 +211,7 @@ const menus = ref([
       },
       {
         children: undefined,
-        icon: () =>
-          h(MailOutlined),
+        icon: () => h(MailOutlined),
         key: '商品',
         label: '商品',
         type: undefined,
@@ -292,8 +257,7 @@ const menus = ref([
         label: '中类',
         type: undefined,
         draggable: 'true',
-        'data-id':
-          'mediumClass',
+        'data-id': 'mediumClass',
         _children: [
           {
             key: 'gaogenxie',
@@ -361,8 +325,7 @@ const menus = ref([
         icon: () =>
           h(Checkbox, {
             checked: checked,
-            'onUpdate:checked':
-              onUpdateChecked
+            'onUpdate:checked': onUpdateChecked
           }),
         key: '基本信息',
         label: '基本信息',
@@ -374,8 +337,7 @@ const menus = ref([
         icon: () =>
           h(Checkbox, {
             checked: checked2,
-            'onUpdate:checked':
-              onUpdateChecked2
+            'onUpdate:checked': onUpdateChecked2
           }),
         key: '消费信息',
         label: '消费信息',
@@ -387,8 +349,7 @@ const menus = ref([
         icon: () =>
           h(Checkbox, {
             checked: checked1,
-            'onUpdate:checked':
-              onUpdateChecked1
+            'onUpdate:checked': onUpdateChecked1
           }),
         key: '销售信息',
         label: '销售信息',
@@ -402,8 +363,7 @@ const menus = ref([
         label: '销售单数',
         type: undefined,
         draggable: 'true',
-        'data-id':
-          'salesVolume'
+        'data-id': 'salesVolume'
       },
       {
         children: undefined,
@@ -412,8 +372,7 @@ const menus = ref([
         label: '总销售额',
         type: undefined,
         draggable: 'true',
-        'data-id':
-          'totalSales'
+        'data-id': 'totalSales'
       },
       {
         children: undefined,
@@ -422,8 +381,7 @@ const menus = ref([
         label: '退款金额',
         type: undefined,
         draggable: 'true',
-        'data-id':
-          'refundAmount'
+        'data-id': 'refundAmount'
       },
       {
         children: undefined,
@@ -432,8 +390,7 @@ const menus = ref([
         label: '连带率',
         type: undefined,
         draggable: 'true',
-        'data-id':
-          'associatedPurchaseRate'
+        'data-id': 'associatedPurchaseRate'
       },
       {
         children: undefined,
@@ -447,8 +404,7 @@ const menus = ref([
         children: undefined,
         icon: () => h('div'),
         key: '优惠券核销金额',
-        label:
-          '优惠券核销金额',
+        label: '优惠券核销金额',
         type: undefined,
         disabled: true
       }
@@ -471,55 +427,30 @@ const headerList = ref([]);
 
 function updateSelectStyle() {
   selectedKeys.value = [
-    ...rowList.value.map(
-      item => item.key
-    ),
-    ...colList.value.map(
-      item => item.key
-    ),
-    ...headerList.value.map(
-      item => item.key
-    )
+    ...rowList.value.map(item => item.key),
+    ...colList.value.map(item => item.key),
+    ...headerList.value.map(item => item.key)
   ];
 }
 
 // 移出行维度
-function handleCloseRow(
-  item
-) {
-  rowList.value =
-    rowList.value.filter(
-      it =>
-        it['data-id'] !==
-        item['data-id']
-    );
+function handleCloseRow(item) {
+  rowList.value = rowList.value.filter(it => it['data-id'] !== item['data-id']);
 
   updateSelectStyle();
   handleData();
 }
 // 移出列维度
-function handleCloseCol(
-  item
-) {
-  colList.value =
-    colList.value.filter(
-      it =>
-        it['data-id'] !==
-        item['data-id']
-    );
+function handleCloseCol(item) {
+  colList.value = colList.value.filter(it => it['data-id'] !== item['data-id']);
   updateSelectStyle();
   handleData();
 }
 // 移出表头
-function handleCloseHeader(
-  item
-) {
-  headerList.value =
-    headerList.value.filter(
-      it =>
-        it['data-id'] !==
-        item['data-id']
-    );
+function handleCloseHeader(item) {
+  headerList.value = headerList.value.filter(
+    it => it['data-id'] !== item['data-id']
+  );
   updateSelectStyle();
   handleData();
 }
@@ -528,46 +459,22 @@ function handleCloseHeader(
 function handleRowDrop() {
   if (
     drag === 'bigClass' &&
-    rowList.value.every(
-      item =>
-        item['data-id'] !==
-        'bigClass'
-    )
+    rowList.value.every(item => item['data-id'] !== 'bigClass')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'bigClass'
-      );
-    rowList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'bigClass');
+    rowList.value.push(result);
   } else if (
     drag === 'mediumClass' &&
-    rowList.value.every(
-      item =>
-        item['data-id'] !==
-        'mediumClass'
-    )
+    rowList.value.every(item => item['data-id'] !== 'mediumClass')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'mediumClass'
-      );
-    rowList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'mediumClass');
+    rowList.value.push(result);
   }
   updateSelectStyle();
   handleData();
@@ -576,25 +483,13 @@ function handleRowDrop() {
 function handleColDrop() {
   if (
     drag === 'area' &&
-    colList.value.every(
-      item =>
-        item['data-id'] !==
-        'area'
-    )
+    colList.value.every(item => item['data-id'] !== 'area')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'area'
-      );
-    colList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'area');
+    colList.value.push(result);
   }
   updateSelectStyle();
   handleData();
@@ -604,95 +499,46 @@ function handleHeaderDrop() {
   //
   if (
     drag === 'salesVolume' &&
-    headerList.value.every(
-      item =>
-        item['data-id'] !==
-        'salesVolume'
-    )
+    headerList.value.every(item => item['data-id'] !== 'salesVolume')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'salesVolume'
-      );
-    headerList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'salesVolume');
+    headerList.value.push(result);
   }
   // 总销售额
   else if (
     drag === 'totalSales' &&
-    headerList.value.every(
-      item =>
-        item['data-id'] !==
-        'totalSales'
-    )
+    headerList.value.every(item => item['data-id'] !== 'totalSales')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'totalSales'
-      );
-    headerList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'totalSales');
+    headerList.value.push(result);
   }
   // 退款金额
   else if (
     drag === 'refundAmount' &&
-    headerList.value.every(
-      item =>
-        item['data-id'] !==
-        'refundAmount'
-    )
+    headerList.value.every(item => item['data-id'] !== 'refundAmount')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'refundAmount'
-      );
-    headerList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'refundAmount');
+    headerList.value.push(result);
   }
   // 连带率
   else if (
-    drag ===
-      'associatedPurchaseRate' &&
-    headerList.value.every(
-      item =>
-        item['data-id'] !==
-        'associatedPurchaseRate'
-    )
+    drag === 'associatedPurchaseRate' &&
+    headerList.value.every(item => item['data-id'] !== 'associatedPurchaseRate')
   ) {
     const result = menus.value
-      .map(item => [
-        ...item.children
-      ])
+      .map(item => [...item.children])
       .flat(Infinity)
-      .find(
-        item =>
-          item['data-id'] ===
-          'associatedPurchaseRate'
-      );
-    headerList.value.push(
-      result
-    );
+      .find(item => item['data-id'] === 'associatedPurchaseRate');
+    headerList.value.push(result);
   }
   updateSelectStyle();
   handleData();
@@ -703,634 +549,311 @@ function getGoodsList() {
   const goodsList = [
     // 商品
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '高跟鞋', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '高跟鞋', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '高跟鞋', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '休闲鞋', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '休闲鞋', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '休闲鞋', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '平底鞋', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '平底鞋', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '鞋子', // 所属大类
       mediumClass: '平底鞋', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '帽子', // 所属大类
       mediumClass: '大帽', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '帽子', // 所属大类
       mediumClass: '大帽', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '帽子', // 所属大类
       mediumClass: '大帽', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '帽子', // 所属大类
       mediumClass: '手工帽', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '帽子', // 所属大类
       mediumClass: '手工帽', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '帽子', // 所属大类
       mediumClass: '手工帽', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '休闲衬衣', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '休闲衬衣', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '休闲衬衣', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '商务衬衣', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '商务衬衣', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '商务衬衣', // 所属中类
       area: '华北' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '百搭衬衣', // 所属中类
       area: '华南' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '百搭衬衣', // 所属中类
       area: '华东' // 所属区域
     },
 
     {
-      salesVolume:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 销售单数
-      totalSales:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 总销售额
-      refundAmount:
-        Math.floor(
-          Math.random() * 100
-        ) + 1, // 退款金额
-      associatedPurchaseRate:
-        (
-          Math.random() * 2
-        ).toFixed(1), // 连带率
+      salesVolume: Math.floor(Math.random() * 100) + 1, // 销售单数
+      totalSales: Math.floor(Math.random() * 100) + 1, // 总销售额
+      refundAmount: Math.floor(Math.random() * 100) + 1, // 退款金额
+      associatedPurchaseRate: (Math.random() * 2).toFixed(1), // 连带率
       bigClass: '衬衣', // 所属大类
       mediumClass: '百搭衬衣', // 所属中类
       area: '华北' // 所属区域
     }
   ];
-  return new Promise(
-    (resolve, reject) => {
-      setTimeout(() => {
-        resolve(goodsList);
-      }, 200);
-    }
-  );
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(goodsList);
+    }, 200);
+  });
 }
 
 // 处理数据  监听用户不需要用watch
 async function handleData() {
   console.clear();
-  console.log(
-    'rowList',
-    rowList.value
-  );
-  console.log(
-    'colList',
-    colList.value
-  );
-  console.log(
-    'headerList',
-    headerList.value
-  );
+  console.log('rowList', rowList.value);
+  console.log('colList', colList.value);
+  console.log('headerList', headerList.value);
   console.log(
     'if',
-    rowList.value.length &&
-      colList.value.length &
-        headerList.value
-          .length
+    rowList.value.length && colList.value.length & headerList.value.length
   );
 
   // 情况1 行 列 表头 都存在 才渲染表格
-  if (
-    rowList.value.length &&
-    colList.value.length &&
-    headerList.value.length
-  ) {
+  if (rowList.value.length && colList.value.length && headerList.value.length) {
     // 处理colmuns   开始 ---
     let cols = [];
 
     // 列维度只有 一个 先不考虑多个
-    colList.value.forEach(
-      item => {
-        cols = item._children;
-      }
-    );
+    colList.value.forEach(item => {
+      cols = item._children;
+    });
 
-    const tmpCol = cols.map(
-      item => {
-        const children =
-          headerList.value.map(
-            ite => {
-              return {
-                field: `${item.key}.${ite.key}`,
-                title:
-                  ite.label,
-                align:
-                  'center'
-                // width: 100,
-                // formatter:
-              };
-            }
-          );
+    const tmpCol = cols.map(item => {
+      const children = headerList.value.map(ite => {
         return {
-          title: item.label,
-          align: 'center',
-          // ... 其他表格支持的属性
-          field: item.key,
-          children: children
+          field: `${item.key}.${ite.key}`,
+          title: ite.label,
+          align: 'center'
+          // width: 100,
+          // formatter:
         };
-      }
-    );
+      });
+      return {
+        title: item.label,
+        align: 'center',
+        // ... 其他表格支持的属性
+        field: item.key,
+        children: children
+      };
+    });
 
     tmpCol.unshift({
       title: '区域',
       align: 'center',
       field: 'area',
-      children:
-        rowList.value.map(
-          item => {
-            return {
-              ...item,
-              title:
-                item.label,
-              align: 'center',
-              width: 100,
-              // ... 其他表格支持的属性
-              field: item.key
-            };
-          }
-        )
+      children: rowList.value.map(item => {
+        return {
+          ...item,
+          title: item.label,
+          align: 'center',
+          width: 100,
+          // ... 其他表格支持的属性
+          field: item.key
+        };
+      })
     });
 
-    console.log(
-      'tmpCol',
-      tmpCol
-    );
+    console.log('tmpCol', tmpCol);
 
-    gridOptions.columns =
-      tmpCol;
+    gridOptions.columns = tmpCol;
     // 处理colmuns   结束 ---
 
     // 处理行数据  开始 ---
@@ -1338,42 +861,21 @@ async function handleData() {
     // 处理行数据  结束 ---
 
     if (
-      rowList.value.length ===
-        1 &&
-      rowList.value[0][
-        'data-id'
-      ] === 'bigClass'
+      rowList.value.length === 1 &&
+      rowList.value[0]['data-id'] === 'bigClass'
     ) {
-      gridOptions.data =
-        handleGoodsList(
-          await getGoodsList()
-        ).filter(
-          item =>
-            item.mediumClass ===
-              '中类-合计' ||
-            item.mediumClass ===
-              ''
-        );
+      gridOptions.data = handleGoodsList(await getGoodsList()).filter(
+        item => item.mediumClass === '中类-合计' || item.mediumClass === ''
+      );
     } else if (
-      rowList.value.length ===
-        1 &&
-      rowList.value[0][
-        'data-id'
-      ] === 'mediumClass'
+      rowList.value.length === 1 &&
+      rowList.value[0]['data-id'] === 'mediumClass'
     ) {
-      gridOptions.data =
-        handleGoodsList(
-          await getGoodsList()
-        ).filter(
-          item =>
-            item.bigClass !==
-            '大类-合计'
-        );
+      gridOptions.data = handleGoodsList(await getGoodsList()).filter(
+        item => item.bigClass !== '大类-合计'
+      );
     } else {
-      gridOptions.data =
-        handleGoodsList(
-          await getGoodsList()
-        );
+      gridOptions.data = handleGoodsList(await getGoodsList());
     }
   }
 
@@ -1387,293 +889,127 @@ async function handleData() {
   }
 }
 
-function handleGoodsList(
-  goodsList
-) {
+function handleGoodsList(goodsList) {
   // 先确定行属性  ： 中类 和 大类
 
   // 对后端数组 进行去重复
 
-  const mediumClass = [
-    ...new Set(
-      goodsList.map(
-        item =>
-          item.mediumClass
-      )
-    )
-  ].map(item =>
-    goodsList.find(
-      it =>
-        it.mediumClass ===
-        item
-    )
+  const mediumClass = [...new Set(goodsList.map(item => item.mediumClass))].map(
+    item => goodsList.find(it => it.mediumClass === item)
   );
 
-  let result =
-    mediumClass.map(row => {
-      // 确定列属性
-      // {
-      //    huanan: {
-      //      salesVolume: '',
-      //      totalSales: '',
-      //      refundAmount: '',
-      //      associatedPurchaseRate: '',
-      //    },
-      //    huanan: {
-      //      salesVolume: '',
-      //      totalSales: '',
-      //      refundAmount: '',
-      //      associatedPurchaseRate: '',
-      //    },
-      //    huanan: {
-      //      salesVolume: '',
-      //      totalSales: '',
-      //      refundAmount: '',
-      //      associatedPurchaseRate: '',
-      //    }
-      // }
-      return {
-        bigClass:
-          row.bigClass,
-        mediumClass:
-          row.mediumClass,
-        huanan: goodsList
-          .filter(
-            item =>
-              item.area ===
-                '华南' &&
-              item.mediumClass ===
-                row.mediumClass
-          )
-          .reduce(
-            (prev, curr) => {
-              prev[
-                'salesVolume'
-              ] =
-                curr.salesVolume;
-              prev[
-                'totalSales'
-              ] =
-                curr.totalSales;
-              prev[
-                'refundAmount'
-              ] =
-                curr.refundAmount;
-              prev[
-                'associatedPurchaseRate'
-              ] =
-                curr.associatedPurchaseRate;
-              return prev;
-            },
-            {}
-          ),
-        huabei: goodsList
-          .filter(
-            item =>
-              item.area ===
-                '华北' &&
-              item.mediumClass ===
-                row.mediumClass
-          )
-          .reduce(
-            (prev, curr) => {
-              prev[
-                'salesVolume'
-              ] =
-                curr.salesVolume;
-              prev[
-                'totalSales'
-              ] =
-                curr.totalSales;
-              prev[
-                'refundAmount'
-              ] =
-                curr.refundAmount;
-              prev[
-                'associatedPurchaseRate'
-              ] =
-                curr.associatedPurchaseRate;
-              return prev;
-            },
-            {}
-          ),
-        huadong: goodsList
-          .filter(
-            item =>
-              item.area ===
-                '华东' &&
-              item.mediumClass ===
-                row.mediumClass
-          )
-          .reduce(
-            (prev, curr) => {
-              prev[
-                'salesVolume'
-              ] =
-                curr.salesVolume;
-              prev[
-                'totalSales'
-              ] =
-                curr.totalSales;
-              prev[
-                'refundAmount'
-              ] =
-                curr.refundAmount;
-              prev[
-                'associatedPurchaseRate'
-              ] =
-                curr.associatedPurchaseRate;
-              return prev;
-            },
-            {}
-          )
-      };
-    });
+  let result = mediumClass.map(row => {
+    // 确定列属性
+    // {
+    //    huanan: {
+    //      salesVolume: '',
+    //      totalSales: '',
+    //      refundAmount: '',
+    //      associatedPurchaseRate: '',
+    //    },
+    //    huanan: {
+    //      salesVolume: '',
+    //      totalSales: '',
+    //      refundAmount: '',
+    //      associatedPurchaseRate: '',
+    //    },
+    //    huanan: {
+    //      salesVolume: '',
+    //      totalSales: '',
+    //      refundAmount: '',
+    //      associatedPurchaseRate: '',
+    //    }
+    // }
+    return {
+      bigClass: row.bigClass,
+      mediumClass: row.mediumClass,
+      huanan: goodsList
+        .filter(
+          item => item.area === '华南' && item.mediumClass === row.mediumClass
+        )
+        .reduce((prev, curr) => {
+          prev['salesVolume'] = curr.salesVolume;
+          prev['totalSales'] = curr.totalSales;
+          prev['refundAmount'] = curr.refundAmount;
+          prev['associatedPurchaseRate'] = curr.associatedPurchaseRate;
+          return prev;
+        }, {}),
+      huabei: goodsList
+        .filter(
+          item => item.area === '华北' && item.mediumClass === row.mediumClass
+        )
+        .reduce((prev, curr) => {
+          prev['salesVolume'] = curr.salesVolume;
+          prev['totalSales'] = curr.totalSales;
+          prev['refundAmount'] = curr.refundAmount;
+          prev['associatedPurchaseRate'] = curr.associatedPurchaseRate;
+          return prev;
+        }, {}),
+      huadong: goodsList
+        .filter(
+          item => item.area === '华东' && item.mediumClass === row.mediumClass
+        )
+        .reduce((prev, curr) => {
+          prev['salesVolume'] = curr.salesVolume;
+          prev['totalSales'] = curr.totalSales;
+          prev['refundAmount'] = curr.refundAmount;
+          prev['associatedPurchaseRate'] = curr.associatedPurchaseRate;
+          return prev;
+        }, {})
+    };
+  });
 
   //  添加  中类合计
-  result = [
-    ...new Set(
-      result.map(
-        item => item.bigClass
-      )
-    )
-  ]
+  result = [...new Set(result.map(item => item.bigClass))]
     .map(bigClass => {
-      const tmp = [
-        ...result.filter(
-          item =>
-            item.bigClass ===
-            bigClass
-        )
-      ];
-      const last = tmp.reduce(
-        (prev, curr) => {
-          prev[
-            'mediumClass'
-          ] = '中类-合计';
-          prev['bigClass'] =
-            curr.bigClass;
-          // 3个区域 循环 处理   目前先写死
-          prev['huadong'] = {
-            ...curr.huadong,
-            salesVolume:
-              Number(
-                curr?.huadong
-                  ?.salesVolume
-              ) +
-              Number(
-                prev?.huadong
-                  ?.salesVolume ||
-                  0
-              ),
-            totalSales:
-              Number(
-                curr?.huadong
-                  ?.totalSales
-              ) +
-              Number(
-                prev?.huadong
-                  ?.totalSales ||
-                  0
-              ),
-            refundAmount:
-              Number(
-                curr?.huadong
-                  ?.refundAmount
-              ) +
-              Number(
-                prev?.huadong
-                  ?.refundAmount ||
-                  0
-              ),
-            associatedPurchaseRate:
-              (
-                Math.random() *
-                2
-              ).toFixed(1) // 连带率
-          };
+      const tmp = [...result.filter(item => item.bigClass === bigClass)];
+      const last = tmp.reduce((prev, curr) => {
+        prev['mediumClass'] = '中类-合计';
+        prev['bigClass'] = curr.bigClass;
+        // 3个区域 循环 处理   目前先写死
+        prev['huadong'] = {
+          ...curr.huadong,
+          salesVolume:
+            Number(curr?.huadong?.salesVolume) +
+            Number(prev?.huadong?.salesVolume || 0),
+          totalSales:
+            Number(curr?.huadong?.totalSales) +
+            Number(prev?.huadong?.totalSales || 0),
+          refundAmount:
+            Number(curr?.huadong?.refundAmount) +
+            Number(prev?.huadong?.refundAmount || 0),
+          associatedPurchaseRate: (Math.random() * 2).toFixed(1) // 连带率
+        };
 
-          prev['huabei'] = {
-            ...curr.huabei,
-            salesVolume:
-              Number(
-                curr.huabei
-                  .salesVolume
-              ) +
-              Number(
-                prev?.huabei
-                  ?.salesVolume ||
-                  0
-              ),
-            totalSales:
-              Number(
-                curr.huabei
-                  .totalSales
-              ) +
-              Number(
-                prev?.huabei
-                  ?.totalSales ||
-                  0
-              ),
-            refundAmount:
-              Number(
-                curr.huabei
-                  .refundAmount
-              ) +
-              Number(
-                prev?.huabei
-                  ?.refundAmount ||
-                  0
-              ),
-            associatedPurchaseRate:
-              (
-                Math.random() *
-                2
-              ).toFixed(1) // 连带率
-          };
+        prev['huabei'] = {
+          ...curr.huabei,
+          salesVolume:
+            Number(curr.huabei.salesVolume) +
+            Number(prev?.huabei?.salesVolume || 0),
+          totalSales:
+            Number(curr.huabei.totalSales) +
+            Number(prev?.huabei?.totalSales || 0),
+          refundAmount:
+            Number(curr.huabei.refundAmount) +
+            Number(prev?.huabei?.refundAmount || 0),
+          associatedPurchaseRate: (Math.random() * 2).toFixed(1) // 连带率
+        };
 
-          prev['huanan'] = {
-            ...curr.huanan,
-            salesVolume:
-              Number(
-                curr.huanan
-                  .salesVolume
-              ) +
-              Number(
-                prev?.huanan
-                  ?.salesVolume ||
-                  0
-              ),
-            totalSales:
-              Number(
-                curr.huanan
-                  .totalSales
-              ) +
-              Number(
-                prev?.huanan
-                  ?.totalSales ||
-                  0
-              ),
-            refundAmount:
-              Number(
-                curr.huanan
-                  .refundAmount
-              ) +
-              Number(
-                prev?.huanan
-                  ?.refundAmount ||
-                  0
-              ),
-            associatedPurchaseRate:
-              (
-                Math.random() *
-                2
-              ).toFixed(1) // 连带率
-          };
-          return prev;
-        },
-        {}
-      );
+        prev['huanan'] = {
+          ...curr.huanan,
+          salesVolume:
+            Number(curr.huanan.salesVolume) +
+            Number(prev?.huanan?.salesVolume || 0),
+          totalSales:
+            Number(curr.huanan.totalSales) +
+            Number(prev?.huanan?.totalSales || 0),
+          refundAmount:
+            Number(curr.huanan.refundAmount) +
+            Number(prev?.huanan?.refundAmount || 0),
+          associatedPurchaseRate: (Math.random() * 2).toFixed(1) // 连带率
+        };
+        return prev;
+      }, {});
 
       return [...tmp, last];
     })
@@ -1682,265 +1018,122 @@ function handleGoodsList(
   // 添加  大类 合计
 
   const bigClassLast = result
-    .filter(
-      item =>
-        item.mediumClass ===
-        '中类-合计'
-    )
+    .filter(item => item.mediumClass === '中类-合计')
     .reduce((prev, curr) => {
-      prev['bigClass'] =
-        '大类-合计';
-      prev['mediumClass'] =
-        '';
+      prev['bigClass'] = '大类-合计';
+      prev['mediumClass'] = '';
       // 3个区域 循环 处理   目前先写死
       prev['huadong'] = {
         ...curr.huadong,
         salesVolume:
-          Number(
-            curr?.huadong
-              ?.salesVolume
-          ) +
-          Number(
-            prev?.huadong
-              ?.salesVolume ||
-              0
-          ),
+          Number(curr?.huadong?.salesVolume) +
+          Number(prev?.huadong?.salesVolume || 0),
         totalSales:
-          Number(
-            curr?.huadong
-              ?.totalSales
-          ) +
-          Number(
-            prev?.huadong
-              ?.totalSales ||
-              0
-          ),
+          Number(curr?.huadong?.totalSales) +
+          Number(prev?.huadong?.totalSales || 0),
         refundAmount:
-          Number(
-            curr?.huadong
-              ?.refundAmount
-          ) +
-          Number(
-            prev?.huadong
-              ?.refundAmount ||
-              0
-          ),
-        associatedPurchaseRate:
-          (
-            Math.random() * 2
-          ).toFixed(1) // 连带率
+          Number(curr?.huadong?.refundAmount) +
+          Number(prev?.huadong?.refundAmount || 0),
+        associatedPurchaseRate: (Math.random() * 2).toFixed(1) // 连带率
       };
 
       prev['huabei'] = {
         ...curr.huabei,
         salesVolume:
-          Number(
-            curr.huabei
-              .salesVolume
-          ) +
-          Number(
-            prev?.huabei
-              ?.salesVolume ||
-              0
-          ),
+          Number(curr.huabei.salesVolume) +
+          Number(prev?.huabei?.salesVolume || 0),
         totalSales:
-          Number(
-            curr.huabei
-              .totalSales
-          ) +
-          Number(
-            prev?.huabei
-              ?.totalSales ||
-              0
-          ),
+          Number(curr.huabei.totalSales) +
+          Number(prev?.huabei?.totalSales || 0),
         refundAmount:
-          Number(
-            curr.huabei
-              .refundAmount
-          ) +
-          Number(
-            prev?.huabei
-              ?.refundAmount ||
-              0
-          ),
-        associatedPurchaseRate:
-          (
-            Math.random() * 2
-          ).toFixed(1) // 连带率
+          Number(curr.huabei.refundAmount) +
+          Number(prev?.huabei?.refundAmount || 0),
+        associatedPurchaseRate: (Math.random() * 2).toFixed(1) // 连带率
       };
 
       prev['huanan'] = {
         ...curr.huanan,
         salesVolume:
-          Number(
-            curr.huanan
-              .salesVolume
-          ) +
-          Number(
-            prev?.huanan
-              ?.salesVolume ||
-              0
-          ),
+          Number(curr.huanan.salesVolume) +
+          Number(prev?.huanan?.salesVolume || 0),
         totalSales:
-          Number(
-            curr.huanan
-              .totalSales
-          ) +
-          Number(
-            prev?.huanan
-              ?.totalSales ||
-              0
-          ),
+          Number(curr.huanan.totalSales) +
+          Number(prev?.huanan?.totalSales || 0),
         refundAmount:
-          Number(
-            curr.huanan
-              .refundAmount
-          ) +
-          Number(
-            prev?.huanan
-              ?.refundAmount ||
-              0
-          ),
-        associatedPurchaseRate:
-          (
-            Math.random() * 2
-          ).toFixed(1) // 连带率
+          Number(curr.huanan.refundAmount) +
+          Number(prev?.huanan?.refundAmount || 0),
+        associatedPurchaseRate: (Math.random() * 2).toFixed(1) // 连带率
       };
       return prev;
     }, {});
 
-  return [
-    ...result,
-    bigClassLast
-  ];
+  return [...result, bigClassLast];
 }
 </script>
 
 <template>
-  <div
-    class="demo-page-wrapper"
-  >
+  <div class="demo-page-wrapper">
     <div class="main">
       <div class="menu">
         <a-menu
           id="dddddd"
-          v-model:openKeys="
-            openKeys
-          "
-          v-model:selectedKeys="
-            selectedKeys
-          "
+          v-model:openKeys="openKeys"
+          v-model:selectedKeys="selectedKeys"
           mode="inline"
           multiple
           :items="menus"
-          @dragstart="
-            handleDragStart
-          "
+          @dragstart="handleDragStart"
         >
         </a-menu>
       </div>
       <div class="table">
         <div class="select">
-          <div
-            class="row-col"
-          >
+          <div class="row-col">
             <div
               class="row"
-              @dragover="
-                e =>
-                  e.preventDefault()
-              "
-              @drop="
-                handleRowDrop
-              "
+              @dragover="e => e.preventDefault()"
+              @drop="handleRowDrop"
             >
-              <div>
-                行维度：
-              </div>
+              <div>行维度：</div>
               <a-tag
                 v-for="item in rowList"
-                :key="
-                  item[
-                    'data-id'
-                  ]
-                "
+                :key="item['data-id']"
                 closable
-                @close="
-                  handleCloseRow(
-                    item
-                  )
-                "
-                >{{
-                  item.label
-                }}</a-tag
+                @close="handleCloseRow(item)"
+                >{{ item.label }}</a-tag
               >
             </div>
             <div
               class="col"
-              @dragover="
-                e =>
-                  e.preventDefault()
-              "
-              @drop="
-                handleColDrop
-              "
+              @dragover="e => e.preventDefault()"
+              @drop="handleColDrop"
             >
-              <div>
-                列维度：
-              </div>
+              <div>列维度：</div>
               <a-tag
                 v-for="item in colList"
-                :key="
-                  item[
-                    'data-id'
-                  ]
-                "
+                :key="item['data-id']"
                 closable
-                @close="
-                  handleCloseCol(
-                    item
-                  )
-                "
-                >{{
-                  item.label
-                }}</a-tag
+                @close="handleCloseCol(item)"
+                >{{ item.label }}</a-tag
               >
             </div>
           </div>
           <div
             class="table-header"
-            @dragover="
-              e =>
-                e.preventDefault()
-            "
-            @drop="
-              handleHeaderDrop
-            "
+            @dragover="e => e.preventDefault()"
+            @drop="handleHeaderDrop"
           >
             <div>表头：</div>
             <a-tag
               v-for="item in headerList"
-              :key="
-                item[
-                  'data-id'
-                ]
-              "
+              :key="item['data-id']"
               closable
-              @close="
-                handleCloseHeader(
-                  item
-                )
-              "
-              >{{
-                item.label
-              }}</a-tag
+              @close="handleCloseHeader(item)"
+              >{{ item.label }}</a-tag
             >
           </div>
         </div>
-        <vxe-grid
-          ref="gridRef"
-          v-bind="gridOptions"
-        >
+        <vxe-grid ref="gridRef" v-bind="gridOptions">
           <!-- <template #toolbarButtons>
             <span>数据：</span>
             <vxe-select v-model="gridOptions.pagerConfig.pageSize" :options="dataOptions" @change="changeRowSizeEvent"></vxe-select>
