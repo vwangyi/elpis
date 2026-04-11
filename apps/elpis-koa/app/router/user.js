@@ -1,10 +1,7 @@
-module.exports = (app, router) => {
-  const { UserController } = app.controllers;
+import Router from '@koa/router';
+import userController from '../controller/userController.js';
+const router = new Router();
 
-  router.get('/api/user/list', UserController.findAll.bind(UserController));
+router.get('/api/users', userController.getUserList);
 
-  router.get(
-    '/api/user/info',
-    UserController.findUserInfo.bind(UserController)
-  );
-};
+export default router;

@@ -1,5 +1,6 @@
-module.exports = {
+export default {
   name: '默认',
+  PORT: process.env.ELPIS_PORT,
   jwtSecreKey: 'b2ed84cb601f464fbf584db1c3206b3a', // 生成一个uuid 作为jwt的key
   database: {
     client: 'mysql2',

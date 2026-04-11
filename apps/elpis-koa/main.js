@@ -1,24 +1,13 @@
-const Koa = require('koa');
-const controllers = require('./app/controllers');
-const services = require('./app/services');
-const router = require('./app/router');
-const env = require('./env');
-const config = require('./config');
-const middlewares = require('./app/middlewares');
+import Koa from 'koa';
+import config from './config/index.js';
+import router from './app/router/app.js';
 
 const app = new Koa();
-env(app);
-config(app);
-middlewares(app);
-services(app);
-controllers(app);
-router(app);
+app.use(router.routes());
+app.use(router.allowedMethods());
 
-try {
-  const port = process.env.PORT || 8080;
-  const host = process.env.IP || '0.0.0.0';
-  app.listen(port, host);
-  console.info(`${app.env.get()}: http://localhost:${port}`);
-} catch (err) {
-  console.error(`启动服务失败:`, err);
-}
+// console.log(app.env, config)
+
+app.listen(config.PORT, () => {
+  console.log(`Server running on http://localhost:${config.PORT}`);
+});

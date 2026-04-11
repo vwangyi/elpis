@@ -1,25 +1,17 @@
 {
   "name": "elpis-koa",
   "version": "1.0.0",
+  "type": "module",
   "main": "main.js",
   "scripts": {
-    "dev": "_ENV='dev' nodemon ./main.js",
-    "sit": "_ENV='sit' PORT=8081 node ./main.js",
-    "uat": "_ENV='prod' PORT=8081 node ./main.js",
-    "pro": "_ENV='prod' PORT=8081 node ./main.js",
-    "prod": "_ENV='prod' PORT=8081 node ./main.js",
-    "build:dev1": "npx webpack serve --config ./webpack/webpack.dev.js",
-    "build:prod1": "npx webpack --config ./webpack/webpack.prod.js",
-    "build:prod": "node ./webpack/webpack.prod.js",
-    "build:dev": "npx webpack serve --config ./webpack/config/webpack.dev.js",
-    "server:dev": "node --max_old_space_size=4096 ./webpack/server.dev.js",
-    "server:prod": "node --max_old_space_size=4096 ./webpack/server.prod.js",
-    "lint:prettier": "prettier --write \"**/*.{js,ts,mjs,cjs,json,tsx,css,less,scss,vue,html,md}\""
+    "dev": "nodemon --env-file=.env.dev main.js",
+    "prod": "node --env-file=.env.prod main.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@koa/router": "^15.4.0",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
     "@wangeditor/plugin-md": "^1.0.0",

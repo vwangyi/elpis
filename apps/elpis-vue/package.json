@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "node ./webpack/webpack.dev.js",
-    "prod": "node ./webpack/webpack.prod.js"
+    "prod": "node --max_old_space_size=4096 ./webpack/webpack.prod.js"
   },
   "keywords": [],
   "author": "",
