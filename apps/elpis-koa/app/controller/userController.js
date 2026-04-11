@@ -1,5 +1,3 @@
-// controllers/userController.js
-// const userService = require('../service/userService');
 import userService from '../service/userService.js';
 
 class UserController {
@@ -33,6 +31,4 @@ class UserController {
     };
   }
 }
-
-// module.exports = new UserController();
 export default new UserController();

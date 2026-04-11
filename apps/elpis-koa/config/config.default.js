@@ -2,6 +2,16 @@ export default {
   name: '默认',
   PORT: process.env.ELPIS_PORT,
   jwtSecreKey: 'b2ed84cb601f464fbf584db1c3206b3a', // 生成一个uuid 作为jwt的key
+
+  MYSQL2: {
+    host: 'codewy.top',
+    user: 'elpis_dev',
+    password: 'elpis_dev@123',
+    database: 'elpis_dev',
+    waitForConnections: true,
+    connectionLimit: 10, // 连接池最大连接数
+    queueLimit: 0
+  },
   database: {
     client: 'mysql2',
     connection: {
@@ -17,7 +27,7 @@ export default {
       max: 20
     }
   },
-  email: {
+  EMAIL: {
     host: 'smtp.qq.com', // QQ邮箱SMTP服务器
     port: 465, // SSL端口
     secure: true, // 465端口必须为true

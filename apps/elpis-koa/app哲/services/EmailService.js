@@ -36,7 +36,8 @@ module.exports = app => {
           address: emailConfig.auth.user // 必须和上面auth.user一致
         },
         to: email,
-        subject: 'WANGYI验证码', // 主题
+        subject: '验证码', // 主题
+        text: `您的验证码是：${code}，该验证码5分钟内有效。`, // 纯文本内容（备用）
         html: ` 
           <div
             style="
@@ -112,9 +113,7 @@ module.exports = app => {
               <p>© ${new Date().getFullYear()} WANGYI. 保留所有权利.</p>
             </div>
           </div>
-        `,
-        // 纯文本内容（备用）
-        text: `您的验证码是：${code}，该验证码5分钟内有效。`
+        `
       });
 
       // 存储验证码（key: email, value: {code, expiresAt}）
