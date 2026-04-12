@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             background: linear-gradient(145deg, #0b1a2e 0%, #1a2f3f 100%);
             min-height: 100vh;
@@ -20,6 +22,7 @@
             padding: 16px;
             margin: 0;
         }
+
         .lottery-card {
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(10px);
@@ -31,10 +34,12 @@
             width: 100%;
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(210, 180, 140, 0.1) inset;
         }
+
         .header {
             text-align: center;
             margin-bottom: 30px;
         }
+
         .header h1 {
             font-size: 2.2rem;
             font-weight: 600;
@@ -46,6 +51,7 @@
             text-shadow: 0 0 10px #ff9900aa;
             margin-bottom: 6px;
         }
+
         .header p {
             color: #9bb7d4;
             font-size: 1rem;
@@ -54,6 +60,7 @@
             padding-top: 12px;
             margin-top: 8px;
         }
+
         .number-panel {
             background: #0d1b28;
             border-radius: 100px;
@@ -62,6 +69,7 @@
             border: 1px solid #546e7a;
             box-shadow: inset 0 4px 8px #00000055, 0 15px 20px #00000033;
         }
+
         .section-label {
             display: flex;
             align-items: center;
@@ -72,6 +80,7 @@
             margin-bottom: 12px;
             padding-left: 12px;
         }
+
         .section-label span {
             background: #ffc107;
             color: #0a1c2c;
@@ -81,6 +90,7 @@
             border-radius: 40px;
             text-transform: uppercase;
         }
+
         .ball-container {
             display: flex;
             flex-wrap: wrap;
@@ -89,6 +99,7 @@
             gap: 12px 18px;
             padding: 8px 0 16px 0;
         }
+
         .ball {
             width: 70px;
             height: 70px;
@@ -103,16 +114,19 @@
             box-shadow: 0 8px 0 #999, 0 14px 18px #00000055, 0 0 0 3px #f7eac6 inset;
             transition: transform 0.1s ease;
         }
+
         .ball-front {
             background: radial-gradient(circle at 30% 30%, #fff4cf, #ffb347);
             color: #221c0f;
             box-shadow: 0 8px 0 #b36200, 0 14px 18px #00000055, 0 0 0 3px #ffdd99 inset;
         }
+
         .ball-back {
             background: radial-gradient(circle at 30% 30%, #c7e5fc, #4a9eff);
             color: #002b4e;
             box-shadow: 0 8px 0 #145a9e, 0 14px 18px #00000055, 0 0 0 3px #b8dcff inset;
         }
+
         .separator-icon {
             font-size: 2.2rem;
             color: #f1c40f;
@@ -121,6 +135,7 @@
             margin: 0 6px;
             text-shadow: 0 0 6px gold;
         }
+
         .action-buttons {
             display: flex;
             gap: 20px;
@@ -128,6 +143,7 @@
             margin-top: 25px;
             flex-wrap: wrap;
         }
+
         .btn {
             border: none;
             border-radius: 60px;
@@ -147,6 +163,7 @@
             flex: 0 1 auto;
             min-width: 200px;
         }
+
         .btn-generate {
             background: linear-gradient(145deg, #f0b514, #d18d00);
             color: #171b1f;
@@ -154,13 +171,16 @@
             box-shadow: 0 10px 0 #7e5200, 0 6px 16px black;
             font-size: 1.4rem;
         }
+
         .btn:active {
             transform: translateY(6px);
             box-shadow: 0 4px 0 #15232e, 0 6px 16px black;
         }
+
         .btn-generate:active {
             box-shadow: 0 4px 0 #7e5200, 0 6px 16px black;
         }
+
         .history-area {
             margin-top: 32px;
             background: #09161ecc;
@@ -170,6 +190,7 @@
             text-align: center;
             backdrop-filter: blur(4px);
         }
+
         .history-title {
             color: #b2cce6;
             font-size: 1rem;
@@ -181,12 +202,14 @@
             justify-content: center;
             gap: 8px;
         }
+
         .history-badge {
             background: #2f4b5c;
             padding: 4px 12px;
             border-radius: 30px;
             font-size: 0.8rem;
         }
+
         #historyList {
             display: flex;
             flex-direction: column;
@@ -198,6 +221,7 @@
             font-family: 'Fira Code', monospace;
             font-size: 1.1rem;
         }
+
         .history-item {
             background: #0b222e;
             padding: 6px 12px;
@@ -208,29 +232,46 @@
             gap: 10px;
             box-shadow: inset 0 1px 4px #00000077;
         }
+
         .history-number {
             font-weight: 600;
             color: #fade85;
         }
+
         footer {
             color: #5b7990;
             font-size: 0.8rem;
             text-align: center;
             margin-top: 20px;
         }
+
         /* 小屏适配 */
         @media (max-width: 520px) {
-            .lottery-card { padding: 20px 16px; }
-            .ball { width: 52px; height: 52px; font-size: 1.5rem; }
-            .btn { padding: 12px 24px; font-size: 1.1rem; min-width: 160px; }
+            .lottery-card {
+                padding: 20px 16px;
+            }
+
+            .ball {
+                width: 52px;
+                height: 52px;
+                font-size: 1.5rem;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 1.1rem;
+                min-width: 160px;
+            }
         }
     </style>
+
 </head>
+
 <body>
     <div class="lottery-card">
         <div class="header">
             <h1>⚡ 超级大乐透 ⚡</h1>
-            <p>前区 01·35  &nbsp;&nbsp;|&nbsp;&nbsp; 后区 01·12</p>
+            <p>前区 01·35 &nbsp;&nbsp;|&nbsp;&nbsp; 后区 01·12</p>
         </div>
 
         <!-- 主显示区：当前生成的号码 -->
@@ -277,7 +318,7 @@
     </div>
 
     <script>
-        (function(){
+        (function () {
             // ---------- 工具函数：生成前区 01-35 不重复5个 ----------
             function generateFront() {
                 const numbers = new Set();
@@ -286,7 +327,7 @@
                     numbers.add(rand);
                 }
                 // 转为排序后的数组 (从小到大, 更符合观感)
-                const sorted = Array.from(numbers).sort((a,b) => a - b);
+                const sorted = Array.from(numbers).sort((a, b) => a - b);
                 // 格式化为两位字符串
                 return sorted.map(num => num.toString().padStart(2, '0'));
             }
@@ -298,7 +339,7 @@
                     const rand = Math.floor(Math.random() * 12) + 1;  // 1-12
                     numbers.add(rand);
                 }
-                const sorted = Array.from(numbers).sort((a,b) => a - b);
+                const sorted = Array.from(numbers).sort((a, b) => a - b);
                 return sorted.map(num => num.toString().padStart(2, '0'));
             }
 
@@ -437,5 +478,8 @@
 
         })();
     </script>
+
+    <script src="./大乐透.js"></script>
 </body>
+
 </html>

@@ -169,6 +169,14 @@ export default defineConfig({
           text: "HTML/CSS",
           items: [
             {
+              text: "视频标签video",
+              link: "/02_JavaScript/05_HTML&CSS/00_video.md"
+            },
+            {
+              text: "图片标签img",
+              link: "/02_JavaScript/05_HTML&CSS/01_img.md"
+            },
+            {
               text: "HTML",
               link: "/02_JavaScript/05_HTML-CSS/01_HTML.md"
             },

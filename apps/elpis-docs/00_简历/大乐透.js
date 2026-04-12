@@ -22,59 +22,96 @@
 
 
 const left = [
-  15,27,29,30,34,
-  9, 10, 11, 12, 16, 10, 11, 22, 26, 32, 3, 15, 24, 28, 29, 2, 4, 8, 10, 21, 9, 25, 26, 27, 28, 5, 9, 10, 18, 26, 5, 8,
-  12, 14, 17, 1, 10, 21, 23, 29, 12, 13, 14, 16, 31, 9, 11, 19, 30, 35, 4, 5, 10, 23, 31, 8, 9, 12, 19, 24, 1, 4, 10,
+  8, 17, 21, 33, 35,
+  7, 12, 13, 28, 32,
+  4, 7, 16, 26, 32,
+  2, 22, 30, 33, 34,
+  11, 12, 25, 26, 27,
+  3, 5, 7, 9, 18,
+  3, 4, 19, 26, 32,
+  2, 13, 22, 28, 34,
+  3, 5, 17, 33, 35,
+  15, 27, 29, 30, 34,
+  9, 10, 11, 12, 16,
+  10, 11, 22, 26, 32,
+  3, 15, 24, 28, 29,
+  2, 4, 8, 10, 21,
+  9,
+  25, 26, 27, 28, 5,
+  9, 10, 18, 26, 5,
+  8, 12, 14, 17, 1,
+  10, 21, 23, 29, 12, 13, 14, 16, 31, 9, 11, 19, 30, 35, 4, 5, 10, 23, 31, 8, 9, 12, 19, 24, 1, 4, 10,
   13, 17, 16, 18, 23, 34, 35, 3, 5, 6, 23, 26, 1, 2, 9, 22, 25, 14, 21, 23, 29, 33, 2, 3, 13, 18, 26, 5, 12, 13, 14, 33,
   3, 6, 17, 21, 33, 1, 2, 13, 20, 26, 5, 12, 18, 23, 35, 2, 4, 16, 23, 35, 5, 18, 23, 25, 32, 2, 9, 11, 15, 16, 4, 8,
   15, 20, 31, 7, 9, 23, 27, 32
 ];
 
 const right = [
-  1,10,1, 11, 1, 8, 3, 7, 9, 12, 1, 8, 5, 6, 4, 5, 10, 12, 4, 12, 1, 12, 7, 12, 1, 6, 3, 11, 1, 6, 1, 2, 1, 6, 2, 10, 2, 9,
+  6, 7,
+  6, 8,
+  5, 8,
+  8, 12,
+  8, 11,
+  2, 10,
+  1, 12,
+  5, 12,
+  5, 7,
+  1, 10, 1, 11, 1, 8, 3, 7, 9, 12, 1, 8, 5, 6, 4, 5, 10, 12, 4, 12, 1, 12, 7, 12, 1, 6, 3, 11, 1, 6, 1, 2, 1, 6, 2, 10, 2, 9,
   5, 8, 5, 11, 3, 10, 6, 12, 6, 11, 5, 9, 2, 4, 7, 8, 2, 8
 ];
 
-const totalLeft = left
-  .reduce((prev, curr) => {
-    if (!prev[curr]) {
-      prev[curr] = { key: curr, value: 0 };
+
+function count(arr, num) {
+
+  const tmp = arr.reduce((prev, index) => {
+
+    if (!prev[index]) {
+      prev[index] = { key: index, value: 0 };
     }
-    if (prev[curr].key === curr) {
-      prev[curr] = { key: curr, value: prev[curr].value + 1 };
+    if (prev[index]?.key === index) {
+      prev[index] = { key: index, value: prev[index].value + 1 };
     }
     return prev;
-  }, [])
-  .reduce((prev, curr, index, arr) => {
+  }, []);
+
+
+  for (let i = 1; i <= num; i++) {
+    if (!tmp[i]) {
+      tmp[i] = { key: i, value: 0 };
+    }
+  }
+  return tmp.reduce((prev, curr, index, arr) => {
+
+
     if (!prev[curr.value]) {
       prev[curr.value] = "";
     }
     prev[curr.value] += prev[curr.value] === "" ? `${curr.key}` : `, ${curr.key}`;
     return prev;
   }, {});
-console.log(totalLeft);
+}
+console.log('统计前区出现次数')
+console.log(count(left, 35));
+console.log('统计后区出现次数')
+console.log(count(right, 12));
 
-const totalRight = right
-  .reduce((prev, curr) => {
-    if (!prev[curr]) {
-      prev[curr] = { key: curr, value: 0 };
-    }
-    if (prev[curr].key === curr) {
-      prev[curr] = { key: curr, value: prev[curr].value + 1 };
-    }
-    return prev;
-  }, [])
-  .reduce((prev, curr, index, arr) => {
-    if (!prev[curr.value]) {
-      prev[curr.value] = "";
-    }
+console.log('统计每一期的结果 和 历史数据的次数统计')
 
-    prev[curr.value] += prev[curr.value] === "" ? `${curr.key}` : `, ${curr.key}`;
-    return prev;
-  }, {});
-console.log(totalRight);
-
-// console.log([{ 9: [1, 2, 3, 4,1, 2, 3, 41, 2, 3, 4] }, { 9: [1, 2, 3, 4] }, { 9: [1, 2, 3, 4] }, { 9: [1, 2, 3, 4] }])
+function count1(left, right) {
+  const leftEachLength = 5;
+  const rightEachLength = 2;
+  const countNum = left.length / leftEachLength;
+  console.log('期数', countNum)
+  for (let i = 0; i < countNum; i++) {
+    const hisLeft = left.slice(i + leftEachLength)
+    const hisRight = right.slice(i + rightEachLength)
+    const currentLeft = left.slice(i, i + leftEachLength)
+    const currentRight = right.slice(i, i + rightEachLength)
+    console.log(`第${i + 1}期号码`, currentLeft, currentRight)
+    console.log('当期的历史记录', count(hisLeft, 35), count(hisRight, 12))
+  }
+}
+console.log(count1(left, right))
 
 // 1. 算出每一期的  冷热号  3热2冷  3大2小（以18为界）
 
@@ -108,6 +145,7 @@ function getBigSmall(arr, value) {
     return res;
   });
 }
+
 
 
 

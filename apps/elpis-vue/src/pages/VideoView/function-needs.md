@@ -21,22 +21,16 @@
 Video.js
 vue-video-player（基于Video.js的Vue封装组件）
 对于大型视频网站，你不能简单地提供一个MP4文件链接，而应使用自适应流媒体（ABR） 技术，主流选择是HLS和DASH。
+
 HLS (HTTP Live Streaming)
-
 核心特点：苹果公司开发，将视频切成 .ts 片段，用 .m3u8 索引文件组织。
-
 兼容性与优势：兼容性最广，尤其在iOS/macOS上原生支持，生态成熟。
-
 缺点：传统HLS延迟较高（6-30秒），标准HLS使用AES-128加密。
 
 DASH (Dynamic Adaptive Streaming over HTTP)
-
 核心特点：MPEG国际标准，类似HLS，但编解码器更灵活，用 .mpd 文件作为清单。
-
 兼容性与优势：标准更开放，兼容Android、Windows等平台，延迟可更低（2-10秒）。
-
 缺点：在iOS生态支持不如HLS原生。
-
 推荐做法：同时生成HLS和DASH两种格式，前端播放器（如Video.js、hls.js、dash.js）会自动检测并选择最合适的协议加载播放。
 
 ## 后端
