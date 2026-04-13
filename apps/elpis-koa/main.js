@@ -2,16 +2,17 @@ import Koa from 'koa';
 import config from './config/index.js';
 import { errorHandler } from './app/middleware/errorHandler.js';
 import { logger } from './app/middleware/logger.js';
-import { router } from './app/middleware/router.js';
+// import { router } from './app/middleware/router.js';
+import router from './app/router/index.js';
 import bodyparser from 'koa-bodyparser';
 
 const app = new Koa();
 app.use(errorHandler);
 
-// app.use(router.routes());
-// app.use(router.allowedMethods());
-app.use(await router(app));
-app.use(logger(app));
+// app.use(logger(app));
+app.use(router.routes());
+app.use(router.allowedMethods());
+// app.use(await router(app));
 // 使用koa-bodyparser后 才可以使用ctx.request.body
 app.use(
   bodyparser({

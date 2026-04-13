@@ -8,10 +8,11 @@ class UserService extends BaseService {
    * @returns {Promise<{list: Array, total: number}>}
    */
   async getUserList(page = 1, limit = 10) {
-    console.log('执行 UserService');
     const sql = `SELECT * FROM user`;
     const offset = (page - 1) * limit;
-    const [a] = await this.mysql2.execute(sql);
+    console.log('执行 UserService', this.mysql2.execute);
+    const a = await this.mysql2.execute(sql);
+    console.log('执行 UserService', a);
     const mockUsers = a.map(item => ({ ...item, password: null }));
 
     // 分页计算

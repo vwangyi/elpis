@@ -23,6 +23,8 @@ export async function errorHandler(ctx, next) {
     // 统一处理异常处理
     const { status, message, detail } = error;
 
+    console.log('errorHandler', status);
+
     // 1. 记录到日志
     // app.logger.info(JSON.stringify(error));
     // app.logger.error('[-- exception --]: ', error);
@@ -32,7 +34,7 @@ export async function errorHandler(ctx, next) {
     ctx.body = {
       success: false,
       code: 50000,
-      message: '网络异常 请稍后重试'
+      message: message || '网络异常 请稍后重试'
     };
   }
 }

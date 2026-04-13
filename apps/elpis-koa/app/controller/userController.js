@@ -6,7 +6,6 @@ class UserController {
    * GET /api/users?page=1&limit=10
    */
   async getUserList(ctx, next) {
-    console.log('执行 UserController');
     // 1. 从 query 中获取分页参数，并转换为数字、设置默认值
     let { page = 1, limit = 10 } = ctx.query;
     page = parseInt(page, 10);
@@ -18,6 +17,7 @@ class UserController {
 
     // 3. 调用 Service 层
     const { list, total } = await userService.getUserList(page, limit);
+    console.log('执行 UserController', list, total);
 
     // 4. 返回统一格式的 JSON
     ctx.body = {

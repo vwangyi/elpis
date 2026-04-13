@@ -19,9 +19,11 @@
 // 套餐票如何买 
 
 
+// 后区要倒数第三个
 
 
 const left = [
+  9, 11, 20, 26, 27,
   8, 17, 21, 33, 35,
   7, 12, 13, 28, 32,
   4, 7, 16, 26, 32,
@@ -47,6 +49,7 @@ const left = [
 ];
 
 const right = [
+  6, 9,
   6, 7,
   6, 8,
   5, 8,
@@ -90,6 +93,7 @@ function count(arr, num) {
     return prev;
   }, {});
 }
+
 console.log('统计前区出现次数')
 console.log(count(left, 35));
 console.log('统计后区出现次数')
@@ -102,13 +106,16 @@ function count1(left, right) {
   const rightEachLength = 2;
   const countNum = left.length / leftEachLength;
   console.log('期数', countNum)
+  let prevLeft = 0, prevRight = 0;
   for (let i = 0; i < countNum; i++) {
-    const hisLeft = left.slice(i + leftEachLength)
-    const hisRight = right.slice(i + rightEachLength)
-    const currentLeft = left.slice(i, i + leftEachLength)
-    const currentRight = right.slice(i, i + rightEachLength)
-    console.log(`第${i + 1}期号码`, currentLeft, currentRight)
-    console.log('当期的历史记录', count(hisLeft, 35), count(hisRight, 12))
+    const hisLeft = left.slice(prevLeft + leftEachLength)
+    const hisRight = right.slice(prevRight + rightEachLength)
+    const currentLeft = left.slice(prevLeft, prevLeft + leftEachLength)
+    const currentRight = right.slice(prevRight, prevRight + rightEachLength)
+    prevLeft = prevLeft + leftEachLength;
+    prevRight = prevRight + rightEachLength
+    console.log(`第${i + 1}期号码`, currentLeft, count(hisLeft, 35))
+    console.log(currentRight, count(hisRight, 12))
   }
 }
 console.log(count1(left, right))

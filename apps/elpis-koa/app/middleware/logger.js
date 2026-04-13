@@ -6,7 +6,6 @@ import * as log4js from 'log4js';
 
 export function logger(app) {
   app.logger = 'logger@';
-  console.log('1231231logger');
 
   // 项目初始化执行
   return async function (ctx, next) {
