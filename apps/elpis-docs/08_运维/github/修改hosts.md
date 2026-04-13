@@ -29,6 +29,12 @@
 #### 2. 查询 GitHub 当前可用的 IP 地址（可选，但推荐）
 由于 GitHub 的 IP 可能变化，建议先获取最新可用 IP：
 - 访问 [ipaddress.com](https://www.ipaddress.com/) 或 [whatismyipaddress.com](https://whatismyipaddress.com/)。
+
+‌DigWebInterface‌ (https://digwebinterface.com/)
+‌DNS Stuff‌ (https://dnsstuff.com/)
+‌IPVoid‌ (https://ipv.io/)
+可百度 获取 github.com 最新的ip地址
+
 - 查询以下域名并记录 IPv4 地址：
   - `github.com`
   - `assets-cdn.github.com`（可选）

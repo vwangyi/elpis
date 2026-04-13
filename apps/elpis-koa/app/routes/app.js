@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+console.log('__dirname', __dirname);
 const router = new Router();
 
 // 批量注册所有 .js 路由文件（排除 app.js 自身）

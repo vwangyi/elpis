@@ -1,4 +1,3 @@
 ```sh
-
 pnpm i -D @babel/core @babel/plugin-transform-runtime @babel/preset-env @vue/babel-plugin-jsx @vue/babel-preset-jsx assert babel-eslint babel-loader consoler css-loader css-minimizer-webpack-plugin directory-named-webpack-plugin eslint eslint-plugin-import eslint-plugin-vue express file-loader ghooks happypack html-webpack-inject-attributes-plugin html-webpack-plugin ip less-loader mini-css-extract-plugin mocha postcss-loader postcss-px-to-viewport-8-plugin sass sass-loader style-loader supertest terser-webpack-plugin typescript url-loader validate-commit-msg vue-loader vue-style-loader webpack webpack-cli webpack-dev-middleware webpack-dev-server webpack-hot-middleware webpack-merge
 ```
