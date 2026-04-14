@@ -23,7 +23,7 @@ export async function errorHandler(ctx, next) {
     // 统一处理异常处理
     const { status, message, detail } = error;
 
-    console.log('errorHandler', status);
+    // console.log('errorHandler', status);
 
     // 1. 记录到日志
     // app.logger.info(JSON.stringify(error));

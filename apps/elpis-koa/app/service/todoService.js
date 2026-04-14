@@ -1,4 +1,5 @@
 import BaseService from './baseService.js';
+import todoModel from '../model/todoModel.js';
 
 class TodoService extends BaseService {
   /**
@@ -8,21 +9,8 @@ class TodoService extends BaseService {
    * @returns {Promise<{list: Array, total: number}>}
    */
   async getTodoList(page = 1, limit = 10) {
-    const sql = `SELECT * FROM user`;
-    const offset = (page - 1) * limit;
-    const [a] = await this.mysql2.execute(sql);
-    const mockUsers = a.map(item => {
-      delete item.password;
-      return item;
-    });
-
-    // 分页计算
-    const start = (page - 1) * limit;
-    const end = start + limit;
-    const list = mockUsers.slice(start, end);
-    const total = mockUsers.length;
-
-    return { list, total };
+    const total = await todoModel.getTotal();
+    console.log('service', total);
   }
 }
 

@@ -103,7 +103,7 @@ zerofill:
 
 
 ## 创建 表
-+ 重点： 在实际 工作中 创建表一般是用可视化界面创建 然后通过查看历史记录得到 sql语句 （这是最快的）
+
 
 ```sql
 
@@ -222,87 +222,7 @@ drop table if exists teacher1; -- 删除表
 
 
 ##  
- 
 
-## 分页和排序
-> 排序 order by
->
-
-```sql
--- 语法： order by 字段 排序类型。 -- 排序类型 只有 升序asc 降序desc 两种
-
--- 需求 通过分数字段进行 成绩的 升序和降序 
-select s.`StudentNo`, `StudentName`, `subjectName`, `studentResult`
-from student as s
-inner join result as r
-on s.StudentNo = sub.`SubjectNo`
-inner join `subject` as sub
-on r.`SubjectNo` = sub.`SubjectNo`
-where subjectName = '数据结构-1'
-order by StudentResult asc
-```
-
-
-
-> 分页 limit 
->
-
-```sql
--- 100万条数据
--- 为什么要分页？ 缓解数据库压力。一次性查询100万费劲 
-
--- 前端的UI组件库 分页器 是没有完整的全部表格数据的 而是点击下一页请求后端接口来获取下一页
-
--- 分页 limit (起始下标, )
-
-
-select s.`StudentNo`, `StudentName`, `subjectName`, `studentResult` -- 查询的字段
-from student as s -- student表
-inner join result as r -- 连接result表
-on s.StudentNo = sub.`SubjectNo` -- 条件
-inner join `subject` as sub -- 连接student表
-on r.`SubjectNo` = sub.`SubjectNo` -- 条件
-where subjectName = '数据结构-1' -- 条件
-order by StudentResult asc -- 排序 
-
--- 分页语法：limit 起始下标,每页条数
--- 例如：limit 5,10 将返回从下标5开始的10条数据 
-limit 5,5  
-
--- 第一页 limit 0,5    >>> (pageIndex-1) * 5
--- 第二页 limit 5,5    >>> (pageIndex-1) * 5
--- 第三页 limit 10,5   >>> (pageIndex-1) * 5   
--- 第n页  						  >>> limit (pageIndex-1) * pageSize, pageSize 
-
--- 一页多少条 pageSize 
--- 当前页 pageIndex  
--- 总页数。>>> 数据总条数 / pageSize 
--- 总条数  total  
-
-
-
--- pageSize 一页多少条
--- (当前页 - 1) * pageSize  起始页 
--- total 总条数
--- n就是当前页
--- 数据总数 / 页面大小 = 总页数 
-
-
--- 思考 
--- 查询 “java第一学年” 课程成绩排名前十的学生 并且分数套大于80的学生信息
--- （字段为 学号 姓名 课程名称 分数 ）
-
-select s.`StudentNo`, `StudentName`, `SubjectName`, `StudentResult`
-from `student` as s
-inner join `result` as r 
-on s.StudentNo = r.studentNo 
-inner join `subject` as sub 
-on sub.`SubjectNo` = r.`SubjectNo`
-where SubjectName = 'Java第一学年' and StudentResult >= 80
-order by StudentResult desc 
-limit 0,10
-
-```
 
 ## 常用函数 分组和过滤
 ```sql

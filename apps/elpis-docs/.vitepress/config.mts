@@ -1,5 +1,5 @@
 import { defineConfig } from "vitepress";
- 
+
 export default defineConfig({
   lang: "zh-CN",
   title: "WANGYI",
@@ -220,7 +220,11 @@ export default defineConfig({
             {
               text: '查（查询某条记录）',
               link: '/01_数据库/01_mysql/04_查.md'
-            }
+            },
+            {
+              text: '创建表',
+              link: '/01_数据库/01_mysql/06_建表.md'
+            },
           ]
         },
         {

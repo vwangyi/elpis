@@ -1,18 +1,8 @@
-// ==================== 1. Model 层 (数据模型与持久化) ====================
-// 职责：定义数据结构，直接操作数据库（此处用内存数组模拟）
-class TodoModel {
-  constructor() {
-    this.todos = [
-      { id: 1, title: '学习 Koa2 架构', completed: false },
-      { id: 2, title: '编写接口代码', completed: true }
-    ];
-    this.nextId = 3; // 模拟自增 ID
-  }
+import BaseModel from './baseModel.js';
 
+class TodoModel extends BaseModel {
   // 获取所有
-  findAll() {
-    return this.todos;
-  }
+  findAll() {}
 
   // 根据id获取一个
   findById(id) {
@@ -41,4 +31,19 @@ class TodoModel {
     this.todos.splice(index, 1);
     return true;
   }
+
+  /* 获取todo表的所有条数 */
+  async getTodoTotal() {
+    const sql = `select count(*) as total from todo`;
+    const [[{ total }]] = await this.mysql2.execute(sql);
+    return total;
+  }
+  /* 分页查询 */
+  async getTodoList(pageIndex, pageSize) {
+    const sql = `select * from user limit ${(pageIndex - 1) * pageSize},${pageSize}`;
+    const [result] = await this.mysql2.execute(sql);
+    return result;
+  }
 }
+
+export default new TodoModel();
