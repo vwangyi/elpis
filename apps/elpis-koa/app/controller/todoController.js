@@ -7,9 +7,11 @@ class TodoController {
    */
   async getTodoList(ctx, next) {
     // 接受数据
+    // const page = ctx;
+    // const limit = ctx;
     // const { list, total } = await todoService.getTodoList(page, limit);
     // 响应回去
-    ctx.body = {};
+    // this.success();
   }
 }
 export default new TodoController();

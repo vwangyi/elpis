@@ -1,5 +1,5 @@
 import Koa from 'koa';
-import config from './config/index.js';
+import config from './app/config/index.js';
 import { errorHandler } from './app/middleware/errorHandler.js';
 import { logger } from './app/middleware/logger.js';
 // import { router } from './app/middleware/router.js';
