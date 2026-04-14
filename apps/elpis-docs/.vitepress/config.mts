@@ -1,7 +1,13 @@
 import { defineConfig } from "vitepress";
+ 
 export default defineConfig({
   lang: "zh-CN",
   title: "WANGYI",
+  vite: {
+    server: {
+      port: 5111
+    }
+  },
   description: "A VitePress Site",
   themeConfig: {
     /**

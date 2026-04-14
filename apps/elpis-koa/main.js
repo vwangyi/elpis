@@ -6,9 +6,8 @@ import { logger } from './app/middleware/logger.js';
 import router from './app/router/index.js';
 import bodyparser from 'koa-bodyparser';
 
-const app = new Koa();
+const app = new Koa(); // 创建app应用程序
 app.use(errorHandler);
-
 // app.use(logger(app));
 app.use(router.routes());
 app.use(router.allowedMethods());

@@ -33,3 +33,35 @@ class UserController {
   }
 }
 export default new UserController();
+
+// controllers/userController.js
+class UserController1 {
+  constructor(userService) {
+    this.userService = userService;
+  }
+
+  // ✅ Controller 只处理 HTTP 请求响应
+  async getList(ctx) {
+    try {
+      // 获取请求参数
+      const page = ctx.query.page || 1;
+      const limit = ctx.query.limit || 10;
+
+      // 调用 Service
+      const result = await this.userService.getUserList(page, limit);
+
+      // 返回响应
+      ctx.body = {
+        success: true,
+        data: result.list,
+        pagination: result.pagination
+      };
+    } catch (error) {
+      ctx.status = 500;
+      ctx.body = {
+        success: false,
+        message: error.message
+      };
+    }
+  }
+}

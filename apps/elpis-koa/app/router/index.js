@@ -3,7 +3,7 @@ import { readdir } from 'fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
-const router = new Router();
+const router = new Router(); //({ prefix: '/api/koa/' });
 // 批量注册所有 .js 路由文件（排除 app.js 自身）
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const routeFiles = (await readdir(__dirname)).filter(
