@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import TodoList from '@/components/TodoList/TodoList.vue';
+import { useTodoStore } from '@/stores/todo';
+const todoStore = useTodoStore();
+
+todoStore.getTodoList(1, 3);
 </script>
 
 <template>
   <div class="home">
     <div class="todolist">
-      <TodoList />
+      <!-- <TodoList /> -->
+      {{ todoStore.todoList }}
     </div>
   </div>
 </template>

@@ -90,12 +90,16 @@ export default defineConfig({
     sidebar: {
       "/02_JavaScript/": [
         {
-          text: "Nodejs",
+          text: "宿主环境",
           items: [
             {
               text: "Nodejs",
               link: "/02_JavaScript/01_Nodejs/index.md"
-            }
+            }, 
+            {
+              text: "Chrome",
+              link: ""
+            }, 
           ]
         },
         {
@@ -237,7 +241,19 @@ export default defineConfig({
         {
           text: "Koa",
           link: "/05_后端框架/01_Koa/index.md",
-        }
+        },
+        {
+          text: "洋葱圈模型",
+          link: "/05_后端框架/01_Koa/02_洋葱圈模型.md",
+        },
+        {
+          text: "服务端路由KoaRouter",
+          link: "/05_后端框架/01_Koa/03_服务端路由KoaRouter.md",
+        },
+        {
+          text: "SpringMVC架构",
+          link: "/05_后端框架/01_Koa/04_SpringMVC架构.md",
+        }, 
       ],
       "/04_前端框架/": [
         {

@@ -65,14 +65,13 @@ module.exports = {
       },
       // 使用 npm i -D url-loader 来处理图片
       {
-        test: /\.(jpg|png|jpeg|gif|webp)(\?.+)?$/, // 项目使用的图片后缀 jpp jpeg png gif webp 后续可扩展
+        test: /\.(jpg|png|jpeg|gif|webp|svg)(\?.+)?$/, // jpp jpeg png等是位图  svg是矢量图 后续可扩展
         use: {
           loader: 'url-loader',
           options: {
             limit: 300, // 小于300B的文件转为base64
             esModule: false,
             // 建议添加输出路径 path表示图片的相对路径 name是图片的文件名 ext是文件的后缀名
-            // name: "imgs/[path][name].[hash:8].[ext]",
             name: 'img/[name].[hash:8].[ext]'
           }
         }
@@ -210,7 +209,8 @@ module.exports = {
       favicon: path.resolve(rootPath, './public/favicon.ico'), // 指定 favicon 路径
       title: 'WANGYI',
       // 产物 最终模版 输出路径
-      filename: path.resolve(rootPath, './dist/', `index.html`),
+      // filename: path.resolve(rootPath, './dist/', `index.html`),
+      filename: 'index.html', // ✅ 改为相对路径，不要用绝对路径
       // 要注入的代码块  <script src="xxx" ></script>
       // chunks: [entryName], // entryPage1和入口的key 一样
       minify: {

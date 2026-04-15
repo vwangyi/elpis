@@ -1,162 +1,59 @@
+// webpack/webpack.dev.js - 精简版
 const path = require('path');
 const { merge } = require('webpack-merge');
-const express = require('express');
-const consoler = require('consoler');
-const webpack = require('webpack');
-const devMiddleware = require('webpack-dev-middleware');
-const hotMiddleware = require('webpack-hot-middleware');
 const baseConfig = require('./webpack.config.js');
-// const history = require('connect-history-api-fallback');
-const serverConfig = {
-  HOST: '127.0.0.1', // 开发环境 肯定为本机
-  PORT: 9002, // 随意分配端口号
-  HMR_PATH: '__webpack_hmr', // 官方规定
-  TIMEOUT: 20000
-};
-const { HOST, PORT, HMR_PATH, TIMEOUT } = serverConfig;
-const rootPath = process.cwd(); // 项目根路径 启动命令的路径
 
-// // 修改entry webpack-hot-middleware插件规定的
-// baseConfig.entry = [
-//   // hmr 更新入口 官方指定的 hmr路径     双方通信用 eventsource 或 webSockte 都行 这里用的eventsource
-//   `webpack-hot-middleware/client?path=${path1}`,
-//   baseConfig.entry,
-// ];
+const rootPath = process.cwd();
 
-// 继承基础配置 并重写部分配置
-const url = `http://${HOST}:${PORT}/${HMR_PATH}&timeout=${TIMEOUT}&reload=true`; // 开发阶段的 entry 配置需要加入hmr
-const webpackConfig = merge(baseConfig, {
-  mode: 'development', // 指定为 开发环境
-  devtool: 'cheap-module-source-map',
-  entry: [
-    // hmr 更新入口 官方指定的 hmr路径     双方通信用 eventsource 或 webSockte 都行 这里用的eventsource
-    `webpack-hot-middleware/client?path=${url}`,
-    baseConfig.entry
-  ],
-  // 开发环境 的 output 配置
-  output: {
-    filename: 'js/[name]_[chunkhash:8].bundle.js',
-    path: path.resolve(rootPath, './dist/'), // 输出文件路径
-    publicPath: `http://${HOST}:${PORT}/public/dist/`, // 外部资源公共路径 这一句决定html中的 js css等静态资源从哪里加载
-    globalObject: 'this' // globalObject指向this
+module.exports = merge(baseConfig, {
+  mode: 'development',
+  devtool: 'eval-cheap-module-source-map',
+  devServer: {
+    port: 8080,
+    open: true,
+    hot: true,
+    compress: true,
+    host: 'localhost',
+    static: {
+      directory: path.resolve(rootPath, './dist')
+    },
+    client: {
+      overlay: true,
+      progress: true
+    },
+    proxy: [
+      {
+        context: ['/api'], // 注意：属性名从 key 改为 context 数组
+        target: 'http://localhost:3002',
+        changeOrigin: true
+      }
+    ],
+    // SPA 路由支持
+    historyApiFallback: true
   },
 
-  plugins: [
-    // hmr
-    new webpack.HotModuleReplacementPlugin({ multiStep: false })
-  ]
-});
-const compiler = webpack(webpackConfig);
-// console.log('baseConfig', JSON.stringify(baseConfig))
-// console.log('webpackConfig', JSON.stringify(webpackConfig))
+  // 开发环境优化
+  optimization: {
+    minimize: false,
+    splitChunks: {
+      chunks: 'all'
+    }
+  },
 
-// ===============================================================================================================================================
+  // 输出配置
+  output: {
+    filename: 'js/[name].js',
+    chunkFilename: 'js/[name].chunk.js',
+    publicPath: '/'
+  },
 
-// 启动服务
-const app = express();
-// 指定静态文件目录
-app.use(express.static(path.join(__dirname, '../public/dist/')));
+  // 缓存加速
+  cache: {
+    type: 'filesystem'
+  },
 
-// 2. 核心修改：添加 History API Fallback 中间件
-// 必须在 devMiddleware 之前使用
-// app.use(history({
-//   verbose: false, // 关闭详细日志
-//   // 这个重写规则表示：除了 API 请求（如果有）和 静态资源文件，其他所有请求都重定向到 index.html
-//   rewrites: [
-//     {
-//       from: /^\/(?!api|public|img|font|assets).*/, // 排除 api 请求和静态资源路径
-//       to: '/index.html'
-//     }
-//   ]
-// }));
-// app.use((req, res, next) => {
-//   // 排除 API 请求（假设你的 API 都带 /api 前缀）和 静态资源文件（.js, .css, .png 等）
-//   // 如果是 API 或者是文件请求，直接交给下一个中间件（即 devMiddleware）处理
-//   if (
-//     req.path.startsWith('/api') ||
-//     req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|json)$/)
-//   ) {
-//     return next();
-//   }
-
-//   // 如果不是上面的类型，说明是 Vue Router 的 history 模式路由
-//   // 我们修改请求的路径，让它去读取 index.html
-//   // 这样 Vue 就能接管路由了
-//   req.url = '/index.html';
-//   next();
-// });
-
-// 添加一个中间件，当访问根路径时返回 index.html
-// app.get('/', (req, res, next) => {
-//   const filename = path.join(compiler.outputPath, 'index.html');
-
-//   compiler.outputFileSystem.readFile(filename, (err, result) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.set('content-type', 'text/html');
-//     res.send(result);
-//     res.end();
-//   });
-// });
-
-// // 处理 404，返回 index.html（支持 Vue Router 的 history 模式）
-// // {path: '*', wildcard: true}
-// app.get("*", (req, res) => {
-//   const filename = path.join(compiler.outputPath, "index.html");
-//   compiler.outputFileSystem.readFile(filename, (err, result) => {
-//     if (err) {
-//       res.status(404).send("Page not found");
-//       return;
-//     }
-//     res.set("content-type", "text/html");
-//     res.send(result);
-//     res.end();
-//   });
-// });
-
-// 引用 webpackDevMiddleware 中间件（监控文件改动）
-app.use(
-  devMiddleware(compiler, {
-    writeToDisk: filePath => {
-      // return filePath.endsWith('.html'); // 物理输出.html文件 其他文件就放到内存中
-      return true; // 物理输出所有文件
-    },
-    publicPath: webpackConfig.output.publicPath, // 设置 资源路径 和 输出的publicPath 一致
-    // 解决跨域
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers':
-        'X-Request-With, content-type, Authorization'
-    },
-    stats: { colors: true } // 打印要有颜色
-  })
-);
-// 引用 webpack-hot-middleware 中间件（通知）
-app.use(
-  hotMiddleware(compiler, {
-    path: `/${HMR_PATH}`,
-    log: () => {}
-  })
-);
-
-/**
- * 如果 前端路由 使用了 history模式 下面中间件必须添加 当访问不到404时 返回index.html
- */
-app.use((req, res, next) => {
-  // 排除 API
-  // 请求有2种  api请求和页面请求  我们的nodejs服务器 都是静态资源 比如 js css png 还有 页面html
-  if (req.path.startsWith('/api')) {
-    return res.status(404).json({
-      error: 'API Not Found'
-    });
+  // 性能提示
+  performance: {
+    hints: false
   }
-
-  // 返回 index.html
-  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
-});
-
-app.listen(PORT, () => {
-  consoler.info(`请等待webpack初次构建完成提示...: ${PORT}`);
 });

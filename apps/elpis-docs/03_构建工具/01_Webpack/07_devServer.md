@@ -5,7 +5,8 @@
 > webpack.config.js
 
 ```js
-// pnpm i webpack-dev-server -D  必须下载这个插件才可以使用devServer配置项
+// pnpm i webpack-dev-server -D  必须下载这个插件才可以使用devServer配置项 
+// 通过 npx webpack serve 启动
 module.exports = {
   mode: "development", // devServer只能开发环境使用
   devServer: {

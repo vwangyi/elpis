@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "node ./webpack/webpack.dev.js",
+    "dev1": "node ./webpack/webpack.dev.js",
+    "dev": "npx webpack serve --config ./webpack/webpack.dev.js",
     "prod": "node --max_old_space_size=4096 ./webpack/webpack.prod.js"
   },
   "keywords": [],

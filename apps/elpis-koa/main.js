@@ -9,18 +9,18 @@ import bodyparser from 'koa-bodyparser';
 const app = new Koa(); // 创建app应用程序
 app.use(errorHandler);
 // app.use(logger(app));
-app.use(router.routes());
-app.use(router.allowedMethods());
 // app.use(await router(app));
 // 使用koa-bodyparser后 才可以使用ctx.request.body
 app.use(
   bodyparser({
     formLimit: '1000mb', // 防止大文件上传导致服务器崩溃
-    // enableTypes是为了支持不同类型的请求体
-    // 比如 application/json application/x-www-form-urlencoded text/plain
+    // // enableTypes是为了支持不同类型的请求体
+    // // 比如 application/json application/x-www-form-urlencoded text/plain
     enableTypes: ['from', 'json', 'text']
   })
 );
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 // console.log(app.env, config)
 

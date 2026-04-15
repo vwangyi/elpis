@@ -53,7 +53,7 @@ import { store } from './store.js'
 - ❌ 不暴露给前端
 
 
-## 业务层controller层 BO（Business Object）
+## 业务层 BO（Business Object）
 - 业务层，封装业务逻辑，可组合多个数据层
 - ✅ 聚合多个数据层DO 的数据
 - ✅ 包含业务逻辑和方法

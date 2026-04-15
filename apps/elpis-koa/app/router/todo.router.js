@@ -2,6 +2,6 @@ import Router from '@koa/router';
 import todoController from '../controller/todoController.js';
 const router = new Router();
 
-router.get('/todo', todoController.getTodoList);
+router.post('/api/todo/list/:id', todoController.getTodoList);
 
 export default router;

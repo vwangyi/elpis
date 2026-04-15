@@ -1,4 +1,10 @@
-Spring的三层架构 
+## 前后端架构
+- 前端架构 api -> store（数据层 也包含一定的业务逻辑） -> vm(script setup 复杂业务逻辑提取为hooks 或 components) -> template（视图层）
+- 后端架构 model -> service -> controller -> router
+
+
+## Spring的三层架构
+ 
 简介： Spring MVC 三层架构（表现层、业务层、数据访问层）通过职责分离提升代码可维护性与扩展性。
 表现层（Controller）接收请求并返回响应；
 业务层（Service）处理核心逻辑与事务；
