@@ -4,7 +4,7 @@
   padding: 10px;
   width: 400px;
   min-height: 150px;
-  border: 1px dashed #DDD;
+  border: 1px dashed #ddd;
 }
 
 .upload_box .upload_inp {
@@ -22,7 +22,7 @@
   text-align: center;
   border: none;
   cursor: pointer;
-  background-color: #DDD;
+  background-color: #ddd;
   overflow: hidden;
 }
 
@@ -31,14 +31,14 @@
   top: 30px;
   left: 0;
   z-index: 999;
-  transition: top .1s;
+  transition: top 0.1s;
   box-sizing: border-box;
   padding-left: 25px;
   width: 100%;
   height: 100%;
   content: 'loading...';
   text-align: left;
-  background: url('./loading.gif') no-repeat 5px center #EEE;
+  background: url('./loading.gif') no-repeat 5px center #eee;
   background-size: 15px 15px;
   color: #999;
 }
@@ -52,21 +52,21 @@
 }
 
 .upload_box .upload_button.select {
-background: linear-gradient(to bottom, #00BFFF, #1E90FF);
-border: none;
-color: white;
-font-size: 14px;
-border-radius: 4px;
-cursor: pointer;
+  background: linear-gradient(to bottom, #00bfff, #1e90ff);
+  border: none;
+  color: white;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .upload_box .upload_button.upload {
   background: #67c23a;
-  color: #FFF;
+  color: #fff;
 }
 
 .upload_box .upload_button.disable {
-  background: #EEE;
+  background: #eee;
   color: #999;
   cursor: inherit;
 }
@@ -125,7 +125,7 @@ cursor: pointer;
 .upload_box .upload_progress {
   position: relative;
   height: 5px;
-  background: #EEE;
+  background: #eee;
 }
 
 .upload_box .upload_progress .value {
@@ -136,7 +136,7 @@ cursor: pointer;
   height: 100%;
   width: 0%;
   background: #67c23a;
-  transition: width .3s;
+  transition: width 0.3s;
 }
 
 .upload_box .upload_drag {
@@ -155,7 +155,7 @@ cursor: pointer;
   top: 40%;
   width: 80px;
   height: 62px;
-  background: url("upload.png") no-repeat;
+  background: url('upload.png') no-repeat;
   background-size: 100% 100%;
 }
 
@@ -177,9 +177,9 @@ cursor: pointer;
   z-index: 999;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, .8);
+  background: rgba(0, 0, 0, 0.8);
   font-size: 12px;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   line-height: 150px;
 }

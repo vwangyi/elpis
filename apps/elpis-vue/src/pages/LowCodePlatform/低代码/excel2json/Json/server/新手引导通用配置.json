@@ -1,15 +1,15 @@
 {
-	"lazConfig": {
-		"seedlingKettleTimes  ": "1",
-		"lettleTreeKettleTimes": "3",
-		"taskLevel": "4",
-		"cisternOpenLevel": "7",
-		"hangUpOpenLevel": "10",
-		"startWater": "400",
-		"startKettleTimes": "0",
-		"seedlingRewardWater": "0",
-		"rewardWater": "300",
-		"newUserGiftOpenLevel": "17",
-		"helpOpenLevel": "4"
-	}
+  "lazConfig": {
+    "seedlingKettleTimes  ": "1",
+    "lettleTreeKettleTimes": "3",
+    "taskLevel": "4",
+    "cisternOpenLevel": "7",
+    "hangUpOpenLevel": "10",
+    "startWater": "400",
+    "startKettleTimes": "0",
+    "seedlingRewardWater": "0",
+    "rewardWater": "300",
+    "newUserGiftOpenLevel": "17",
+    "helpOpenLevel": "4"
+  }
 }

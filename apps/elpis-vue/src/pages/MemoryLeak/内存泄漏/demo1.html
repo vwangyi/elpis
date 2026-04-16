@@ -1,27 +1,26 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <div>
-        <button onclick="createInput(true)">内存泄漏</button>
-        <button onclick="createInput(false)">不会内存泄漏</button>
+      <button onclick="createInput(true)">内存泄漏</button>
+      <button onclick="createInput(false)">不会内存泄漏</button>
     </div>
-    
+
     <script>
-        function createInput(isFoucus) {
-            const inp = document.createElement('input');
-            document.body.appendChild(inp);
-            isFoucus && inp.focus();
-            setTimeout(() => {
-                inp.blur();
-                inp.remove();
-            }, 2000);
-        }
+      function createInput(isFoucus) {
+        const inp = document.createElement('input');
+        document.body.appendChild(inp);
+        isFoucus && inp.focus();
+        setTimeout(() => {
+          inp.blur();
+          inp.remove();
+        }, 2000);
+      }
     </script>
-</body>
+  </body>
 </html>

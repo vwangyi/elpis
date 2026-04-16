@@ -1,130 +1,127 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        } 
-        #visible {  
-            width: 400px;
-            height: 400px;
-            overflow-y: scroll; 
-        }
- 
-        .list { 
-            width: 100%;
-            position: relative;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      #visible {
+        width: 400px;
+        height: 400px;
+        overflow-y: scroll;
+      }
 
-        .item { 
-            width: 100%;
-            position: absolute;
-        }
+      .list {
+        width: 100%;
+        position: relative;
+      }
+
+      .item {
+        width: 100%;
+        position: absolute;
+      }
     </style>
-</head>
-<body>
-
-    <div id="app">  
-        <div>注意！数据量过大 不建议直接拖动滚动条</div>
-        <div>scrollTop：{{ scrollTop }}</div> 
-        <div>slice({{startIndex}}, {{endIndex}}) </div>
-        <div>原数组总length :{{ list.length }}</div> 
-        <div 
-            id="visible" 
-            ref="visible"
-            style="height: 400px"
-            @scroll="handleScroll"    
-        >
-            <div class="list" :style="{ height: totalHeight + 'px' }" > 
-                <div 
-                    class="item" 
-                    v-for="item in currentList" 
-                    :key="item.id " 
-                    :style="{
+  </head>
+  <body>
+    <div id="app">
+      <div>注意！数据量过大 不建议直接拖动滚动条</div>
+      <div>scrollTop：{{ scrollTop }}</div>
+      <div>slice({{startIndex}}, {{endIndex}})</div>
+      <div>原数组总length :{{ list.length }}</div>
+      <div
+        id="visible"
+        ref="visible"
+        style="height: 400px"
+        @scroll="handleScroll"
+      >
+        <div class="list" :style="{ height: totalHeight + 'px' }">
+          <div
+            class="item"
+            v-for="item in currentList"
+            :key="item.id "
+            :style="{
                         height: item.height + 'px', 
                         top: item.top + 'px',
                         border: '1px solid red'
                     }"
-                >  
-                    <div>当前item的高度：{{ item.height }} </div>
-                    <div>当前item索引：{{ item.id }} </div>
-                </div> 
-            </div> 
-
+          >
+            <div>当前item的高度：{{ item.height }}</div>
+            <div>当前item索引：{{ item.id }}</div>
+          </div>
         </div>
-    </div> 
+      </div>
+    </div>
     <script src="./js/vue.js"></script>
-    <script> 
-        let topHeight = 0;
-        const list = new Array(10000    ).fill(0).map((_, i) => {    
-            // 获取 20 - 40 之间的随机整数 作为item的高度
-            const height = 70 //  Math.floor(Math.random() * (80 - 40 + 1)) + 40;
-            const item = { id: i , height, top: topHeight }
-            topHeight += height;
-            return item 
-        })   
-        const cache = 10 // 缓存的项数
-        const app = new Vue({
-            el: '#app',
-            data() {
-                return {  
-                    list: Object.freeze(list),  
-                    scrollTop: 0, // 被卷去的高度  
-                    startIndex: 0, // 开始索引
-                    endIndex: 20, // 结束索引 
-                }
-            }, 
-            computed: {
-                totalHeight() {
-                    const len = this.list.length * 70; 
-                    return len
-                },
-                currentList() {
-                    return this.list.slice(this.startIndex, this.endIndex) 
-                },
-            },
-            created() {
-                this.init()
-            },
-            methods: {
-                init() {
-                    this.startIndex = 0; // startIndex初始值一定是0  
-                    let initEndIndex = this.getEndIndex(0, 400);
-                    initEndIndex = Math.min(this.list.length - 1, initEndIndex + cache)
-                    this.endIndex = initEndIndex
-                }, 
-                getStartIndex(scrollTop) { 
-                    return Math.floor(scrollTop / 70)
-                }, 
-                getEndIndex(scrollTop, clientHeight) {
-                    return Math.ceil(clientHeight / 70) + this.getStartIndex(scrollTop) 
-                },
-                // 用户滚动 触发计算 然后渲染   可加节流
-                handleScroll(e) {  
-                    const { scrollTop, clientHeight } = e.currentTarget;   
-                    let startIndex = this.getStartIndex(scrollTop)
-                    let endIndex = this.getEndIndex(scrollTop, clientHeight)
+    <script>
+      let topHeight = 0;
+      const list = new Array(10000).fill(0).map((_, i) => {
+        // 获取 20 - 40 之间的随机整数 作为item的高度
+        const height = 70; //  Math.floor(Math.random() * (80 - 40 + 1)) + 40;
+        const item = { id: i, height, top: topHeight };
+        topHeight += height;
+        return item;
+      });
+      const cache = 10; // 缓存的项数
+      const app = new Vue({
+        el: '#app',
+        data() {
+          return {
+            list: Object.freeze(list),
+            scrollTop: 0, // 被卷去的高度
+            startIndex: 0, // 开始索引
+            endIndex: 20 // 结束索引
+          };
+        },
+        computed: {
+          totalHeight() {
+            const len = this.list.length * 70;
+            return len;
+          },
+          currentList() {
+            return this.list.slice(this.startIndex, this.endIndex);
+          }
+        },
+        created() {
+          this.init();
+        },
+        methods: {
+          init() {
+            this.startIndex = 0; // startIndex初始值一定是0
+            let initEndIndex = this.getEndIndex(0, 400);
+            initEndIndex = Math.min(this.list.length - 1, initEndIndex + cache);
+            this.endIndex = initEndIndex;
+          },
+          getStartIndex(scrollTop) {
+            return Math.floor(scrollTop / 70);
+          },
+          getEndIndex(scrollTop, clientHeight) {
+            return Math.ceil(clientHeight / 70) + this.getStartIndex(scrollTop);
+          },
+          // 用户滚动 触发计算 然后渲染   可加节流
+          handleScroll(e) {
+            const { scrollTop, clientHeight } = e.currentTarget;
+            let startIndex = this.getStartIndex(scrollTop);
+            let endIndex = this.getEndIndex(scrollTop, clientHeight);
 
-                    const len = this.list.length;
+            const len = this.list.length;
 
-                    // 开始索引-cache是为了上缓存有cache项 最小索引为0
-                    startIndex = Math.max(0, startIndex - cache)
-                    // 结束索引+cache是为了下缓存有cache项 最大索引为len。因为slice不包含结束索引 所以不能-1
-                    endIndex =   Math.min(len, endIndex + cache) 
- 
+            // 开始索引-cache是为了上缓存有cache项 最小索引为0
+            startIndex = Math.max(0, startIndex - cache);
+            // 结束索引+cache是为了下缓存有cache项 最大索引为len。因为slice不包含结束索引 所以不能-1
+            endIndex = Math.min(len, endIndex + cache);
 
-                    // 触发渲染
-                    this.scrollTop = scrollTop;
-                    this.startIndex = startIndex;
-                    this.endIndex = endIndex; 
-                }, 
-            }, 
-        })
-    </script> 
-</body>
+            // 触发渲染
+            this.scrollTop = scrollTop;
+            this.startIndex = startIndex;
+            this.endIndex = endIndex;
+          }
+        }
+      });
+    </script>
+  </body>
 </html>

@@ -1,44 +1,44 @@
 {
-	"1": {
-		"interval": "0",
-		"spanDayType": "0",
-		"rewardType": "1",
-		"rewardNum": "300"
-	},
-	"2": {
-		"interval": "1",
-		"spanDayType": "0",
-		"rewardType": "1",
-		"rewardNum": "300"
-	},
-	"3": {
-		"interval": "3",
-		"spanDayType": "0",
-		"rewardType": "1",
-		"rewardNum": "300"
-	},
-	"4": {
-		"interval": "0",
-		"spanDayType": "1",
-		"rewardType": "1",
-		"rewardNum": "1000"
-	},
-	"5": {
-		"interval": "1",
-		"spanDayType": "0",
-		"rewardType": "1",
-		"rewardNum": "300"
-	},
-	"6": {
-		"interval": "3",
-		"spanDayType": "0",
-		"rewardType": "1",
-		"rewardNum": "300"
-	},
-	"7": {
-		"interval": "0",
-		"spanDayType": "1",
-		"rewardType": "1",
-		"rewardNum": "1000"
-	}
+  "1": {
+    "interval": "0",
+    "spanDayType": "0",
+    "rewardType": "1",
+    "rewardNum": "300"
+  },
+  "2": {
+    "interval": "1",
+    "spanDayType": "0",
+    "rewardType": "1",
+    "rewardNum": "300"
+  },
+  "3": {
+    "interval": "3",
+    "spanDayType": "0",
+    "rewardType": "1",
+    "rewardNum": "300"
+  },
+  "4": {
+    "interval": "0",
+    "spanDayType": "1",
+    "rewardType": "1",
+    "rewardNum": "1000"
+  },
+  "5": {
+    "interval": "1",
+    "spanDayType": "0",
+    "rewardType": "1",
+    "rewardNum": "300"
+  },
+  "6": {
+    "interval": "3",
+    "spanDayType": "0",
+    "rewardType": "1",
+    "rewardNum": "300"
+  },
+  "7": {
+    "interval": "0",
+    "spanDayType": "1",
+    "rewardType": "1",
+    "rewardNum": "1000"
+  }
 }

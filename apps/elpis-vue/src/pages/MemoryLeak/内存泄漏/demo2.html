@@ -1,34 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <div>
-        <button onclick="createInput(10)">创建10个聚集的input</button>
+      <button onclick="createInput(10)">创建10个聚集的input</button>
     </div>
-    
-    <script>
-        
-        async function createInput(num = 1) {
-            for(let i=0; i<num; i++) { 
-                // const inp = document.createElement('input');
-                // document.body.appendChild(inp);
-                // inp.focus();
-                // setTimeout(() => {
-                //     // inp.blur();
-                //     inp.remove();
-                // }, 2000);
-                // await new Promise(res => setTimeout(res, 200)); // 每次创建间隔200ms
 
-                const arr = new Array(10000).fill(0).map((_, idx) => `大量数据`); // 创建大量数据，增加内存压力
-                window.listss = arr; // 保持引用，防止垃圾回收 
-                console.log('Created input', i + 1, arr[arr.length - 1], arr);
-            }
+    <script>
+      async function createInput(num = 1) {
+        for (let i = 0; i < num; i++) {
+          // const inp = document.createElement('input');
+          // document.body.appendChild(inp);
+          // inp.focus();
+          // setTimeout(() => {
+          //     // inp.blur();
+          //     inp.remove();
+          // }, 2000);
+          // await new Promise(res => setTimeout(res, 200)); // 每次创建间隔200ms
+
+          const arr = new Array(10000).fill(0).map((_, idx) => `大量数据`); // 创建大量数据，增加内存压力
+          window.listss = arr; // 保持引用，防止垃圾回收
+          console.log('Created input', i + 1, arr[arr.length - 1], arr);
         }
+      }
     </script>
-</body>
+  </body>
 </html>
