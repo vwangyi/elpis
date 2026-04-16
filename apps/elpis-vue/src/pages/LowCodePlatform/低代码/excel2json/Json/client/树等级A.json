@@ -1,0 +1,92 @@
+{
+	"1": {
+		"levelComment": "幼苗",
+		"level": 1,
+		"rewardNum": "0",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 1,
+		"newUserAvailable": "1"
+	},
+	"2": {
+		"levelComment": "小树",
+		"level": 2,
+		"rewardNum": "0",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 3,
+		"newUserAvailable": "1"
+	},
+	"3": {
+		"levelComment": "大树",
+		"level": 3,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 5,
+		"newUserAvailable": "1"
+	},
+	"4": {
+		"levelComment": "开花1",
+		"level": 4,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 8,
+		"newUserAvailable": "1"
+	},
+	"5": {
+		"levelComment": "结果1",
+		"level": 5,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 11,
+		"newUserAvailable": "1"
+	},
+	"6": {
+		"levelComment": "成熟1",
+		"level": 6,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 14,
+		"newUserAvailable": "1"
+	},
+	"7": {
+		"levelComment": "开花2",
+		"level": 7,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 18,
+		"newUserAvailable": "1"
+	},
+	"8": {
+		"levelComment": "结果2",
+		"level": 8,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 22,
+		"newUserAvailable": "1"
+	},
+	"9": {
+		"levelComment": "成熟2",
+		"level": 9,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 26,
+		"newUserAvailable": "1"
+	},
+	"10": {
+		"levelComment": "开花3",
+		"level": 10,
+		"rewardNum": "300",
+		"rewardType": "1",
+		"oldUserAvailable": "1",
+		"levelMaxExp": 31,
+		"newUserAvailable": "1"
+	}
+}

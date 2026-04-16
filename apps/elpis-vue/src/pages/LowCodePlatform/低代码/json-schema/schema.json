@@ -1,0 +1,38 @@
+{
+  "fields": [
+    {
+      "type": "el-input", // 要渲染的组件标签名
+      "prop": "name",     // 表单数据对象的键名
+      "label": "姓名",
+      "attrs": {          // 需要绑定的属性
+        "placeholder": "请输入姓名",
+        "clearable": true
+      },
+      "rules": [          // 校验规则（示例，处理规则略复杂，此处聚焦渲染）
+        { "required": true, "message": "姓名不能为空" }
+      ]
+    },
+    {
+      "type": "el-select",
+      "prop": "role",
+      "label": "角色",
+      "attrs": {},
+      "options": [      
+        { "label": "管理员", "value": "admin" },
+        { "label": "用户", "value": "user" }
+      ],
+      "events": {         
+        "change": "onRoleChange"   
+      }
+    },
+    {
+      "type": "el-switch",
+      "prop": "isEnabled",
+      "label": "启用状态",
+      "attrs": {
+        "active-text": "开启",
+        "inactive-text": "关闭"
+      }
+    }
+  ]
+}

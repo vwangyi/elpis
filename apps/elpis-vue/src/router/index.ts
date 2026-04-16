@@ -15,6 +15,41 @@ export const routes = [
     }
   },
   {
+    path: '/files-upload',
+    name: 'FilesUpload',
+    component: () =>
+      import(
+        /* webpackChunkName: "FilesUpload" */ '@/pages/FilesUpload/FilesUpload.vue'
+      ),
+    meta: {
+      title: '大文件上传'
+    }
+  },
+
+  {
+    path: '/low-code-platform',
+    name: 'LowCodePlatform',
+    component: () =>
+      import(
+        /* webpackChunkName: "LowCodePlatform" */ '@/pages/LowCodePlatform/LowCodePlatform.vue'
+      ),
+    meta: {
+      title: '低代码'
+    }
+  },
+
+  {
+    path: '/memory-leak',
+    name: 'MemoryLeak',
+    component: () =>
+      import(
+        /* webpackChunkName: "MemoryLeak" */ '@/pages/MemoryLeak/MemoryLeak.vue'
+      ),
+    meta: {
+      title: '内存泄露'
+    }
+  },
+  {
     path: '/video-view',
     name: 'VideoView',
     component: () =>

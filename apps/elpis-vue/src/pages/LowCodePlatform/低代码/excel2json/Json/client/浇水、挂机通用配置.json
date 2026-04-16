@@ -1,0 +1,18 @@
+{
+	"lazConfig": {
+		"kettleMaxNum": 1000000,
+		"kettleFullNum": 10000,
+		"prompteHandClickTime": 15,
+		"handClickkettleTime": 5,
+		"singleWaterNum": 100,
+		"hangupWaterClearTime": "12:00:00 AM",
+		"hangupWaterTotal": 3500,
+		"hangupSigleWater": 500,
+		"gainMatureNum": "15",
+		"maxPlantLevel": "48",
+		"levelRuleGroupNum": "3",
+		"riskUserWaterNum": "1000000",
+		"showProgreeLevel": "41",
+		"sealcontrolCheckList": "[14]"
+	}
+}
