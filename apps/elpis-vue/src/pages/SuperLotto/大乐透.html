@@ -1,485 +1,517 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎰 大乐透随机选号 · 生成器</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        body {
-            background: linear-gradient(145deg, #0b1a2e 0%, #1a2f3f 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
-            padding: 16px;
-            margin: 0;
-        }
+      body {
+        background: linear-gradient(145deg, #0b1a2e 0%, #1a2f3f 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family:
+          'Segoe UI',
+          Roboto,
+          system-ui,
+          -apple-system,
+          sans-serif;
+        padding: 16px;
+        margin: 0;
+      }
 
+      .lottery-card {
+        background: rgba(255, 255, 255, 0.07);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        border-radius: 48px;
+        padding: 32px 28px;
+        max-width: 680px;
+        width: 100%;
+        box-shadow:
+          0 30px 50px rgba(0, 0, 0, 0.7),
+          0 0 0 2px rgba(210, 180, 140, 0.1) inset;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .header h1 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        letter-spacing: 2px;
+        background: linear-gradient(135deg, #f9e084, #ffc107, #f1c40f);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow: 0 0 10px #ff9900aa;
+        margin-bottom: 6px;
+      }
+
+      .header p {
+        color: #9bb7d4;
+        font-size: 1rem;
+        font-weight: 400;
+        border-top: 1px dashed #3a506c;
+        padding-top: 12px;
+        margin-top: 8px;
+      }
+
+      .number-panel {
+        background: #0d1b28;
+        border-radius: 100px;
+        padding: 28px 18px;
+        margin-bottom: 30px;
+        border: 1px solid #546e7a;
+        box-shadow:
+          inset 0 4px 8px #00000055,
+          0 15px 20px #00000033;
+      }
+
+      .section-label {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        color: #cfddee;
+        font-weight: 500;
+        letter-spacing: 1px;
+        margin-bottom: 12px;
+        padding-left: 12px;
+      }
+
+      .section-label span {
+        background: #ffc107;
+        color: #0a1c2c;
+        font-weight: bold;
+        font-size: 0.8rem;
+        padding: 5px 14px;
+        border-radius: 40px;
+        text-transform: uppercase;
+      }
+
+      .ball-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 12px 18px;
+        padding: 8px 0 16px 0;
+      }
+
+      .ball {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        font-weight: 700;
+        background: radial-gradient(circle at 30% 30%, #ffffff, #ececec);
+        color: #1f2c3a;
+        box-shadow:
+          0 8px 0 #999,
+          0 14px 18px #00000055,
+          0 0 0 3px #f7eac6 inset;
+        transition: transform 0.1s ease;
+      }
+
+      .ball-front {
+        background: radial-gradient(circle at 30% 30%, #fff4cf, #ffb347);
+        color: #221c0f;
+        box-shadow:
+          0 8px 0 #b36200,
+          0 14px 18px #00000055,
+          0 0 0 3px #ffdd99 inset;
+      }
+
+      .ball-back {
+        background: radial-gradient(circle at 30% 30%, #c7e5fc, #4a9eff);
+        color: #002b4e;
+        box-shadow:
+          0 8px 0 #145a9e,
+          0 14px 18px #00000055,
+          0 0 0 3px #b8dcff inset;
+      }
+
+      .separator-icon {
+        font-size: 2.2rem;
+        color: #f1c40f;
+        opacity: 0.8;
+        font-weight: 300;
+        margin: 0 6px;
+        text-shadow: 0 0 6px gold;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 25px;
+        flex-wrap: wrap;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 60px;
+        padding: 16px 40px;
+        font-size: 1.3rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        background: #30455b;
+        color: #e9f2fa;
+        cursor: pointer;
+        transition: 0.15s;
+        border: 1px solid #6a8faa;
+        box-shadow:
+          0 10px 0 #15232e,
+          0 6px 16px black;
+        flex: 0 1 auto;
+        min-width: 200px;
+      }
+
+      .btn-generate {
+        background: linear-gradient(145deg, #f0b514, #d18d00);
+        color: #171b1f;
+        border-color: #ffdb8e;
+        box-shadow:
+          0 10px 0 #7e5200,
+          0 6px 16px black;
+        font-size: 1.4rem;
+      }
+
+      .btn:active {
+        transform: translateY(6px);
+        box-shadow:
+          0 4px 0 #15232e,
+          0 6px 16px black;
+      }
+
+      .btn-generate:active {
+        box-shadow:
+          0 4px 0 #7e5200,
+          0 6px 16px black;
+      }
+
+      .history-area {
+        margin-top: 32px;
+        background: #09161ecc;
+        border-radius: 60px;
+        padding: 20px 18px;
+        border: 1px solid #4d6b7c;
+        text-align: center;
+        backdrop-filter: blur(4px);
+      }
+
+      .history-title {
+        color: #b2cce6;
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .history-badge {
+        background: #2f4b5c;
+        padding: 4px 12px;
+        border-radius: 30px;
+        font-size: 0.8rem;
+      }
+
+      #historyList {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 140px;
+        overflow-y: auto;
+        padding-right: 6px;
+        color: #aac7df;
+        font-family: 'Fira Code', monospace;
+        font-size: 1.1rem;
+      }
+
+      .history-item {
+        background: #0b222e;
+        padding: 6px 12px;
+        border-radius: 40px;
+        border-left: 5px solid #ffc107;
+        text-align: left;
+        display: flex;
+        gap: 10px;
+        box-shadow: inset 0 1px 4px #00000077;
+      }
+
+      .history-number {
+        font-weight: 600;
+        color: #fade85;
+      }
+
+      footer {
+        color: #5b7990;
+        font-size: 0.8rem;
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      /* 小屏适配 */
+      @media (max-width: 520px) {
         .lottery-card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 48px;
-            padding: 32px 28px;
-            max-width: 680px;
-            width: 100%;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7), 0 0 0 2px rgba(210, 180, 140, 0.1) inset;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            font-size: 2.2rem;
-            font-weight: 600;
-            letter-spacing: 2px;
-            background: linear-gradient(135deg, #f9e084, #ffc107, #f1c40f);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 10px #ff9900aa;
-            margin-bottom: 6px;
-        }
-
-        .header p {
-            color: #9bb7d4;
-            font-size: 1rem;
-            font-weight: 400;
-            border-top: 1px dashed #3a506c;
-            padding-top: 12px;
-            margin-top: 8px;
-        }
-
-        .number-panel {
-            background: #0d1b28;
-            border-radius: 100px;
-            padding: 28px 18px;
-            margin-bottom: 30px;
-            border: 1px solid #546e7a;
-            box-shadow: inset 0 4px 8px #00000055, 0 15px 20px #00000033;
-        }
-
-        .section-label {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            color: #cfddee;
-            font-weight: 500;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            padding-left: 12px;
-        }
-
-        .section-label span {
-            background: #ffc107;
-            color: #0a1c2c;
-            font-weight: bold;
-            font-size: 0.8rem;
-            padding: 5px 14px;
-            border-radius: 40px;
-            text-transform: uppercase;
-        }
-
-        .ball-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 12px 18px;
-            padding: 8px 0 16px 0;
+          padding: 20px 16px;
         }
 
         .ball {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 700;
-            background: radial-gradient(circle at 30% 30%, #ffffff, #ececec);
-            color: #1f2c3a;
-            box-shadow: 0 8px 0 #999, 0 14px 18px #00000055, 0 0 0 3px #f7eac6 inset;
-            transition: transform 0.1s ease;
-        }
-
-        .ball-front {
-            background: radial-gradient(circle at 30% 30%, #fff4cf, #ffb347);
-            color: #221c0f;
-            box-shadow: 0 8px 0 #b36200, 0 14px 18px #00000055, 0 0 0 3px #ffdd99 inset;
-        }
-
-        .ball-back {
-            background: radial-gradient(circle at 30% 30%, #c7e5fc, #4a9eff);
-            color: #002b4e;
-            box-shadow: 0 8px 0 #145a9e, 0 14px 18px #00000055, 0 0 0 3px #b8dcff inset;
-        }
-
-        .separator-icon {
-            font-size: 2.2rem;
-            color: #f1c40f;
-            opacity: 0.8;
-            font-weight: 300;
-            margin: 0 6px;
-            text-shadow: 0 0 6px gold;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 25px;
-            flex-wrap: wrap;
+          width: 52px;
+          height: 52px;
+          font-size: 1.5rem;
         }
 
         .btn {
-            border: none;
-            border-radius: 60px;
-            padding: 16px 40px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: #30455b;
-            color: #e9f2fa;
-            cursor: pointer;
-            transition: 0.15s;
-            border: 1px solid #6a8faa;
-            box-shadow: 0 10px 0 #15232e, 0 6px 16px black;
-            flex: 0 1 auto;
-            min-width: 200px;
+          padding: 12px 24px;
+          font-size: 1.1rem;
+          min-width: 160px;
         }
-
-        .btn-generate {
-            background: linear-gradient(145deg, #f0b514, #d18d00);
-            color: #171b1f;
-            border-color: #ffdb8e;
-            box-shadow: 0 10px 0 #7e5200, 0 6px 16px black;
-            font-size: 1.4rem;
-        }
-
-        .btn:active {
-            transform: translateY(6px);
-            box-shadow: 0 4px 0 #15232e, 0 6px 16px black;
-        }
-
-        .btn-generate:active {
-            box-shadow: 0 4px 0 #7e5200, 0 6px 16px black;
-        }
-
-        .history-area {
-            margin-top: 32px;
-            background: #09161ecc;
-            border-radius: 60px;
-            padding: 20px 18px;
-            border: 1px solid #4d6b7c;
-            text-align: center;
-            backdrop-filter: blur(4px);
-        }
-
-        .history-title {
-            color: #b2cce6;
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .history-badge {
-            background: #2f4b5c;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-        }
-
-        #historyList {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 140px;
-            overflow-y: auto;
-            padding-right: 6px;
-            color: #aac7df;
-            font-family: 'Fira Code', monospace;
-            font-size: 1.1rem;
-        }
-
-        .history-item {
-            background: #0b222e;
-            padding: 6px 12px;
-            border-radius: 40px;
-            border-left: 5px solid #ffc107;
-            text-align: left;
-            display: flex;
-            gap: 10px;
-            box-shadow: inset 0 1px 4px #00000077;
-        }
-
-        .history-number {
-            font-weight: 600;
-            color: #fade85;
-        }
-
-        footer {
-            color: #5b7990;
-            font-size: 0.8rem;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        /* 小屏适配 */
-        @media (max-width: 520px) {
-            .lottery-card {
-                padding: 20px 16px;
-            }
-
-            .ball {
-                width: 52px;
-                height: 52px;
-                font-size: 1.5rem;
-            }
-
-            .btn {
-                padding: 12px 24px;
-                font-size: 1.1rem;
-                min-width: 160px;
-            }
-        }
+      }
     </style>
+  </head>
 
-</head>
-
-<body>
+  <body>
     <div class="lottery-card">
-        <div class="header">
-            <h1>⚡ 超级大乐透 ⚡</h1>
-            <p>前区 01·35 &nbsp;&nbsp;|&nbsp;&nbsp; 后区 01·12</p>
+      <div class="header">
+        <h1>⚡ 超级大乐透 ⚡</h1>
+        <p>前区 01·35 &nbsp;&nbsp;|&nbsp;&nbsp; 后区 01·12</p>
+      </div>
+
+      <!-- 主显示区：当前生成的号码 -->
+      <div class="number-panel" id="currentNumbers">
+        <div class="section-label">
+          <span>🏆 前区</span>
+          <span style="background: #2d5f7e; color: white">5个 · 不重复</span>
+        </div>
+        <div class="ball-container" id="frontArea">
+          <!-- 动态填充 front balls -->
         </div>
 
-        <!-- 主显示区：当前生成的号码 -->
-        <div class="number-panel" id="currentNumbers">
-            <div class="section-label">
-                <span>🏆 前区</span>
-                <span style="background:#2d5f7e; color:white;">5个 · 不重复</span>
-            </div>
-            <div class="ball-container" id="frontArea">
-                <!-- 动态填充 front balls -->
-            </div>
-
-            <div class="section-label" style="margin-top: 6px;">
-                <span>⭐ 后区</span>
-                <span style="background:#2d5f7e; color:white;">2个 · 不重复</span>
-            </div>
-            <div class="ball-container" id="backArea">
-                <!-- 动态填充 back balls -->
-            </div>
+        <div class="section-label" style="margin-top: 6px">
+          <span>⭐ 后区</span>
+          <span style="background: #2d5f7e; color: white">2个 · 不重复</span>
         </div>
-
-        <!-- 按钮组 -->
-        <div class="action-buttons">
-            <button class="btn btn-generate" id="generateBtn">
-                <span>🎲</span> 摇一注
-            </button>
-            <button class="btn" id="resetHistoryBtn">
-                <span>🧹</span> 清空记录
-            </button>
+        <div class="ball-container" id="backArea">
+          <!-- 动态填充 back balls -->
         </div>
+      </div>
 
-        <!-- 历史记录 (选号记录) -->
-        <div class="history-area">
-            <div class="history-title">
-                <span>📋 最近选号</span>
-                <span class="history-badge" id="historyCount">0</span>
-            </div>
-            <div id="historyList">
-                <!-- 历史条目会出现在这里 -->
-                <div style="color:#4f6579; padding:12px;">点击「摇一注」开始记录</div>
-            </div>
+      <!-- 按钮组 -->
+      <div class="action-buttons">
+        <button class="btn btn-generate" id="generateBtn">
+          <span>🎲</span> 摇一注
+        </button>
+        <button class="btn" id="resetHistoryBtn">
+          <span>🧹</span> 清空记录
+        </button>
+      </div>
+
+      <!-- 历史记录 (选号记录) -->
+      <div class="history-area">
+        <div class="history-title">
+          <span>📋 最近选号</span>
+          <span class="history-badge" id="historyCount">0</span>
         </div>
-        <footer>随机生成 · 仅供娱乐</footer>
+        <div id="historyList">
+          <!-- 历史条目会出现在这里 -->
+          <div style="color: #4f6579; padding: 12px">
+            点击「摇一注」开始记录
+          </div>
+        </div>
+      </div>
+      <footer>随机生成 · 仅供娱乐</footer>
     </div>
 
     <script>
-        (function () {
-            // ---------- 工具函数：生成前区 01-35 不重复5个 ----------
-            function generateFront() {
-                const numbers = new Set();
-                while (numbers.size < 5) {
-                    const rand = Math.floor(Math.random() * 35) + 1;  // 1-35
-                    numbers.add(rand);
-                }
-                // 转为排序后的数组 (从小到大, 更符合观感)
-                const sorted = Array.from(numbers).sort((a, b) => a - b);
-                // 格式化为两位字符串
-                return sorted.map(num => num.toString().padStart(2, '0'));
-            }
+      (function () {
+        // ---------- 工具函数：生成前区 01-35 不重复5个 ----------
+        function generateFront() {
+          const numbers = new Set();
+          while (numbers.size < 5) {
+            const rand = Math.floor(Math.random() * 35) + 1; // 1-35
+            numbers.add(rand);
+          }
+          // 转为排序后的数组 (从小到大, 更符合观感)
+          const sorted = Array.from(numbers).sort((a, b) => a - b);
+          // 格式化为两位字符串
+          return sorted.map(num => num.toString().padStart(2, '0'));
+        }
 
-            // ---------- 后区 01-12 不重复2个 ----------
-            function generateBack() {
-                const numbers = new Set();
-                while (numbers.size < 2) {
-                    const rand = Math.floor(Math.random() * 12) + 1;  // 1-12
-                    numbers.add(rand);
-                }
-                const sorted = Array.from(numbers).sort((a, b) => a - b);
-                return sorted.map(num => num.toString().padStart(2, '0'));
-            }
+        // ---------- 后区 01-12 不重复2个 ----------
+        function generateBack() {
+          const numbers = new Set();
+          while (numbers.size < 2) {
+            const rand = Math.floor(Math.random() * 12) + 1; // 1-12
+            numbers.add(rand);
+          }
+          const sorted = Array.from(numbers).sort((a, b) => a - b);
+          return sorted.map(num => num.toString().padStart(2, '0'));
+        }
 
-            // ---------- 组合成一注完整对象 ----------
-            function generateTicket() {
-                return {
-                    front: generateFront(),
-                    back: generateBack()
-                };
-            }
+        // ---------- 组合成一注完整对象 ----------
+        function generateTicket() {
+          return {
+            front: generateFront(),
+            back: generateBack()
+          };
+        }
 
-            // ---------- 渲染当前号码到面板 ----------
-            const frontContainer = document.getElementById('frontArea');
-            const backContainer = document.getElementById('backArea');
-            const historyListEl = document.getElementById('historyList');
-            const historyCountSpan = document.getElementById('historyCount');
+        // ---------- 渲染当前号码到面板 ----------
+        const frontContainer = document.getElementById('frontArea');
+        const backContainer = document.getElementById('backArea');
+        const historyListEl = document.getElementById('historyList');
+        const historyCountSpan = document.getElementById('historyCount');
 
-            // 存储历史记录 (最多10条)
-            let historyTickets = [];
+        // 存储历史记录 (最多10条)
+        let historyTickets = [];
 
-            // 渲染指定票到主区域
-            function renderTicket(ticket) {
-                // 清空容器
-                frontContainer.innerHTML = '';
-                backContainer.innerHTML = '';
+        // 渲染指定票到主区域
+        function renderTicket(ticket) {
+          // 清空容器
+          frontContainer.innerHTML = '';
+          backContainer.innerHTML = '';
 
-                // 渲染前区5个球
-                ticket.front.forEach((num, index) => {
-                    const ball = document.createElement('div');
-                    ball.className = `ball ball-front`;   // 前区金色风格
-                    ball.textContent = num;
-                    // 加一点延迟动画 (可选)
-                    ball.style.animation = `popIn 0.2s ease ${index * 0.05}s both`;
-                    frontContainer.appendChild(ball);
-                });
+          // 渲染前区5个球
+          ticket.front.forEach((num, index) => {
+            const ball = document.createElement('div');
+            ball.className = `ball ball-front`; // 前区金色风格
+            ball.textContent = num;
+            // 加一点延迟动画 (可选)
+            ball.style.animation = `popIn 0.2s ease ${index * 0.05}s both`;
+            frontContainer.appendChild(ball);
+          });
 
-                // 后区2个球
-                ticket.back.forEach((num, index) => {
-                    const ball = document.createElement('div');
-                    ball.className = `ball ball-back`;    // 后区蓝色风格
-                    ball.textContent = num;
-                    ball.style.animation = `popIn 0.2s ease ${index * 0.07 + 0.2}s both`;
-                    backContainer.appendChild(ball);
-                });
-            }
+          // 后区2个球
+          ticket.back.forEach((num, index) => {
+            const ball = document.createElement('div');
+            ball.className = `ball ball-back`; // 后区蓝色风格
+            ball.textContent = num;
+            ball.style.animation = `popIn 0.2s ease ${index * 0.07 + 0.2}s both`;
+            backContainer.appendChild(ball);
+          });
+        }
 
-            // 添加简单动画keyframe (若没有则动态创建)
-            if (!document.getElementById('popKeyframes')) {
-                const style = document.createElement('style');
-                style.id = 'popKeyframes';
-                style.innerHTML = `
+        // 添加简单动画keyframe (若没有则动态创建)
+        if (!document.getElementById('popKeyframes')) {
+          const style = document.createElement('style');
+          style.id = 'popKeyframes';
+          style.innerHTML = `
                     @keyframes popIn {
                         0% { transform: scale(0.6); opacity: 0.2; }
                         80% { transform: scale(1.08); }
                         100% { transform: scale(1); opacity: 1; }
                     }
                 `;
-                document.head.appendChild(style);
-            }
+          document.head.appendChild(style);
+        }
 
-            // 更新历史记录UI
-            function updateHistoryUI() {
-                if (historyTickets.length === 0) {
-                    historyListEl.innerHTML = `<div style="color:#4f6579; padding:12px;">✨ 点击「摇一注」开始记录</div>`;
-                    historyCountSpan.textContent = '0';
-                    return;
-                }
+        // 更新历史记录UI
+        function updateHistoryUI() {
+          if (historyTickets.length === 0) {
+            historyListEl.innerHTML = `<div style="color:#4f6579; padding:12px;">✨ 点击「摇一注」开始记录</div>`;
+            historyCountSpan.textContent = '0';
+            return;
+          }
 
-                // 构建历史条目 (最多展示10条, 倒序: 最新的在上)
-                const reversed = [...historyTickets].reverse();
-                historyListEl.innerHTML = reversed.map(ticket => {
-                    const frontStr = ticket.front.join(' · ');
-                    const backStr = ticket.back.join(' · ');
-                    return `<div class="history-item">
+          // 构建历史条目 (最多展示10条, 倒序: 最新的在上)
+          const reversed = [...historyTickets].reverse();
+          historyListEl.innerHTML = reversed
+            .map(ticket => {
+              const frontStr = ticket.front.join(' · ');
+              const backStr = ticket.back.join(' · ');
+              return `<div class="history-item">
                         <span class="history-number">🎯</span>
                         <span>【前】${frontStr}  ｜  【后】${backStr}</span>
                     </div>`;
-                }).join('');
+            })
+            .join('');
 
-                historyCountSpan.textContent = historyTickets.length;
-            }
+          historyCountSpan.textContent = historyTickets.length;
+        }
 
-            // 新增一注 (生成并加入历史)
-            function addNewTicket() {
-                const newTicket = generateTicket();
-                renderTicket(newTicket);
+        // 新增一注 (生成并加入历史)
+        function addNewTicket() {
+          const newTicket = generateTicket();
+          renderTicket(newTicket);
 
-                // 存入历史 (最多保留10条)
-                historyTickets.push(newTicket);
-                if (historyTickets.length > 10) {
-                    historyTickets.shift(); // 移除最早的一条
-                }
-                updateHistoryUI();
-            }
+          // 存入历史 (最多保留10条)
+          historyTickets.push(newTicket);
+          if (historyTickets.length > 10) {
+            historyTickets.shift(); // 移除最早的一条
+          }
+          updateHistoryUI();
+        }
 
-            // 重置历史
-            function resetHistory() {
-                historyTickets = [];
-                updateHistoryUI();
-                // 重置后重新生成一注默认占位 (或者保留之前那注? 这里再随机一注让面板不空)
-                const freshTicket = generateTicket();
-                renderTicket(freshTicket);
-                // 注意: 按照习惯, 重置历史不应该自动把这一条加进去, 所以不能push
-                // 但主面板需要显示新号码, 上面已render, 没问题。
-                // 如果你希望重置后立刻把当前这注也保存? 多数清空逻辑是仅仅清空记录, 不改变当前号码。但当前号码也需要有。我们已经render了fresh。
-                // 为了体验更好: 让重置后的第一条“摇一注”再开始记录。
-                // 目前重置不清除主面板, 但会清除历史。fine.
-            }
+        // 重置历史
+        function resetHistory() {
+          historyTickets = [];
+          updateHistoryUI();
+          // 重置后重新生成一注默认占位 (或者保留之前那注? 这里再随机一注让面板不空)
+          const freshTicket = generateTicket();
+          renderTicket(freshTicket);
+          // 注意: 按照习惯, 重置历史不应该自动把这一条加进去, 所以不能push
+          // 但主面板需要显示新号码, 上面已render, 没问题。
+          // 如果你希望重置后立刻把当前这注也保存? 多数清空逻辑是仅仅清空记录, 不改变当前号码。但当前号码也需要有。我们已经render了fresh。
+          // 为了体验更好: 让重置后的第一条“摇一注”再开始记录。
+          // 目前重置不清除主面板, 但会清除历史。fine.
+        }
 
-            // ---------- 初始化: 加载第一注随机号码(不自动加入历史，为了让用户先看到一组号) ----------
-            (function init() {
-                // 首次加载生成一组默认号码渲染，但不存入history
-                const initialTicket = generateTicket();
-                renderTicket(initialTicket);
-                // 历史记录为空
-                historyTickets = [];
-                updateHistoryUI();
-            })();
-
-            // ---------- 绑定事件 ----------
-            document.getElementById('generateBtn').addEventListener('click', () => {
-                addNewTicket();
-            });
-
-            document.getElementById('resetHistoryBtn').addEventListener('click', () => {
-                resetHistory();
-            });
-
-            // (可选) 增加键盘快捷键: 空格生成新一注 (无障碍)
-            window.addEventListener('keydown', (e) => {
-                if (e.code === 'Space' && !e.repeat && document.activeElement?.tagName !== 'BUTTON') {
-                    e.preventDefault();  // 避免页面滚动
-                    addNewTicket();
-                }
-            });
-
+        // ---------- 初始化: 加载第一注随机号码(不自动加入历史，为了让用户先看到一组号) ----------
+        (function init() {
+          // 首次加载生成一组默认号码渲染，但不存入history
+          const initialTicket = generateTicket();
+          renderTicket(initialTicket);
+          // 历史记录为空
+          historyTickets = [];
+          updateHistoryUI();
         })();
+
+        // ---------- 绑定事件 ----------
+        document.getElementById('generateBtn').addEventListener('click', () => {
+          addNewTicket();
+        });
+
+        document
+          .getElementById('resetHistoryBtn')
+          .addEventListener('click', () => {
+            resetHistory();
+          });
+
+        // (可选) 增加键盘快捷键: 空格生成新一注 (无障碍)
+        window.addEventListener('keydown', e => {
+          if (
+            e.code === 'Space' &&
+            !e.repeat &&
+            document.activeElement?.tagName !== 'BUTTON'
+          ) {
+            e.preventDefault(); // 避免页面滚动
+            addNewTicket();
+          }
+        });
+      })();
     </script>
 
     <script src="./大乐透.js"></script>
-</body>
-
+  </body>
 </html>
