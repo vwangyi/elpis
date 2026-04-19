@@ -45,7 +45,7 @@ import { store } from './store.js'
 
 
 
-## 数据层 DO（Data Object）
+## 数据层DO(Data Object)
 - 数据层，和数据库表一一对应，无业务逻辑，纯数据载体
 - ✅ 与数据库表结构完全对应
 - ✅ 包含所有字段（包括逻辑删除、创建时间等）
@@ -53,14 +53,14 @@ import { store } from './store.js'
 - ❌ 不暴露给前端
 
 
-## 业务层 BO（Business Object）
+## 业务层BO(Business Object)
 - 业务层，封装业务逻辑，可组合多个数据层
 - ✅ 聚合多个数据层DO 的数据
 - ✅ 包含业务逻辑和方法
 - ✅ 领域驱动设计（DDD）中的实体
 - ✅ 内部使用，不直接暴露
  
-## 传输层 DTO（Data Transfer Object）
+## 传输层DTO(Data Transfer Object)
 - 传输层，前后端数据传输
 - ✅ 用于接口参数和返回值
 - ✅ 可能包含多个 数据层/业务层 BO/DO 的聚合数据
@@ -69,7 +69,7 @@ import { store } from './store.js'
 - ✅ 字段名更友好，可能重命名
 
 
- ## 视图层（View Object）
+ ## 视图层VO(View Object)
 - 视图层，前端展示数据，与UI强相关
 - ✅ 专为前端展示优化
 - ✅ 包含格式化后的数据
@@ -81,8 +81,8 @@ import { store } from './store.js'
  
 
 
-## 321
-- 数据层 ⇄ 业务层 ⇄ 传输层 ⇄ 视图层
+## 总结
+- 数据层DO ⇄ 业务层BO ⇄ 传输层DTO ⇄ 视图层VO
 ```js 
 前端常做：
 

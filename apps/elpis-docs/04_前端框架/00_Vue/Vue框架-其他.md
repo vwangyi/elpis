@@ -75,18 +75,7 @@
 
      v-on .stop.prevent.self.capture.once.passive  按键修饰符.enter.tab.delete 系统按键修饰符.ctrl.alt.shift.meta 鼠标按键修饰符.left.right.middle
 
-## vue 的样式穿透
-修改 样式穿透 最终法宝 拿dom 修改样式
 
-样式穿透 
-
-/deep/ .home {  }
-
-:deep(.home) {  }
-
-::v-deep .home {  } 
-
-终极方案 操作原生DOM 解决样式问题
 
 ## 手写自定义指令
 ## 通过ref属性打标记

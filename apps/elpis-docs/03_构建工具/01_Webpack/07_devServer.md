@@ -10,37 +10,28 @@
 module.exports = {
   mode: "development", // devServer只能开发环境使用
   devServer: {
+    port: 8080,
+    open: true,
+    hot: true,
+    compress: true,
+    host: 'localhost',
     static: {
-      directory: path.join(__dirname, "../app/public"),
+      directory: path.resolve(rootPath, './dist')
     },
-    compress: true, // 开启gzip压缩
-    port: 8081, // 指定端口号
-    host: "localhost", // 指定ip地址
-    open: true, // 自动打开浏览器
-    hot: true, // 热更新 开启HMR 搜索vue或react对应的热更新插件配置
-    contentBase: path.resolve(__dirname, "dist"),
-    historyApiFallback: true, // 支持HTML5 History API  解决开发环境刷新404问题 生产环境用nginx配置解决
     client: {
-      progress: true,
-      overlay: {
-        errors: true,
-        warnings: false,
-      },
+      overlay: true,
+      progress: true
     },
-    proxy: {
-      "/api": {
-        target: "https://192.168.21.21:4000", // 后端真实服务器ip
-        pathRewrite: {
-          "^/api": "",
-        },
-      },
-      "/api1": {
-        target: "www.baidu.com:4000",
-        pathRewrite: {
-          "^/api1": "",
-        },
-      },
-    },
+    proxy: [
+      {
+        context: ['/api'], // 注意：属性名从 key 改为 context 数组
+        target: 'http://localhost:3002',
+        changeOrigin: true
+      }
+    ],
+    // SPA 路由支持
+    historyApiFallback: true,
+
     onListening(devServer) {
       setTimeout(() => {
         console.clear();

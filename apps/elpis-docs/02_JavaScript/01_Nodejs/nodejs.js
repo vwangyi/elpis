@@ -30,14 +30,23 @@
 
 
 
-const now = Temporal.Now.instant();
-const birthday = Temporal.PlainDate.from('2024-01-15');
-const meeting = Temporal.ZonedDateTime.from('2024-12-25T10:30:00[Asia/Shanghai]');
+// const now = Temporal.Now.instant();
+// const birthday = Temporal.PlainDate.from('2024-01-15');
+// const meeting = Temporal.ZonedDateTime.from('2024-12-25T10:30:00[Asia/Shanghai]');
 
-// 人性化的时间运算
-const nextWeek = now.add({ days: 7 });
-const projectDeadline = meeting.add({ hours: 2, minutes: 30 });
+// // 人性化的时间运算
+// const nextWeek = now.add({ days: 7 });
+// const projectDeadline = meeting.add({ hours: 2, minutes: 30 });
 
-// 时间段计算
-const vacation = Temporal.Duration.from({ days: 10 });
-const returnDate = now.add(vacation);
+// // 时间段计算
+// const vacation = Temporal.Duration.from({ days: 10 });
+// const returnDate = now.add(vacation);
+
+// import path from 'path';
+
+const path = require('path');
+
+console.log(globalThis.process === process)
+
+console.log(this === module.exports)
+

@@ -90,16 +90,40 @@ export default defineConfig({
     sidebar: {
       "/02_JavaScript/": [
         {
-          text: "宿主环境",
+          text: "Nodejs",
           items: [
             {
               text: "Nodejs",
               link: "/02_JavaScript/01_Nodejs/index.md"
-            }, 
+            },
             {
-              text: "Chrome",
-              link: ""
-            }, 
+              text: "globalThis",
+              link: "/02_JavaScript/01_Nodejs/01_globalThis全局对象.md"
+            },
+            {
+              text: "path路径模块",
+              link: "/02_JavaScript/01_Nodejs/01_path.md"
+            },
+            {
+              text: "fs文件系统模块",
+              link: "/02_JavaScript/01_Nodejs/02_fs文件系统模块.md"
+            },
+            {
+              text: "包管理器",
+              link: "/02_JavaScript/01_Nodejs/03_包管理器.md"
+            },
+            {
+              text: "pageage.json",
+              link: "/02_JavaScript/01_Nodejs/04_pageage.json.md"
+            },
+            {
+              text: "发布npm包",
+              link: "/02_JavaScript/01_Nodejs/05_发布npm包.md"
+            },
+            {
+              text: "模块化",
+              link: "/02_JavaScript/01_Nodejs/06_模块化.md"
+            },
           ]
         },
         {
@@ -253,7 +277,7 @@ export default defineConfig({
         {
           text: "SpringMVC架构",
           link: "/05_后端框架/01_Koa/04_SpringMVC架构.md",
-        }, 
+        },
       ],
       "/04_前端框架/": [
         {
@@ -378,6 +402,11 @@ export default defineConfig({
               text: "25_v-model",
               link: "/04_前端框架/00_Vue/25_v-model.md"
             },
+            {
+              text: "样式穿透",
+              link: "/04_前端框架/00_Vue/27_样式穿透.md"
+            },
+
           ]
         },
         // {

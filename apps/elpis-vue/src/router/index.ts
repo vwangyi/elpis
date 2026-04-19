@@ -116,6 +116,17 @@ export const routes = [
     }
   },
   {
+    path: '/super-lotto',
+    name: 'SuperLotto',
+    component: () =>
+      import(
+        /* webpackChunkName: "SuperLotto" */ '@/pages/SuperLotto/SuperLotto.vue'
+      ),
+    meta: {
+      title: '大乐透'
+    }
+  },
+  {
     path: '/multi-spec-goods',
     name: 'MultiSpecGoods',
     component: () =>

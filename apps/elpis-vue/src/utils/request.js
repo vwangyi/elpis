@@ -34,9 +34,9 @@ async function request(url, config = {}) {
     if (res.data.success !== true) {
       message.error(res.data.message || '业务失败');
     }
-    if (res.data.success === true) {
-      message.success(res.data.message || '业务成功');
-    }
+    // if (res.data.success === true) {
+    //   message.success(res.data.message || '业务成功');
+    // }
     // res.data才是后端给的数据 res其他数据均为axios附加数据
     return Promise.resolve(res.data);
   } catch (err) {

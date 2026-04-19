@@ -24,7 +24,7 @@ module.exports = merge(baseConfig, {
     proxy: [
       {
         context: ['/api'], // 注意：属性名从 key 改为 context 数组
-        target: 'http://localhost:3002',
+        target: 'http://localhost:2009',
         changeOrigin: true
       }
     ],

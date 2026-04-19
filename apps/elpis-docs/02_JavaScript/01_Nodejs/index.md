@@ -1,11 +1,18 @@
 # Nodejs
-- node官网：https://nodejs.org/zh-cn 
+- Nodejs官网：https://nodejs.org/zh-cn 
 
-- Nodejs是JavaScript的运行时环境。
+- Nodejs是一个基于V8引擎的JavaScript运行时环境。
  
-## Nodejs环境api >>>> path 
+## path模块
 ```js
 const path = require('path');
+const path = require('node:path');
+import path from 'path';
+```
+
+## fs文件系统模块
+```js
+
 ```
 ## Nodejs
 ```js 
