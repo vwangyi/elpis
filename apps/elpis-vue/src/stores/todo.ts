@@ -5,8 +5,13 @@ import type { Todo } from '@/types/todo';
 
 /* todo模块 */
 export const useTodoStore = defineStore('todo', () => {
+  const todoInp = ref<string>('');
   const todoList = ref<Todo[]>([]);
   const todoTotal = ref<number>(0);
+
+  function updateTodoInp(val: string) {
+    todoInp.value = val;
+  }
 
   async function createTodo(data: Todo) {
     const vto = await todoAPI.createTodo(data);
@@ -21,7 +26,9 @@ export const useTodoStore = defineStore('todo', () => {
   }
 
   return {
+    todoInp,
     todoList,
+    updateTodoInp,
     createTodo,
     findAll
   };

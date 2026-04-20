@@ -5,7 +5,7 @@
     counter.increment();
     counter.increment();
     counter.decrement();
-    console.log(counter.getValue());  // 输出 1
+    counter.getValue();  // 输出 1
  */
 export class Counter {
   count = 0;

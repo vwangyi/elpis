@@ -17,8 +17,6 @@ class UserController {
 
     // 3. 调用 Service 层
     const { list, total } = await userService.getUserList(page, limit);
-    console.log('执行 UserController', list, total);
-
     // 4. 返回统一格式的 JSON
     ctx.body = {
       code: 0,

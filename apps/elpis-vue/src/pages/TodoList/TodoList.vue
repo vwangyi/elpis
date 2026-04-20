@@ -11,16 +11,21 @@ import {
 const todoStore = useTodoStore();
 const activeKey = ref('1');
 const todoList = computed(() => todoStore.todoList);
-const todoInp = ref<string>('');
+
 const checked = ref(false);
+const todoInp = computed({
+  get: () => todoStore.todoInp,
+  set: val => todoStore.updateTodoInp(val)
+});
 
 /* 处理输入框的回车事件 */
 async function handleEnter(e: KeyboardEvent) {
   const target = e.target as HTMLInputElement;
-  const title = target.value.trim();
+  // const title = target.value.trim();
+  const title = todoStore.todoInp.trim();
   const result = await todoStore.createTodo({ title });
   result.message && message.success(result.message);
-  todoInp.value = '';
+  todoStore.updateTodoInp('');
   await todoStore.findAll(1, 10);
 }
 
@@ -38,7 +43,7 @@ onMounted(() => {
     <div class="container">
       <a-input
         class="todo-inp"
-        v-model:value.lazy="todoInp"
+        v-model:value="todoInp"
         autofocus
         placeholder="请输入代办事项"
         @pressEnter="handleEnter"

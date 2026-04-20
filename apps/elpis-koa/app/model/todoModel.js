@@ -20,7 +20,6 @@ class TodoModel extends BaseModel {
   async findAll(pageIndex, pageSize) {
     const sql = `select * from todo where is_delete=0 limit ${(pageIndex - 1) * pageSize},${pageSize}`;
     const [result] = await this.mysql2.execute(sql);
-    console.log('sq', result);
     return result;
   }
 
