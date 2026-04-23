@@ -2,6 +2,9 @@
 
 
 
+- 接收的props数据  在 computed watch template中 可以正确的响应式
+
+
 ## 父组件.vue
 ```vue
 <script setup>
