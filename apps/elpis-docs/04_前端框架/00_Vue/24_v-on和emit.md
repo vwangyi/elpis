@@ -1,4 +1,8 @@
-+ [https://cn.vuejs.org/guide/components/events.html#component-events](https://cn.vuejs.org/guide/components/events.html#component-events)
+# v-on 和 emit
+
+- https://cn.vuejs.org/guide/components/events.html#component-events
+
+ 
 
 
 
@@ -12,8 +16,8 @@ function fn(e, value) {
 
 <template>
   <子组件
-    @some-event="fn($event, 123)"
     @some-event="fn"
+    @some-event="fn($event, '123')"
     @some-event="(e) => fn(e, 123)"
     @some-event.once="fn"
   ></子组件>
@@ -28,13 +32,13 @@ function fn(e, value) {
 const emit = defineEmits(['inFocus', 'submit']) // JS中需要显式接收一下事件 
 
 function buttonClick() {
-  emit('submit', '参数1') // 调用 submit事件
+  emit('submit', '参数1') // js中使用 emit() template中使用 $emit()
 }  
   
 </script>
 
 <template>
-   <!--  模版中 直接调用 父组件传递的事件  -->
+   <!--  模版中 直接使用 $emit    -->
    <div @click="$emit('触发的事件名', '参数1')"></div>
 </template>
 
@@ -56,33 +60,15 @@ export default {
 <div v-on:event="event1"></div>
 <div @event="event1"></div> 
 // 传递的参数名 是一个变量
-<div @[event]="id"></div> 
-
+<div @[event]="id"></div>  
 // 方法名不用() 这函数默认收到一个事件对象
 // 方法名后面加() 事件函数就不会收到事件对象 且收到的值由小括号决定 不传参不要用() 传参就要用()
 <div @click="test"></div>
 <div @click="test($event, 'xx')"></div>
-
-// 原生js
-const btn = document.getElementById('btn')
-btn.onclick = function (e) {
-    console.log('默认收到一个事件对象',e)
-}
-btn.addEventListener('click', function (e) {
-    console.log('默认收到一个事件对象',e)
-})
-
-
-        <button @click="test">test</button> 
-        <button @click.native="test"></button>
-        <button @click.native="test()"></button>
-
-          
-<!-- 
-    v-on="{}"   v-on支持传递对象(不能是字面量对象) 就是批量绑定事件
-  -->
+   
+// v-on支持传递对象进行批量绑定事件 (但不能是字面量对象v-on="{}") 
 <my-div v-on="obj" />
-相当于
+// 相当于
 <my-div @key="obj.key" @key="obj.key" /> 
 
 

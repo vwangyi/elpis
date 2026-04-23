@@ -37,7 +37,17 @@ export const routes = [
       title: '低代码'
     }
   },
-
+  {
+    path: '/antd-table',
+    name: 'AntdTable',
+    component: () =>
+      import(
+        /* webpackChunkName: "AntdTable" */ '@/pages/AntdTable/AntdTable.vue'
+      ),
+    meta: {
+      title: 'Antd 表格'
+    }
+  },
   {
     path: '/memory-leak',
     name: 'MemoryLeak',
