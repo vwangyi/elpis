@@ -1,12 +1,20 @@
+# 组件间通信 
 
 
-### 问：Vue 的组件间通信
 + Vue组件间通信
     - 组件通信，有 父子 兄弟 跨代 全局
     - 父子通信
         * 父子通信 只能传 3个东西 属性 事件 插槽
-        * 属性和事件 用 props和emits 或 $attrs接收
+        * 属性和事件 用 props和emits 或 $attrs接收 ($attrs包含所有事件和属性 用porps和emit接收后 $attrs会自动剔除   )
         * 插槽用 slot标签 或 $slots接收
+        - ref  
+            1. ref 
+
+
+           ref可以向外面抛方法 。 最后注意：少用ref 1. 直接拿组件里面的方法属性 这是不合理的 2.容易打破单向数据流  
+           不建议用 但实际情况只能用那就用  element组件库用的多 antd用的少
+
+        - defineExport 
     - 兄弟通信 
         * eventBus
     - 跨代通信
@@ -16,8 +24,77 @@
 
 
 
+## ref 
+
+- script setup
 ```vue
-$attrs包含所有事件和属性 用porps和emit接收 自动剔除   
+
+```
+- vue3 this 
+```vue
+<script>
+export default {
+  mounted() {
+    for(const key in this.$refs.myInpRef) {
+       this[key] = this.$refs.myInpRef[key]; // 把内部的ref暴露的属性方法 挂载当前实例上 外面拿当前组件的ref就可以拿到内层的ref上的方法
+    }
+  }
+}
+</script>
+<template>
+   <el-input ref="myInpRef"/>
+</template>   
+```
+## defineExport原理
+```vue
+<script setup>
+import { ref, getCurrentInstance } from 'vue';
+
+
+
+// defineExport({}); // 把传递的对象 挂载 当前组件实例的某个属性上   defineExport({}) 等价于 vm.exposed = {}; 
+
+const vm = getCurrentInstance();
+vm.exposed = {}; // 等价于 defineExport({}); 
+</script>
+```
+
+
+## 二次封装
+```vue
+
+<script setup>
+import { ref, getCurrentInstance, h } from 'vue';
+import type { ComponentInstance } from 'vue';
+import { ElInput } from 'element-plus'; 
+/**
+ * 组件二次封装
+ * 1. 属性
+ * 2. 事件
+ * 3. 插槽
+ * 4. 方法
+ * 5. 类型提示 ts 和 文档注释
+ */ 
+const vm = getCurrentInstance();
+function changeRef(exposed) {
+  vm.exposed = exposed;
+}
+
+// 使用defineExpose和 vm.exposed不冲突 因为先执行setup的defineExpose 挂载后（渲染）执行changeRef函数vm.exposed = {}; 最终vm.exposed 生效
+// 这里的defineExpose只是为了加个类型 让调用者有ts提示
+defineExpose({} as ComponentInstance<typeof ElInput>); 
+</script>
+<template>
+   <div>
+    <component :is="h(ElInput, {...$arrts, ref: changeRef }, $slots)" ></component> 
+   </div>
+</template> 
+```
+
+## ---------- 
+
+```vue
+
 <script setup>
 import xixi from './xixi.vue'; 
 </script>
