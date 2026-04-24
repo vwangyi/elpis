@@ -3,10 +3,8 @@
 
 ## 获取最新的github的ip地址
 1. [https://seo.chinaz.com/github.com]
-2. [https://digwebinterface.com/]
-3. [https://dnsstuff.com/]
-4. [https://ipv.io/]
-5. [https://www.ipaddress.com/]
+2. [https://digwebinterface.com/]  
+3. https://api.github.com/meta
 6. 可百度 获取 github.com 最新的ip地址 (若上面都不行 可能是获取ip不是最新的 换其他方式获取ip 去百度重新找获取ip的方法)
 
 ## 修改host文件
@@ -19,6 +17,7 @@ sudo killall -HUP mDNSResponder # 刷新DNS缓存
 ## 访问github 验证是否生效 
 - 打开浏览器访问 `https://github.com`。
 - 或在终端执行 `ping github.com`，看是否返回你设置的 IP。
+
 
 
 
