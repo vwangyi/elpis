@@ -60,8 +60,8 @@ export default defineConfig({
         activeMatch: "^/08_运维/"
       },
       {
-        text: "人工智能",
-        link: "/07_AI/01_AI-agent.md",
+        text: "人工智能", 
+        link: "/07_AI/01_大语言模型.md",
         activeMatch: "^/07_AI/"
       }
 
@@ -430,6 +430,16 @@ export default defineConfig({
           ]
         },
         {
+
+          text: "Vite",
+          items: [
+            {
+              text: 'Vite',
+              link: '/03_构建工具/04_Vite/index.md',
+            }
+          ]
+        },
+        {
           text: "Webpack",
           items: [
             {
@@ -663,8 +673,28 @@ export default defineConfig({
           text: "github",
           link: "/08_运维/github/修改hosts.md"
         },
+      ],
+      "/07_AI/": [
+        { 
+          text: "基础概念",
+          items: [
+            {
+              text: "大语言模型",
+              link: "/07_AI/01_大语言模型.md"
+            },
+            {
+              text: "模型服务",
+              link: "/07_AI/02_模型服务.md"
+            },
+            {
+              text: "AI应用",
+              link: "/07_AI/03_AI应用.md"
+            }
+ 
+          ] 
+        }
       ]
     },
-    socialLinks: [{ icon: "github", link: "https://github.com/vwangyi" }]
+    socialLinks: [{ icon: "github", link: "https://github.com/vwangyi/elpis/" }]
   }
 });
