@@ -69,4 +69,44 @@ onMounted(async () => {
 </template>
 ```
 
+## 再举例子
+```vue
+<script setup>
+async function upwardMovement(item) {
+  const currentIndex = list.value.findIndex((it) => it.jsvKey === item.jsvKey);
+  const currentItem = list.value.find((it) => it.jsvKey === item.jsvKey);
+  const previousIndex = currentIndex - 1;
+  if (previousIndex >= 0) {
+    list.value.splice(previousIndex, 2, currentItem, list.value[previousIndex]);
+    console.log("list.value", list.value);
+    await nextTick();
+    CardEditRef.value.refreshData();
+    CardEditRef.value.cleanFocusStatus();
+    await nextTick();
+    CardEditRef.value.setFocusByUid(currentItem.uid, true, true);
+    focusHub.setFocus(currentItem?.jsvKey);
+  }
+}
+
+// 等价于 
+
+function upwardMovement(item) {
+  const currentIndex = list.value.findIndex((it) => it.jsvKey === item.jsvKey);
+  const currentItem = list.value.find((it) => it.jsvKey === item.jsvKey);
+  const previousIndex = currentIndex - 1;
+  if (previousIndex >= 0) {
+    list.value.splice(previousIndex, 2, currentItem, list.value[previousIndex]);
+    nextTick(() => { 
+        CardEditRef.value.refreshData();
+        CardEditRef.value.cleanFocusStatus();
+        nextTick(() => { 
+            CardEditRef.value.setFocusByUid(currentItem.uid, true, true);
+            focusHub.setFocus(currentItem?.jsvKey);
+        })
+    }); 
+  }
+}
+</script>
+```
+
 
