@@ -1,9 +1,9 @@
 
-
-
-
 - 接收的props数据  在 computed watch template中 可以正确的响应式
 
+- 一般传函数优先用 emit事件  除非需要高阶组件或作用域插槽 props可考虑传函数 
+
+- vue规范中 props保持干净 只传数据 emit负责向上通知
 
 ## 父组件.vue
 ```vue
