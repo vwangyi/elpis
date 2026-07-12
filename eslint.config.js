@@ -21,7 +21,8 @@ const ignores = [
   'apps/bff-koa',
   'apps/vue3-electron',
   'apps/vue3-vite',
-  'apps/vue3-webpack'
+  'apps/vue3-webpack',
+  '**/dist-electron/**'
 ];
 const rules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
@@ -259,6 +260,15 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off' // 允许使用require函数
+    }
+  },
+  {
+    files: ['apps/vue3-electron-vite/**/*.{ts,js}'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        ...globals.browser
+      }
     }
   }
 ]);
