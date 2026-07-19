@@ -6,6 +6,13 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vite.dev/config/
 export default defineConfig({
+  esbuild: {
+    tsconfigRaw: {
+      compilerOptions: {
+        experimentalDecorators: true
+      }
+    }
+  },
   plugins: [vue(), vueDevTools()],
   resolve: {
     alias: {
