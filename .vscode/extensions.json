@@ -9,8 +9,6 @@
     // 其他常用工具
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss",
-    "ms-vscode.vscode-ai-assistant", // 微软 AI
-    "amazonwebservices.aws-toolkit-vscode" // AWS CodeWhisperer
+    "bradlc.vscode-tailwindcss", 
   ]
 }
