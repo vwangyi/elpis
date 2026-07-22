@@ -64,16 +64,7 @@ export default {
         name: '🎨 8. 样式调整(不影响代码运行): style'
       }
     ],
-    scopes: [
-      'root',
-      'koa',
-      'docs',
-      'vue3-vite',
-      'vue3-webpack',
-      'demo',
-      'disign',
-      'utils'
-    ],
+    scopes: ['root', 'all-blue', 'new-world', 'docs', 'demo', 'packages'],
     allowCustomScopes: true,
     skipQuestions: ['body', 'footerPrefix', 'footer', 'breaking'], // 跳过“详细描述”和“底部信息”
     messages: {
