@@ -9,6 +9,6 @@
     // 其他常用工具
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss", 
+    "bradlc.vscode-tailwindcss"
   ]
 }
