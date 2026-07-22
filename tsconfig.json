@@ -19,6 +19,6 @@
   },
   "exclude": ["node_modules", "dist"],
   "include": [
-    "packages/elpis-design-vue" // 目前只有这一个项目是ts
+    "apps/new-world", // 目前只有这一个项目是ts
   ]
 }
