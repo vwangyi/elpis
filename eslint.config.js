@@ -10,6 +10,7 @@ import eslintConfigPrettier from 'eslint-config-prettier/flat';
 const ignores = [
   '**/node_modules',
   '**/dist',
+  'apps/new-world/src/components/VirtualList/虚拟列表',
   '**/node_modules/**',
   '.*',
   '.vscode',
