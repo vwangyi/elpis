@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "jsx": "preserve", // 或 "react-jsx" (Vue 3.4+)
+    "allowImportingTsExtensions": true,
+    "jsxImportSource": "vue", // 如果使用 Vue 3，添加这行
+
     "module": "esnext", // 使用什么模块化标准  commonjs 和 es6
     "target": "esnext", // 把ts编译为js时 使用什么es版本 默认是es3
     "types": [],
@@ -15,12 +19,12 @@
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
     "strict": true,
-    "verbatimModuleSyntax": false,
+    "verbatimModuleSyntax": true,
     "moduleResolution": "bundler", // 模块解析模式 node和classic classic是旧的  一般用node
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
+    "skipLibCheck": true, 
     "noImplicitAny": true // 开启对隐式any类型的检查 当ts自动推导为any的隐式any是否类型正确 ，比如  用中括号访问不存在的成员也会报错，开启这个配置也就意味着 ts会更加严格 ，如果你的ts很强就开启 不强就不开启
   },
   "exclude": ["node_modules", "dist"],

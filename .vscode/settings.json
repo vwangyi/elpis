@@ -12,10 +12,16 @@
     "html"
   ],
   "liveServer.settings.port": 5502,
-  "explorer.fileNesting.enabled": true,
+  // 关闭折叠规则
+  // "explorer.fileNesting.enabled": false,
+  // // 关闭折叠规则
+  // "explorer.fileNesting.expand": false,
+  // 自定义规则把文件折叠起来.    eslint prettier cspell package.json 
   "explorer.fileNesting.patterns": {
-    "tsconfig.json": "tsconfig.*.json, env.d.ts, typed-router.d.ts",
-    "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
-    "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .oxfmt*, .prettier*, prettier*, .editorconfig"
+    // "eslint.config.js":"eslint.config.js, ",
+    // ".gitignore": ".gitignore, .prettierignore",
+    // "tsconfig.json": "tsconfig.*.json, env.d.ts, typed-router.d.ts",
+    // "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
+    // "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .oxfmt*, .prettier*, prettier*, .editorconfig"
   }
 }

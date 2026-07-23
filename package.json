@@ -29,6 +29,7 @@
     "pnpm": ">=10.17.1"
   },
   "devDependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
     "@commitlint/cli": "^20.5.0",
     "@commitlint/config-conventional": "^20.5.0",
     "@cspell/dict-lorem-ipsum": "^4.0.5",

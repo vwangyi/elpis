@@ -49,9 +49,7 @@
                         top: item.top + 'px',
                         border: '1px solid red'
                     }"
-          >
-            <div>当前item的高度：{{ item.height }}</div>
-            <div>当前item索引：{{ item.id }}</div>
+          > 
           </div>
         </div>
       </div>
@@ -107,14 +105,11 @@
             const { scrollTop, clientHeight } = e.currentTarget;
             let startIndex = this.getStartIndex(scrollTop);
             let endIndex = this.getEndIndex(scrollTop, clientHeight);
-
             const len = this.list.length;
-
             // 开始索引-cache是为了上缓存有cache项 最小索引为0
             startIndex = Math.max(0, startIndex - cache);
             // 结束索引+cache是为了下缓存有cache项 最大索引为len。因为slice不包含结束索引 所以不能-1
             endIndex = Math.min(len, endIndex + cache);
-
             // 触发渲染
             this.scrollTop = scrollTop;
             this.startIndex = startIndex;

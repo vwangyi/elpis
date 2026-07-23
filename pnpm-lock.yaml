@@ -108,6 +108,9 @@ importers:
         specifier: ^4.6.4
         version: 4.6.4(vue@3.5.39(typescript@5.9.3))
     devDependencies:
+      '@ant-design/icons-vue':
+        specifier: ^7.0.1
+        version: 7.0.1(vue@3.5.39(typescript@5.9.3))
       '@commitlint/cli':
         specifier: ^20.5.0
         version: 20.5.3(@types/node@25.9.5)(conventional-commits-parser@6.4.0)(typescript@5.9.3)
@@ -17531,7 +17534,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 24.13.3
+      '@types/node': 25.9.5
       merge-stream: 2.0.0
       supports-color: 8.1.1
 

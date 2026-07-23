@@ -150,6 +150,17 @@ const rules = {
   'vue/html-indent': ['error', 2],
   // template中的引号
   'vue/html-quotes': ['error', 'double', { avoidEscape: false }],
+  'vue/max-attributes-per-line': [
+    'error',
+    {
+      singleline: {
+        max: 3 // 单行最多3个属性，超过则换行
+      },
+      multiline: {
+        max: 1 // 多行模式下每行最多1个属性（通常这样更清晰）
+      }
+    }
+  ],
   // 插值表达式
   'vue/mustache-interpolation-spacing': ['error', 'always'],
   // template中的空格
@@ -207,6 +218,7 @@ export default defineConfig([
       'apps/elpis-babel/**/*.{ts,js,tsx,jsx,vue}',
       'apps/elpis-rollup/**/*.{ts,js,tsx,jsx,vue}',
       'packages/design/**/*.{ts,js,tsx,jsx,vue}',
+      'apps/new-world/**/*.{ts,js,tsx,jsx,vue}',
       'packages/api/**/*.{ts,js,tsx,jsx,vue}'
     ],
     extends: [
