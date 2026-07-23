@@ -13,7 +13,6 @@ const ignores = [
   '**/node_modules/**',
   '.*',
   '.vscode',
-  'docs',
   'scripts',
   'docs',
   'demo/*',

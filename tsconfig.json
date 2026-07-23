@@ -24,7 +24,7 @@
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true, 
+    "skipLibCheck": true,
     "noImplicitAny": true // 开启对隐式any类型的检查 当ts自动推导为any的隐式any是否类型正确 ，比如  用中括号访问不存在的成员也会报错，开启这个配置也就意味着 ts会更加严格 ，如果你的ts很强就开启 不强就不开启
   },
   "exclude": ["node_modules", "dist"],
