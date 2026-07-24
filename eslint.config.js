@@ -1,3 +1,4 @@
+// eslint.config.js
 import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
@@ -13,15 +14,11 @@ const ignores = [
   '**/node_modules/**',
   '.*',
   '.vscode',
-  'scripts',
   'docs',
-  'demo/*',
+  'demo',
+  'scripts',
   'packages/*',
-  'apps/bff-koa',
-  'apps/vue3-electron',
-  'apps/vue3-vite',
-  'apps/vue3-webpack',
-  '**/dist-electron/**'
+  'apps'
 ];
 const rules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
@@ -29,6 +26,21 @@ const rules = {
   'no-unreachable': 0, // 无法访问的代码 比如 return后面的代码
   // 不能使用var
   'no-var': 'error',
+  // 强制在注释中 // 或 /* 使用一致的空格
+  'spaced-comment': [
+    'error',
+    'always',
+    {
+      line: {
+        markers: ['/'], // 允许三斜线注释
+        exceptions: ['-', '+']
+      },
+      block: {
+        markers: ['!'],
+        exceptions: ['*']
+      }
+    }
+  ],
   // 关闭声明但未使用的变量的报错
   'no-unused-vars': 'off',
   // 要求使用 isNaN() 检查 NaN
@@ -95,15 +107,13 @@ const rules = {
   'space-in-parens': ['error', 'never'],
   // 要求操作符周围有空格
   'space-infix-ops': 'error',
-  // 强制在注释中 // 或 /* 使用一致的空格
-  'spaced-comment': 'error',
   // js中必须使用单引号
   quotes: ['error', 'single'],
   //
   'operator-linebreak': 'off',
 
   // vue部分
-  // vue组件标签不能为一个单词
+  // vue组件标签不能是一个单词
   'vue/multi-word-component-names': 'off',
   // vue在watch中不能用箭头函数
   'vue/no-arrow-functions-in-watch': 'error',
@@ -135,10 +145,48 @@ const rules = {
   'vue/return-in-computed-property': 'error',
   // vue中不能使用无效的nextTick
   'vue/valid-next-tick': 'error',
+  // 强制每行最多2个属性（可根据需求调整）
+  'vue/max-attributes-per-line': [
+    'error',
+    {
+      singleline: {
+        max: 3 // 单行最多3个属性
+      },
+      multiline: {
+        max: 1 // 多行时每行1个属性
+      }
+    }
+  ],
   // vue标签换行
   'vue/singleline-html-element-content-newline': 'off',
+  // 属性换行风格
+  'vue/first-attribute-linebreak': [
+    'error',
+    {
+      singleline: 'ignore',
+      multiline: 'below' // 第一个属性换行
+    }
+  ],
   // vue属性顺序
-  'vue/attributes-order': 'off',
+  'vue/attributes-order': [
+    'error',
+    {
+      order: [
+        'DEFINITION',
+        'LIST_RENDERING',
+        'CONDITIONALS',
+        'RENDER_MODIFIERS',
+        'GLOBAL',
+        'UNIQUE',
+        'TWO_WAY_BINDING',
+        'OTHER_DIRECTIVES',
+        'OTHER_ATTR',
+        'EVENTS',
+        'CONTENT'
+      ],
+      alphabetical: false
+    }
+  ],
   // vue方法顺序
   'vue/order-in-components': 'off',
   // v-html
@@ -149,17 +197,7 @@ const rules = {
   'vue/html-indent': ['error', 2],
   // template中的引号
   'vue/html-quotes': ['error', 'double', { avoidEscape: false }],
-  'vue/max-attributes-per-line': [
-    'error',
-    {
-      singleline: {
-        max: 3 // 单行最多3个属性，超过则换行
-      },
-      multiline: {
-        max: 1 // 多行模式下每行最多1个属性（通常这样更清晰）
-      }
-    }
-  ],
+
   // 插值表达式
   'vue/mustache-interpolation-spacing': ['error', 'always'],
   // template中的空格
@@ -213,9 +251,6 @@ export default defineConfig([
   {
     ignores,
     files: [
-      'apps/elpis-vue/**/*.{ts,js,tsx,jsx,vue}',
-      'apps/elpis-babel/**/*.{ts,js,tsx,jsx,vue}',
-      'apps/elpis-rollup/**/*.{ts,js,tsx,jsx,vue}',
       'packages/design/**/*.{ts,js,tsx,jsx,vue}',
       'apps/new-world/**/*.{ts,js,tsx,jsx,vue}',
       'packages/api/**/*.{ts,js,tsx,jsx,vue}'
@@ -231,10 +266,10 @@ export default defineConfig([
     },
     rules
   },
-  /* koa项目 */
+  /* nestjs项目 */
   {
     ignores,
-    files: ['apps/elpis-koa/**/*.{ts,js}'],
+    files: ['apps/all-blue/**/*.{ts,js}'],
     languageOptions: {
       globals: {
         ...globals.node,
@@ -263,7 +298,7 @@ export default defineConfig([
 
   /* cli 项目 */
   {
-    files: ['packages/elpis-cli/**/*.js'],
+    files: ['packages/cli/**/*.js'],
     languageOptions: {
       globals: {
         ...globals.node // 添加 Node.js 全局变量

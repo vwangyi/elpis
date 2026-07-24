@@ -1,21 +1,24 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-defineProps({
-  list: Array,
-})
+import { computed } from 'vue';
 
 const l = computed(() => {
-  return new Array(1000000).fill(0).map((item, index) => {
-    return {
-      id: index,
-    }
-  })
-})
+  return new Array(1000000)
+    .fill(0)
+    .map((item, index) => {
+      return {
+        id: index
+      };
+    });
+});
 </script>
 
 <template>
   <div class="container">
-    <div v-for="item in l" :key="item.id" class="item"></div>
+    <div
+      v-for="item in l"
+      :key="item.id"
+      class="item"
+    ></div>
   </div>
 </template>
 

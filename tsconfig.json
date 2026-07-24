@@ -2,8 +2,8 @@
   "compilerOptions": {
     "jsx": "preserve", // 或 "react-jsx" (Vue 3.4+)
     "noEmit": true,
-    "emitDeclarationOnly": false,
-    "rewriteRelativeImportExtensions": false,
+    // "emitDeclarationOnly": false,
+    // "rewriteRelativeImportExtensions": false,
     "allowImportingTsExtensions": true,
     "jsxImportSource": "vue", // 如果使用 Vue 3，添加这行
     // 使用什么模块化标准  commonjs 和 es6

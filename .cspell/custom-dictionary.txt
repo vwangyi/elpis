@@ -1,5 +1,5 @@
-elpis
 happypack
 persistedstate
 iconfont
 framwork
+elpis

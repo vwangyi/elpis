@@ -6,6 +6,18 @@
 export default {
   // 指定最大换行长度
   printWidth: 80,
+  // 针对 Vue 文件特殊处理
+  overrides: [
+    {
+      files: '*.vue',
+      options: {
+        // 降低到 40，强制 2-3 个属性就换行
+        printWidth: 40
+        // 或者使用更大的值，让 ESLint 控制
+        // printWidth: 120
+      }
+    }
+  ],
   // 缩进制表符宽度 | 空格数
   tabWidth: 2,
   // 使用制表符而不是空格缩进行 (true：制表符，false：空格)
