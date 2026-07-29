@@ -8,6 +8,16 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/dynamic-segmented-demo',
+    name: 'DynamicSegmentedDemo',
+    component: () => import('@/views/VirtualList/DynamicSegmentedDemo.vue')
+  },
+  {
+    path: '/segmented-demo',
+    name: 'SegmentedDemo',
+    component: () => import('@/views/VirtualList/SegmentedDemo.vue')
+  },
+  {
     path: '/virtual-list',
     name: 'VirtualList',
     component: () => import('@/views/VirtualList/VirtualList.vue')

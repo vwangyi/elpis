@@ -8,7 +8,7 @@ const state = reactive({
 });
 
 const items = ref(
-  new Array(10)
+  new Array(10000)
     .fill(0)
     .map((item, index) => {
       return {
@@ -20,7 +20,12 @@ const items = ref(
 );
 </script>
 <template>
-  <div>
+  <div
+    :style="{
+      width: 220 + 'px',
+      overflowY: 'scroll'
+    }"
+  >
     <a-menu
       v-model:open-keys="state.openKeys"
       v-model:selected-keys="

@@ -1,10 +1,8 @@
 <script setup>
-import VirtualList from './components/VirtualList.vue';
+import SegmentedVirtualList from './components/SegmentedVirtualList.vue';
 
-// 500000
-// 499995 499995
-// 500000 300000 5000000 ( 335544 | 335545)
-const data = new Array(10000000)
+// 100 万条数据，分成每 10 万一段（共 10 段）
+const data = new Array(1000000)
   .fill(0)
   .map((item, i) => {
     return {
@@ -16,11 +14,10 @@ const data = new Array(10000000)
 
 <template>
   <div style="height: 500px">
-    <!-- 给虚拟列表一个固定高度 -->
-    <VirtualList
+    <SegmentedVirtualList
       :list="data"
       :item-height="50"
-      :buffer-count="0"
+      :segment-size="100000"
       item-key="id"
     >
       <template #item="{ item }">
@@ -28,7 +25,7 @@ const data = new Array(10000000)
           <span>{{ item.name }}</span>
         </div>
       </template>
-    </VirtualList>
+    </SegmentedVirtualList>
   </div>
 </template>
 
