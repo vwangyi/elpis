@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-   "compilerOptions": {
+  "compilerOptions": {
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "resolvePackageJsonExports": true,
@@ -22,8 +22,6 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false
-    
   },
   "include": ["src/**/*"]
 }
- 
