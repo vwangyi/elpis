@@ -1,6 +1,8 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+// md5是一种哈希算法，可以根据文件内容生成固定长度的字符串用来唯一标识这个文件。
 import MD5 from 'spark-md5';
+
 const CHUNK_SIZE = 1024 * 1024 * 5; // 5MB 假设每个分片是5MB
 // 获取当前设备的线程数量
 const threadCount =

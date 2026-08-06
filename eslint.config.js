@@ -18,7 +18,7 @@ const ignores = [
   'demo',
   'scripts',
   'packages/*',
-  'apps'
+  'apps/*'
 ];
 const rules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
