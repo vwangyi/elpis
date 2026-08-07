@@ -3,7 +3,7 @@
     "jsx": "preserve", // 或 "react-jsx" (Vue 3.4+)
     "noEmit": true,
     "emitDeclarationOnly": false,
-    "rewriteRelativeImportExtensions": false, 
+    "rewriteRelativeImportExtensions": false,
     // true 表示导入 需要写 ts后缀
     "allowImportingTsExtensions": true,
 
@@ -14,8 +14,8 @@
     "module": "esnext",
     "types": ["jest"],
     // 采用什么编译环境   如果需要node 额外安装@types/node 的node环境. ["es2016", "dom"]
-    "lib": ["esnext"],  
-    "outDir": "./dist",  // 编译的输出目录 
+    "lib": ["esnext"],
+    "outDir": "./dist", // 编译的输出目录
     "sourceMap": true,
     "declaration": true,
     // 开启严格的空值检查 null和undefined 就不能赋值给任意类型 只能赋值给自己。
@@ -34,8 +34,8 @@
     "exactOptionalPropertyTypes": true,
     "strict": true,
     //verbatimModuleSyntax 为true 表示不能混用模块化 要么全是esm 要么全是commonjs
-    "verbatimModuleSyntax": false, 
-    // 模块解析模式 node和classic classic是旧的  一般用node  
+    "verbatimModuleSyntax": false,
+    // 模块解析模式 node和classic classic是旧的  一般用node
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
@@ -44,26 +44,23 @@
     // 开启对隐式any类型的检查 当ts自动推导为any的隐式any是否类型正确 ，
     // 比如  用中括号访问不存在的成员也会报错，开启这个配置也就意味着 ts会更加严格 ，
     // 如果你的ts很强就开启 不强就不开启
-    "noImplicitAny": true,  
-    "emitDecoratorMetadata": true, 
+    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true
- 
   },
   "exclude": ["node_modules", "dist"],
   // include 表示只需要编译src下的ts文件  files和include一样 files是具体的文件 include是文件夹
   "include": ["apps/all-blue"]
-  // "files": ["./src/index.ts"], 
+  // "files": ["./src/index.ts"],
 }
 
+//   "baseUrl": "./",
+//   "incremental": true,
+//   "forceConsistentCasingInFileNames": true,
+//   "strictBindCallApply": false,
+//   "noFallthroughCasesInSwitch": false
 
- 
-  //   "baseUrl": "./",
-  //   "incremental": true,
-  //   "forceConsistentCasingInFileNames": true,
-  //   "strictBindCallApply": false,
-  //   "noFallthroughCasesInSwitch": false
- 
 //     "declaration": true,
 //     "removeComments": true,
 //     "allowSyntheticDefaultImports": true,
