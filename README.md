@@ -3,3 +3,16 @@
 如果你感到痛苦和不自由，希望你心里永远有一团不会熄灭的火焰，不要麻木，不要被同化，
 拼命成为一个有力量破釜沉舟的人。
 ```
+
+1、根目录统一版本 node npm pnpm
+2、根目录统一ts配置 子包也有配置用自己的ts配置继承公共tsconfig
+3、prettier
+4、eslint。 全局和局部
+5、拼写检查cspell
+6、统一git提交 commonizen husk lint-staged
+
+7、基建包统一打包 测试 发布
+script里面写统一打包
+根目录vitest配置 并配置命令统一跑单元测试
+配置一个发布npm命令 统一发布npm私服
+8、包依赖 开发环境用worksapce 生产环境发布npm包
