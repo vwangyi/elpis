@@ -12,9 +12,9 @@
     "target": "esnext",
     // tsc编译后使用什么模块化标准  commonjs 和 es6 esnext
     "module": "esnext",
-    // types配置的值就是 node_modules/@types下的包名 
+    // types配置的值就是 node_modules/@types下的包名
     "types": ["node", "jest", "multer"],
-    "typeRoots":  ["./node_modules/@types", "./src/types"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
     // 采用什么编译环境   如果需要node 额外安装@types/node 的node环境. ["es2016", "dom"]
     "lib": ["esnext"],
     "outDir": "./dist", // 编译的输出目录
@@ -56,4 +56,3 @@
   "include": ["apps/all-blue"]
   // "files": ["./src/index.ts"],
 }
- 

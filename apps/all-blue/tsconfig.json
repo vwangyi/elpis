@@ -7,8 +7,8 @@
     // NestJS 需要由 tsc 实际产出 .js 文件，必须关闭
     "noEmit": false,
 
-    // 表示当前源码在 ./src里面 
-    "rootDir": "./src", 
+    // 表示当前源码在 ./src里面
+    "rootDir": "./src",
     // 根配置的 "./dist" 继承后会解析为项目根目录的 dist/
     // 这里显式指定为当前子包的 dist/，与 nest-cli.json 的 deleteOutDir 配合
     "outDir": "./dist",
@@ -37,8 +37,7 @@
     "resolvePackageJsonExports": false,
 
     // 同上，根配置为 true，仅在 node16/nodenext/bundler 模式下有效，node 模式下关闭
-    "noUncheckedSideEffectImports": false,
- 
+    "noUncheckedSideEffectImports": false
   },
 
   // 根配置 include 为 ["apps/all-blue"]，继承后输出会保留 src/ 子目录层级
