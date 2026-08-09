@@ -1,4 +1,10 @@
 
+```ts 
+// @Controller() 控制器  @Inject() 注入 是inject注入消费者
+// service @Injectable() 可注入的 是provide提供者
+
+
+```
 
 ## IOC 控制反转 
 controller层
@@ -13,7 +19,7 @@ datasource 数据源
 
 - 通过IOC 我们从主动创建对象和维护对象，转变为 被动等待依赖注入，实现从主动下厨到等待服务员上菜的转变，这就是IOC控制反转的精髓
 
-- 本质就是 维护一个 IOC容器 每次从IOC容器里面拿对象 所以就保持单例模式了 
+- 本质就是 维护一个 IOC容器 内部是一个new Map()  每次从IOC容器里面拿对象 所以就保持单例模式了 
 
 ## nestjs中如何应用IOC容器  
 
@@ -27,30 +33,27 @@ datasource 数据源
 
 @Module({
     imports: [],
-    // controller是消费者 
+    // controller是消费者  是inject 
     controllers: [UserController],
-    // provides提供服务的提供者   provides里面 其实就是 键值对 provide是key useClass和useValue是value 
+    // provides提供服务的提供者   
     // 这里注入之后 就是在 IOC容器里面注入了  然后才可以在 controller文件里面引用 
+    provides: [UserService], // provide和useClass的值相同就可以简写
     provides: [
         {
-            provide: UserService, // 就是key名而已  也可以直接传字符串 key
+            provide: UserService, // provide 就是key名而已 Map的key可以是任意类型 所以并不局限于是symbol或string 
             useClass: UserService
         },
         {
             // provide是key
             provide: 'car',
             // useValue可以是一个字面量对象  
-            useValue: {
-                brand: 'BYD',
-                price: 9999
-            }
+            useValue: { brand: 'BYD', price: 9999 }
         },
         {
             provide: 'random',
             useFactory: () => Math.rondom() // useFactory 可以是一个函数
         }
     ],
-    provides: [UserService], // 简写
 
 })  
 export class UserModule {}
@@ -100,14 +103,13 @@ export class AppModule {}
 @Controller('app')
 export class AppController {
   @Inject(UserService) // 这里传递的就是上面的key名  上面key是字符串 这里也是字符串 一般用类名
-
   @Inject('car')
   private car: { brand: string; price: number };
-
+  // 属性注入
   @Inject('random')
   private random: number;
 
-  // 最常用是 构造函数注入 而不是属性注入 
+  // 构造函数注入 最常用是 构造函数注入 而不是属性注入 
   constructor(private readonly appService: AppService) {}
  
   @Get('hello1')

@@ -1,24 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
-  getUserList() {
-    return [
-      { id: 1, name: 'jack', age: 19 },
-      { id: 2, name: 'rose', age: 17 }
-    ];
+  create(createUserDto: CreateUserDto) {
+    return 'This action adds a new user';
   }
 
-  query(name: string, age: number) {
-    return `查询条件：name=${name}，age=${age}`;
+  findAll() {
+    return `调用成功`;
   }
 
   findOne(id: number) {
-    return `查询id=${id}的用户`;
+    return `This action returns a #${id} user`;
   }
 
-  add(user: CreateUserDto) {
-    return `添加用户：${JSON.stringify(user)}`;
+  update(id: number, updateUserDto: UpdateUserDto) {
+    return `This action updates a #${id} user`;
+  }
+
+  remove(id: number) {
+    return `This action removes a #${id} user`;
   }
 }

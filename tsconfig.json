@@ -53,6 +53,6 @@
   },
   "exclude": ["node_modules", "dist"],
   // include 表示只需要编译src下的ts文件  files和include一样 files是具体的文件 include是文件夹
-  "include": ["apps/all-blue"]
+  "include": ["apps/all-blue", "apps/new-world"]
   // "files": ["./src/index.ts"],
 }

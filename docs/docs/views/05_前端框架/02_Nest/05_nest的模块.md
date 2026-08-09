@@ -1,4 +1,7 @@
-
+```ts
+@Module()
+@Global()
+```
 ## 模块
 
 ```ts
