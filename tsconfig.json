@@ -10,9 +10,11 @@
     "jsxImportSource": "vue", // 如果使用 Vue 3，添加这行
     // 把ts编译为js时 使用什么es版本 默认是es3
     "target": "esnext",
-    // 使用什么模块化标准  commonjs 和 es6 esnext
+    // tsc编译后使用什么模块化标准  commonjs 和 es6 esnext
     "module": "esnext",
-    "types": ["jest"],
+    // types配置的值就是 node_modules/@types下的包名 
+    "types": ["node", "jest", "multer"],
+    "typeRoots":  ["./node_modules/@types", "./src/types"],
     // 采用什么编译环境   如果需要node 额外安装@types/node 的node环境. ["es2016", "dom"]
     "lib": ["esnext"],
     "outDir": "./dist", // 编译的输出目录
@@ -28,7 +30,7 @@
     // ts发生语法错误时不生成编译结果
     "noEmitOnError": true,
     // 封装类的属性方法时 属性必须初始化 不初始化值为undefined 是不行的 （属性的初始化检查）
-    "strictPropertyInitialization": true,
+    "strictPropertyInitialization": false,
     "noUncheckedIndexedAccess": true,
     "resolvePackageJsonExports": true,
     "exactOptionalPropertyTypes": true,
@@ -54,26 +56,4 @@
   "include": ["apps/all-blue"]
   // "files": ["./src/index.ts"],
 }
-
-//   "baseUrl": "./",
-//   "incremental": true,
-//   "forceConsistentCasingInFileNames": true,
-//   "strictBindCallApply": false,
-//   "noFallthroughCasesInSwitch": false
-
-//     "declaration": true,
-//     "removeComments": true,
-//     "allowSyntheticDefaultImports": true,
-//     "target": "es2021",
-//     "sourceMap": true,
-//     "outDir": "./dist",
-//     "baseUrl": "./",
-//     "incremental": true,
-//     "skipLibCheck": true,
-//     "strictNullChecks": true,
-//     "noImplicitAny": true,
-//     "strictBindCallApply": true,
-//     "forceConsistentCasingInFileNames": true,
-//     "noFallthroughCasesInSwitch": true,
-//     "esModuleInterop": true,
-//     "types": ["node", "jest"]
+ 
