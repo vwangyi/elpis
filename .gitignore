@@ -18,6 +18,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+*.workbuddy
 # .vscode/
 
 # OS
@@ -75,3 +76,4 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+ 
