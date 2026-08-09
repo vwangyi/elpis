@@ -1,11 +1,26 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '@/views/HomeView/HomeView.vue';
 
-const routes = [
+export const routes = [
   {
     path: '/',
     name: 'home',
-    component: HomeView
+    component: HomeView,
+    redirect: '/files-upload',
+    children: [
+      {
+        path: 'files-upload',
+        name: 'FilesUpload',
+        meta: { title: '文件上传' },
+        component: () => import('@/views/FilesUpload/FilesUpload.vue')
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '虚拟列表' },
+        component: () => import('@/views/VirtualList/VirtualList.vue')
+      }
+    ]
   },
   {
     path: '/dynamic-segmented-demo',
@@ -16,11 +31,6 @@ const routes = [
     path: '/segmented-demo',
     name: 'SegmentedDemo',
     component: () => import('@/views/VirtualList/SegmentedDemo.vue')
-  },
-  {
-    path: '/virtual-list',
-    name: 'VirtualList',
-    component: () => import('@/views/VirtualList/VirtualList.vue')
   }
 ];
 const router = createRouter({
