@@ -23,5 +23,12 @@
     // "tsconfig.json": "tsconfig.*.json, env.d.ts, typed-router.d.ts",
     // "vite.config.*": "jsconfig*, vitest.config.*, cypress.config.*, playwright.config.*",
     // "package.json": "package-lock.json, pnpm*, .yarnrc*, yarn*, .eslint*, eslint*, .oxlint*, oxlint*, .oxfmt*, .prettier*, prettier*, .editorconfig"
-  }
+  },
+  // 1. 指定字体，将 'Fira Code' 替换为你安装的字体名称
+  "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
+  // 2. 开启连字功能
+  "editor.fontLigatures": true,
+  // 如果你想更精细地控制，也可以用下面的方式
+  // "editor.fontLigatures": "'calt', 'ss01'"
 }
+ 

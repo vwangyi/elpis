@@ -69,6 +69,8 @@ export class UserModule implements NestModule {
 
 ```
 ## 全局中间件 放到src下 而不是某个模块下
+
+- nest g mi logger --flat --no-spec 
 ```ts
 // user.middleware.ts
 import { Injectable, NestMiddleware } from '@nestjs/common';
