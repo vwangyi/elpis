@@ -2,7 +2,7 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 
 /* 服务监控 */
-export const useCounterStore = defineStore('monitoring', () => {
+export const useMonitoringStore = defineStore('monitoring', () => {
   const count = ref(0);
 
   // 用户停留时间

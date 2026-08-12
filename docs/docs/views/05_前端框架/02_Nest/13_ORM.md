@@ -16,3 +16,21 @@
 
 ## TypeORM
 - npx typeorm init --name typeorm-test --database mysql2
+
+- pnpm typeorm mysql2 -w -D
+
+
+- https://www.typeorm.net/ 官网 
+
+
+
+一对一 OneToOne
+一对多 OneToMany
+多对一 ManyToOne
+多对多 ManyToMany
+
+
+
+## nest中使用TypeORM
+
+- @nestjs/typeorm  mysql2 typeorm 
