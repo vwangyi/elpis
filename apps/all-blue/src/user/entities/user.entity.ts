@@ -8,10 +8,10 @@ export class User {
   @PrimaryGeneratedColumn()
   user_id: number;
 
-  @Column({ name: 'u_name', length: 100 })
+  @Column({ name: 'u_name', length: 6 })
   username: string;
 
-  @Column({ name: 'u_name', length: 100 })
+  @Column({ length: 50 })
   password: string;
 
   @Column() // 默认是 varchat(255)

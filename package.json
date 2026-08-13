@@ -86,6 +86,7 @@
     "@nestjs/core": "^11.1.28",
     "@nestjs/mapped-types": "^2.1.1",
     "@nestjs/platform-express": "^11.1.28",
+    "@nestjs/typeorm": "^11.0.3",
     "@vueuse/core": "^14.3.0",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
