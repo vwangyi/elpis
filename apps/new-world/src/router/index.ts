@@ -1,36 +1,92 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '@/views/HomeView/HomeView.vue';
+import DemoView from '@/views/DemoView/DemoView.vue';
 
 export const routes = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
+    name: 'DemoView',
+    component: DemoView,
     redirect: '/files-upload',
     children: [
       {
         path: 'files-upload',
         name: 'FilesUpload',
         meta: { title: '文件上传' },
-        component: () => import('@/views/FilesUpload/FilesUpload.vue')
+        component: () => {
+          return import('@/views/DemoView/views/FilesUpload/FilesUpload.vue');
+        }
       },
       {
         path: 'virtual-list',
         name: 'VirtualList',
         meta: { title: '虚拟列表' },
-        component: () => import('@/views/VirtualList/VirtualList.vue')
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '权限' },
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '审批' },
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '流程' },
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '登录' },
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '单点登录' },
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
+      },
+      {
+        path: 'virtual-list',
+        name: 'VirtualList',
+        meta: { title: '数据分析WebSocket' },
+        component: () => {
+          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+        }
       }
     ]
   },
   {
     path: '/dynamic-segmented-demo',
     name: 'DynamicSegmentedDemo',
-    component: () => import('@/views/VirtualList/DynamicSegmentedDemo.vue')
+    component: () => {
+      return import('@/views/DemoView/views/VirtualList/DynamicSegmentedDemo.vue');
+    }
   },
   {
     path: '/segmented-demo',
     name: 'SegmentedDemo',
-    component: () => import('@/views/VirtualList/SegmentedDemo.vue')
+    component: () => {
+      return import('@/views/DemoView/views/VirtualList/SegmentedDemo.vue');
+    }
   }
 ];
 const router = createRouter({
