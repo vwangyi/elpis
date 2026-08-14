@@ -20,7 +20,7 @@ import { AuthModule } from './auth/auth.module';
       database: 'onepiece_dev',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true, // 可以修改数据库根据实体和数据库会一致
-      timezone: 'Z', // 表示用 UTC时间
+      timezone: 'Z' // 表示用 UTC时间
     }),
     UserModule,
     UploadModule,

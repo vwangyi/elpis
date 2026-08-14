@@ -1,4 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Session, Req, Inject, Res, Headers, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Session,
+  Req,
+  Inject,
+  Res,
+  Headers,
+  UnauthorizedException
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -12,7 +26,6 @@ export class AuthController {
 
   constructor(private readonly authService: AuthService) {}
 
-
   @Get('jwt1')
   getJwt1(@Res({ passthrough: true }) res: Response): string {
     const token = this.jwtService.sign({ count: 1 });
@@ -20,34 +33,26 @@ export class AuthController {
     return 'hello jwt1';
   }
 
-
   @Get('jwt2')
   getJwt2(
     @Headers('authorization') authorization: string,
     @Res({ passthrough: true }) res: Response
   ): string {
     if (authorization) {
-   try{
-       const token = authorization?.split(' ')?.[1] || '' ;
-      const payload = this.jwtService.verify(token);
-      const newToken = this.jwtService.sign({count: payload.count + 1});
-    res.setHeader('Authorization', `Bearer ${newToken}`);
-   } catch(e) {
-    console.log('catch error', e );
-    throw new UnauthorizedException()
-   }
-  
- 
+      try {
+        const token = authorization?.split(' ')?.[1] || '';
+        const payload = this.jwtService.verify(token);
+        const newToken = this.jwtService.sign({ count: payload.count + 1 });
+        res.setHeader('Authorization', `Bearer ${newToken}`);
+      } catch (e) {
+        console.log('catch error', e);
+        throw new UnauthorizedException();
+      }
     } else {
-
-    throw new UnauthorizedException()
-   }
+      throw new UnauthorizedException();
+    }
     return 'hello jwt2';
   }
-
-
-
-
 
   @Get('session1')
   getSession(
@@ -67,6 +72,4 @@ export class AuthController {
     session.views = session.views ? session.views + 1 : 1;
     return session.views;
   }
-
- 
 }
