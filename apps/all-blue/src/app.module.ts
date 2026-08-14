@@ -7,6 +7,7 @@ import { diskStorage } from 'multer';
 import { MulterModule } from '@nestjs/platform-express';
 import { extname } from 'node:path';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,14 +16,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       host: 'codewy.top',
       port: 3306,
       username: 'root',
-      password: '123456',
-      database: 'nest_typeorm',
+      password: 'Root@123456',
+      database: 'onepiece_dev',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true,
-      timezone: 'Z'
+      synchronize: true, // 可以修改数据库根据实体和数据库会一致
+      timezone: 'Z', // 表示用 UTC时间
     }),
     UserModule,
-    UploadModule
+    UploadModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService]
