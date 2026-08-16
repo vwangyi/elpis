@@ -43,5 +43,6 @@
   // 根配置 include 为 ["apps/all-blue"]，继承后输出会保留 src/ 子目录层级
   // 导致 main.js 生成在 dist/src/main.js 而非 dist/main.js
   // 覆盖为 ["src"]，使输出直接落在 dist/ 下，与 start:prod 的 "node dist/main" 匹配
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"],
 }

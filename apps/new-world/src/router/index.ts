@@ -71,6 +71,14 @@ export const routes = [
         component: () => {
           return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
         }
+      },
+      {
+        path: 'todo-list',
+        name: 'TodoList',
+        meta: { title: '代办列表' },
+        component: () => {
+          return import('@/views/DemoView/views/TodoList/TodoList.vue');
+        }
       }
     ]
   },

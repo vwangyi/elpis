@@ -8,6 +8,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { extname } from 'node:path';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { TodoModule } from './todo/todo.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -44,7 +45,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     // }),
     UserModule,
     UploadModule,
-    AuthModule
+    AuthModule,
+    TodoModule
   ],
   controllers: [AppController],
   providers: [AppService]

@@ -46,6 +46,7 @@ function handleClickMenu(menu) {
   height: 100%;
   overflow-y: auto;
   background-color: #fff;
+  border: 1px solid rgba(5, 5, 5, 0.06);
 }
 
 .sider-item {
@@ -58,7 +59,13 @@ function handleClickMenu(menu) {
 }
 
 .sider-item.active {
-  color: #409eff;
+  color: #1677ff;
+  background-color: rgba(
+    236,
+    245,
+    255,
+    1
+  );
 }
 
 .sider-item:hover {
