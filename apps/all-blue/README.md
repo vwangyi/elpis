@@ -7,3 +7,11 @@
 - `nest g gu 模块名`: `给这个模块加路由守卫`
 
 - `nest build -b webpack`: `打包`
+
+## 接口
+
+>
+
+- GET
+- /list/
+- query参数

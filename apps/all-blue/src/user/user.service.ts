@@ -9,6 +9,11 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import md5 from 'md5';
 
+// 1. 先写service
+// 	1.先用@Injectable() 修饰 Service类
+// 	2. @InjectRepository(User) 修饰 userRepository 属性
+//  3. 就可以 通过 this.userRepository 调用 数据库了  封装普通方法一样的
+
 @Injectable()
 export class UserService {
   // @InjectEntityManager()
@@ -29,7 +34,6 @@ export class UserService {
     if (loginUser.password !== md5(user.password)) {
       throw new HttpException('密码错误', 400);
     }
-
     return loginUser;
   }
 

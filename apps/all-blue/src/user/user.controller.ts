@@ -17,13 +17,19 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginGuard } from './login.guard';
+import { AuthService } from '../auth/auth.service';
 
 @Controller('user')
 export class UserController {
-  // 注册jwt
+  // 当前controller 需要调用 其他service
   @Inject()
   private jwtService: JwtService;
 
+  // 当前controller 需要调用 其他service
+  @Inject()
+  private authService: AuthService;
+
+  // 当前controller 需要调用 自己的service
   constructor(private readonly userService: UserService) {}
 
   // 登录
@@ -99,11 +105,10 @@ export class UserController {
     return this.userService.findAll(username, age);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    console.log('id====', typeof id, id);
-    return this.userService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.userService.findOne(+id);
+  // }
 
   // @Get('find')
   // query(@Query('name') name: string, @Query('age') age: number) {
