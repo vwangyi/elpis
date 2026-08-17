@@ -4,14 +4,12 @@ import VirtualList from './components/VirtualList.vue';
 // 500000
 // 499995 499995
 // 500000 300000 5000000 ( 335544 | 335545)
-const data = new Array(500000)
-  .fill(0)
-  .map((item, i) => {
-    return {
-      id: i + 1,
-      name: `Item ${i + 1}`
-    };
-  });
+const data = new Array(500000).fill(0).map((item, i) => {
+  return {
+    id: i + 1,
+    name: `Item ${i + 1}`
+  };
+});
 </script>
 
 <template>

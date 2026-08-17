@@ -2,14 +2,12 @@
 import SegmentedVirtualList from './components/SegmentedVirtualList.vue';
 
 // 100 万条数据，分成每 10 万一段（共 10 段）
-const data = new Array(1000000)
-  .fill(0)
-  .map((item, i) => {
-    return {
-      id: i + 1,
-      name: `Item ${i + 1}`
-    };
-  });
+const data = new Array(1000000).fill(0).map((item, i) => {
+  return {
+    id: i + 1,
+    name: `Item ${i + 1}`
+  };
+});
 </script>
 
 <template>

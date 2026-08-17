@@ -1,12 +1,12 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": {  
-    "moduleResolution": "bundler", 
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],  
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {
       "@/*": ["./src/*"]
     }
-  }, 
+  },
   "exclude": ["node_modules", "dist"],
-  "include": ["./src/**/*.ts", "./src/**/*.tsx"], // 只包含当前目录下的 src
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"] // 只包含当前目录下的 src
 }

@@ -1,11 +1,5 @@
 <script setup>
-import {
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount,
-  nextTick
-} from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, nextTick } from 'vue';
 
 const props = defineProps({
   // 列表数据
@@ -53,98 +47,58 @@ const containerHeight = ref(0);
 const currentSegment = ref(0); // 当前段索引（0 基）
 
 // 实际生效的每段条数：保证单段高度不超浏览器上限
-const effectiveSegmentSize = computed(
-  () =>
-    Math.max(
-      1,
-      Math.min(
-        props.segmentSize,
-        Math.floor(
-          props.maxScrollHeight /
-            props.itemHeight
-        )
-      )
+const effectiveSegmentSize = computed(() =>
+  Math.max(
+    1,
+    Math.min(
+      props.segmentSize,
+      Math.floor(props.maxScrollHeight / props.itemHeight)
     )
+  )
 );
 
 const totalSegments = computed(() =>
-  Math.max(
-    1,
-    Math.ceil(
-      props.list.length /
-        effectiveSegmentSize.value
-    )
-  )
+  Math.max(1, Math.ceil(props.list.length / effectiveSegmentSize.value))
 );
 
 const segmentStart = computed(
-  () =>
-    currentSegment.value *
-    effectiveSegmentSize.value
+  () => currentSegment.value * effectiveSegmentSize.value
 );
 const segmentEnd = computed(() =>
-  Math.min(
-    props.list.length,
-    segmentStart.value +
-      effectiveSegmentSize.value
-  )
+  Math.min(props.list.length, segmentStart.value + effectiveSegmentSize.value)
 );
-const segmentLength = computed(
-  () =>
-    segmentEnd.value -
-    segmentStart.value
-);
+const segmentLength = computed(() => segmentEnd.value - segmentStart.value);
 
 // 撑高元素高度：单段 ≤ maxScrollHeight，永远不会触发浏览器裁剪
-const phantomHeight = computed(
-  () =>
-    segmentLength.value *
-    props.itemHeight
-);
+const phantomHeight = computed(() => segmentLength.value * props.itemHeight);
 // 当前段内最大可滚动距离
 const maxTop = computed(() =>
-  Math.max(
-    0,
-    phantomHeight.value -
-      containerHeight.value
-  )
+  Math.max(0, phantomHeight.value - containerHeight.value)
 );
 
 // 段内虚拟列表索引
 const startIndex = computed(() => {
   const idx =
-    Math.floor(
-      scrollTop.value / props.itemHeight
-    ) - props.bufferCount;
+    Math.floor(scrollTop.value / props.itemHeight) - props.bufferCount;
   return Math.max(0, idx);
 });
 const endIndex = computed(() => {
   const idx =
-    Math.ceil(
-      (scrollTop.value +
-        containerHeight.value) /
-        props.itemHeight
-    ) + props.bufferCount;
-  return Math.min(
-    segmentLength.value,
-    idx
-  );
+    Math.ceil((scrollTop.value + containerHeight.value) / props.itemHeight) +
+    props.bufferCount;
+  return Math.min(segmentLength.value, idx);
 });
 
 // 实际渲染的数据（全局下标 = 段内下标 + segmentStart）
 const visibleData = computed(() =>
   props.list.slice(
-    segmentStart.value +
-      startIndex.value,
+    segmentStart.value + startIndex.value,
     segmentStart.value + endIndex.value
   )
 );
 
 // 偏移量（段内无缩放，恒等于 startIndex * itemHeight）
-const offsetY = computed(
-  () =>
-    startIndex.value * props.itemHeight
-);
+const offsetY = computed(() => startIndex.value * props.itemHeight);
 
 const resolveKey = item =>
   typeof props.itemKey === 'function'
@@ -177,8 +131,7 @@ const handleScroll = e => {
   if (
     maxTop.value > 0 &&
     top >= maxTop.value - 1 &&
-    currentSegment.value <
-      totalSegments.value - 1
+    currentSegment.value < totalSegments.value - 1
   ) {
     currentSegment.value += 1;
     scrollTop.value = 0;
@@ -191,20 +144,11 @@ const handleScroll = e => {
 const handleWheel = e => {
   const el = containerRef.value;
   if (!el) return;
-  if (
-    e.deltaY < 0 &&
-    el.scrollTop <= 0 &&
-    currentSegment.value > 0
-  ) {
+  if (e.deltaY < 0 && el.scrollTop <= 0 && currentSegment.value > 0) {
     currentSegment.value -= 1;
-    const targetTop = Math.max(
-      0,
-      phantomHeight.value -
-        containerHeight.value
-    );
+    const targetTop = Math.max(0, phantomHeight.value - containerHeight.value);
     scrollTop.value = targetTop; // 先更新逻辑位置，避免闪烁
-    if (e.cancelable)
-      e.preventDefault(); // 阻止页面被带动滚动
+    if (e.cancelable) e.preventDefault(); // 阻止页面被带动滚动
     nextTick(() => {
       suppressAdvance = true; // 屏蔽本次程序化滚动触发的 scroll 事件
       el.scrollTop = targetTop;
@@ -218,48 +162,30 @@ const handleWheel = e => {
 
 const updateContainerHeight = () => {
   if (containerRef.value)
-    containerHeight.value =
-      containerRef.value.clientHeight;
+    containerHeight.value = containerRef.value.clientHeight;
 };
 
 let resizeObserver = null;
 let wheelListener = null;
 onMounted(() => {
   updateContainerHeight();
-  if (
-    typeof ResizeObserver !==
-      'undefined' &&
-    containerRef.value
-  ) {
-    resizeObserver = new ResizeObserver(
-      updateContainerHeight
-    );
-    resizeObserver.observe(
-      containerRef.value
-    );
+  if (typeof ResizeObserver !== 'undefined' && containerRef.value) {
+    resizeObserver = new ResizeObserver(updateContainerHeight);
+    resizeObserver.observe(containerRef.value);
   }
   // 用非 passive 监听，以便必要时 preventDefault
   wheelListener = handleWheel;
-  containerRef.value?.addEventListener(
-    'wheel',
-    wheelListener,
-    { passive: false }
-  );
+  containerRef.value?.addEventListener('wheel', wheelListener, {
+    passive: false
+  });
 });
 onBeforeUnmount(() => {
   resizeObserver?.disconnect();
   resizeObserver = null;
-  if (
-    wheelListener &&
-    containerRef.value
-  ) {
-    containerRef.value.removeEventListener(
-      'wheel',
-      wheelListener
-    );
+  if (wheelListener && containerRef.value) {
+    containerRef.value.removeEventListener('wheel', wheelListener);
   }
-  if (suppressTimer)
-    clearTimeout(suppressTimer);
+  if (suppressTimer) clearTimeout(suppressTimer);
 });
 </script>
 
@@ -267,10 +193,7 @@ onBeforeUnmount(() => {
   <div
     class="segmented-virtual-list"
     :style="{
-      height:
-        typeof height === 'number'
-          ? height + 'px'
-          : height
+      height: typeof height === 'number' ? height + 'px' : height
     }"
   >
     <div
@@ -309,14 +232,10 @@ onBeforeUnmount(() => {
     </div>
     <!-- 段进度指示，便于直观确认分段滚动生效 -->
     <div class="segment-badge">
-      第 {{ currentSegment + 1 }} /
-      {{ totalSegments }} 段 · 共
+      第 {{ currentSegment + 1 }} / {{ totalSegments }} 段 · 共
       {{ list.length }} 条
       <span class="seg-range"
-        >（本段
-        {{ segmentStart + 1 }}–{{
-          segmentEnd
-        }}）</span
+        >（本段 {{ segmentStart + 1 }}–{{ segmentEnd }}）</span
       >
     </div>
   </div>

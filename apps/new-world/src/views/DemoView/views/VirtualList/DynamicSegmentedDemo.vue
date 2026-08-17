@@ -2,15 +2,13 @@
 import DynamicSegmentedVirtualList from './components/DynamicSegmentedVirtualList.vue';
 
 // 100 万条数据，每条高度各不相同（40~60px）
-const data = new Array(400000)
-  .fill(0)
-  .map((item, i) => {
-    return {
-      id: i + 1,
-      name: `Item ${i + 1}`,
-      h: 40 + ((i * 37) % 21) // 40 ~ 60，不定高度
-    };
-  });
+const data = new Array(400000).fill(0).map((item, i) => {
+  return {
+    id: i + 1,
+    name: `Item ${i + 1}`,
+    h: 40 + ((i * 37) % 21) // 40 ~ 60，不定高度
+  };
+});
 </script>
 
 <template>
@@ -27,13 +25,8 @@ const data = new Array(400000)
             height: item.h + 'px'
           }"
         >
-          <span class="idx"
-            >#{{ item.id }}</span
-          >
-          <span
-            >{{ item.name }}（高
-            {{ item.h }}px）</span
-          >
+          <span class="idx">#{{ item.id }}</span>
+          <span>{{ item.name }}（高 {{ item.h }}px）</span>
         </div>
       </template>
     </DynamicSegmentedVirtualList>
