@@ -1,12 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import DemoView from '@/views/DemoView/DemoView.vue';
+import HomeView from '@/views/HomeView/HomeView.vue';
 
 export const routes = [
   {
     path: '/',
+    redirect: '/demo',
+    component: HomeView
+  },
+  {
+    path: '/demo',
     name: 'DemoView',
-    component: DemoView,
-    redirect: '/files-upload',
+    component: () => import('@/views/DemoView/DemoView.vue'),
+    redirect: '/demo/files-upload',
     children: [
       {
         path: 'files-upload',

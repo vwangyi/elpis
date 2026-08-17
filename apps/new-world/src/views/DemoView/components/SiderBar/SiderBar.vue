@@ -8,7 +8,7 @@ const route = useRoute();
 const router = useRouter();
 
 const data = computed(() => {
-  const list = routes.find(route => route.path === '/');
+  const list = routes.find(route => route.path === '/demo');
   if (list) {
     return list.children || [];
   }
