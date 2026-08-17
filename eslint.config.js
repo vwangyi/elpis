@@ -24,7 +24,9 @@ const ignores = [
   'demo',
   'scripts',
   'packages/*',
-  'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
+  'apps/all-blue/*',
+  'apps/new-world/*'
+  // 'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
 ];
 const rules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
