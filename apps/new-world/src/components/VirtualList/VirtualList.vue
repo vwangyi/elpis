@@ -2,13 +2,11 @@
 import { computed } from 'vue';
 
 const l = computed(() => {
-  return new Array(1000000)
-    .fill(0)
-    .map((item, index) => {
-      return {
-        id: index
-      };
-    });
+  return new Array(1000000).fill(0).map((item, index) => {
+    return {
+      id: index
+    };
+  });
 });
 </script>
 

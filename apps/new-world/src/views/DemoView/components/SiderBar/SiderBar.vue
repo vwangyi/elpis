@@ -1,9 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import {
-  useRoute,
-  useRouter
-} from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { routes } from '@/router/index.ts';
 import { computed } from 'vue';
 
@@ -11,9 +8,7 @@ const route = useRoute();
 const router = useRouter();
 
 const data = computed(() => {
-  const list = routes.find(
-    route => route.path === '/'
-  );
+  const list = routes.find(route => route.path === '/');
   if (list) {
     return list.children || [];
   }
@@ -60,20 +55,10 @@ function handleClickMenu(menu) {
 
 .sider-item.active {
   color: #1677ff;
-  background-color: rgba(
-    236,
-    245,
-    255,
-    1
-  );
+  background-color: rgba(236, 245, 255, 1);
 }
 
 .sider-item:hover {
-  background-color: rgba(
-    236,
-    245,
-    255,
-    0.7
-  );
+  background-color: rgba(236, 245, 255, 0.7);
 }
 </style>

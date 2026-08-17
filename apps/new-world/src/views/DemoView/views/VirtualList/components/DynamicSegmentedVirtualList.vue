@@ -1,11 +1,5 @@
 <script setup>
-import {
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount,
-  watch
-} from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 
 /*
  * 不定高度（动态高度）分段虚拟列表
@@ -32,9 +26,7 @@ class FenwickTree {
   constructor(n, initValue = 0) {
     this.n = n;
     this.tree = new Float64Array(n + 1);
-    if (initValue)
-      for (let i = 0; i < n; i++)
-        this.add(i, initValue);
+    if (initValue) for (let i = 0; i < n; i++) this.add(i, initValue);
   }
   // 0-based 单点加 delta
   add(i, delta) {
@@ -59,26 +51,16 @@ class FenwickTree {
     if (pos <= 0) return 0;
     let idx = 0;
     let bitMask = 1;
-    while (bitMask <= this.n)
-      bitMask <<= 1;
+    while (bitMask <= this.n) bitMask <<= 1;
     let accum = 0;
-    for (
-      let m = bitMask;
-      m > 0;
-      m >>= 1
-    ) {
+    for (let m = bitMask; m > 0; m >>= 1) {
       const next = idx + m;
-      if (
-        next <= this.n &&
-        accum + this.tree[next] <= pos
-      ) {
+      if (next <= this.n && accum + this.tree[next] <= pos) {
         accum += this.tree[next];
         idx = next;
       }
     }
-    return idx >= this.n
-      ? this.n - 1
-      : idx;
+    return idx >= this.n ? this.n - 1 : idx;
   }
 }
 
@@ -127,11 +109,7 @@ let segmentsArr = []; // [[start, end), ...] 每段 item 下标区间
 const tick = ref(0); // 高度/分段变化计数，所有段相关计算属性都读它以触发重算
 
 // 段像素目标：留 0.9 倍余量，降低低估导致超限的风险
-const SEG_TARGET = computed(() =>
-  Math.floor(
-    props.maxScrollHeight * 0.9
-  )
-);
+const SEG_TARGET = computed(() => Math.floor(props.maxScrollHeight * 0.9));
 
 const resolveKey = item =>
   typeof props.itemKey === 'function'
@@ -141,13 +119,8 @@ const resolveKey = item =>
 // 初始化高度表与 Fenwick 树（同步执行，保证首次渲染前 bit 已建好）
 function initHeights() {
   const N = props.list.length;
-  heights = new Float64Array(N).fill(
-    props.estimatedItemHeight
-  );
-  bit = new FenwickTree(
-    N,
-    props.estimatedItemHeight
-  );
+  heights = new Float64Array(N).fill(props.estimatedItemHeight);
+  bit = new FenwickTree(N, props.estimatedItemHeight);
   segmentsArr = buildSegments();
   displaySegIndex.value = 0;
   containerScrollTop.value = 0;
@@ -163,10 +136,7 @@ function buildSegments() {
   let acc = 0;
   for (let i = 0; i < N; i++) {
     const h = heights[i];
-    if (
-      i > segStart &&
-      acc + h > target
-    ) {
+    if (i > segStart && acc + h > target) {
       segs.push([segStart, i]);
       segStart = i;
       acc = 0;
@@ -184,10 +154,7 @@ function segmentIndexAt(pos) {
   let ans = 0;
   while (lo <= hi) {
     const mid = (lo + hi) >> 1;
-    if (
-      bit.sum(segmentsArr[mid][0]) <=
-      pos
-    ) {
+    if (bit.sum(segmentsArr[mid][0]) <= pos) {
       ans = mid;
       lo = mid + 1;
     } else {
@@ -202,112 +169,65 @@ const segments = computed(() => {
   tick.value;
   return segmentsArr;
 });
-const totalSegments = computed(
-  () => segments.value.length
-);
+const totalSegments = computed(() => segments.value.length);
 // 钳制，避免 displaySegIndex 越界（重建后段数可能变化）
 const currentSegIndex = computed(() =>
   Math.min(
     Math.max(0, displaySegIndex.value),
-    Math.max(
-      0,
-      segments.value.length - 1
-    )
+    Math.max(0, segments.value.length - 1)
   )
 );
 const currentSeg = computed(
-  () =>
-    segments.value[
-      currentSegIndex.value
-    ] || [0, props.list.length]
+  () => segments.value[currentSegIndex.value] || [0, props.list.length]
 );
-const segStartOffset = computed(() =>
-  bit.sum(currentSeg.value[0])
-);
+const segStartOffset = computed(() => bit.sum(currentSeg.value[0]));
 const segHeight = computed(() =>
-  Math.max(
-    0,
-    bit.sum(currentSeg.value[1]) -
-      segStartOffset.value
-  )
+  Math.max(0, bit.sum(currentSeg.value[1]) - segStartOffset.value)
 );
 const maxTop = computed(() =>
-  Math.max(
-    0,
-    segHeight.value -
-      containerHeight.value
-  )
+  Math.max(0, segHeight.value - containerHeight.value)
 );
 // 段内滚动距离（钳制到合法范围）
 const localScrollTop = computed(() =>
-  Math.min(
-    Math.max(
-      0,
-      containerScrollTop.value
-    ),
-    maxTop.value
-  )
+  Math.min(Math.max(0, containerScrollTop.value), maxTop.value)
 );
 // 视口顶在全局坐标的像素位置（推导值，仅用于渲染/锚点）
-const globalTop = computed(
-  () =>
-    segStartOffset.value +
-    localScrollTop.value
-);
+const globalTop = computed(() => segStartOffset.value + localScrollTop.value);
 
 // 当前段内第一个可见 item
 const startIndex = computed(() => {
   tick.value;
-  const gi = bit.findIndex(
-    globalTop.value
-  );
-  return Math.max(
-    currentSeg.value[0],
-    gi - props.bufferCount
-  );
+  const gi = bit.findIndex(globalTop.value);
+  return Math.max(currentSeg.value[0], gi - props.bufferCount);
 });
 // 当前段内最后一个可见 item（扫描累计高度直到覆盖视口）
 const endIndex = computed(() => {
   tick.value;
   const seg = currentSeg.value;
   const startOff = bit.sum(seg[0]);
-  let cum =
-    bit.sum(startIndex.value) -
-    startOff; // 第一个 item 顶部（段内坐标）
+  let cum = bit.sum(startIndex.value) - startOff; // 第一个 item 顶部（段内坐标）
   let end = startIndex.value;
-  const bottom =
-    localScrollTop.value +
-    containerHeight.value;
+  const bottom = localScrollTop.value + containerHeight.value;
   while (end < seg[1] && cum < bottom) {
     cum += heights[end];
     end++;
   }
-  return Math.min(
-    seg[1],
-    end + props.bufferCount
-  );
+  return Math.min(seg[1], end + props.bufferCount);
 });
 
 const visibleData = computed(() =>
-  props.list.slice(
-    startIndex.value,
-    endIndex.value
-  )
+  props.list.slice(startIndex.value, endIndex.value)
 );
 
 // 可见区域偏移量：让首个渲染 item 出现在正确屏幕位置。
 // 注意：visible-area 是容器内的绝对定位元素，会随滚动一起上移，
 // 因此 offsetY = 首个渲染 item 的「段内全局偏移」即可，不要再减 localScrollTop（否则滚动量被减两遍，item 飞出视口）。
 const offsetY = computed(
-  () =>
-    bit.sum(startIndex.value) -
-    segStartOffset.value
+  () => bit.sum(startIndex.value) - segStartOffset.value
 );
 
 // 撑高元素高度 = 当前段真实高度（已测量则用真实高度，保证 ≤ 上限）
-const phantomHeight = computed(
-  () => segHeight.value
-);
+const phantomHeight = computed(() => segHeight.value);
 
 // 必须在首次渲染前同步初始化
 initHeights();
@@ -335,31 +255,20 @@ function scheduleRebuild() {
     // 记录当前视口顶的全局像素位置与所在 item，用于重建后精确还原
     const anchorTop = globalTop.value;
     segmentsArr = buildSegments();
-    const newSeg =
-      segmentIndexAt(anchorTop);
-    const newStart = bit.sum(
-      segments.value[newSeg][0]
-    );
+    const newSeg = segmentIndexAt(anchorTop);
+    const newStart = bit.sum(segments.value[newSeg][0]);
     const newMaxTop = Math.max(
       0,
-      bit.sum(
-        segments.value[newSeg][1]
-      ) -
-        newStart -
-        containerHeight.value
+      bit.sum(segments.value[newSeg][1]) - newStart - containerHeight.value
     );
-    const newLocal = Math.min(
-      Math.max(0, anchorTop - newStart),
-      newMaxTop
-    );
+    const newLocal = Math.min(Math.max(0, anchorTop - newStart), newMaxTop);
     displaySegIndex.value = newSeg;
     containerScrollTop.value = newLocal;
     tick.value++;
     // 同步 DOM 滚动位置（避免内容跳动）；该次 scroll 事件由 suppressNextScroll 屏蔽
     if (containerRef.value) {
       suppressNextScroll = true;
-      containerRef.value.scrollTop =
-        newLocal;
+      containerRef.value.scrollTop = newLocal;
     }
   });
 }
@@ -374,10 +283,7 @@ function handleScroll(e) {
   const local = el.scrollTop;
   const segIdx = currentSegIndex.value;
   // 向下滚到本段底部 → 进入下一段并把滚动条回顶（回顶后 scrollTop=0，不会再次触发跨段）
-  if (
-    local >= maxTop.value - 1 &&
-    segIdx < segments.value.length - 1
-  ) {
+  if (local >= maxTop.value - 1 && segIdx < segments.value.length - 1) {
     displaySegIndex.value = segIdx + 1;
     containerScrollTop.value = 0;
     el.scrollTop = 0;
@@ -390,34 +296,23 @@ const handleWheel = e => {
   const el = containerRef.value;
   if (!el) return;
   // 向上滚到本段顶部 → 回到上一段底部（target == maxTop，会被误判成「到底」，故用 suppressNextScroll 屏蔽）
-  if (
-    e.deltaY < 0 &&
-    el.scrollTop <= 0 &&
-    currentSegIndex.value > 0
-  ) {
-    const newIdx =
-      currentSegIndex.value - 1;
+  if (e.deltaY < 0 && el.scrollTop <= 0 && currentSegIndex.value > 0) {
+    const newIdx = currentSegIndex.value - 1;
     const seg = segments.value[newIdx];
     const startOff = bit.sum(seg[0]);
-    const h =
-      bit.sum(seg[1]) - startOff;
-    const target = Math.max(
-      0,
-      h - containerHeight.value
-    );
+    const h = bit.sum(seg[1]) - startOff;
+    const target = Math.max(0, h - containerHeight.value);
     displaySegIndex.value = newIdx;
     containerScrollTop.value = target;
     suppressNextScroll = true;
     el.scrollTop = target;
-    if (e.cancelable)
-      e.preventDefault();
+    if (e.cancelable) e.preventDefault();
   }
 };
 
 const updateContainerHeight = () => {
   if (containerRef.value)
-    containerHeight.value =
-      containerRef.value.clientHeight;
+    containerHeight.value = containerRef.value.clientHeight;
 };
 
 let resizeObserver = null;
@@ -425,101 +320,64 @@ let wheelListener = null;
 onMounted(() => {
   updateContainerHeight();
   if (containerRef.value)
-    containerRef.value.scrollTop =
-      containerScrollTop.value;
+    containerRef.value.scrollTop = containerScrollTop.value;
   ro = new ResizeObserver(entries => {
     let needAnchor = false;
     let anchorDelta = 0;
     for (const entry of entries) {
-      const idx =
-        +entry.target.dataset.index;
+      const idx = +entry.target.dataset.index;
       if (Number.isNaN(idx)) continue;
       const h =
-        entry.borderBoxSize &&
-        entry.borderBoxSize[0]
-          ? entry.borderBoxSize[0]
-              .blockSize
+        entry.borderBoxSize && entry.borderBoxSize[0]
+          ? entry.borderBoxSize[0].blockSize
           : entry.target.offsetHeight;
-      if (
-        h > 0 &&
-        Math.abs(h - heights[idx]) > 0.5
-      ) {
+      if (h > 0 && Math.abs(h - heights[idx]) > 0.5) {
         const delta = h - heights[idx];
         heights[idx] = h;
         bit.add(idx, delta);
         // 滚动锚定：仅当该 item 位于「当前段、视口上方」时，修正段内滚动距离避免跳动
-        if (
-          idx >= currentSeg.value[0] &&
-          idx < startIndex.value
-        ) {
+        if (idx >= currentSeg.value[0] && idx < startIndex.value) {
           anchorDelta += delta;
           needAnchor = true;
         }
         tick.value++;
       }
     }
-    if (
-      needAnchor &&
-      anchorDelta !== 0
-    ) {
-      containerScrollTop.value =
-        Math.max(
-          0,
-          containerScrollTop.value +
-            anchorDelta
-        );
+    if (needAnchor && anchorDelta !== 0) {
+      containerScrollTop.value = Math.max(
+        0,
+        containerScrollTop.value + anchorDelta
+      );
     }
     scheduleRebuild();
   });
-  if (
-    typeof ResizeObserver !==
-      'undefined' &&
-    containerRef.value
-  ) {
-    resizeObserver = new ResizeObserver(
-      updateContainerHeight
-    );
-    resizeObserver.observe(
-      containerRef.value
-    );
+  if (typeof ResizeObserver !== 'undefined' && containerRef.value) {
+    resizeObserver = new ResizeObserver(updateContainerHeight);
+    resizeObserver.observe(containerRef.value);
   }
   wheelListener = handleWheel;
-  containerRef.value?.addEventListener(
-    'wheel',
-    wheelListener,
-    { passive: false }
-  );
+  containerRef.value?.addEventListener('wheel', wheelListener, {
+    passive: false
+  });
 });
 onBeforeUnmount(() => {
   resizeObserver?.disconnect();
   resizeObserver = null;
   ro?.disconnect();
   ro = null;
-  if (
-    wheelListener &&
-    containerRef.value
-  ) {
-    containerRef.value.removeEventListener(
-      'wheel',
-      wheelListener
-    );
+  if (wheelListener && containerRef.value) {
+    containerRef.value.removeEventListener('wheel', wheelListener);
   }
 });
 
-watch(
-  () => props.list.length,
-  initHeights
-);
+watch(() => props.list.length, initHeights);
 </script>
 
 <template>
   <div
     class="dynamic-segmented-virtual-list"
     :style="{
-      height:
-        typeof height === 'number'
-          ? height + 'px'
-          : height
+      height: typeof height === 'number' ? height + 'px' : height
     }"
   >
     <div
@@ -540,18 +398,10 @@ watch(
           }"
         >
           <div
-            v-for="(
-              item, i
-            ) in visibleData"
+            v-for="(item, i) in visibleData"
             :key="resolveKey(item)"
             class="list-item"
-            :ref="
-              el =>
-                setItemRef(
-                  el,
-                  startIndex + i
-                )
-            "
+            :ref="el => setItemRef(el, startIndex + i)"
           >
             <slot
               name="item"
@@ -562,14 +412,10 @@ watch(
       </div>
     </div>
     <div class="segment-badge">
-      第 {{ currentSegIndex + 1 }} /
-      {{ totalSegments }} 段 · 共
+      第 {{ currentSegIndex + 1 }} / {{ totalSegments }} 段 · 共
       {{ list.length }} 条
       <span class="seg-range"
-        >（本段
-        {{ currentSeg[0] + 1 }}–{{
-          currentSeg[1]
-        }}）</span
+        >（本段 {{ currentSeg[0] + 1 }}–{{ currentSeg[1] }}）</span
       >
     </div>
   </div>

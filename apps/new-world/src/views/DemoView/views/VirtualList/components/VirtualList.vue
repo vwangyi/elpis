@@ -1,10 +1,5 @@
 <script setup>
-import {
-  ref,
-  computed,
-  onMounted,
-  onBeforeUnmount
-} from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 
 const props = defineProps({
   // 列表数据
@@ -47,17 +42,11 @@ const scrollTop = ref(0);
 const containerHeight = ref(0);
 
 // 理论总高度
-const totalHeight = computed(
-  () =>
-    props.list.length * props.itemHeight
-);
+const totalHeight = computed(() => props.list.length * props.itemHeight);
 
 // 撑高元素实际渲染高度：不超过浏览器上限，避免被裁剪
 const phantomHeight = computed(() =>
-  Math.min(
-    totalHeight.value,
-    props.maxScrollHeight
-  )
+  Math.min(totalHeight.value, props.maxScrollHeight)
 );
 
 // 滚动映射比例：把 phantom 滚动区间 [0, phantomHeight - H]
@@ -69,28 +58,16 @@ const scrollRatio = computed(() => {
   const H = containerHeight.value;
   const ph = phantomHeight.value;
   // 内容不足一屏，或无需缩放（总高度未超上限）
-  if (
-    ph <= H ||
-    totalHeight.value <= ph
-  )
-    return 1;
-  return (
-    (totalHeight.value - H) / (ph - H)
-  );
+  if (ph <= H || totalHeight.value <= ph) return 1;
+  return (totalHeight.value - H) / (ph - H);
 });
 
 // 真实滚动位置（内容坐标系）
-const realTop = computed(
-  () =>
-    scrollTop.value * scrollRatio.value
-);
+const realTop = computed(() => scrollTop.value * scrollRatio.value);
 
 // 开始索引（向上多渲染 bufferCount 条做缓冲）
 const startIndex = computed(() => {
-  const idx =
-    Math.floor(
-      realTop.value / props.itemHeight
-    ) - props.bufferCount;
+  const idx = Math.floor(realTop.value / props.itemHeight) - props.bufferCount;
   return Math.max(0, idx);
 });
 
@@ -98,62 +75,39 @@ const startIndex = computed(() => {
 const endIndex = computed(() => {
   const H = containerHeight.value;
   const idx =
-    Math.ceil(
-      (realTop.value + H) /
-        props.itemHeight
-    ) + props.bufferCount;
-  return Math.min(
-    props.list.length,
-    idx
-  );
+    Math.ceil((realTop.value + H) / props.itemHeight) + props.bufferCount;
+  return Math.min(props.list.length, idx);
 });
 
 // 实际要渲染的数据
 const visibleData = computed(() => {
-  return props.list.slice(
-    startIndex.value,
-    endIndex.value
-  );
+  return props.list.slice(startIndex.value, endIndex.value);
 });
 
 // 可见区域偏移量：让首个渲染项出现在正确的屏幕位置
 // （包含被滚出视口的上半截部分，保证与滚动位置对齐）
 const offsetY = computed(
-  () =>
-    scrollTop.value +
-    startIndex.value *
-      props.itemHeight -
-    realTop.value
+  () => scrollTop.value + startIndex.value * props.itemHeight - realTop.value
 );
 
 // 滚动事件处理
 const handleScroll = e => {
-  scrollTop.value =
-    e.currentTarget.scrollTop;
+  scrollTop.value = e.currentTarget.scrollTop;
 };
 
 // 容器高度可能在布局/响应式时变化，监听以确保比例准确
 const updateContainerHeight = () => {
   if (containerRef.value) {
-    containerHeight.value =
-      containerRef.value.clientHeight;
+    containerHeight.value = containerRef.value.clientHeight;
   }
 };
 
 let resizeObserver = null;
 onMounted(() => {
   updateContainerHeight();
-  if (
-    typeof ResizeObserver !==
-      'undefined' &&
-    containerRef.value
-  ) {
-    resizeObserver = new ResizeObserver(
-      updateContainerHeight
-    );
-    resizeObserver.observe(
-      containerRef.value
-    );
+  if (typeof ResizeObserver !== 'undefined' && containerRef.value) {
+    resizeObserver = new ResizeObserver(updateContainerHeight);
+    resizeObserver.observe(containerRef.value);
   }
 });
 onBeforeUnmount(() => {

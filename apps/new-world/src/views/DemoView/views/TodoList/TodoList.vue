@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import { useTodoStore } from '@/stores/todo';
-import {
-  ref,
-  computed,
-  onMounted
-} from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { message } from 'ant-design-vue';
-import {
-  DeleteOutlined,
-  EditOutlined
-} from '@ant-design/icons-vue';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons-vue';
 import type { Todo } from '@/types/todo';
 
 const todoStore = useTodoStore();
@@ -36,19 +29,14 @@ const activeKey = ref('1');
 
 const todoInp = computed({
   get: () => todoStore.todoInp,
-  set: val =>
-    todoStore.updateTodoInp(val)
+  set: val => todoStore.updateTodoInp(val)
 });
 
-const todoList = computed(
-  () => todoStore.todoList
-);
+const todoList = computed(() => todoStore.todoList);
 
 /* ---------- 加载列表 ---------- */
 async function loadList() {
-  const tab = tabs.find(
-    t => t.key === activeKey.value
-  );
+  const tab = tabs.find(t => t.key === activeKey.value);
   await todoStore.findAll(
     todoStore.page,
     todoStore.pageSize,
@@ -59,15 +47,14 @@ async function loadList() {
 
 /* ---------- 新增 ---------- */
 async function handleEnter() {
-  const title = `${Math.random() * 3}${todoStore.todoInp.trim()}`;
+  const title = todoStore.todoInp.trim();
   if (!title) {
     message.warning('请输入待办内容');
     return;
   }
-  const res =
-    await todoStore.createTodo({
-      title
-    });
+  const res = await todoStore.createTodo({
+    title
+  });
   if (res.success) {
     message.success('添加成功');
     todoStore.updateTodoInp('');
@@ -75,27 +62,16 @@ async function handleEnter() {
     todoStore.page = 1;
     await loadList();
   } else {
-    message.error(
-      res.message || '添加失败'
-    );
+    message.error(res.message || '添加失败');
   }
 }
 
 /* ---------- 切换完成状态 ---------- */
-async function handleToggleStatus(
-  todo: Todo
-) {
-  const newStatus =
-    todo.status === 1 ? 0 : 1;
-  const res =
-    await todoStore.updateTodo(
-      todo.id,
-      { status: newStatus }
-    );
+async function handleToggleStatus(todo: Todo) {
+  const newStatus = todo.status === 1 ? 0 : 1;
+  const res = await todoStore.updateTodo(todo.id, { status: newStatus });
   if (!res.success) {
-    message.error(
-      res.message || '更新失败'
-    );
+    message.error(res.message || '更新失败');
     return;
   }
   // 在「未完成 / 已完成」标签下，切换状态后需重新加载（该项应离开当前列表）
@@ -127,26 +103,22 @@ function handleEdit(todo: Todo) {
 }
 
 async function handleEditOk() {
-  const { id, title, description } =
-    editForm.value;
+  const { id, title, description } = editForm.value;
   if (!title.trim()) {
     message.warning('标题不能为空');
     return;
   }
   editLoading.value = true;
   try {
-    const res =
-      await todoStore.updateTodo(id, {
-        title: title.trim(),
-        description
-      });
+    const res = await todoStore.updateTodo(id, {
+      title: title.trim(),
+      description
+    });
     if (res.success) {
       message.success('更新成功');
       editVisible.value = false;
     } else {
-      message.error(
-        res.message || '更新失败'
-      );
+      message.error(res.message || '更新失败');
     }
   } finally {
     editLoading.value = false;
@@ -154,25 +126,17 @@ async function handleEditOk() {
 }
 
 /* ---------- 删除 ---------- */
-async function handleDelete(
-  id: number
-) {
-  const res =
-    await todoStore.removeTodo(id);
+async function handleDelete(id: number) {
+  const res = await todoStore.removeTodo(id);
   if (res.success) {
     message.success('删除成功');
     // 当前页删空时回退一页
-    if (
-      todoList.value.length === 0 &&
-      todoStore.page > 1
-    ) {
+    if (todoList.value.length === 0 && todoStore.page > 1) {
       todoStore.page -= 1;
     }
     await loadList();
   } else {
-    message.error(
-      res.message || '删除失败'
-    );
+    message.error(res.message || '删除失败');
   }
 }
 
@@ -183,17 +147,12 @@ async function handleTabChange() {
 }
 
 /* ---------- 分页 ---------- */
-async function handlePageChange(
-  p: number,
-  ps: number
-) {
+async function handlePageChange(p: number, ps: number) {
   await todoStore.findAll(
     p,
     ps,
     undefined,
-    tabs.find(
-      t => t.key === activeKey.value
-    )?.status
+    tabs.find(t => t.key === activeKey.value)?.status
   );
 }
 
@@ -207,17 +166,17 @@ onMounted(() => {
     <div class="container">
       <!-- 新增输入框 -->
       <a-input
-        class="todo-inp"
         v-model:value="todoInp"
+        class="todo-inp"
         placeholder="请输入待办事项，按回车添加"
         allow-clear
-        @pressEnter="handleEnter"
+        @press-enter="handleEnter"
       />
 
       <!-- 标签页 -->
       <div class="todo-tabs">
         <a-tabs
-          v-model:activeKey="activeKey"
+          v-model:active-key="activeKey"
           centered
           @change="handleTabChange"
         >
@@ -227,77 +186,48 @@ onMounted(() => {
             :tab="tab.label"
           >
             <div class="list-container">
-              <a-spin
-                :spinning="
-                  todoStore.loading
-                "
-              >
+              <a-spin :spinning="todoStore.loading">
                 <a-empty
-                  v-if="
-                    todoList.length ===
-                    0
-                  "
+                  v-if="todoList.length === 0"
                   description="暂无待办"
                   :image="undefined"
                 />
                 <div
-                  class="list-card"
                   v-for="item in todoList"
                   :key="item.id"
+                  class="list-card"
                 >
                   <a-checkbox
-                    :checked="
-                      item.status === 1
-                    "
-                    @change="
-                      handleToggleStatus(
-                        item
-                      )
-                    "
+                    :checked="item.status === 1"
+                    @change="handleToggleStatus(item)"
                   >
                     <span
                       :class="{
-                        done:
-                          item.status ===
-                          1
+                        done: item.status === 1
                       }"
                     >
                       {{ item.title }}
                     </span>
                     <span
-                      v-if="
-                        item.description
-                      "
+                      v-if="item.description"
                       class="card-desc"
                     >
                       —
-                      {{
-                        item.description
-                      }}
+                      {{ item.description }}
                     </span>
                   </a-checkbox>
-                  <div
-                    class="card-actions"
-                  >
+                  <div class="card-actions">
                     <EditOutlined
                       class="card-icon edit"
-                      @click="
-                        handleEdit(item)
-                      "
+                      @click="handleEdit(item)"
                     />
                     <a-popconfirm
                       title="确定删除该待办吗？"
                       ok-text="删除"
                       cancel-text="取消"
-                      @confirm="
-                        handleDelete(
-                          item.id
-                        )
-                      "
+                      @confirm="handleDelete(item.id)"
                     >
-                      <DeleteOutlined
-                        class="card-icon delete"
-                      />
+                      <DeleteOutlined class="card-icon delete" />
                     </a-popconfirm>
                   </div>
                 </div>
@@ -311,14 +241,11 @@ onMounted(() => {
       <div class="todo-pagination">
         <a-pagination
           :current="todoStore.page"
-          :pageSize="todoStore.pageSize"
+          :page-size="todoStore.pageSize"
           :total="todoStore.todoTotal"
           size="small"
           show-size-changer
-          :show-total="
-            (total: number) =>
-              `共 ${total} 条`
-          "
+          :show-total="(total: number) => `共 ${total} 条`"
           @change="handlePageChange"
         />
       </div>
@@ -337,17 +264,13 @@ onMounted(() => {
           required
         >
           <a-input
-            v-model:value="
-              editForm.title
-            "
+            v-model:value="editForm.title"
             placeholder="请输入标题"
           />
         </a-form-item>
         <a-form-item label="描述">
           <a-textarea
-            v-model:value="
-              editForm.description
-            "
+            v-model:value="editForm.description"
             :rows="3"
             placeholder="请输入描述（可选）"
           />
@@ -406,8 +329,7 @@ onMounted(() => {
   background: white;
   border-radius: 20px;
   padding: 12px 16px 12px 20px;
-  box-shadow: 0 2px 6px
-    rgba(0, 0, 0, 0.03);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
   border: 1px solid #edf2f7;
   transition: all 0.2s;
 

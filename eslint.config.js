@@ -7,6 +7,12 @@ import eslintPluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
+/**
+ * rules
+ * 关闭 >>> 0 或 'off' 表示关闭 允许使用
+ * 警告 >>> 1 或 'warn' 表示警告 允许使用
+ * 错误 >>> 2 或 'error' 表示错误 不允许使用
+ */
 // 忽略所有文件和目录
 const ignores = [
   '**/node_modules',
@@ -18,12 +24,14 @@ const ignores = [
   'demo',
   'scripts',
   'packages/*',
-  'apps/*'
+  'apps/all-blue/*',
+  'apps/new-world/*'
+  // 'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
 ];
 const rules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
-  '@typescript-eslint/no-unused-vars': 0, // 未使用的变量
-  'no-unreachable': 0, // 无法访问的代码 比如 return后面的代码
+  '@typescript-eslint/no-unused-vars': 'off', // 未使用的变量
+  'no-unreachable': 'off', // 无法访问的代码 比如 return后面的代码
   // 不能使用var
   'no-var': 'error',
   // 强制在注释中 // 或 /* 使用一致的空格
@@ -145,12 +153,12 @@ const rules = {
   'vue/return-in-computed-property': 'error',
   // vue中不能使用无效的nextTick
   'vue/valid-next-tick': 'error',
-  // 强制每行最多2个属性（可根据需求调整）
+  // 强制每行最多1个属性：只有1个属性时不换行，>=2个属性强制换行（与 Prettier singleAttributePerLine 一致）
   'vue/max-attributes-per-line': [
     'error',
     {
       singleline: {
-        max: 3 // 单行最多3个属性
+        max: 1 // 单行最多1个属性
       },
       multiline: {
         max: 1 // 多行时每行1个属性
@@ -221,7 +229,7 @@ const rules = {
 
 export default defineConfig([
   { ignores },
-  // 通用配置
+  /* 所有项目的基础通用eslint配置 */
   {
     ignores, // 忽略项
     // 继承规则
@@ -239,32 +247,8 @@ export default defineConfig([
       parser: tseslint.parser // 解析器
     },
     rules: {
-      /**
-       * 关闭 >>> 0 或 'off' 表示关闭 也表示允许使用
-       * 警告 >>> 1 或 'warn'
-       * 错误 >>> 2 或 'error'
-       */
-      'no-var': 2
+      'no-var': 'error'
     }
-  },
-  /* vue项目 */
-  {
-    ignores,
-    files: [
-      'packages/design/**/*.{ts,js,tsx,jsx,vue}',
-      'apps/new-world/**/*.{ts,js,tsx,jsx,vue}',
-      'packages/api/**/*.{ts,js,tsx,jsx,vue}'
-    ],
-    extends: [
-      ...eslintPluginVue.configs['flat/recommended'],
-      eslintConfigPrettier
-    ],
-    languageOptions: {
-      globals: {
-        ...globals.browser
-      }
-    },
-    rules
   },
   /* nestjs项目 */
   {
@@ -272,7 +256,7 @@ export default defineConfig([
     files: ['apps/all-blue/**/*.{ts,js}'],
     languageOptions: {
       globals: {
-        ...globals.node,
+        ...globals.node, // 添加 Node.js 全局变量
         ...globals.mocha, // 添加 Mocha 全局变量 测试框架
         vi: 'readonly', // 如果使用 Vitest
         jest: 'readonly' // 如果使用 Jest
@@ -280,8 +264,8 @@ export default defineConfig([
     },
     rules: {
       '@typescript-eslint/no-require-imports': 'off', // 使用require函数
-      '@typescript-eslint/no-unused-vars': 0, // 未使用的变量
-      'no-unreachable': 0, // 无法访问的代码 比如 return后面的代码
+      '@typescript-eslint/no-unused-vars': 'off', // 未使用的变量
+      'no-unreachable': 'off', // 无法访问的代码 比如 return后面的代码
 
       // 禁止使用 var，强制使用 let 或 const
       'no-var': 'error',
@@ -295,26 +279,27 @@ export default defineConfig([
       ]
     }
   },
-
-  /* cli 项目 */
+  /* 所有的vue项目共享同一套eslint规则 */
   {
-    files: ['packages/cli/**/*.js'],
+    ignores,
+    files: [
+      'apps/new-world/**/*.{ts,js,tsx,jsx,vue}',
+      'packages/design/**/*.{ts,js,tsx,jsx,vue}'
+    ],
+    extends: [
+      ...eslintPluginVue.configs['flat/recommended'],
+      eslintConfigPrettier
+    ],
     languageOptions: {
+      parserOptions: {
+        // <script setup lang="ts"> 需要 TS 解析器，否则 import type 等语法会报 Parsing error
+        parser: tseslint.parser
+      },
       globals: {
-        ...globals.node // 添加 Node.js 全局变量
-      }
-    },
-    rules: {
-      '@typescript-eslint/no-require-imports': 'off' // 允许使用require函数
-    }
-  },
-  {
-    files: ['apps/vue3-electron-vite/**/*.{ts,js}'],
-    languageOptions: {
-      globals: {
-        ...globals.node,
         ...globals.browser
       }
-    }
+    },
+    rules
   }
+  // ...后续新增其他项目
 ]);

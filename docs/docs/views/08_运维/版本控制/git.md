@@ -1,3 +1,35 @@
+# git命令
+
+
+## 常用git命令
+```sh 
+# 克隆仓库
+git clone -b 分支名 远程地址
+git clone -b master http:xx 
+
+# 新建分支
+git checkout -b 新分支名 # 基于当前分支 创建新分支 并切换到新分支 
+git branch 新分支名 # 基于当前分支 创建新分支 但不切换到新分支
+git checkout 分支名 # 切换到指定分支
+git checkout -b dev origin/dev # 新建本地dev分支和远程dev分支保持一致 
+ 
+# 查看分支
+git branch -a  # 查看分支 简写
+git branch -all  # 查看分支
+git log --graph --pretty=oneline --abbrev-commit --all  # 查看分支合并图
+ 
+# 删除分支 
+# 直接删除.git 隐藏文件夹 重新git init 重新建立版本库 
+git branch -d 分支名 # 删除本地分支 （会检查当前分支是否合并过）
+git branch -D 分支名 # 强制删除本地分支 （不做任何检查 强制删除 （少用））
+git push origin -d 分支名 # 删除远程分支  git push origin -d pro 
+git branch -dr origin/远程分支名 # 删除追踪分支 （只是删除了本地分支和远程分支的关联 并没有删除本地和远程的分支）
+
+  
+
+```
+
+
 ## git项目分支 
 - main分支： 和生产环境一致
 
@@ -112,45 +144,6 @@ incoming 进来的
 ```
 
 
-
-git 命令
-
-```shell
-// 克隆仓库
-git clone -b 分支名 远程地址  
-
-
-# 新建分支
-git checkout -b 新分支名 # 基于当前分支 创建新分支并切换到新分支 （常用）
-git branch 新分支名 # 基于当前分支 创建新分支 
-git checkout 分支名 # 切换到指定分支
- 
-
-git branch -a  # 查看分支 简写
-git branch -all  # 查看分支
-git log --graph --pretty=oneline --abbrev-commit --all  # 查看分支合并图
- 
-# 删除分支 
-git branch -d 本地分支名 # 删除本地分支 （会检查当前分支是否合并过）
-git branch -D 本地分支名 # 强制删除本地分支 （不做任何检查 强制删除 （少用））
- 
-git push origin -d 分支名  # 删除远程分支
-  
-git branch -dr origin/远程分支名 # 删除追踪分支 只是删除了本地分支和远程分支的关联
-
-
-# 直接删除.git 隐藏文件夹 重新git init 重新建立版本库
-
-
-
-
-
-
-
-git clone -b master http:xx 
-
-git checkout -b dev origin/dev // 新建本地dev分支和远程dev分支保持一致 
-```
 
 master分支（固定存在） 永远和生产保持一致 
 
