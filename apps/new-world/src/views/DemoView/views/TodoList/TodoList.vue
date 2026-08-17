@@ -59,7 +59,8 @@ async function loadList() {
 
 /* ---------- 新增 ---------- */
 async function handleEnter() {
-  const title = `${Math.random() * 3}${todoStore.todoInp.trim()}`;
+  const title =
+    todoStore.todoInp.trim();
   if (!title) {
     message.warning('请输入待办内容');
     return;

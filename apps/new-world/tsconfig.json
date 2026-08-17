@@ -1,6 +1,6 @@
 {
   "extends": "../../tsconfig.json",
-  "compilerOptions": { 
+  "compilerOptions": {  
     "moduleResolution": "bundler", 
     "lib": ["ESNext", "DOM", "DOM.Iterable"],  
     "paths": {
@@ -8,5 +8,5 @@
     }
   }, 
   "exclude": ["node_modules", "dist"],
-  "include": ["src/**/*.ts", "src/**/*.tsx"], // 只包含当前目录下的 src
+  "include": ["./src/**/*.ts", "./src/**/*.tsx"], // 只包含当前目录下的 src
 }
