@@ -84,6 +84,14 @@ export const routes = [
         component: () => {
           return import('@/views/DemoView/views/TodoList/TodoList.vue');
         }
+      },
+      {
+        path: 'chat-room',
+        name: 'ChatRoom',
+        meta: { title: '聊天室' },
+        component: () => {
+          return import('@/views/DemoView/views/ChatView/ChatView.vue');
+        }
       }
     ]
   },
