@@ -10,6 +10,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { TodoModule } from './todo/todo.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -46,7 +47,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     UserModule,
     UploadModule,
     AuthModule,
-    TodoModule
+    TodoModule,
+    ChatModule
   ],
   controllers: [AppController],
   providers: [AppService]
