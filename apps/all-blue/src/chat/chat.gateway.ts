@@ -114,7 +114,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @SubscribeMessage('chatMessage')
   async handleChatMessage(
     @ConnectedSocket() client: Socket,
-    @MessageBody(new ValidationPipe({ whitelist: true })) body: CreateChatDto
+    @MessageBody(new ValidationPipe({ whitelist: true }))
+    body: CreateChatDto
   ) {
     const user = this.onlineUsers.get(client.id);
     if (!user) {
@@ -156,7 +157,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   handleGetOnlineUsers(@ConnectedSocket() client: Socket) {
     const user = this.onlineUsers.get(client.id);
     if (user) {
-      client.emit('onlineUsers', { users: this.getOnlineUsers(user.room) });
+      client.emit('onlineUsers', {
+        users: this.getOnlineUsers(user.room)
+      });
     }
   }
 

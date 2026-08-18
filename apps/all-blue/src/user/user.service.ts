@@ -78,7 +78,10 @@ export class UserService {
     // 实现或者关系 需要用到 createQueryBuilder 的方式 写sql
     return this.userRepository
       .createQueryBuilder('user')
-      .where('user.username = :username or user.age = :age', { username, age })
+      .where('user.username = :username or user.age = :age', {
+        username,
+        age
+      })
       .getMany();
   }
 

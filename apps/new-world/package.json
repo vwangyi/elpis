@@ -1,11 +1,11 @@
 {
-  "name": "new-world",
-  "version": "0.0.0",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "vite"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+    "name": "new-world",
+    "version": "0.0.0",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite"
+    },
+    "dependencies": {},
+    "devDependencies": {}
 }

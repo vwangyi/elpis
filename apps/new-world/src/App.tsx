@@ -1,5 +1,5 @@
 import { RouterView } from 'vue-router';
 function setup() {
-  return () => <RouterView />;
+    return () => <RouterView />;
 }
 export default { setup };

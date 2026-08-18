@@ -1,14 +1,14 @@
 {
-  "recommendations": [
-    // Vue 相关
-    "Vue.volar",
-    "Vue.vscode-typescript-vue-plugin",
-    // AI 编程助手
-    "GitHub.copilot",
-    "GitHub.copilot-chat",
-    // 其他常用工具
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss"
-  ]
+    "recommendations": [
+        // Vue 相关
+        "Vue.volar",
+        "Vue.vscode-typescript-vue-plugin",
+        // AI 编程助手
+        "GitHub.copilot",
+        "GitHub.copilot-chat",
+        // 其他常用工具
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+    ]
 }

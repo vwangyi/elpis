@@ -1,48 +1,48 @@
 {
-  "extends": "../../tsconfig.json",
-  "compilerOptions": {
-    // ===== 以下配置覆盖根 tsconfig.json 中不适用于 NestJS 的设置 =====
+    "extends": "../../tsconfig.json",
+    "compilerOptions": {
+        // ===== 以下配置覆盖根 tsconfig.json 中不适用于 NestJS 的设置 =====
 
-    // 根配置为 noEmit: true（Vue 前端用，由 Vite 负责编译输出）
-    // NestJS 需要由 tsc 实际产出 .js 文件，必须关闭
-    "noEmit": false,
+        // 根配置为 noEmit: true（Vue 前端用，由 Vite 负责编译输出）
+        // NestJS 需要由 tsc 实际产出 .js 文件，必须关闭
+        "noEmit": false,
 
-    // 表示当前源码在 ./src里面
-    "rootDir": "./src",
-    // 根配置的 "./dist" 继承后会解析为项目根目录的 dist/
-    // 这里显式指定为当前子包的 dist/，与 nest-cli.json 的 deleteOutDir 配合
-    "outDir": "./dist",
+        // 表示当前源码在 ./src里面
+        "rootDir": "./src",
+        // 根配置的 "./dist" 继承后会解析为项目根目录的 dist/
+        // 这里显式指定为当前子包的 dist/，与 nest-cli.json 的 deleteOutDir 配合
+        "outDir": "./dist",
 
-    // tsc编译后使用什么模块化标准 commonjs , 即使编译前 nest采用esm 但编译后仍然是commonjs
-    // NestJS 官方脚手架默认的配置（module: "commonjs" + moduleResolution: "node"）。
-    // "module": "commonjs",
+        // tsc编译后使用什么模块化标准 commonjs , 即使编译前 nest采用esm 但编译后仍然是commonjs
+        // NestJS 官方脚手架默认的配置（module: "commonjs" + moduleResolution: "node"）。
+        // "module": "commonjs",
 
-    // 根配置为 "bundler"（给 Vite/Webpack 用的解析模式）
-    // NestJS 走 tsc 编译，需要 node 模式来正确解析 node_modules 依赖
-    // "moduleResolution": "node",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+        // 根配置为 "bundler"（给 Vite/Webpack 用的解析模式）
+        // NestJS 走 tsc 编译，需要 node 模式来正确解析 node_modules 依赖
+        // "moduleResolution": "node",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
 
-    // 根配置为 "esnext"，NestJS 官方推荐 es2021 即可
-    "target": "es2021",
-    // 根配置 lib 只有 ["esnext"]，补充 es2021 即可（NestJS 不需要 DOM）
-    "lib": ["es2021"],
+        // 根配置为 "esnext"，NestJS 官方推荐 es2021 即可
+        "target": "es2021",
+        // 根配置 lib 只有 ["esnext"]，补充 es2021 即可（NestJS 不需要 DOM）
+        "lib": ["es2021"],
 
-    // 根配置 allowImportingTsExtensions: true 要求 noEmit 或 emitDeclarationOnly
-    // 这里已关闭 noEmit，同时需要写 .js 输出，所以必须关闭此项
-    "allowImportingTsExtensions": false,
+        // 根配置 allowImportingTsExtensions: true 要求 noEmit 或 emitDeclarationOnly
+        // 这里已关闭 noEmit，同时需要写 .js 输出，所以必须关闭此项
+        "allowImportingTsExtensions": false,
 
-    // 根配置为 true，但该选项仅在 moduleResolution 为 node16/nodenext/bundler 时有效
-    // 使用 node 模式时必须关闭，否则报 TS5098
-    "resolvePackageJsonExports": false,
+        // 根配置为 true，但该选项仅在 moduleResolution 为 node16/nodenext/bundler 时有效
+        // 使用 node 模式时必须关闭，否则报 TS5098
+        "resolvePackageJsonExports": false,
 
-    // 同上，根配置为 true，仅在 node16/nodenext/bundler 模式下有效，node 模式下关闭
-    "noUncheckedSideEffectImports": false
-  },
+        // 同上，根配置为 true，仅在 node16/nodenext/bundler 模式下有效，node 模式下关闭
+        "noUncheckedSideEffectImports": false
+    },
 
-  // 根配置 include 为 ["apps/all-blue"]，继承后输出会保留 src/ 子目录层级
-  // 导致 main.js 生成在 dist/src/main.js 而非 dist/main.js
-  // 覆盖为 ["src"]，使输出直接落在 dist/ 下，与 start:prod 的 "node dist/main" 匹配
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+    // 根配置 include 为 ["apps/all-blue"]，继承后输出会保留 src/ 子目录层级
+    // 导致 main.js 生成在 dist/src/main.js 而非 dist/main.js
+    // 覆盖为 ["src"]，使输出直接落在 dist/ 下，与 start:prod 的 "node dist/main" 匹配
+    "include": ["src"],
+    "exclude": ["node_modules", "dist"]
 }

@@ -83,7 +83,10 @@ function bindSocketEvents(socket: Socket) {
   socket.on('connect', () => {
     // 断线重连后自动重新加入房间
     if (joined.value && nickname.value) {
-      socket.emit('join', { username: nickname.value, room: DEFAULT_ROOM });
+      socket.emit('join', {
+        username: nickname.value,
+        room: DEFAULT_ROOM
+      });
     }
   });
 
