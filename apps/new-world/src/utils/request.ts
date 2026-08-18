@@ -64,11 +64,12 @@ async function request<T = any>(
       message.error('请求超时', 5);
     }
     // 构造一个符合 ApiResponse 结构的失败对象，避免调用方出现 undefined
-    return Promise.resolve({
+    const result: ApiResponse = {
       success: false,
       message: msg,
       code: -1
-    } as ApiResponse);
+    };
+    return Promise.resolve(result);
   }
 }
 
