@@ -8,6 +8,12 @@ import globals from 'globals';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 /**
+ * 最新版的 eslint 和 prettier 各司其职
+ * Prettier 负责所有格式：换行、缩进、引号、空格等
+ * ESLint 负责代码质量：语法错误、潜在bug、最佳实践， 之前版本的eslint涉及（换行、缩进、引号、空格等）都放弃使用 而是在prettier的配置中处理
+ */
+
+/**
  * rules
  * 关闭 >>> 0 或 'off' 表示关闭 允许使用
  * 警告 >>> 1 或 'warn' 表示警告 允许使用
@@ -24,8 +30,8 @@ const ignores = [
   'demo',
   'scripts',
   'packages/*',
-  // 'apps/all-blue/*',
   'apps/new-world/*'
+  // 'apps/all-blue/*',
   // 'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
 ];
 // ============ 基础规则 ============
