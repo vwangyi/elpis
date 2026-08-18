@@ -50,16 +50,10 @@ async function request<T = any>(
   try {
     const res: AxiosResponse<ApiResponse<T>> = await axios.request(ajax);
     const data = res.data;
-
     // 业务失败
     if (data.success !== true) {
       message.error(data.message || '业务失败');
     }
-    // 若需要全局成功提示，取消注释以下代码
-    // if (data.success === true) {
-    //   message.success(data.message || '业务成功');
-    // }
-
     return Promise.resolve(data);
   } catch (err: any) {
     // 物理失败（网络、超时等）/ HTTP 错误状态码（4xx、5xx）
