@@ -102,8 +102,10 @@
     "@wangeditor/plugin-md": "^1.0.0",
     "ant-design-vue": "~4.2.6",
     "axios": "^1.13.2",
+    "chalk": "^6.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
+    "dayjs": "^1.11.23",
     "dexie": "^4.4.4",
     "dompurify": "^3.3.1",
     "echarts": "^6.0.0",
@@ -142,6 +144,8 @@
     "vue": "^3.5.40",
     "vue-echarts": "^8.0.1",
     "vue-router": "^5.2.0",
-    "vue-virtual-scroller": "^3.0.4"
+    "vue-virtual-scroller": "^3.0.4",
+    "winston": "^3.19.0",
+    "winston-daily-rotate-file": "^5.0.0"
   }
 }
