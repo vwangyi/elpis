@@ -1,58 +1,58 @@
 {
-    "compilerOptions": {
-        "jsx": "preserve", // 或 "react-jsx" (Vue 3.4+)
-        "noEmit": true,
-        "emitDeclarationOnly": false,
-        "rewriteRelativeImportExtensions": false,
-        // true 表示导入 需要写 ts后缀
-        "allowImportingTsExtensions": true,
+  "compilerOptions": {
+    "jsx": "preserve", // 或 "react-jsx" (Vue 3.4+)
+    "noEmit": true,
+    "emitDeclarationOnly": false,
+    "rewriteRelativeImportExtensions": false,
+    // true 表示导入 需要写 ts后缀
+    "allowImportingTsExtensions": true,
 
-        "jsxImportSource": "vue", // 如果使用 Vue 3，添加这行
-        // 把ts编译为js时 使用什么es版本 默认是es3
-        "target": "esnext",
-        // tsc编译后使用什么模块化标准  commonjs 和 es6 esnext
-        "module": "esnext",
-        // types配置的值就是 node_modules/@types下的包名
-        "types": ["node", "jest", "multer"],
-        "typeRoots": ["./node_modules/@types", "./src/types"],
-        // 采用什么编译环境   如果需要node 额外安装@types/node 的node环境. ["es2016", "dom"]
-        "lib": ["esnext"],
-        "outDir": "./dist", // 编译的输出目录
-        "sourceMap": true,
-        "declaration": true,
-        // 开启严格的空值检查 null和undefined 就不能赋值给任意类型 只能赋值给自己。
-        "strictNullChecks": true,
-        "declarationMap": true,
-        // 编译结果移除注释
-        "removeComments": true,
-        // 启动esm 非es模块导出。可以用 import fs from 'fs'
-        "esModuleInterop": true,
-        // ts发生语法错误时不生成编译结果
-        "noEmitOnError": true,
-        // 封装类的属性方法时 属性必须初始化 不初始化值为undefined 是不行的 （属性的初始化检查）
-        "strictPropertyInitialization": false,
-        "noUncheckedIndexedAccess": true,
-        "resolvePackageJsonExports": true,
-        "exactOptionalPropertyTypes": true,
-        "strict": true,
-        //verbatimModuleSyntax 为true 表示不能混用模块化 要么全是esm 要么全是commonjs
-        "verbatimModuleSyntax": false,
-        // 模块解析模式 node和classic classic是旧的  一般用node
-        "moduleResolution": "bundler",
-        "isolatedModules": true,
-        "noUncheckedSideEffectImports": true,
-        "moduleDetection": "force",
-        "skipLibCheck": true,
-        // 开启对隐式any类型的检查 当ts自动推导为any的隐式any是否类型正确 ，
-        // 比如  用中括号访问不存在的成员也会报错，开启这个配置也就意味着 ts会更加严格 ，
-        // 如果你的ts很强就开启 不强就不开启
-        "noImplicitAny": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "allowSyntheticDefaultImports": true
-    },
-    "exclude": ["node_modules", "dist"],
-    // include 表示只需要编译src下的ts文件  files和include一样 files是具体的文件 include是文件夹
-    "include": ["apps/all-blue", "apps/new-world"]
-    // "files": ["./src/index.ts"],
+    "jsxImportSource": "vue", // 如果使用 Vue 3，添加这行
+    // 把ts编译为js时 使用什么es版本 默认是es3
+    "target": "esnext",
+    // tsc编译后使用什么模块化标准  commonjs 和 es6 esnext
+    "module": "esnext",
+    // types配置的值就是 node_modules/@types下的包名
+    "types": ["node", "jest", "multer"],
+    "typeRoots": ["./node_modules/@types", "./src/types"],
+    // 采用什么编译环境   如果需要node 额外安装@types/node 的node环境. ["es2016", "dom"]
+    "lib": ["esnext"],
+    "outDir": "./dist", // 编译的输出目录
+    "sourceMap": true,
+    "declaration": true,
+    // 开启严格的空值检查 null和undefined 就不能赋值给任意类型 只能赋值给自己。
+    "strictNullChecks": true,
+    "declarationMap": true,
+    // 编译结果移除注释
+    "removeComments": true,
+    // 启动esm 非es模块导出。可以用 import fs from 'fs'
+    "esModuleInterop": true,
+    // ts发生语法错误时不生成编译结果
+    "noEmitOnError": true,
+    // 封装类的属性方法时 属性必须初始化 不初始化值为undefined 是不行的 （属性的初始化检查）
+    "strictPropertyInitialization": false,
+    "noUncheckedIndexedAccess": true,
+    "resolvePackageJsonExports": true,
+    "exactOptionalPropertyTypes": true,
+    "strict": true,
+    //verbatimModuleSyntax 为true 表示不能混用模块化 要么全是esm 要么全是commonjs
+    "verbatimModuleSyntax": false,
+    // 模块解析模式 node和classic classic是旧的  一般用node
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+    // 开启对隐式any类型的检查 当ts自动推导为any的隐式any是否类型正确 ，
+    // 比如  用中括号访问不存在的成员也会报错，开启这个配置也就意味着 ts会更加严格 ，
+    // 如果你的ts很强就开启 不强就不开启
+    "noImplicitAny": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["node_modules", "dist"],
+  // include 表示只需要编译src下的ts文件  files和include一样 files是具体的文件 include是文件夹
+  "include": ["apps/all-blue", "apps/new-world"]
+  // "files": ["./src/index.ts"],
 }

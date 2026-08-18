@@ -9,7 +9,7 @@ export default {
   // 只有一个属性时不换行，>=2 个属性时每个属性独占一行
   // (Prettier 3.0+ 原生支持，替代之前 Vue 文件 printWidth:40 的强拆方案)
   singleAttributePerLine: true,
-  // 缩进制表符宽度 | 空格数
+  // 缩进制表符宽度 | 空格数   缩进统一是prettier的tabWidth控制 而不会用eslint的相关规则
   tabWidth: 2,
   // 使用制表符而不是空格缩进行 (true：制表符，false：空格)
   useTabs: false,
