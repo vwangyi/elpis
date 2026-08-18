@@ -7,5 +7,5 @@ function handleClick() {
 </script>
 
 <template>
-  <div @click="handleClick">demo</div>
+  <a-button @click="handleClick">demo</a-button>
 </template>
