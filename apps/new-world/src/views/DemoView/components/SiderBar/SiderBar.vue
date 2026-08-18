@@ -26,7 +26,7 @@ function handleClickMenu(menu) {
       :key="item.name"
       :class="{
         'sider-item': true,
-        active: item.name === route.name
+        'active': item.name === route.name
       }"
       @click="handleClickMenu(item)"
     >

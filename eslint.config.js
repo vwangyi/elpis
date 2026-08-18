@@ -32,142 +32,11 @@ const ignores = [
 
 // ============ 基础规则（非 Vue） ============
 const baseRules = {
-  '@typescript-eslint/no-require-imports': 'off',
-  '@typescript-eslint/no-unused-vars': 'off',
-  '@typescript-eslint/no-explicit-any': 'off',
-  'no-unreachable': 'off',
-  'no-var': 'error',
-  'spaced-comment': [
-    'error',
-    'always',
-    {
-      line: {
-        markers: ['/'],
-        exceptions: ['-', '+']
-      },
-      block: {
-        markers: ['!'],
-        exceptions: ['*']
-      }
-    }
-  ],
-  'no-unused-vars': 'off',
-  'use-isnan': 'error',
-  'array-callback-return': 'error',
-  'default-case': 'error',
-  'dot-notation': 'error',
-  eqeqeq: 'error',
-  'no-alert': 'error',
-  'no-else-return': 'error',
-  'no-eval': 'error',
-  'no-multi-spaces': 'error',
-  'no-redeclare': 'error',
-  'no-return-assign': 'error',
-  'no-unused-expressions': 'error',
-  'no-useless-call': 'error',
-  'no-undef': 'off',
-  'no-use-before-define': 'error',
-  'comma-spacing': 'error',
-  'array-bracket-spacing': 'error',
-  'block-spacing': 'error',
-  'brace-style': 'error',
-  'eol-last': 'error',
-  'key-spacing': 'error',
-  'keyword-spacing': 'error',
-  'new-cap': 'off',
-  'newline-per-chained-call': 'error',
-  'no-multiple-empty-lines': 'error',
-  'no-trailing-spaces': 'error',
-  'object-curly-spacing': ['error', 'always'],
-  'semi-spacing': 'error',
-  'space-before-blocks': 'error',
-  'space-in-parens': ['error', 'never'],
-  'space-infix-ops': 'error',
-  quotes: ['error', 'single'],
-  'operator-linebreak': 'off',
-  'linebreak-style': [2, 'unix'],
-  'require-jsdoc': 'off',
-  'guard-for-in': 'off',
-  'max-len': 'off'
-};
-
-// ============ Vue 规则 ============
-const vueRules = {
-  'vue/multi-word-component-names': 'off',
-  'vue/no-arrow-functions-in-watch': 'error',
-  'vue/no-async-in-computed-properties': 'error',
-  'vue/no-dupe-keys': 'error',
-  'vue/no-mutating-props': 'error',
-  'vue/no-reserved-keys': 'error',
-  'vue/no-shared-component-data': 'error',
-  'vue/no-side-effects-in-computed-properties': 'error',
-  'vue/no-template-key': 'error',
-  'vue/no-use-computed-property-like-method': 'error',
-  'vue/no-use-v-if-with-v-for': 'error',
-  'vue/no-useless-template-attributes': 'error',
-  'vue/require-prop-type-constructor': 'error',
-  'vue/require-v-for-key': 'error',
-  'vue/return-in-computed-property': 'error',
-  'vue/valid-next-tick': 'error',
-  'vue/max-attributes-per-line': [
-    'error',
-    {
-      singleline: {
-        max: 1
-      },
-      multiline: {
-        max: 1
-      }
-    }
-  ],
-  'vue/singleline-html-element-content-newline': 'off',
-  'vue/first-attribute-linebreak': [
-    'error',
-    {
-      singleline: 'ignore',
-      multiline: 'below'
-    }
-  ],
-  'vue/attributes-order': [
-    'error',
-    {
-      order: [
-        'DEFINITION',
-        'LIST_RENDERING',
-        'CONDITIONALS',
-        'RENDER_MODIFIERS',
-        'GLOBAL',
-        'UNIQUE',
-        'TWO_WAY_BINDING',
-        'OTHER_DIRECTIVES',
-        'OTHER_ATTR',
-        'EVENTS',
-        'CONTENT'
-      ],
-      alphabetical: false
-    }
-  ],
-  'vue/order-in-components': 'off',
-  'vue/no-v-html': 'off',
-  'vue/valid-template-root': 'off',
-  'vue/html-quotes': ['error', 'double', { avoidEscape: false }],
-  'vue/mustache-interpolation-spacing': ['error', 'always'],
-  'vue/no-multi-spaces': [
-    'error',
-    {
-      ignoreProperties: false
-    }
-  ],
-  'vue/no-v-text-v-html-on-component': 'off'
-};
-
-const rules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
   '@typescript-eslint/no-unused-vars': 'off', // 未使用的变量
   '@typescript-eslint/no-explicit-any': 'off', // 是否允许any
   'no-unreachable': 'off', // 无法访问的代码 比如 return后面的代码
-  // 不能使用var
-  'no-var': 'error',
+  'no-var': 'error', // 不能使用var
   // 强制在注释中 // 或 /* 使用一致的空格
   'spaced-comment': [
     'error',
@@ -194,7 +63,7 @@ const rules = {
   // 强制在任何允许的时候使用点号
   'dot-notation': 'error',
   // 要求使用 === 和 !==
-  eqeqeq: 'error',
+  'eqeqeq': 'error',
   // 禁用 alert、confirm 和 prompt
   'no-alert': 'error',
   // 禁止 if 语句中有 return 之后有 else
@@ -248,10 +117,20 @@ const rules = {
   // 要求操作符周围有空格
   'space-infix-ops': 'error',
   // js中必须使用单引号
-  quotes: ['error', 'single'],
-  //
-  'operator-linebreak': 'off',
+  'quotes': ['error', 'single'],
+  // 换行符
+  'linebreak-style': [2, 'unix'],
+  // 取消jsdoc注释
+  'require-jsdoc': 'off',
+  // 正常for..in..
+  'guard-for-in': 'off',
+  // 限制每行代码的字数
+  'max-len': 'off',
+  'operator-linebreak': 'off'
+};
 
+// ============ Vue 规则 ============
+const vueRules = {
   // vue部分
   // vue组件标签不能是一个单词
   'vue/multi-word-component-names': 'off',
@@ -345,16 +224,7 @@ const rules = {
       ignoreProperties: false
     }
   ],
-  'vue/no-v-text-v-html-on-component': 'off',
-
-  // 换行符
-  'linebreak-style': [2, 'unix'],
-  // 取消jsdoc注释
-  'require-jsdoc': 'off',
-  // 正常for..in..
-  'guard-for-in': 'off',
-  // 限制每行代码的字数
-  'max-len': 'off'
+  'vue/no-v-text-v-html-on-component': 'off'
 };
 
 export default defineConfig([
