@@ -3,3 +3,11 @@ persistedstate
 iconfont
 framwork
 elpis
+onepiece
+codewy
+tinyint
+varchat
+popconfirm
+Fenwick
+accum
+segs

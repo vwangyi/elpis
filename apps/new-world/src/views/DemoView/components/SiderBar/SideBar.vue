@@ -20,12 +20,12 @@ function handleClickMenu(menu) {
 }
 </script>
 <template>
-  <div class="sider-bar">
+  <div class="side-bar">
     <div
       v-for="item in data"
       :key="item.name"
       :class="{
-        'sider-item': true,
+        'side-item': true,
         'active': item.name === route.name
       }"
       @click="handleClickMenu(item)"
@@ -36,7 +36,7 @@ function handleClickMenu(menu) {
 </template>
 
 <style lang="scss" scoped>
-.sider-bar {
+.side-bar {
   width: 100%;
   height: 100%;
   overflow-y: auto;
@@ -44,7 +44,7 @@ function handleClickMenu(menu) {
   border: 1px solid rgba(5, 5, 5, 0.06);
 }
 
-.sider-item {
+.side-item {
   width: 100%;
   height: 56px;
   line-height: 56px;
@@ -53,12 +53,12 @@ function handleClickMenu(menu) {
   cursor: pointer;
 }
 
-.sider-item.active {
+.side-item.active {
   color: #1677ff;
   background-color: rgba(236, 245, 255, 1);
 }
 
-.sider-item:hover {
+.side-item:hover {
   background-color: rgba(236, 245, 255, 0.7);
 }
 </style>

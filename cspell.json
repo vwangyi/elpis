@@ -31,7 +31,7 @@
     "commitlint.config.js",
     ".cspell",
     ".vscode",
-    "demo/*",
-    "apps"
+    "demo/*"
+    // "apps"
   ]
 }

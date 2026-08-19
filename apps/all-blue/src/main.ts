@@ -8,7 +8,7 @@ async function bootstrap() {
   app.useStaticAssets('public');
   app.use(
     session({
-      secret: 'asdfaf', // session方案 需要一个唯一字符串密钥
+      secret: 'hello world', // session方案 需要一个唯一字符串密钥
       resave: false,
       saveUninitialized: false
     })

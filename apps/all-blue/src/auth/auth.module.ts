@@ -12,7 +12,7 @@ import { JwtStrategy } from './jwt.strategy';
     forwardRef(() => UserModule),
     PassportModule,
     JwtModule.register({
-      secret: 'asdfasfs',
+      secret: 'hello key',
       signOptions: { expiresIn: '7d' } // 过期时间 60s 表示60秒 7d表示7day
     })
   ],

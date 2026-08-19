@@ -76,7 +76,7 @@ async function handleFile(event) {
       result[i] = e.data; // 将计算后的结果存储到对应的索引位置
       finishCount++;
       if (finishCount >= threadCount) {
-        console.log('Finalresult', result.flat(Infinity)); // 所有线程都完成后，输出最终结果
+        console.log('xx', result.flat(Infinity)); // 所有线程都完成后，输出最终结果
         console.timeEnd('time');
       }
     };
