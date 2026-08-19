@@ -5,8 +5,7 @@ const props = defineProps({
   // 列表数据
   list: {
     type: Array,
-    required: true,
-    default: () => []
+    required: true
   },
   // 每个列表项的固定高度（px）
   itemHeight: {
