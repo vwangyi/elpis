@@ -38,11 +38,11 @@ import { PersonGuard } from './xxx'
         AppService,
         {
             provide: APP_GUARD,
-            useClass: PersonGuard, // 把类给IOC容器管理
+            useClass: PersonGuard, // 把类给IOC容器管理  （全局使用）
         }, 
         {
             provide: APP_INTERCEPTOR,
-            useClass: TimeIntercepor, // 把类给IOC容器管理
+            useClass: TimeIntercepor, // 把类给IOC容器管理 （全局使用）
         }
     ]
 })
