@@ -32,6 +32,5 @@
     ".cspell",
     ".vscode",
     "demo/*"
-    // "apps"
   ]
 }
