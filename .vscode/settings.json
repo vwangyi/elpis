@@ -1,7 +1,18 @@
 {
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit" // 或 "always"
+    // "source.fixAll.eslint": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.validate": [
     "javascript",
@@ -16,7 +27,7 @@
   // "explorer.fileNesting.enabled": false,
   // // 关闭折叠规则
   // "explorer.fileNesting.expand": false,
-  // 自定义规则把文件折叠起来.    eslint prettier cspell package.json 
+  // 自定义规则把文件折叠起来.    eslint prettier cspell package.json
   "explorer.fileNesting.patterns": {
     // "eslint.config.js":"eslint.config.js, ",
     // ".gitignore": ".gitignore, .prettierignore",
@@ -27,8 +38,7 @@
   // 1. 指定字体，将 'Fira Code' 替换为你安装的字体名称
   "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
   // 2. 开启连字功能
-  "editor.fontLigatures": true,
+  "editor.fontLigatures": true
   // 如果你想更精细地控制，也可以用下面的方式
   // "editor.fontLigatures": "'calt', 'ss01'"
 }
- 

@@ -67,8 +67,7 @@ class FenwickTree {
 const props = defineProps({
   list: {
     type: Array,
-    required: true,
-    default: () => []
+    required: true
   },
   // 未测量 item 的预估高度（建议取所有 item 高度的上界）
   estimatedItemHeight: {
@@ -166,7 +165,7 @@ function segmentIndexAt(pos) {
 
 // —— 段相关 computed（全部读 tick，防止 segmentsArr 重建后用过期段）——
 const segments = computed(() => {
-  tick.value;
+  // tick.value;
   return segmentsArr;
 });
 const totalSegments = computed(() => segments.value.length);
@@ -196,13 +195,13 @@ const globalTop = computed(() => segStartOffset.value + localScrollTop.value);
 
 // 当前段内第一个可见 item
 const startIndex = computed(() => {
-  tick.value;
+  // tick.value;
   const gi = bit.findIndex(globalTop.value);
   return Math.max(currentSeg.value[0], gi - props.bufferCount);
 });
 // 当前段内最后一个可见 item（扫描累计高度直到覆盖视口）
 const endIndex = computed(() => {
-  tick.value;
+  // tick.value;
   const seg = currentSeg.value;
   const startOff = bit.sum(seg[0]);
   let cum = bit.sum(startIndex.value) - startOff; // 第一个 item 顶部（段内坐标）
@@ -400,8 +399,8 @@ watch(() => props.list.length, initHeights);
           <div
             v-for="(item, i) in visibleData"
             :key="resolveKey(item)"
-            class="list-item"
             :ref="el => setItemRef(el, startIndex + i)"
+            class="list-item"
           >
             <slot
               name="item"

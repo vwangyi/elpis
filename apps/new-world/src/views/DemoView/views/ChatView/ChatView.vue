@@ -150,7 +150,16 @@ function bindSocketEvents(socket: Socket) {
     }
   });
 }
-
+/* ---------- 退出聊天室 ---------- */
+function leaveRoom(silent = false) {
+  socket?.close();
+  socket = null;
+  joined.value = false;
+  msgList.value = [];
+  onlineUsers.value = [];
+  typingUsers.value.clear();
+  if (!silent) message.info('已退出聊天室');
+}
 /* ---------- 加入聊天室 ---------- */
 function handleJoin() {
   const name = nickname.value.trim();
@@ -181,17 +190,6 @@ function handleJoin() {
       socket = null;
     }
   });
-}
-
-/* ---------- 退出聊天室 ---------- */
-function leaveRoom(silent = false) {
-  socket?.close();
-  socket = null;
-  joined.value = false;
-  msgList.value = [];
-  onlineUsers.value = [];
-  typingUsers.value.clear();
-  if (!silent) message.info('已退出聊天室');
 }
 
 /* ---------- 发送消息 ---------- */
@@ -325,8 +323,8 @@ onBeforeUnmount(() => {
       <div class="room-body">
         <!-- 消息区 -->
         <div
-          class="messages"
           ref="messagesRef"
+          class="messages"
         >
           <div
             v-for="(msg, index) in msgList"

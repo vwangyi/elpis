@@ -2,10 +2,17 @@
 import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+// eslint-plugin-prettier 把prettier的错误报到eslint里面
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 import eslintPluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
+/**
+ * eslint-config-prettier 会帮我们把处理 eslint中格式化规则 和prettier冲突后 按prettier走
+ * eslint-config-prettier 内部维护了一个规则列表，包含了所有可能与 Prettier 产生冲突的 ESLint 规则，然后统一将它们设置为 off。
+ */
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
+
+console.log('eslintConfigPrettier', eslintConfigPrettier);
 
 /**
  * 最新版的 eslint 和 prettier 各司其职
@@ -29,14 +36,13 @@ const ignores = [
   'docs',
   'demo',
   'scripts',
-  'packages/*',
-  'apps/new-world/*'
+  'packages/*'
+  // 'apps/new-world/*'
   // 'apps/all-blue/*',
   // 'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
 ];
-// ============ 基础规则 ============
 
-// ============ 基础规则（非 Vue） ============
+// ============ 基础规则 ============
 const baseRules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
   '@typescript-eslint/no-unused-vars': 'off', // 未使用的变量
@@ -78,8 +84,9 @@ const baseRules = {
   'no-eval': 'error',
   // 禁止使用多个空格
   'no-multi-spaces': 'error',
-  // 禁止使用 var 多次声明同一变量
-  'no-redeclare': 'error',
+  // 用@typescript-eslint/no-redeclare 替换 no-redeclare 来实现 禁止多次声明同一变量
+  'no-redeclare': 'off',
+  '@typescript-eslint/no-redeclare': 'error',
   // 禁止在 return 语句中使用赋值语句
   'no-return-assign': 'error',
   // 禁止出现未使用过的表达式
@@ -88,8 +95,19 @@ const baseRules = {
   'no-useless-call': 'error',
   // 禁用未声明的变量，除非它们在 /global / 注释中被提到
   'no-undef': 'off',
-  // 不允许在变量定义之前使用它们
-  'no-use-before-define': 'error',
+  /**
+   * 用ts的@typescript-eslint/no-use-before-define 替换 原生的 no-use-before-define
+   * 实现 不允许在变量定义之前使用它们
+   */
+  'no-use-before-define': 'off',
+  '@typescript-eslint/no-use-before-define': [
+    'error',
+    {
+      functions: false, // 允许函数提升
+      classes: true,
+      variables: true
+    }
+  ],
   // 强制在逗号前后使用一致的空格
   'comma-spacing': 'error',
   // 强制数组方括号中使用一致的空格
@@ -255,7 +273,9 @@ export default defineConfig([
     rules: {
       ...baseRules,
       // 新增或重写自己的eslint规则
-      'no-var': 'error'
+      'no-var': 'error',
+      // 关闭所有和prettier冲突的规则
+      ...eslintConfigPrettier.rules
     }
   },
   /* nestjs项目 */
@@ -285,7 +305,10 @@ export default defineConfig([
           destructuring: 'any', // 解构时也检查
           ignoreReadBeforeAssign: false // 赋值前读取的变量也检查
         }
-      ]
+      ],
+
+      // 关闭所有和prettier冲突的规则
+      ...eslintConfigPrettier.rules
     }
   },
   /* 所有的vue项目共享同一套eslint规则 */
@@ -310,8 +333,11 @@ export default defineConfig([
     },
     rules: {
       ...baseRules,
-      ...vueRules
+      ...vueRules,
       // 新增或重写自己的eslint规则
+
+      // 关闭所有和prettier冲突的规则
+      ...eslintConfigPrettier.rules
     }
   }
   // ...后续新增其他项目
