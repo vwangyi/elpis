@@ -1,14 +1,11 @@
 {
+  // 推荐安装的vscode插件
   "recommendations": [
-    // Vue 相关
-    "Vue.volar",
-    "Vue.vscode-typescript-vue-plugin",
-    // AI 编程助手
-    "GitHub.copilot",
-    "GitHub.copilot-chat",
-    // 其他常用工具
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss"
+    "Vue.volar", // vue插件
+    "Vue.vscode-typescript-vue-plugin", // vue插件
+    "GitHub.copilot", // AI copilot
+    "GitHub.copilot-chat", // AI copilot
+    "dbaeumer.vscode-eslint", // eslint插件
+    "esbenp.prettier-vscode" // prettier插件
   ]
 }
