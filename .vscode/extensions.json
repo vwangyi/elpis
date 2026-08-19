@@ -7,5 +7,9 @@
     "GitHub.copilot-chat", // AI copilot
     "dbaeumer.vscode-eslint", // eslint插件
     "esbenp.prettier-vscode" // prettier插件
+  ],
+  // 不推荐的扩展（避免冲突）
+  "unwantedRecommendations": [
+    "octref.vetur" // Vue 2 扩展，与 Vue.volar 冲突
   ]
 }
