@@ -2,7 +2,7 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import * as todoAPI from '@/api/todo';
 import type { Todo, TodoPageResult, TodoParams } from '@/types/todo';
-import type { ApiResponse } from '@/utils/request';
+import type { ApiResponse } from '@/api/request';
 
 /* todo 模块 */
 export const useTodoStore = defineStore('todo', () => {
