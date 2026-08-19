@@ -12,8 +12,6 @@ import globals from 'globals';
  */
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
-console.log('eslintConfigPrettier', eslintConfigPrettier);
-
 /**
  * 最新版的 eslint 和 prettier 各司其职
  * Prettier 负责所有格式：换行、缩进、引号、空格等
