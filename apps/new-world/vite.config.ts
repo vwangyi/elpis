@@ -31,7 +31,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
           rewrite: path => path.replace(/^\/api/, '')
         },
         '/socket.io': {
-          target: 'http://localhost:3000',
+          target: env.VITE_SOCKET_BASE_URL || 'http://localhost:3000',
           changeOrigin: true,
           ws: true // 关键：支持 WebSocket 升级
         }

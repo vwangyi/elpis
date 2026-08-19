@@ -15,11 +15,10 @@ export interface OnlineUser {
 }
 
 /* ---------- 配置 ---------- */
-// 后端 WebSocket 地址（all-blue 服务，命名空间 /chat）
-const SOCKET_BASE_URL =
-  import.meta.env.VITE_SOCKET_BASE_URL || window?.location?.origin || '';
+// 走 vite 代理：客户端只填命名空间，socket.io 握手请求 (/socket.io) 由
+// vite.config.ts 的 server.proxy['/socket.io'] 转发到后端，避免直连 localhost:3000
 export const CHAT_NAMESPACE = '/chat';
-export const SOCKET_URL = `${SOCKET_BASE_URL}${CHAT_NAMESPACE}`; // 'http://localhost:3000/chat'
+export const SOCKET_URL = CHAT_NAMESPACE;
 export const DEFAULT_ROOM = 'public';
 
 /* ---------- Socket 对象管理 ---------- */
