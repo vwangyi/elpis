@@ -13,3 +13,4 @@ accum
 segs
 pinia
 VITE
+PoweroffOutlined

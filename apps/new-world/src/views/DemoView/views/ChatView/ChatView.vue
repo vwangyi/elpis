@@ -1,35 +1,291 @@
 <script setup lang="ts">
 import {
   ref,
+  reactive,
   nextTick,
   onMounted,
   onBeforeUnmount,
   computed,
   watch
 } from 'vue';
-import { storeToRefs } from 'pinia';
+import { io, type Socket } from 'socket.io-client';
+import { message } from 'ant-design-vue';
 import {
   SendOutlined,
   UserOutlined,
-  ReloadOutlined
+  ReloadOutlined,
+  PoweroffOutlined
 } from '@ant-design/icons-vue';
-import { useChatStore } from '@/stores/chat';
 
-/* ---------- store ---------- */
-const chatStore = useChatStore();
-const {
-  nickname,
-  joined,
-  connecting,
-  inputMsg,
-  msgList,
-  onlineUsers,
-  typingUsers
-} = storeToRefs(chatStore);
+/* ================================================================
+ *  类型定义（对齐后端 chat.gateway.ts / chat.entity.ts）
+ * ================================================================ */
+
+interface ChatMsg {
+  id?: number;
+  room?: string;
+  username: string;
+  content: string;
+  createTime?: string;
+  type?: 'user' | 'system';
+}
+
+interface OnlineUser {
+  username: string;
+  joinTime: number;
+}
+
+interface HistoryPayload {
+  list: ChatMsg[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+/* ================================================================
+ *  配置
+ * ================================================================ */
+
+const CHAT_NAMESPACE = '/chat';
+const DEFAULT_ROOM = 'public';
+
+/* ================================================================
+ *  Socket 管理
+ * ================================================================ */
+
+let socket: Socket | null = null;
+
+function connectSocket(): Socket {
+  disconnectSocket();
+  socket = io(CHAT_NAMESPACE, {
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionDelay: 2000
+  });
+  return socket;
+}
+
+function getSocket(): Socket | null {
+  return socket;
+}
+
+function disconnectSocket(): void {
+  socket?.close();
+  socket = null;
+}
+
+function emitEvent<T = unknown>(event: string, payload?: T): void {
+  socket?.emit(event, payload);
+}
+
+/* ================================================================
+ *  响应式状态
+ * ================================================================ */
+
+const nickname = ref('');
+const joined = ref(false);
+const connecting = ref(false);
+const inputMsg = ref('');
+const msgList = ref<ChatMsg[]>([]);
+const onlineUsers = ref<OnlineUser[]>([]);
+const typingUsers = ref<Set<string>>(new Set());
+
+// 节流相关（非响应式）
+let typingTimer: ReturnType<typeof setTimeout> | null = null;
+let lastTypingSent = false;
+
+/* ================================================================
+ *  Socket 事件绑定
+ * ================================================================ */
+
+function bindSocketEvents(s: Socket) {
+  // 连接建立 —— 后端会 emit('connected', { socketId })
+  s.on('connected', (data: { socketId: string }) => {
+    console.log('[chat] 已连接，socketId =', data.socketId);
+  });
+
+  // 断线重连后自动重新加入房间
+  s.on('connect', () => {
+    if (joined.value && nickname.value) {
+      s.emit('join', {
+        username: nickname.value,
+        room: DEFAULT_ROOM
+      });
+    }
+  });
+
+  // 历史消息（join 后服务端自动下发 / 翻页请求）
+  s.on('history', (data: HistoryPayload) => {
+    msgList.value = (data.list || []).map(m => ({ ...m, type: 'user' }));
+  });
+
+  // 收到聊天消息
+  s.on('chatMessage', (msg: ChatMsg) => {
+    msgList.value.push({ ...msg, type: 'user' });
+    typingUsers.value.delete(msg.username);
+  });
+
+  // 上线通知
+  s.on('userJoined', (data: { username: string; time: string }) => {
+    msgList.value.push({
+      username: 'system',
+      content: `${data.username} 加入了聊天室`,
+      createTime: data.time,
+      type: 'system'
+    });
+  });
+
+  // 下线通知
+  s.on('userLeft', (data: { username: string; time: string }) => {
+    msgList.value.push({
+      username: 'system',
+      content: `${data.username} 离开了聊天室`,
+      createTime: data.time,
+      type: 'system'
+    });
+    typingUsers.value.delete(data.username);
+  });
+
+  // 在线用户列表
+  s.on('onlineUsers', (data: { users: OnlineUser[] }) => {
+    onlineUsers.value = data.users || [];
+  });
+
+  // 正在输入（后端只转发给同房间其他人，自己不会收到自己发的）
+  s.on('typing', (data: { username: string; typing: boolean }) => {
+    if (data.typing) typingUsers.value.add(data.username);
+    else typingUsers.value.delete(data.username);
+  });
+
+  // 被顶号（同名登录）
+  s.on('kicked', (data: { message: string }) => {
+    message.warning(data.message || '您已在其他地方登录');
+    leaveRoom(true);
+  });
+
+  // 错误
+  s.on('error', (data: { message: string }) => {
+    message.error(data.message || '发生错误');
+  });
+
+  // 断线
+  s.on('disconnect', () => {
+    if (joined.value) {
+      message.warning('与服务器的连接已断开，正在尝试重连...');
+    }
+  });
+}
+
+/* ================================================================
+ *  业务方法
+ * ================================================================ */
+
+/** 加入聊天室 */
+function joinRoom() {
+  const name = nickname.value.trim();
+  if (!name) {
+    message.warning('请输入昵称');
+    return;
+  }
+
+  connecting.value = true;
+  const s = connectSocket();
+  bindSocketEvents(s);
+
+  // 首次连接成功后发送 join
+  s.on('connect', () => {
+    s.emit('join', { username: name, room: DEFAULT_ROOM });
+    joined.value = true;
+    connecting.value = false;
+    message.success(`欢迎加入聊天室，${name}`);
+  });
+
+  // 连接失败（首次）
+  s.on('connect_error', () => {
+    if (!joined.value) {
+      connecting.value = false;
+      message.error('连接服务器失败，请确认后端服务已启动');
+      disconnectSocket();
+    }
+  });
+}
+
+/** 退出聊天室 */
+function leaveRoom(silent = false) {
+  disconnectSocket();
+  joined.value = false;
+  msgList.value = [];
+  onlineUsers.value = [];
+  typingUsers.value.clear();
+  lastTypingSent = false;
+  if (!silent) message.info('已退出聊天室');
+}
+
+/** 发送消息 */
+function sendMessage() {
+  const content = inputMsg.value.trim();
+  if (!content) return;
+  if (!getSocket() || !joined.value) {
+    message.warning('请先加入聊天室');
+    return;
+  }
+
+  // 后端 CreateChatDto: { room, username, content }
+  emitEvent('chatMessage', {
+    room: DEFAULT_ROOM,
+    username: nickname.value.trim(),
+    content
+  });
+
+  inputMsg.value = '';
+
+  // 发送后停止 typing 提示
+  emitEvent('typing', { typing: false });
+  lastTypingSent = false;
+}
+
+/** 正在输入提示（节流，2s 内不重复发送） */
+function updateTyping() {
+  if (!getSocket() || !joined.value) return;
+
+  const typing = !!inputMsg.value.trim();
+  if (typing !== lastTypingSent) {
+    emitEvent('typing', { typing });
+    lastTypingSent = typing;
+  }
+
+  clearTimeout(typingTimer!);
+  typingTimer = setTimeout(() => {
+    if (lastTypingSent) {
+      emitEvent('typing', { typing: false });
+      lastTypingSent = false;
+    }
+  }, 2000);
+}
+
+/** 刷新历史消息 */
+function refreshHistory() {
+  if (!getSocket() || !joined.value) return;
+  emitEvent('history', { page: 1, pageSize: 50 });
+  message.info('已刷新最新历史消息');
+}
+
+/** 组件卸载时清理 */
+function dispose() {
+  clearTimeout(typingTimer!);
+  typingTimer = null;
+  disconnectSocket();
+  joined.value = false;
+  lastTypingSent = false;
+}
+
+/* ================================================================
+ *  组件视图逻辑
+ * ================================================================ */
 
 const messagesRef = ref<HTMLElement | null>(null);
 
-/* ---------- 工具 ---------- */
+/** 格式化时间：今天显示 HH:mm，跨天显示 M-D HH:mm */
 function formatTime(time?: string | number | Date) {
   if (!time) return '';
   const d = new Date(time);
@@ -52,7 +308,7 @@ function scrollToBottom() {
   });
 }
 
-// 消息数量变化时滚动到底部
+// 消息数量变化时自动滚动到底部
 watch(
   () => msgList.value.length,
   () => scrollToBottom()
@@ -68,7 +324,7 @@ const typingText = computed(() => {
 function handleInputKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
-    chatStore.sendMessage();
+    sendMessage();
   }
 }
 
@@ -78,7 +334,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  chatStore.dispose();
+  dispose();
 });
 </script>
 
@@ -97,7 +353,7 @@ onBeforeUnmount(() => {
           size="large"
           placeholder="请输入昵称"
           :maxlength="20"
-          @press-enter="chatStore.joinRoom()"
+          @press-enter="joinRoom()"
         >
           <template #prefix>
             <UserOutlined />
@@ -109,7 +365,7 @@ onBeforeUnmount(() => {
           block
           :loading="connecting"
           style="margin-top: 16px"
-          @click="chatStore.joinRoom()"
+          @click="joinRoom()"
         >
           进入聊天室
         </a-button>
@@ -132,7 +388,7 @@ onBeforeUnmount(() => {
         <div class="header-actions">
           <a-button
             size="small"
-            @click="chatStore.refreshHistory()"
+            @click="refreshHistory()"
           >
             <template #icon>
               <ReloadOutlined />
@@ -142,9 +398,13 @@ onBeforeUnmount(() => {
           <a-button
             size="small"
             danger
-            @click="chatStore.leaveRoom()"
-            >退出</a-button
+            @click="leaveRoom()"
           >
+            <template #icon>
+              <PoweroffOutlined />
+            </template>
+            退出
+          </a-button>
         </div>
       </div>
 
@@ -186,6 +446,14 @@ onBeforeUnmount(() => {
               </div>
             </template>
           </div>
+
+          <!-- 空状态 -->
+          <div
+            v-if="msgList.length === 0"
+            class="empty-state"
+          >
+            还没有消息，发一条试试吧 👋
+          </div>
         </div>
 
         <!-- 在线用户侧栏 -->
@@ -218,12 +486,12 @@ onBeforeUnmount(() => {
             :auto-size="{ minRows: 1, maxRows: 4 }"
             :maxlength="2000"
             @keydown="handleInputKeydown"
-            @input="chatStore.updateTyping()"
+            @input="updateTyping()"
           />
           <a-button
             type="primary"
             :disabled="!inputMsg.trim()"
-            @click="chatStore.sendMessage()"
+            @click="sendMessage()"
           >
             <template #icon>
               <SendOutlined />
@@ -403,6 +671,13 @@ onBeforeUnmount(() => {
       white-space: pre-wrap;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
     }
+  }
+
+  .empty-state {
+    text-align: center;
+    color: #ccc;
+    font-size: 14px;
+    margin-top: 40px;
   }
 }
 

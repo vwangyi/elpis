@@ -9,6 +9,7 @@ import vueDevTools from 'vite-plugin-vue-devtools';
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
   // 加载.env文件 不会使用node原生提供的process.env 而是用vite提供的import.meta.env
   const env = loadEnv(mode, process.cwd(), '');
+  console.log('VITE_BASE_URL', env.VITE_BASE_URL);
   return {
     plugins: [
       vue(),
@@ -24,7 +25,7 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     server: {
       proxy: {
         '/api': {
-          target: env.VITE_BASE_URL || 'http://localhost:1234', // 默认给一个不存在的服务
+          target: env.VITE_BASE_URL || 'http://localhost:1234', // 后端 NestJS 默认端口
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, '')
         },
