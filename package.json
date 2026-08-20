@@ -69,6 +69,7 @@
     "rollup": "^4.59.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-typescript2": "^0.36.0",
+    "rollup-plugin-visualizer": "^7.1.1",
     "source-map-support": "^0.5.21",
     "supertest": "^7.0.0",
     "ts-jest": "^29.4.12",
@@ -86,10 +87,6 @@
     "vue": "^3.5.30"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "dayjs": "^1.11.23",
-    "winston": "^3.19.0",
-    "winston-daily-rotate-file": "^5.0.0",
     "@nestjs/common": "^11.1.28",
     "@nestjs/config": "^4.0.4",
     "@nestjs/core": "^11.1.28",
@@ -106,8 +103,10 @@
     "@wangeditor/plugin-md": "^1.0.0",
     "ant-design-vue": "~4.2.6",
     "axios": "^1.13.2",
+    "chalk": "^4.1.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.15.1",
+    "dayjs": "^1.11.23",
     "dexie": "^4.4.4",
     "dompurify": "^3.3.1",
     "echarts": "^6.0.0",
@@ -146,6 +145,8 @@
     "vue": "^3.5.40",
     "vue-echarts": "^8.0.1",
     "vue-router": "^5.2.0",
-    "vue-virtual-scroller": "^3.0.4"
+    "vue-virtual-scroller": "^3.0.4",
+    "winston": "^3.19.0",
+    "winston-daily-rotate-file": "^5.0.0"
   }
 }

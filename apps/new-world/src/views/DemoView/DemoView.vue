@@ -9,6 +9,8 @@ import SideBar from './components/SideBar/SideBar.vue';
       <SideBar />
     </div>
     <div class="main">
+      <!-- <KeepAlive>
+      </KeepAlive> -->
       <RouterView />
     </div>
   </div>

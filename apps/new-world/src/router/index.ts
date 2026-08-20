@@ -4,7 +4,7 @@ import HomeView from '@/views/HomeView/HomeView.vue';
 export const routes = [
   {
     path: '/',
-    // redirect: '/demo',
+    redirect: '/demo',
     component: HomeView
   },
   {
@@ -30,51 +30,54 @@ export const routes = [
         }
       },
       {
-        path: 'virtual-list',
-        name: 'VirtualList',
+        path: 'rbac-permissions',
+        name: 'RbacPermissions',
         meta: { title: '权限' },
         component: () => {
-          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+          return import('@/views/DemoView/views/RbacPermissions/RbacPermissions.vue');
         }
       },
       {
-        path: 'virtual-list',
-        name: 'VirtualList',
-        meta: { title: '审批' },
+        path: 'approval-flow',
+        name: 'ApprovalFlow',
+        meta: {
+          title: '审批流',
+          desc: '流程可以没有审批 但审批一定有流程，审批是流程的一个环节'
+        },
         component: () => {
-          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+          return import('@/views/DemoView/views/ApprovalFlow/ApprovalFlow.vue');
         }
       },
       {
-        path: 'virtual-list',
-        name: 'VirtualList',
-        meta: { title: '流程' },
+        path: 'work-flow',
+        name: 'WorkFlow',
+        meta: { title: '工作流' },
         component: () => {
-          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+          return import('@/views/DemoView/views/WorkFlow/WorkFlow.vue');
         }
       },
       {
-        path: 'virtual-list',
-        name: 'VirtualList',
-        meta: { title: '登录' },
+        path: 'session-login',
+        name: 'SessionLogin',
+        meta: { title: 'session登录' },
         component: () => {
-          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+          return import('@/views/DemoView/views/SessionLogin/SessionLogin.vue');
         }
       },
       {
-        path: 'virtual-list',
-        name: 'VirtualList',
+        path: 'jwt-login',
+        name: 'JwtLogin',
+        meta: { title: 'jwt登录' },
+        component: () => {
+          return import('@/views/DemoView/views/JwtLogin/JwtLogin.vue');
+        }
+      },
+      {
+        path: 'single-sign-on',
+        name: 'SingleSignOn',
         meta: { title: '单点登录' },
         component: () => {
-          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
-        }
-      },
-      {
-        path: 'virtual-list',
-        name: 'VirtualList',
-        meta: { title: '数据分析WebSocket' },
-        component: () => {
-          return import('@/views/DemoView/views/VirtualList/VirtualList.vue');
+          return import('@/views/DemoView/views/SingleSignOn/SingleSignOn.vue');
         }
       },
       {
@@ -92,15 +95,29 @@ export const routes = [
         component: () => {
           return import('@/views/DemoView/views/ChatView/ChatView.vue');
         }
+      },
+      {
+        path: 'service-monitoring',
+        name: 'ServiceMonitoring',
+        meta: { title: '服务监控' },
+        component: () => {
+          return import('@/views/DemoView/views/ServiceMonitoring/ServiceMonitoring.vue');
+        }
+      },
+      {
+        path: 'log-record',
+        name: 'LogRecord',
+        meta: { title: '日志记录' },
+        component: () =>
+          import('@/views/DemoView/views/LogRecord/LogRecord.vue')
       }
     ]
   },
   {
     path: '/dynamic-segmented-demo',
     name: 'DynamicSegmentedDemo',
-    component: () => {
-      return import('@/views/DemoView/views/VirtualList/DynamicSegmentedDemo.vue');
-    }
+    component: () =>
+      import('@/views/DemoView/views/VirtualList/DynamicSegmentedDemo.vue')
   },
   {
     path: '/segmented-demo',
