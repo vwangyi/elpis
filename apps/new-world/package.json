@@ -6,7 +6,5 @@
   "scripts": {
     "dev": "vite --mode dev",
     "build": "vite build --mode prod"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+  }
 }
