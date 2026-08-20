@@ -1,52 +1,33 @@
 <script setup lang="ts">
 import {
   ref,
-  reactive,
   nextTick,
   onMounted,
   onBeforeUnmount,
-  computed
+  computed,
+  watch
 } from 'vue';
-import { message } from 'ant-design-vue';
-import { io, type Socket } from 'socket.io-client';
+import { storeToRefs } from 'pinia';
 import {
   SendOutlined,
   UserOutlined,
   ReloadOutlined
 } from '@ant-design/icons-vue';
+import { useChatStore } from '@/stores/chat';
 
-/* ---------- 类型 ---------- */
-interface ChatMsg {
-  id?: number;
-  username: string;
-  content: string;
-  createTime?: string;
-  type?: 'user' | 'system';
-}
+/* ---------- store ---------- */
+const chatStore = useChatStore();
+const {
+  nickname,
+  joined,
+  connecting,
+  inputMsg,
+  msgList,
+  onlineUsers,
+  typingUsers
+} = storeToRefs(chatStore);
 
-interface OnlineUser {
-  username: string;
-  joinTime: number;
-}
-
-/* ---------- 配置 ---------- */
-// 后端 WebSocket 地址（all-blue 服务，命名空间 /chat）
-const SOCKET_URL = 'http://localhost:3000/chat';
-const DEFAULT_ROOM = 'public';
-
-/* ---------- 状态 ---------- */
-const nickname = ref(''); // 昵称输入框
-const joined = ref(false); // 是否已进入聊天室
-const connecting = ref(false);
-const inputMsg = ref(''); // 消息输入框
-const msgList = ref<ChatMsg[]>([]);
-const onlineUsers = ref<OnlineUser[]>([]);
-const typingUsers = ref(new Set<string>());
 const messagesRef = ref<HTMLElement | null>(null);
-
-let socket: Socket | null = null;
-let typingTimer: ReturnType<typeof setTimeout> | null = null;
-let lastTypingSent = false;
 
 /* ---------- 工具 ---------- */
 function formatTime(time?: string | number | Date) {
@@ -71,6 +52,12 @@ function scrollToBottom() {
   });
 }
 
+// 消息数量变化时滚动到底部
+watch(
+  () => msgList.value.length,
+  () => scrollToBottom()
+);
+
 const typingText = computed(() => {
   const names = [...typingUsers.value];
   if (!names.length) return '';
@@ -78,168 +65,11 @@ const typingText = computed(() => {
   return `${names.slice(0, 2).join('、')} 正在输入...`;
 });
 
-/* ---------- Socket 事件 ---------- */
-function bindSocketEvents(socket: Socket) {
-  socket.on('connect', () => {
-    // 断线重连后自动重新加入房间
-    if (joined.value && nickname.value) {
-      socket.emit('join', {
-        username: nickname.value,
-        room: DEFAULT_ROOM
-      });
-    }
-  });
-
-  // 历史消息（join 后服务端自动下发）
-  socket.on('history', (data: { list: ChatMsg[] }) => {
-    msgList.value = (data.list || []).map(m => ({ ...m, type: 'user' }));
-    scrollToBottom();
-  });
-
-  // 收到聊天消息
-  socket.on('chatMessage', (msg: ChatMsg) => {
-    msgList.value.push({ ...msg, type: 'user' });
-    typingUsers.value.delete(msg.username);
-    scrollToBottom();
-  });
-
-  // 上线/下线通知
-  socket.on('userJoined', (data: { username: string }) => {
-    msgList.value.push({
-      username: 'system',
-      content: `${data.username} 加入了聊天室`,
-      type: 'system'
-    });
-    scrollToBottom();
-  });
-  socket.on('userLeft', (data: { username: string }) => {
-    msgList.value.push({
-      username: 'system',
-      content: `${data.username} 离开了聊天室`,
-      type: 'system'
-    });
-    typingUsers.value.delete(data.username);
-    scrollToBottom();
-  });
-
-  // 在线用户
-  socket.on('onlineUsers', (data: { users: OnlineUser[] }) => {
-    onlineUsers.value = data.users || [];
-  });
-
-  // 正在输入
-  socket.on('typing', (data: { username: string; typing: boolean }) => {
-    if (data.typing) typingUsers.value.add(data.username);
-    else typingUsers.value.delete(data.username);
-  });
-
-  // 被顶号
-  socket.on('kicked', (data: { message: string }) => {
-    message.warning(data.message || '您已在其他地方登录');
-    leaveRoom(true);
-  });
-
-  // 错误
-  socket.on('error', (data: { message: string }) => {
-    message.error(data.message || '发生错误');
-  });
-
-  socket.on('disconnect', () => {
-    if (joined.value) {
-      message.warning('与服务器的连接已断开，正在尝试重连...');
-    }
-  });
-}
-/* ---------- 退出聊天室 ---------- */
-function leaveRoom(silent = false) {
-  socket?.close();
-  socket = null;
-  joined.value = false;
-  msgList.value = [];
-  onlineUsers.value = [];
-  typingUsers.value.clear();
-  if (!silent) message.info('已退出聊天室');
-}
-/* ---------- 加入聊天室 ---------- */
-function handleJoin() {
-  const name = nickname.value.trim();
-  if (!name) {
-    message.warning('请输入昵称');
-    return;
-  }
-  connecting.value = true;
-  socket = io(SOCKET_URL, {
-    transports: ['websocket', 'polling'],
-    reconnection: true,
-    reconnectionDelay: 2000
-  });
-  bindSocketEvents(socket);
-
-  socket.on('connect', () => {
-    socket!.emit('join', { username: name, room: DEFAULT_ROOM });
-    joined.value = true;
-    connecting.value = false;
-    message.success(`欢迎加入聊天室，${name}`);
-  });
-
-  socket.on('connect_error', () => {
-    if (!joined.value) {
-      connecting.value = false;
-      message.error('连接服务器失败，请确认后端服务已启动');
-      socket?.close();
-      socket = null;
-    }
-  });
-}
-
-/* ---------- 发送消息 ---------- */
-function handleSend() {
-  const content = inputMsg.value.trim();
-  if (!content) return;
-  if (!socket || !joined.value) {
-    message.warning('请先加入聊天室');
-    return;
-  }
-  socket.emit('chatMessage', {
-    room: DEFAULT_ROOM,
-    username: nickname.value.trim(),
-    content
-  });
-  inputMsg.value = '';
-  // 发送后停止 typing 提示
-  socket.emit('typing', { typing: false });
-  lastTypingSent = false;
-}
-
 function handleInputKeydown(e: KeyboardEvent) {
   if (e.key === 'Enter' && !e.shiftKey) {
     e.preventDefault();
-    handleSend();
+    chatStore.sendMessage();
   }
-}
-
-/* ---------- 正在输入提示（节流） ---------- */
-function handleTyping() {
-  if (!socket || !joined.value) return;
-  const typing = !!inputMsg.value.trim();
-  if (typing !== lastTypingSent) {
-    socket.emit('typing', { typing });
-    lastTypingSent = typing;
-  }
-  clearTimeout(typingTimer!);
-  typingTimer = setTimeout(() => {
-    if (lastTypingSent) {
-      socket?.emit('typing', { typing: false });
-      lastTypingSent = false;
-    }
-  }, 2000);
-}
-
-/* ---------- 加载更多历史 ---------- */
-function loadHistory() {
-  if (!socket || !joined.value) return;
-  socket.emit('history', { page: 1, pageSize: 50 });
-  message.info('已刷新最新历史消息');
 }
 
 /* ---------- 生命周期 ---------- */
@@ -248,9 +78,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  clearTimeout(typingTimer!);
-  socket?.close();
-  socket = null;
+  chatStore.dispose();
 });
 </script>
 
@@ -269,7 +97,7 @@ onBeforeUnmount(() => {
           size="large"
           placeholder="请输入昵称"
           :maxlength="20"
-          @press-enter="handleJoin"
+          @press-enter="chatStore.joinRoom()"
         >
           <template #prefix>
             <UserOutlined />
@@ -281,7 +109,7 @@ onBeforeUnmount(() => {
           block
           :loading="connecting"
           style="margin-top: 16px"
-          @click="handleJoin"
+          @click="chatStore.joinRoom()"
         >
           进入聊天室
         </a-button>
@@ -304,7 +132,7 @@ onBeforeUnmount(() => {
         <div class="header-actions">
           <a-button
             size="small"
-            @click="loadHistory"
+            @click="chatStore.refreshHistory()"
           >
             <template #icon>
               <ReloadOutlined />
@@ -314,7 +142,7 @@ onBeforeUnmount(() => {
           <a-button
             size="small"
             danger
-            @click="leaveRoom()"
+            @click="chatStore.leaveRoom()"
             >退出</a-button
           >
         </div>
@@ -390,12 +218,12 @@ onBeforeUnmount(() => {
             :auto-size="{ minRows: 1, maxRows: 4 }"
             :maxlength="2000"
             @keydown="handleInputKeydown"
-            @input="handleTyping"
+            @input="chatStore.updateTyping()"
           />
           <a-button
             type="primary"
             :disabled="!inputMsg.trim()"
-            @click="handleSend"
+            @click="chatStore.sendMessage()"
           >
             <template #icon>
               <SendOutlined />

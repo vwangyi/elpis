@@ -1,5 +1,5 @@
-import request from '@/utils/request';
-import type { ApiResponse } from '@/utils/request';
+import request from '@/api/request';
+import type { ApiResponse } from '@/api/request';
 import type { Todo, TodoPageResult, TodoParams } from '@/types/todo';
 
 // 查询待办列表（分页 + 可选筛选）
