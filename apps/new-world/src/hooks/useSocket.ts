@@ -1,5 +1,5 @@
 import { io, type Socket } from 'socket.io-client';
-import { onMounted, onUnmounted } from 'vue';
+import { onDeactivated, onMounted, onUnmounted } from 'vue';
 
 export function useSocket(url: string) {
   let socket: Socket | null = null;
@@ -7,6 +7,12 @@ export function useSocket(url: string) {
   onMounted(() => {});
 
   onUnmounted(() => {
+    socket?.close();
+    socket = null;
+  });
+
+  onDeactivated(() => {
+    socket?.close();
     socket = null;
   });
 

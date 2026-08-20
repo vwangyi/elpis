@@ -5,11 +5,9 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import vueDevTools from 'vite-plugin-vue-devtools';
 
-// 一般来说 不会使用 node原生提供的process.env 而是用vite提供的 import.meta.env
-
 // https://cn.vite.dev/config/
 export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
-  // 加载 .env 文件（包括 .env.dev 等）
+  // 加载.env文件 不会使用node原生提供的process.env 而是用vite提供的import.meta.env
   const env = loadEnv(mode, process.cwd(), '');
   return {
     plugins: [
@@ -26,12 +24,13 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     server: {
       proxy: {
         '/api': {
-          target: env.VITE_SOCKET_BASE_URL || '',
+          target: env.VITE_BASE_URL || 'http://localhost:1234', // 默认给一个不存在的服务
           changeOrigin: true,
           rewrite: path => path.replace(/^\/api/, '')
         },
+        // /socket.io这个key值是socket.io这个库决定的
         '/socket.io': {
-          target: env.VITE_SOCKET_BASE_URL || 'http://localhost:3000',
+          target: env.VITE_BASE_URL || 'http://localhost:1234',
           changeOrigin: true,
           ws: true // 关键：支持 WebSocket 升级
         }

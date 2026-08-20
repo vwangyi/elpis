@@ -11,3 +11,5 @@ popconfirm
 Fenwick
 accum
 segs
+pinia
+VITE
