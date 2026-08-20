@@ -48,3 +48,13 @@ const chatSocket = io('http://localhost:3000/chat', {
 会建立 3 条 WebSocket 连接吗？	不会，默认只有 1 条连接
 多个实例的意义是什么？	代码组织、权限控制、功能隔离
 什么时候才有真正的多条连接？	不同服务器、禁用 multiplex、不同传输方式
+
+
+
+
+socket.on('connect', () => console.log(1))
+socket.on('connect', () => console.log(2))
+
+会依次追加两个事件。两个回调都会执行，连接成功时会依次打印 1 和 2。
+因为 socket.on（底层是 EventEmitter 的 addListener）是追加监听器，而不是覆盖。每次调用都会把新回调推入事件队列，触发时按绑定顺序执行。
+不建议这样写 写一个就好。

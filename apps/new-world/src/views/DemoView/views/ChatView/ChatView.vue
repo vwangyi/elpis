@@ -16,6 +16,7 @@ import {
   ReloadOutlined,
   PoweroffOutlined
 } from '@ant-design/icons-vue';
+import { P } from 'vue-router/dist/index-BN0B0y8a.js';
 
 /* ================================================================
  *  类型定义（对齐后端 chat.gateway.ts / chat.entity.ts）
@@ -49,11 +50,82 @@ interface HistoryPayload {
 const CHAT_NAMESPACE = '/chat';
 const DEFAULT_ROOM = 'public';
 
-/* ================================================================
- *  Socket 管理
+/* ================================================================ *
+  你好
  * ================================================================ */
 
+/* ================================================================
+ * 状态
+ * ================================================================ */
 let socket: Socket | null = null;
+const nickname = ref('');
+const joined = ref(false);
+const connecting = ref(false);
+const inputMsg = ref('');
+const msgList = ref<ChatMsg[]>([]);
+const onlineUsers = ref<OnlineUser[]>([]);
+const typingUsers = ref<Set<string>>(new Set());
+
+// 节流相关（非响应式）
+let typingTimer: ReturnType<typeof setTimeout> | null = null;
+let lastTypingSent = false;
+/**
+ * 0. 销毁socket对象
+ */
+function closeSocket() {
+  socket?.close();
+  socket = null;
+}
+
+/**
+ * 1. 创建socket对象
+ */
+function createSocket(): Socket {
+  closeSocket();
+  socket = io('/chat', {
+    transports: ['websocket', 'polling'],
+    reconnection: true,
+    reconnectionDelay: 2000
+  });
+  return socket;
+}
+/**
+ * 2. 绑定所有事件
+ */
+function batchEventBinding(s: Socket) {
+  // s?.on('')
+}
+
+/**
+ * 3. 进入聊天室
+ */
+function enterChatRoom() {
+  const name = nickname.value.trim();
+  if (!name) {
+    message.warning('请输入昵称');
+    return;
+  }
+  const s = createSocket();
+  batchEventBinding(s);
+  s.on('connect', () => {
+    if (joined.value && nickname.value) {
+      s.emit('join', { username: nickname.value, room: DEFAULT_ROOM });
+      return;
+    }
+    s.emit('join', { username: name, room: DEFAULT_ROOM });
+    joined.value = true;
+    connecting.value = false;
+    message.success(`欢迎加入聊天室，${name}`);
+  });
+  // 连接失败
+  s.on('connect_error', () => {
+    if (!joined.value) {
+      connecting.value = false;
+      message.error('连接服务器失败，请确认后端服务已启动');
+      disconnectSocket();
+    }
+  });
+}
 
 function connectSocket(): Socket {
   disconnectSocket();
@@ -62,6 +134,7 @@ function connectSocket(): Socket {
     reconnection: true,
     reconnectionDelay: 2000
   });
+  console.log(socket);
   return socket;
 }
 
@@ -79,22 +152,6 @@ function emitEvent<T = unknown>(event: string, payload?: T): void {
 }
 
 /* ================================================================
- *  响应式状态
- * ================================================================ */
-
-const nickname = ref('');
-const joined = ref(false);
-const connecting = ref(false);
-const inputMsg = ref('');
-const msgList = ref<ChatMsg[]>([]);
-const onlineUsers = ref<OnlineUser[]>([]);
-const typingUsers = ref<Set<string>>(new Set());
-
-// 节流相关（非响应式）
-let typingTimer: ReturnType<typeof setTimeout> | null = null;
-let lastTypingSent = false;
-
-/* ================================================================
  *  Socket 事件绑定
  * ================================================================ */
 
@@ -106,11 +163,9 @@ function bindSocketEvents(s: Socket) {
 
   // 断线重连后自动重新加入房间
   s.on('connect', () => {
+    console.log('xxxxxxxxxxxxxx', '断线重连后自动重新加入房间');
     if (joined.value && nickname.value) {
-      s.emit('join', {
-        username: nickname.value,
-        room: DEFAULT_ROOM
-      });
+      s.emit('join', { username: nickname.value, room: DEFAULT_ROOM });
     }
   });
 
@@ -194,6 +249,8 @@ function joinRoom() {
 
   // 首次连接成功后发送 join
   s.on('connect', () => {
+    console.log('xxxxxxxxxxxxxx', '首次连接成功后发送');
+
     s.emit('join', { username: name, room: DEFAULT_ROOM });
     joined.value = true;
     connecting.value = false;
