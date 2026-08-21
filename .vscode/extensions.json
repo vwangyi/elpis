@@ -3,7 +3,6 @@
   "recommendations": [
     "Vue.volar", // vue插件
     "Vue.vscode-typescript-vue-plugin", // vue插件
-    "GitHub.copilot", // AI copilot
     "GitHub.copilot-chat", // AI copilot
     "dbaeumer.vscode-eslint", // eslint插件
     "esbenp.prettier-vscode" // prettier插件

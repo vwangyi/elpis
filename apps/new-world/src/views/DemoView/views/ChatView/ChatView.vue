@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, reactive, computed, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { nextTick, onMounted, onBeforeUnmount } from 'vue';
 import { io, type Socket } from 'socket.io-client';
 import { message } from 'ant-design-vue';
@@ -35,7 +35,7 @@ function closeSocket() {
 // 创建socket对象
 function createSocket(): Socket {
   closeSocket();
-  socket = io('/chat', {
+  socket = io(CHAT_NAMESPACE, {
     transports: ['websocket', 'polling'],
     reconnection: true,
     reconnectionDelay: 2000
