@@ -1,85 +1,38 @@
 <script setup lang="ts">
-import {
-  ref,
-  reactive,
-  nextTick,
-  onMounted,
-  onBeforeUnmount,
-  computed,
-  watch
-} from 'vue';
+import { ref, reactive, computed, watch } from 'vue';
+import { nextTick, onMounted, onBeforeUnmount } from 'vue';
 import { io, type Socket } from 'socket.io-client';
 import { message } from 'ant-design-vue';
-import {
-  SendOutlined,
-  UserOutlined,
-  ReloadOutlined,
-  PoweroffOutlined
-} from '@ant-design/icons-vue';
-import { P } from 'vue-router/dist/index-BN0B0y8a.js';
-
-/* ================================================================
- *  类型定义（对齐后端 chat.gateway.ts / chat.entity.ts）
- * ================================================================ */
-
-interface ChatMsg {
-  id?: number;
-  room?: string;
-  username: string;
-  content: string;
-  createTime?: string;
-  type?: 'user' | 'system';
-}
-
-interface OnlineUser {
-  username: string;
-  joinTime: number;
-}
-
-interface HistoryPayload {
-  list: ChatMsg[];
-  total: number;
-  page: number;
-  pageSize: number;
-}
-
-/* ================================================================
- *  配置
- * ================================================================ */
+import { ReloadOutlined, PoweroffOutlined } from '@ant-design/icons-vue';
+import { SendOutlined, UserOutlined } from '@ant-design/icons-vue';
+import type { ChatMsg, OnlineUser, HistoryPayload } from './types';
 
 const CHAT_NAMESPACE = '/chat';
 const DEFAULT_ROOM = 'public';
-
-/* ================================================================ *
-  你好
- * ================================================================ */
-
-/* ================================================================
- * 状态
- * ================================================================ */
-let socket: Socket | null = null;
 const nickname = ref('');
-const joined = ref(false);
+const joined = ref(false); // 记录状态是否是首次连接
 const connecting = ref(false);
 const inputMsg = ref('');
 const msgList = ref<ChatMsg[]>([]);
 const onlineUsers = ref<OnlineUser[]>([]);
 const typingUsers = ref<Set<string>>(new Set());
-
-// 节流相关（非响应式）
+const typingText = computed(() => {
+  const names = [...typingUsers.value];
+  if (!names.length) return '';
+  if (names.length === 1) return `${names[0]} 正在输入...`;
+  return `${names.slice(0, 2).join('、')} 正在输入...`;
+});
+let socket: Socket | null = null;
 let typingTimer: ReturnType<typeof setTimeout> | null = null;
 let lastTypingSent = false;
-/**
- * 0. 销毁socket对象
- */
+const messagesRef = ref<HTMLElement | null>(null);
+
+// 销毁socket对象
 function closeSocket() {
   socket?.close();
   socket = null;
 }
-
-/**
- * 1. 创建socket对象
- */
+// 创建socket对象
 function createSocket(): Socket {
   closeSocket();
   socket = io('/chat', {
@@ -89,11 +42,86 @@ function createSocket(): Socket {
   });
   return socket;
 }
-/**
- * 2. 绑定所有事件
- */
+
+function handleConnected(data: { socketId: string }) {
+  console.log('[chat] 已连接，socketId =', data.socketId);
+}
+function handleHistory(data: HistoryPayload) {
+  msgList.value = (data.list || []).map(m => ({ ...m, type: 'user' }));
+}
+function chatMessage(msg: ChatMsg) {
+  msgList.value.push({ ...msg, type: 'user' });
+  typingUsers.value.delete(msg.username);
+}
+function handleUserJoined(data: { username: string; time: string }) {
+  msgList.value.push({
+    username: 'system',
+    content: `${data.username} 加入了聊天室`,
+    createTime: data.time,
+    type: 'system'
+  });
+}
+function handleUserLeft(data: { username: string; time: string }) {
+  msgList.value.push({
+    username: 'system',
+    content: `${data.username} 离开了聊天室`,
+    createTime: data.time,
+    type: 'system'
+  });
+  typingUsers.value.delete(data.username);
+}
+function handleOnlineUsers(data: { users: OnlineUser[] }) {
+  onlineUsers.value = data.users || [];
+}
+function handleTyping(data: { username: string; typing: boolean }) {
+  if (data.typing) typingUsers.value.add(data.username);
+  else typingUsers.value.delete(data.username);
+}
+function handleKicked(data: { message: string }) {
+  message.warning(data.message || '您已在其他地方登录');
+  leaveRoom(true);
+}
+function handleError(data: { message: string }) {
+  message.error(data.message || '发生错误');
+}
+function handleDisconnect() {
+  if (joined.value) {
+    message.warning('与服务器的连接已断开，正在尝试重连...');
+  }
+}
+function handleConnect() {
+  if (!socket) throw new Error('socket 未初始化');
+  const name = nickname.value.trim();
+  if (joined.value && name) {
+    socket?.emit('join', { username: name, room: DEFAULT_ROOM });
+    return;
+  }
+  socket?.emit('join', { username: name, room: DEFAULT_ROOM });
+  joined.value = true;
+  connecting.value = false;
+  message.success(`欢迎加入聊天室，${name}`);
+}
+function handleConnectError() {
+  if (!joined.value) {
+    connecting.value = false;
+    message.error('连接服务器失败，请确认后端服务已启动');
+    closeSocket();
+  }
+}
+// 绑定所有事件
 function batchEventBinding(s: Socket) {
-  // s?.on('')
+  s.on('history', handleHistory); // 监听history 历史消息
+  s.on('chatMessage', chatMessage); // 监听chatMessage 聊天消息
+  s.on('userJoined', handleUserJoined); // 监听userJoined 获得上线通知
+  s.on('userLeft', handleUserLeft); // 监听userLeft 获得下线通知
+  s.on('onlineUsers', handleOnlineUsers); // 监听onlineUsers 获得在线用户列表
+  s.on('typing', handleTyping); // 监听typing 获得同房间其他人正在输入状态
+  s.on('kicked', handleKicked); // 监听kicked 监听被顶号（同名登录）
+  s.on('error', handleError); // 监听error 发生错误触发
+  s.on('disconnect', handleDisconnect); // 监听disconnect 断线就触发
+  s.on('connected', handleConnected); // 监听connected 连接成功触发
+  s.on('connect', handleConnect); // 监听connect 连接成功触发
+  s.on('connect_error', handleConnectError); // 监听connect_error 首次连接失败触发
 }
 
 /**
@@ -105,30 +133,11 @@ function enterChatRoom() {
     message.warning('请输入昵称');
     return;
   }
-  const s = createSocket();
-  batchEventBinding(s);
-  s.on('connect', () => {
-    if (joined.value && nickname.value) {
-      s.emit('join', { username: nickname.value, room: DEFAULT_ROOM });
-      return;
-    }
-    s.emit('join', { username: name, room: DEFAULT_ROOM });
-    joined.value = true;
-    connecting.value = false;
-    message.success(`欢迎加入聊天室，${name}`);
-  });
-  // 连接失败
-  s.on('connect_error', () => {
-    if (!joined.value) {
-      connecting.value = false;
-      message.error('连接服务器失败，请确认后端服务已启动');
-      disconnectSocket();
-    }
-  });
+  batchEventBinding(createSocket());
 }
 
 function connectSocket(): Socket {
-  disconnectSocket();
+  closeSocket();
   socket = io(CHAT_NAMESPACE, {
     transports: ['websocket', 'polling'],
     reconnection: true,
@@ -140,15 +149,6 @@ function connectSocket(): Socket {
 
 function getSocket(): Socket | null {
   return socket;
-}
-
-function disconnectSocket(): void {
-  socket?.close();
-  socket = null;
-}
-
-function emitEvent<T = unknown>(event: string, payload?: T): void {
-  socket?.emit(event, payload);
 }
 
 /* ================================================================
@@ -235,41 +235,9 @@ function bindSocketEvents(s: Socket) {
  *  业务方法
  * ================================================================ */
 
-/** 加入聊天室 */
-function joinRoom() {
-  const name = nickname.value.trim();
-  if (!name) {
-    message.warning('请输入昵称');
-    return;
-  }
-
-  connecting.value = true;
-  const s = connectSocket();
-  bindSocketEvents(s);
-
-  // 首次连接成功后发送 join
-  s.on('connect', () => {
-    console.log('xxxxxxxxxxxxxx', '首次连接成功后发送');
-
-    s.emit('join', { username: name, room: DEFAULT_ROOM });
-    joined.value = true;
-    connecting.value = false;
-    message.success(`欢迎加入聊天室，${name}`);
-  });
-
-  // 连接失败（首次）
-  s.on('connect_error', () => {
-    if (!joined.value) {
-      connecting.value = false;
-      message.error('连接服务器失败，请确认后端服务已启动');
-      disconnectSocket();
-    }
-  });
-}
-
 /** 退出聊天室 */
 function leaveRoom(silent = false) {
-  disconnectSocket();
+  closeSocket();
   joined.value = false;
   msgList.value = [];
   onlineUsers.value = [];
@@ -288,7 +256,7 @@ function sendMessage() {
   }
 
   // 后端 CreateChatDto: { room, username, content }
-  emitEvent('chatMessage', {
+  socket?.emit('chatMessage', {
     room: DEFAULT_ROOM,
     username: nickname.value.trim(),
     content
@@ -297,72 +265,53 @@ function sendMessage() {
   inputMsg.value = '';
 
   // 发送后停止 typing 提示
-  emitEvent('typing', { typing: false });
+  socket?.emit('typing', { typing: false });
   lastTypingSent = false;
 }
 
-/** 正在输入提示（节流，2s 内不重复发送） */
+/* 正在输入提示（节流，2s 内不重复发送）*/
 function updateTyping() {
   if (!getSocket() || !joined.value) return;
 
   const typing = !!inputMsg.value.trim();
   if (typing !== lastTypingSent) {
-    emitEvent('typing', { typing });
+    socket?.emit('typing', { typing });
     lastTypingSent = typing;
   }
 
   clearTimeout(typingTimer!);
   typingTimer = setTimeout(() => {
     if (lastTypingSent) {
-      emitEvent('typing', { typing: false });
+      socket?.emit('typing', { typing: false });
       lastTypingSent = false;
     }
   }, 2000);
 }
-
-/** 刷新历史消息 */
+/* 刷新历史消息 */
 function refreshHistory() {
   if (!getSocket() || !joined.value) return;
-  emitEvent('history', { page: 1, pageSize: 50 });
+  socket?.emit('history', { page: 1, pageSize: 50 });
   message.info('已刷新最新历史消息');
 }
-
-/** 组件卸载时清理 */
+/* 组件卸载时清理 */
 function dispose() {
   clearTimeout(typingTimer!);
   typingTimer = null;
-  disconnectSocket();
+  closeSocket();
   joined.value = false;
   lastTypingSent = false;
 }
-
-/* ================================================================
- *  组件视图逻辑
- * ================================================================ */
-
-const messagesRef = ref<HTMLElement | null>(null);
-
-/** 格式化时间：今天显示 HH:mm，跨天显示 M-D HH:mm */
-function formatTime(time?: string | number | Date) {
-  if (!time) return '';
-  const d = new Date(time);
-  const now = new Date();
-  const sameDay =
-    d.getFullYear() === now.getFullYear() &&
-    d.getMonth() === now.getMonth() &&
-    d.getDate() === now.getDate();
-  const hh = String(d.getHours()).padStart(2, '0');
-  const mm = String(d.getMinutes()).padStart(2, '0');
-  return sameDay
-    ? `${hh}:${mm}`
-    : `${d.getMonth() + 1}-${d.getDate()} ${hh}:${mm}`;
-}
-
 function scrollToBottom() {
   nextTick(() => {
     const el = messagesRef.value;
     if (el) el.scrollTop = el.scrollHeight;
   });
+}
+function handleInputKeydown(e: KeyboardEvent) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
 }
 
 // 消息数量变化时自动滚动到底部
@@ -370,20 +319,6 @@ watch(
   () => msgList.value.length,
   () => scrollToBottom()
 );
-
-const typingText = computed(() => {
-  const names = [...typingUsers.value];
-  if (!names.length) return '';
-  if (names.length === 1) return `${names[0]} 正在输入...`;
-  return `${names.slice(0, 2).join('、')} 正在输入...`;
-});
-
-function handleInputKeydown(e: KeyboardEvent) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMessage();
-  }
-}
 
 /* ---------- 生命周期 ---------- */
 onMounted(() => {
@@ -410,7 +345,7 @@ onBeforeUnmount(() => {
           size="large"
           placeholder="请输入昵称"
           :maxlength="20"
-          @press-enter="joinRoom()"
+          @press-enter="enterChatRoom"
         >
           <template #prefix>
             <UserOutlined />
@@ -422,7 +357,7 @@ onBeforeUnmount(() => {
           block
           :loading="connecting"
           style="margin-top: 16px"
-          @click="joinRoom()"
+          @click="enterChatRoom"
         >
           进入聊天室
         </a-button>
@@ -486,7 +421,7 @@ onBeforeUnmount(() => {
               class="system-msg"
             >
               {{ msg.content }}
-              <span class="sys-time">{{ formatTime(msg.createTime) }}</span>
+              <span class="sys-time">{{ msg.createTime }}</span>
             </div>
 
             <!-- 用户消息 -->
@@ -497,7 +432,7 @@ onBeforeUnmount(() => {
               <div class="bubble-wrap">
                 <div class="msg-meta">
                   <span class="msg-username">{{ msg.username }}</span>
-                  <span class="msg-time">{{ formatTime(msg.createTime) }}</span>
+                  <span class="msg-time">{{ msg.createTime }}</span>
                 </div>
                 <div class="bubble">{{ msg.content }}</div>
               </div>
