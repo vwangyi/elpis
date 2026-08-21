@@ -34,7 +34,8 @@ const ignores = [
   'docs',
   'demo',
   'scripts',
-  'packages/*'
+  'packages/*',
+  '**/.nuxt/**'
   // 'apps/new-world/*'
   // 'apps/all-blue/*',
   // 'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
