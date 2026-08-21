@@ -1,4 +1,4 @@
-# nest
+# 山治的梦想 ------ 传说之海 AllBlue
 
 - `npm i -g @nestjs/cli`: `用npm全局下载nest命令 得到nest命令`
 
