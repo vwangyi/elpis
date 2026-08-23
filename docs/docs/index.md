@@ -8,7 +8,7 @@ __微前端__：拥有丰富的微前端架构经验，熟悉多种微前端实�
 __框架__：主用框架Vue2、Vue3、等现代前端框架，理解两个框架之间的核心原理以及差异，独立实现min版Vue和React，已开源Github等平台。拥有两框架开发多个型项目的业务经验，对两大框架的周边生态（VueRouter、Pinia、Elemenful、Reactrouter、redux、recoil、Antdesign）有一定的心得和体会。
 
 __工程化__：熟练掌握Webpack、Vite、Rollup等前端工程化工具，了解不同工具的核心原理以及差异，拥有编写Webpack、Vite插件的经验、插件已发布至npm上，服务于4+项目。
-__桌面端__：熟练使用UniAPP、Taro等跨端框架或者原语法独开发微信程序，拥有使用ReactNative开发iOS和ndroid原生应用的开发经验，熟悉Electron，能够运用Electron制作桌面应用。
+__桌面端__：熟悉Electron，能够运用Electron制作桌面应用。
 
 __性能优化__：掌握前端常见性能优化手段，包括代码分割、懒加载、资源优化、SSR服务端渲染等技术，显著降低FCP和LCP间，提升用户交互体验。
 
@@ -20,7 +20,7 @@ __设计模式__：熟悉SOLID设计原则以及前端常用设计模式，能�
 
 __数据结构与算法__：熟悉常见的数据结构和算法，完成力扣前200道算法题。
 
-__语言方面__：拥有扎实的HTML、CS、JS基础，针对部分前端核心知识有深入研究，研究心得已发文于掘金、语雀等平台。熟练练案握TypeScript，在大型项目中能够利用lvpescrip进行类型检查和代码优化，提升代码的可维护性和可靠性。    TypeScript JavaScript HTML CSS 
+__语言__：拥有扎实的HTML、CS、JS基础，针对部分前端核心知识有深入研究，研究心得已发文于掘金、语雀等平台。熟练练案握TypeScript，在大型项目中能够利用lvpescrip进行类型检查和代码优化，提升代码的可维护性和可靠性。    TypeScript JavaScript HTML CSS 
 
 __JavaScript__: 熟悉JavaScript和Chrome运行环境的底层原理，包括但不限于渲染主线程、事件循环、渲染引擎、V8引擎，执行栈、垃圾回收机制、闭包、作用域、协程、异步编程、面向对象等等核心概念。能够运用相关知识对项目进行性能评估，提出优化方案。
 

@@ -19,7 +19,8 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
     resolve: {
       extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
       alias: {
-        '@': fileURLToPath(new URL('./src', import.meta.url))
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+        '~': fileURLToPath(new URL('./src/views/DemoView', import.meta.url))
       }
     },
     server: {
