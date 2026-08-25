@@ -8,5 +8,9 @@ export const useCounterStore = defineStore('counter', () => {
     count.value++;
   }
 
-  return { count: readonly(count), doubleCount, increment };
+  return {
+    count: readonly(count), // ref需要readonly包裹 防止外部直接赋值
+    doubleCount, // computed不需要readonly包裹
+    increment
+  };
 });
