@@ -11,31 +11,32 @@ export const routes = [
     path: '/demo',
     name: 'DemoView',
     component: () => import('~/DemoView.vue'),
-    redirect: '/demo/files-upload',
+    redirect: '/demo/coding-view',
     children: [
+      {
+        path: 'coding-view',
+        name: 'CodingView',
+        meta: { title: '编码能力' },
+        component: () => import('~/views/CodingView/CodingView.vue')
+      },
+
       {
         path: 'files-upload',
         name: 'FilesUpload',
         meta: { title: '文件上传' },
-        component: () => {
-          return import('~/views/FilesUpload/FilesUpload.vue');
-        }
+        component: () => import('~/views/FilesUpload/FilesUpload.vue')
       },
       {
         path: 'virtual-list',
         name: 'VirtualList',
         meta: { title: '虚拟列表' },
-        component: () => {
-          return import('~/views/VirtualList/VirtualList.vue');
-        }
+        component: () => import('~/views/VirtualList/VirtualList.vue')
       },
       {
         path: 'rbac-permissions',
         name: 'RbacPermissions',
         meta: { title: '权限' },
-        component: () => {
-          return import('~/views/RbacPermissions/RbacPermissions.vue');
-        }
+        component: () => import('~/views/RbacPermissions/RbacPermissions.vue')
       },
       {
         path: 'approval-flow',
@@ -44,65 +45,50 @@ export const routes = [
           title: '审批流',
           desc: '流程可以没有审批 但审批一定有流程，审批是流程的一个环节'
         },
-        component: () => {
-          return import('~/views/ApprovalFlow/ApprovalFlow.vue');
-        }
+        component: () => import('~/views/ApprovalFlow/ApprovalFlow.vue')
       },
       {
         path: 'work-flow',
         name: 'WorkFlow',
         meta: { title: '工作流' },
-        component: () => {
-          return import('~/views/WorkFlow/WorkFlow.vue');
-        }
+        component: () => import('~/views/WorkFlow/WorkFlow.vue')
       },
       {
         path: 'session-login',
         name: 'SessionLogin',
         meta: { title: 'session登录' },
-        component: () => {
-          return import('~/views/SessionLogin/SessionLogin.vue');
-        }
+        component: () => import('~/views/SessionLogin/SessionLogin.vue')
       },
       {
         path: 'jwt-login',
         name: 'JwtLogin',
         meta: { title: 'jwt登录' },
-        component: () => {
-          return import('~/views/JwtLogin/JwtLogin.vue');
-        }
+        component: () => import('~/views/JwtLogin/JwtLogin.vue')
       },
       {
         path: 'single-sign-on',
         name: 'SingleSignOn',
         meta: { title: '单点登录' },
-        component: () => {
-          return import('~/views/SingleSignOn/SingleSignOn.vue');
-        }
+        component: () => import('~/views/SingleSignOn/SingleSignOn.vue')
       },
       {
         path: 'todo-list',
         name: 'TodoList',
         meta: { title: '代办列表' },
-        component: () => {
-          return import('~/views/TodoList/TodoList.vue');
-        }
+        component: () => import('~/views/TodoList/TodoList.vue')
       },
       {
         path: 'chat-room',
         name: 'ChatRoom',
         meta: { title: '聊天室' },
-        component: () => {
-          return import('~/views/ChatView/ChatView.vue');
-        }
+        component: () => import('~/views/ChatView/ChatView.vue')
       },
       {
         path: 'service-monitoring',
         name: 'ServiceMonitoring',
         meta: { title: '服务监控' },
-        component: () => {
-          return import('~/views/ServiceMonitoring/ServiceMonitoring.vue');
-        }
+        component: () =>
+          import('~/views/ServiceMonitoring/ServiceMonitoring.vue')
       },
       {
         path: 'log-record',
@@ -132,9 +118,7 @@ export const routes = [
   {
     path: '/segmented-demo',
     name: 'SegmentedDemo',
-    component: () => {
-      return import('~/views/VirtualList/SegmentedDemo.vue');
-    }
+    component: () => import('~/views/VirtualList/SegmentedDemo.vue')
   }
 ];
 const router = createRouter({
