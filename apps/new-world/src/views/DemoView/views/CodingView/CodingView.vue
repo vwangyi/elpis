@@ -13,6 +13,7 @@ const test = `
   <div>2. 手写 instanceof原理</div>
   <div>3. 手写 new操作符原理</div>
   <div>4. 手写 call/bind/apply</div>
+  <div>5. this指向</div>
   <pre>
   <code>
     {{ test }}
