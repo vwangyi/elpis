@@ -1,6 +1,6 @@
 ## 技能专长
 
-✅ __架构方面__: 能够从0到1搭建整个Multirepo/Monorepo项目，采用微前端如qiankun把巨石应用拆分为独立部署的子应用。
+✅ __架构方面__: 能够从0到1搭建整个Multirepo、Monorepo、微前端等项目架构。
 ✅ __工程化__: webpack vite rollup 打包构建优化 以及工具链选型 团队代码规范。
 ✅ __框架__: Vue2 Vue3 源码 diff 
 ✅ __单元测试__: jest vitest 
