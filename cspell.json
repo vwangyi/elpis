@@ -32,6 +32,7 @@
     ".cspell",
     ".vscode",
     "demo/*",
+    "docs",
     ".nuxt"
   ]
 }

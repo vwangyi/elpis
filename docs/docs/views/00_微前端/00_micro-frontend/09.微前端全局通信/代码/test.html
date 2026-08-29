@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script>
+  //1.共享的状态
+  //2.订阅变化
+  //3.提交修改
+  //4.取消订阅
+  const state = {
+    pendingCount: 3
+  }
+
+  const listeners = new Set();
+
+  function subscribe(listener) {
+    // 1. 把订阅者保存起来，后续状态变化进行通知
+    listeners.add(listener);
+
+    // 2. 立即调用一次，让订阅这先拿到当前状态
+    listener(state);
+
+    // 3. 返回一个取消订阅的函数
+    return () => {
+      listeners.delete(listener);
+    }
+  }
+
+  function setState(partialState){
+    // 1. 更新状态
+    Object.assign(state, partialState);
+
+    // 2. 通知所有订阅者
+    listeners.forEach(listener => listener(state));
+  }
+
+  const unsubscribe = subscribe((state) => {
+    console.log('当前待处理事项', state.pendingCount);
+  });
+
+  setState({ pendingCount: 2 });
+  setState({ pendingCount: 1 });
+
+  unsubscribe();
+
+  setState({ pendingCount: 0 });
+
+</script>
+</html>

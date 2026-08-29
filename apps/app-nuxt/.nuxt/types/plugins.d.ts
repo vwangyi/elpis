@@ -6,25 +6,19 @@ type Decorate<T extends Record<string, any>> = { [K in keyof T as K extends stri
 type InjectionType<A extends Plugin> = A extends {default: Plugin<infer T>} ? Decorate<T> : unknown
 
 type NuxtAppInjections = 
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/revive-payload.client.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/head/runtime/plugins/unhead.server.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/head/runtime/plugins/unhead.client.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/router.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/browser-devtools-timing.client.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/dev-server-logs.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/navigation-repaint.client.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/check-outdated-build.client.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/revive-payload.server.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/@nuxt/devtools/dist/runtime/plugins/devtools.server.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/@nuxt/devtools/dist/runtime/plugins/devtools.client.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/warn.dev.server.js")> &
-  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/plugins/check-if-layout-used.js")>
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/plugins/revive-payload.client.js")> &
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/head/runtime/plugins/unhead.server.js")> &
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/head/runtime/plugins/unhead.client.js")> &
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/plugins/router.js")> &
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/plugins/navigation-repaint.client.js")> &
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/plugins/check-outdated-build.client.js")> &
+  InjectionType<typeof import("../../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/plugins/revive-payload.server.js")>
 
 declare module '#app' {
   interface NuxtApp extends NuxtAppInjections { }
 
   interface NuxtAppLiterals {
-    pluginName: 'vue-devtools-client' | 'nuxt:revive-payload:client' | 'nuxt:head' | 'nuxt:head' | 'nuxt:router' | 'nuxt:browser-devtools-timing' | 'nuxt:revive-payload:server' | 'nuxt:global-components' | 'nuxt:checkIfLayoutUsed'
+    pluginName: 'nuxt:revive-payload:client' | 'nuxt:head' | 'nuxt:head' | 'nuxt:router' | 'nuxt:revive-payload:server' | 'nuxt:global-components'
   }
 }
 

@@ -1,0 +1,13 @@
+{
+  "name": "@supply-chain/design-tokens",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./theme.css": "./theme.css",
+    "./theme": "./theme.ts"
+  },
+  "devDependencies": {
+    "@supply-chain/typescript-config": "workspace:*"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "mf-react-remote",
+  "private": true,
+  "scripts": {
+    "dev": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@babel/core": "8.0.1",
+    "@babel/preset-react": "8.0.1",
+    "babel-loader": "10.1.1"
+  }
+}

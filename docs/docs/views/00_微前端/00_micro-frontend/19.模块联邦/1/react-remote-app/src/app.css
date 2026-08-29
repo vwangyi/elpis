@@ -1,0 +1,5 @@
+:root { font-family: Inter, "PingFang SC", sans-serif; color: #1e293b; background: #ecfdf5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+.page { width: min(680px, calc(100% - 40px)); margin: 80px auto; padding: 36px; border: 1px solid #bbdfcf; border-radius: 16px; background: #fff; }
+.eyebrow { color: #059669; font-size: 11px; font-weight: 800; letter-spacing: .08em; }

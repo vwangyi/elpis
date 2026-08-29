@@ -1,0 +1,15 @@
+{
+  "name": "03",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:main": "pnpm --filter main-app dev",
+    "dev:order": "pnpm --filter order-app dev",
+    "dev:finance": "pnpm --filter finance-app dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.33.0"
+}

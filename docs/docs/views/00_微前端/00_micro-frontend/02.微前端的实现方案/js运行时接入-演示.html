@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JS 运行时接入演示</title>
+    <style>
+      :root {
+        --bg: #f6f1e8;
+        --paper: rgba(255, 252, 247, 0.9);
+        --ink: #1c2a39;
+        --muted: #65707c;
+        --line: rgba(28, 42, 57, 0.1);
+        --main: #194d63;
+        --card: rgba(255, 255, 255, 0.88);
+        --shadow: 0 22px 50px rgba(27, 39, 50, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(25, 77, 99, 0.09), transparent 28%),
+          radial-gradient(circle at right bottom, rgba(166, 81, 42, 0.12), transparent 24%),
+          linear-gradient(180deg, #f8f3ea 0%, #f1eadf 100%);
+      }
+
+      .page {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 18px;
+        padding: 18px;
+        border-radius: 34px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .sidebar,
+      .workspace {
+        border-radius: 26px;
+        overflow: hidden;
+      }
+
+      .sidebar {
+        padding: 22px;
+        background: linear-gradient(180deg, #183d50 0%, #1f5870 100%);
+        color: #edf7fb;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+
+      .brand strong {
+        font-size: 20px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+
+      .tag-main {
+        color: #edf7fb;
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .nav-title {
+        margin: 0 0 10px;
+        font-size: 13px;
+        color: rgba(237, 247, 251, 0.72);
+        letter-spacing: 0.08em;
+      }
+
+      .menu {
+        display: grid;
+        gap: 10px;
+      }
+
+      .menu button {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.08);
+        color: #f2f8fb;
+        border-radius: 18px;
+        padding: 14px 16px;
+        text-align: left;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .menu button.active {
+        color: var(--main);
+        background: #f0f6f8;
+      }
+
+      .workspace {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(180deg, #fffdfa 0%, #f8f2ea 100%);
+        border: 1px solid rgba(28, 42, 57, 0.1);
+      }
+
+      .topbar {
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.84);
+        border-bottom: 1px solid rgba(28, 42, 57, 0.08);
+      }
+
+      .topbar h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+
+      .topbar p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .stage {
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .route-summary {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 16px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        background: rgba(25, 77, 99, 0.08);
+        color: var(--main);
+        font-size: 13px;
+      }
+
+      .route-summary strong {
+        font-family: "SFMono-Regular", Menlo, monospace;
+        font-size: 13px;
+      }
+
+      #subapp {
+        min-height: 620px;
+        padding: 20px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.62);
+        border: 1px dashed rgba(25, 77, 99, 0.18);
+      }
+
+      .loading-panel {
+        display: grid;
+        gap: 12px;
+        padding: 28px;
+        border-radius: 24px;
+        border: 1px solid rgba(28, 42, 57, 0.08);
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      .loading-panel h2 {
+        margin: 0;
+        font-size: 26px;
+      }
+
+      .loading-panel p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      @media (max-width: 1080px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="shell">
+        <aside class="sidebar">
+          <div class="brand">
+            <strong>运营管理平台</strong>
+            <span class="tag tag-main">JS 运行时接入</span>
+          </div>
+
+          <p class="nav-title">业务导航</p>
+          <div class="menu">
+            <button class="menu-btn active" data-app="order">订单管理</button>
+            <button class="menu-btn" data-app="finance">财务管理</button>
+          </div>
+        </aside>
+
+        <main class="workspace">
+          <div class="topbar">
+            <h1>JavaScript 运行时接入</h1>
+            <p>主应用只保留统一菜单和外壳，真正的业务内容由子应用在运行时挂到这个页面里。</p>
+            <div class="route-summary">
+              <span>当前系统路径</span>
+              <strong id="currentRoute">#/orders/list</strong>
+            </div>
+          </div>
+
+          <div class="stage">
+            <div id="subapp"></div>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <script>
+      window.microApps = window.microApps || {};
+
+      const subapp = document.getElementById('subapp');
+      const buttons = document.querySelectorAll('.menu-btn');
+      const currentRoute = document.getElementById('currentRoute');
+
+      const appManifest = {
+        order: {
+          label: '订单管理',
+          script: './js运行时接入-订单子应用.js',
+          registryKey: 'order',
+          defaultRoute: '#/orders/list',
+        },
+        finance: {
+          label: '财务管理',
+          script: './js运行时接入-财务子应用.js',
+          registryKey: 'finance',
+          defaultRoute: '#/finance/bills',
+        },
+      };
+
+      const scriptTasks = {};
+      const routeCache = Object.fromEntries(
+        Object.entries(appManifest).map(([name, meta]) => [name, meta.defaultRoute]),
+      );
+
+      let currentApp = null;
+      let currentAppKey = '';
+
+      // 统一更新主应用顶部路径
+      function syncShellRoute(route) {
+        currentRoute.textContent = route;
+        window.history.replaceState(null, '', route);
+      }
+
+      // 记录当前子应用的最新路由，切走再切回时就能恢复到上次位置。
+      function saveAppRoute(appName, route) {
+        routeCache[appName] = route;
+        syncShellRoute(route);
+      }
+
+      // loading 占位
+      function renderLoading(meta) {
+        subapp.innerHTML = `
+          <section class="loading-panel">
+            <h2>正在接入 ${meta.label}</h2>
+            <p>主应用正在加载对应子应用脚本，然后会把内容挂到当前页面里。</p>
+          </section>
+        `;
+      }
+
+      function setButtonsDisabled(disabled) {
+        buttons.forEach((button) => {
+          button.disabled = disabled;
+        });
+      }
+
+      // 首次进入某个业务时，主应用需要先把“子应用代码文件”加载到当前页面里。
+      // 这里用浏览器原生的 script 标签来做这件事，等脚本执行完以后，
+      // 子应用会把自己的 mount / unmount 挂到 window.microApps 上，主应用再去读取。
+      function loadChildScript(name) {
+        const meta = appManifest[name];
+
+        // 如果这个子应用之前已经加载过了，就不再重复创建 script，直接复用。
+        if (window.microApps[meta.registryKey]) {
+          return Promise.resolve(window.microApps[meta.registryKey]);
+        }
+
+        // scriptTasks 用来缓存“正在加载中的任务”，避免用户快速连点时重复发起加载。
+        if (!scriptTasks[name]) {
+          scriptTasks[name] = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = meta.script;
+            script.async = true;
+
+            // 脚本下载并执行完成后，主应用再去全局注册表里取出子应用暴露的能力。
+            script.onload = () => {
+              const childApp = window.microApps[meta.registryKey];
+
+              // 脚本虽然加载成功，但如果没有注册 mount / unmount，主应用还是没法接入它。
+              if (!childApp) {
+                reject(new Error(`${meta.label} 脚本加载成功，但没有暴露 mount/unmount。`));
+                return;
+              }
+
+              resolve(childApp);
+            };
+
+            // 如果脚本文件本身加载失败，就直接抛出错误给主应用处理。
+            script.onerror = () => {
+              reject(new Error(`${meta.script} 加载失败。`));
+            };
+
+            // 把 script 真正插入页面后，浏览器才会开始请求并执行这个子应用脚本。
+            document.body.appendChild(script);
+          });
+        }
+
+        return scriptTasks[name];
+      }
+
+      // 切换业务时，主应用做三件事：
+      // 1. 卸载当前子应用
+      // 2. 确保目标子应用脚本已经加载完成
+      // 3. 调用目标子应用的 mount，把它挂到同一个容器里
+      async function switchApp(name) {
+        const meta = appManifest[name];
+
+        if (!meta) {
+          return;
+        }
+
+        // 如果当前已经是这个子应用，就不重复切换了。
+        if (currentAppKey === name && currentApp) {
+          return;
+        }
+
+        // 先更新左侧菜单的激活态，让主应用壳子和当前业务保持一致。
+        buttons.forEach((button) => {
+          button.classList.toggle('active', button.dataset.app === name);
+        });
+
+        // 切换过程中先禁用按钮，避免短时间内重复点击造成并发切换。
+        setButtonsDisabled(true);
+
+        // 旧子应用先卸载，给新子应用腾出同一个挂载容器。
+        if (currentApp) {
+          currentApp.unmount(subapp);
+        }
+
+        // 卸载完成后，先显示一个很轻的 loading 占位。
+        renderLoading(meta);
+
+        try {
+          // 先确保目标子应用脚本已经被浏览器加载并执行。
+          const nextApp = await loadChildScript(name);
+
+          // 这里真正调用子应用暴露的 mount。
+          // 主应用把两个信息交给子应用：
+          // initialRoute 表示这个子应用上次停留在哪个路由
+          // onRouteChange 表示子应用每次切路由后，要同步通知主应用
+          nextApp.mount(subapp, {
+            initialRoute: routeCache[name],
+            onRouteChange(route) {
+              saveAppRoute(name, route);
+            },
+          });
+
+          // 记录当前已经激活的是哪一个子应用，方便下次切换时先卸载它。
+          currentApp = nextApp;
+          currentAppKey = name;
+        } catch (error) {
+          // 如果加载或挂载失败，就把当前状态清空，并把错误展示在容器里。
+          currentApp = null;
+          currentAppKey = '';
+          subapp.innerHTML = `
+            <section class="loading-panel">
+              <h2>挂载失败</h2>
+              <p>${error.message}</p>
+            </section>
+          `;
+        } finally {
+          // 不管成功还是失败，最后都把按钮恢复可点击状态。
+          setButtonsDisabled(false);
+        }
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => switchApp(button.dataset.app));
+      });
+
+      switchApp('order');
+    </script>
+  </body>
+</html>

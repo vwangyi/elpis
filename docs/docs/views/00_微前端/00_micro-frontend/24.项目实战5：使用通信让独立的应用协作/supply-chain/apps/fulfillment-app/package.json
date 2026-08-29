@@ -1,0 +1,43 @@
+{
+  "name": "@supply-chain/fulfillment-app",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "webpack serve --config webpack.config.mjs --mode development",
+    "build": "vue-tsc -b && webpack --config webpack.config.mjs --mode production",
+    "typecheck": "vue-tsc -b",
+    "preview": "webpack serve --config webpack.config.mjs --mode production"
+  },
+  "dependencies": {
+    "@supply-chain/api-client": "workspace:*",
+    "@supply-chain/auth-session": "workspace:*",
+    "@supply-chain/design-tokens": "workspace:*",
+    "@supply-chain/micro-bridge": "workspace:*",
+    "@supply-chain/micro-router": "workspace:*",
+    "@supply-chain/ui-vue": "workspace:*",
+    "@unovis/ts": "^1.6.1",
+    "@unovis/vue": "^1.6.1",
+    "lucide-vue-next": "^0.468.0",
+    "vue": "^3.5.17",
+    "vue-router": "4.5.1"
+  },
+  "devDependencies": {
+    "@supply-chain/typescript-config": "workspace:*",
+    "@types/node": "^24.0.0",
+    "@vue/compiler-sfc": "^3.5.17",
+    "autoprefixer": "^10.4.21",
+    "css-loader": "^7.1.2",
+    "html-webpack-plugin": "^5.6.4",
+    "postcss": "^8.5.6",
+    "postcss-loader": "^8.2.0",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^3.4.17",
+    "ts-loader": "^9.5.2",
+    "vue-loader": "^17.4.2",
+    "vue-tsc": "^3.0.0",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}

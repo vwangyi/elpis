@@ -1,0 +1,27 @@
+{
+  "name": "@supply-chain/ui-react",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@supply-chain/design-tokens": "workspace:*",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.468.0",
+    "react": "^19.1.0",
+    "recharts": "3.10.1",
+    "tailwind-merge": "^3.3.0"
+  },
+  "devDependencies": {
+    "@supply-chain/typescript-config": "workspace:*",
+    "@types/react": "^19.1.8"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  }
+}

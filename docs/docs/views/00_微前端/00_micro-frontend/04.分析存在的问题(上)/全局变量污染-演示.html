@@ -1,0 +1,451 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>全局变量污染演示</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: linear-gradient(180deg, #f5f7f2 0%, #eef2ea 100%);
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .page {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 32px 24px 48px;
+      }
+
+      .hero {
+        padding: 28px;
+        border-radius: 28px;
+        color: #ecfeff;
+        background: linear-gradient(135deg, #134e4a, #0f766e);
+        box-shadow: 0 24px 48px rgba(15, 23, 42, 0.14);
+      }
+
+      .hero span {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .hero h1 {
+        margin: 14px 0 10px;
+        font-size: 34px;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 840px;
+        line-height: 1.8;
+      }
+
+      .hero strong {
+        color: #ccfbf1;
+      }
+
+      .grid {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+      }
+
+      .card {
+        padding: 22px;
+        border: 1px solid rgba(31, 41, 55, 0.08);
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      }
+
+      .card h2 {
+        margin: 0 0 10px;
+        font-size: 24px;
+      }
+
+      .card p {
+        margin: 0;
+        line-height: 1.8;
+        color: #4b5563;
+      }
+
+      .actions {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .actions button {
+        appearance: none;
+        border: 0;
+        border-radius: 14px;
+        padding: 11px 14px;
+        font-weight: 700;
+        color: #f8fafc;
+        background: #0f766e;
+        cursor: pointer;
+      }
+
+      .actions button.alt {
+        color: #0f172a;
+        background: #d1fae5;
+      }
+
+      .panel {
+        margin-top: 16px;
+        padding: 16px;
+        border-radius: 18px;
+        background: #f8fafc;
+        border: 1px solid rgba(148, 163, 184, 0.24);
+      }
+
+      .state-box,
+      .log-box,
+      .code-box {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 16px;
+        background: #0f172a;
+        color: #dbeafe;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      @media (max-width: 960px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <h1>全局变量污染，到底污染了什么</h1>
+        <p>
+          左边直接写 <strong>真实 window</strong>，右边只写各自的
+          <strong>fakeWindow</strong>。两边一对比，污染边界就清楚了。
+        </p>
+      </section>
+
+      <section class="grid">
+        <article class="card">
+          <h2>无沙箱</h2>
+          <p>两个子应用都直接读写同一个 window.sharedRuntime。</p>
+          <div class="actions">
+            <button type="button" data-run="raw-order">无沙箱加载订单</button>
+            <button type="button" data-run="raw-finance">无沙箱加载财务</button>
+            <button type="button" class="alt" data-run="raw-reset">
+              清空真实全局
+            </button>
+          </div>
+          <div class="panel">
+            <strong>真实 window.sharedRuntime</strong>
+            <div class="state-box" id="raw-state"></div>
+            <div class="log-box" id="raw-log"></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>最小沙箱</h2>
+          <p>每个子应用先写自己的 fakeWindow，不直接改真实 window。</p>
+          <div class="actions">
+            <button type="button" data-run="sandbox-order">
+              最小沙箱加载订单
+            </button>
+            <button type="button" data-run="sandbox-finance">
+              最小沙箱加载财务
+            </button>
+            <button type="button" class="alt" data-run="sandbox-reset">
+              重置两个沙箱
+            </button>
+          </div>
+          <div class="panel">
+            <strong>订单沙箱 / 财务沙箱 / 真实 window</strong>
+            <div class="state-box" id="sandbox-state"></div>
+            <div class="log-box" id="sandbox-log"></div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <script>
+      const rawStateEl = document.querySelector("#raw-state");
+      const rawLogEl = document.querySelector("#raw-log");
+      const sandboxStateEl = document.querySelector("#sandbox-state");
+      const sandboxLogEl = document.querySelector("#sandbox-log");
+
+      const rawLogs = [];
+      const sandboxLogs = [];
+
+      // 把一条运行日志插到最前面，并且只保留最近几条，避免日志区域无限变长。
+      function pushLog(target, list, message) {
+        list.unshift(`[${new Date().toLocaleTimeString()}] ${message}`);
+        target.textContent = list.slice(0, 8).join("\n");
+      }
+
+      // 把“无沙箱”这一侧真实 window 上的 sharedRuntime 渲染到页面里。
+      // 点完按钮后，马上就能看到真实全局对象到底被改成了什么。
+      function renderRawState() {
+        rawStateEl.textContent = JSON.stringify(
+          window.sharedRuntime ?? null,
+          null,
+          2,
+        );
+      }
+
+      function createSandbox(name) {
+        // 这个方法的目标，是做一个“最小可运行”的沙箱。
+        // 它不是去复制一个真正的 window，而是在子应用和真实 window 中间加一层代理。
+        // 子应用以后如果写 window.xxx，实际上会先命中这个 proxy；
+        // 我们就能把写操作拦下来，存进自己的 fakeWindow，而不是直接改宿主页面的真实 window。
+        // 这样做的关键价值是：
+        // 1. 子应用还能继续用浏览器提供的全局能力，比如 document、console、setTimeout。
+        // 2. 子应用自己挂出来的全局变量，不会和别的子应用写到同一个地方，污染范围就被收住了。
+        const fakeWindow = Object.create(null);
+
+        // fakeWindow 故意做成一个“干净对象”，不继承 Object.prototype。
+        // 为什么这么写：
+        // 1. 我们只想让它保存“子应用自己写进去的东西”，不要混入 toString、constructor 这类原型链属性。
+        // 2. 后面判断 key in target 时，看到的更接近“沙箱里到底存了什么”，教学演示也更直观。
+        let proxy = null;
+
+        // 这里先声明 proxy，再在 Proxy 内部引用它，是因为 get trap 里要返回 proxy 自己。
+        // 比如子应用代码里如果写 window.window、window.self、window.globalThis，
+        // 正常浏览器里它们都会继续指向全局对象本身。
+        // 沙箱里也要保留这个语义，否则很多依赖全局对象自引用的代码会直接跑偏。
+        proxy = new Proxy(fakeWindow, {
+          get(target, key) {
+            // 这一段是在模拟浏览器里的“全局对象自引用”。
+            // 子应用访问 window / self / globalThis 时，不应该拿到真实 window，
+            // 否则它下一步再写属性，就会绕过沙箱，直接把值写进宿主环境。
+            // 这里统一返回 proxy，本质上是在说：
+            // “你以为自己拿到的是全局对象，实际上拿到的是被代理过的沙箱入口。”
+            if (key === "window" || key === "self" || key === "globalThis") {
+              return proxy;
+            }
+
+            // 如果这个属性已经写进过 fakeWindow，就优先从 fakeWindow 里读。
+            // 这一步决定了“每个子应用先看到自己的全局状态”。
+            // 例如订单子应用先写了 sharedRuntime，后面它自己再读，
+            // 读到的就会是自己沙箱里的 sharedRuntime，而不是别人留下来的值。
+            if (key in target) {
+              return target[key];
+            }
+
+            // 如果 fakeWindow 里没有，再回退到真实 window。
+            // 这是这个最小沙箱能跑起来的另一个关键：
+            // 子应用虽然不能直接污染宿主，但它仍然需要浏览器原生能力，
+            // 比如 document、history、location、console、setTimeout 等都在真实 window 上。
+            // 读操作允许回退，相当于“能力共享”；
+            // 写操作不回退，才实现了“状态隔离”。
+            return window[key];
+          },
+          set(target, key, value) {
+            // 所有写操作都只落到 fakeWindow 上，不去碰真实 window。
+            // 这就是这个沙箱最核心的隔离点：
+            // 子应用执行 window.sharedRuntime = {...} 时，
+            // 实际上只是给自己这份 fakeWindow 新增了一个 sharedRuntime。
+            // 另一个子应用拿到的是另一份 fakeWindow，所以互相看不到彼此刚写进去的值。
+            target[key] = value;
+
+            // Proxy 的 set trap 需要返回 true，表示“这次赋值成功了”。
+            // 如果这里返回 false，严格模式下会直接抛错，子应用代码就可能中断。
+            return true;
+          },
+        });
+
+        // 给 fakeWindow 挂一个名字，主要是为了演示和排查时更容易分辨这是谁的沙箱。
+        // 它不是沙箱成立的必要条件，只是为了让调试信息更可读。
+        fakeWindow.__sandboxName = name;
+
+        // 同时把 proxy 和 fakeWindow 返回出去：
+        // 1. proxy 给“子应用运行时”使用，子应用真正接触到的应该是这个代理入口。
+        // 2. fakeWindow 给“主应用演示层”观察，页面上要把每个沙箱内部状态打印出来，就得直接看它。
+        return { name, proxy, fakeWindow };
+      }
+
+      // 分别创建订单子应用和财务子应用的沙箱实例。
+      // 后面点不同按钮时，会操作各自这一份独立的 fakeWindow。
+      let orderSandbox = createSandbox("订单子应用");
+      let financeSandbox = createSandbox("财务子应用");
+
+      // 把两个沙箱里的状态和真实 window 的状态一起渲染出来。
+      // 这样能直观看到：沙箱内的值变了，不代表真实 window 也跟着变。
+      function renderSandboxState() {
+        sandboxStateEl.textContent = JSON.stringify(
+          {
+            orderSandbox: orderSandbox.fakeWindow.sharedRuntime ?? null,
+            financeSandbox: financeSandbox.fakeWindow.sharedRuntime ?? null,
+            realWindow: window.sharedRuntime ?? null,
+          },
+          null,
+          2,
+        );
+      }
+
+      // 模拟“订单子应用在没有沙箱时启动”。
+      // 它直接把 sharedRuntime 写到真实 window 上，后面的应用都会读到这份值。
+      function runOrderWithoutSandbox() {
+        window.sharedRuntime = {
+          owner: "订单子应用",
+          page: "/orders/refund/1024",
+          updatedAt: new Date().toLocaleTimeString(),
+        };
+        pushLog(
+          rawLogEl,
+          rawLogs,
+          "订单子应用把 sharedRuntime 写到了真实 window 上。",
+        );
+        renderRawState();
+      }
+
+      // 模拟“财务子应用在没有沙箱时启动”。
+      // 它先读到订单子应用留下来的旧值，再把同一个全局变量覆盖掉，用来演示污染和抢写。
+      function runFinanceWithoutSandbox() {
+        pushLog(
+          rawLogEl,
+          rawLogs,
+          `财务子应用读到真实 window.sharedRuntime = ${JSON.stringify(window.sharedRuntime)}`,
+        );
+        window.sharedRuntime = {
+          owner: "财务子应用",
+          page: "/finance/invoice/908",
+          updatedAt: new Date().toLocaleTimeString(),
+        };
+        pushLog(
+          rawLogEl,
+          rawLogs,
+          "财务子应用又把同一个 sharedRuntime 覆盖掉了。",
+        );
+        renderRawState();
+      }
+
+      // 清空无沙箱实验里真实 window 上的 sharedRuntime，方便重新演示。
+      function resetRaw() {
+        delete window.sharedRuntime;
+        pushLog(rawLogEl, rawLogs, "真实 window.sharedRuntime 已清空。");
+        renderRawState();
+      }
+
+      // 这是一个小工具方法，只负责清空真实 window，不额外写日志。
+      // 这样别的方法在复用它时，不会多打一条和当前场景无关的说明。
+      function clearRealWindowState() {
+        delete window.sharedRuntime;
+        renderRawState();
+      }
+
+      // 模拟“订单子应用在沙箱里启动”。
+      // 它看起来像是在写 window.sharedRuntime，实际上写进的是订单自己的 fakeWindow。
+      function runOrderWithSandbox() {
+        orderSandbox.proxy.sharedRuntime = {
+          owner: "订单子应用",
+          page: "/orders/refund/1024",
+          updatedAt: new Date().toLocaleTimeString(),
+        };
+        pushLog(
+          sandboxLogEl,
+          sandboxLogs,
+          "订单子应用把 sharedRuntime 写进了自己的 fakeWindow。",
+        );
+        renderSandboxState();
+      }
+
+      // 模拟“财务子应用在沙箱里启动”。
+      // 它会先读自己的沙箱状态，再写自己的沙箱状态，用来对比“同名变量也不会互相覆盖”。
+      function runFinanceWithSandbox() {
+        pushLog(
+          sandboxLogEl,
+          sandboxLogs,
+          `财务子应用先读自己的 sharedRuntime = ${JSON.stringify(financeSandbox.proxy.sharedRuntime ?? null)}`,
+        );
+        financeSandbox.proxy.sharedRuntime = {
+          owner: "财务子应用",
+          page: "/finance/invoice/908",
+          updatedAt: new Date().toLocaleTimeString(),
+        };
+        pushLog(
+          sandboxLogEl,
+          sandboxLogs,
+          "财务子应用把值写进了自己的 fakeWindow，没有改真实 window。",
+        );
+        renderSandboxState();
+      }
+
+      // 重建两个沙箱，相当于给两个子应用各发一份全新的 fakeWindow。
+      // 同时把真实 window 也清空，确保下一轮演示从干净状态开始。
+      function resetSandbox() {
+        orderSandbox = createSandbox("订单子应用");
+        financeSandbox = createSandbox("财务子应用");
+        clearRealWindowState();
+        pushLog(
+          sandboxLogEl,
+          sandboxLogs,
+          "两个沙箱已重置，真实 window 也已清空。",
+        );
+        renderSandboxState();
+      }
+
+      // 用事件委托统一接管所有按钮点击。
+      // 每个按钮只需要声明 data-run，主逻辑都在这里按类型分发即可。
+      document.addEventListener("click", (event) => {
+        const type = event.target.dataset.run;
+
+        switch (type) {
+          case "raw-order":
+            runOrderWithoutSandbox();
+            break;
+          case "raw-finance":
+            runFinanceWithoutSandbox();
+            break;
+          case "raw-reset":
+            resetRaw();
+            break;
+          case "sandbox-order":
+            runOrderWithSandbox();
+            break;
+          case "sandbox-finance":
+            runFinanceWithSandbox();
+            break;
+          case "sandbox-reset":
+            resetSandbox();
+            break;
+          default:
+            break;
+        }
+      });
+
+      // 页面第一次打开时，先把两侧状态和“已就绪”日志渲染出来。
+      // 这样还没点按钮，也能先看到当前实验的初始状态。
+      renderRawState();
+      renderSandboxState();
+      pushLog(rawLogEl, rawLogs, "已就绪");
+      pushLog(sandboxLogEl, sandboxLogs, "已就绪");
+    </script>
+  </body>
+</html>

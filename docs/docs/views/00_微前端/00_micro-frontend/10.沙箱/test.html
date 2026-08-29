@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    //1.共享的状态
+    //2.订阅变化
+    //3.提交修改
+    //4.取消订阅
+    /*
+    const state = {
+      pendingCount: 3
+    }
+
+    const listeners = new Set();
+
+    function subscribe(listener) {
+      // 1. 把订阅者保存起来，后续状态变化进行通知
+      listeners.add(listener);
+
+      // 2. 立即调用一次，让订阅这先拿到当前状态
+      listener(state);
+
+      // 3. 返回一个取消订阅的函数
+      return () => {
+        listeners.delete(listener);
+      }
+    }
+
+    function setState(partialState){
+      // 1. 更新状态
+      Object.assign(state, partialState);
+
+      // 2. 通知所有订阅者
+      listeners.forEach(listener => listener(state));
+    }
+
+    const unsubscribe = subscribe((state) => {
+      console.log('当前待处理事项', state.pendingCount);
+    });
+
+    setState({ pendingCount: 2 });
+    setState({ pendingCount: 1 });
+
+    unsubscribe();
+
+    setState({ pendingCount: 0 });
+    */
+
+
+
+    // ECMAScript 规范中规定，eval 函数有两种调用方式：
+    // 1. 直接调用eval时：他会创建/使用当前执行上下文中的变量环境
+    // 2. 间接调用eval时：（任何不是直接使用标识符eval的调用），它会在全局环境中执行
+    //  
+
+  window.appName = "全局window上的appName";
+
+  function mainAppLoader(){
+    const appName = "主应用加载函数里的appName";
+    const childScript = "console.log(appName)";
+
+    // 直接调用
+    eval(childScript);
+
+    // 间接调用
+    // (0, eval)(childScript);
+
+    // const indirectEval = eval;
+    // indirectEval(childScript);
+
+    // (0,eval) 其实就是利用了逗号运算符的基本规则
+    // 逗号运算符会从左导游执行每个表达式，然后返回最后一个表达式的值
+    const indirectEval = (0, eval);
+    indirectEval(childScript);
+  }
+
+  mainAppLoader();
+
+
+  </script>
+</html>

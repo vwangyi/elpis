@@ -17,7 +17,7 @@
         "../../../node_modules/.pnpm/@nuxt+schema@4.5.2/node_modules/@nuxt/schema"
       ],
       "nuxt": [
-        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt"
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt"
       ],
       "vite/client": [
         "../../../node_modules/.pnpm/vite@8.1.4_@types+node@25.9.5_esbuild@0.28.1_jiti@2.7.0_less@4.6.7_sass@1.101.0_terser@5.49.0_yaml@2.9.0/node_modules/vite/client"
@@ -83,25 +83,25 @@
         "../server/*"
       ],
       "#app": [
-        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app"
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app"
       ],
       "#app/*": [
-        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/*"
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/*"
       ],
       "vue-demi": [
-        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/app/compat/vue-demi"
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/compat/vue-demi"
       ],
       "#vue-router": [
         "../../../node_modules/.pnpm/vue-router@5.2.0_@vue+compiler-sfc@3.5.41_esbuild@0.28.1_pinia@4.0.2_@vue+devtools-api@_a24a2191205656fd4259f9a6b730833a/node_modules/vue-router"
       ],
       "#unhead/composables": [
-        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_923c7cb51993e82e392866731c3f646c/node_modules/nuxt/dist/head/runtime/composables"
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/head/runtime/composables"
       ],
       "#imports": [
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/dev.json"
+        "./manifest/meta/83dfbdee-edd5-44d1-853e-0ae45211db10.json"
       ],
       "#build": [
         "."

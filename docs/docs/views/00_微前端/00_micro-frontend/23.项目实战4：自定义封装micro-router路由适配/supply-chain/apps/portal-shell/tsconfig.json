@@ -1,0 +1,9 @@
+{
+  "extends": "@supply-chain/typescript-config/app.json",
+  "compilerOptions": {
+    "paths": { "@/*": ["./src/*"] },
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo",
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "vite.config.ts"]
+}

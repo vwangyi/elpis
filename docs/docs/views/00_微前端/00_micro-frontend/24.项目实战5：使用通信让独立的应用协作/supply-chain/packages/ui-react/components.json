@@ -1,0 +1,14 @@
+{
+  "style": "new-york",
+  "tsx": true,
+  "tailwind": {
+    "config": "../../apps/settlement-app/tailwind.config.ts",
+    "css": "../design-tokens/theme.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@supply-chain/ui-react",
+    "utils": "@supply-chain/ui-react"
+  }
+}

@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iframe 子应用 - 财务页</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+        background: #fffdf9;
+        color: #1c2a39;
+      }
+
+      .page {
+        padding: 24px;
+      }
+
+      .subtopbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .subtopbar span {
+        color: #66707c;
+        font-size: 13px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .toolbar button {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: #a6512a;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .route-block {
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(166, 81, 42, 0.08);
+      }
+
+      .route-block strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+
+      .route-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .route-actions button {
+        appearance: none;
+        border: 1px solid rgba(166, 81, 42, 0.15);
+        border-radius: 999px;
+        padding: 9px 14px;
+        background: #fff;
+        color: #a6512a;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .card {
+        padding: 22px;
+        border-radius: 24px;
+        border: 1px solid rgba(28, 42, 57, 0.08);
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 26px;
+      }
+
+      p {
+        margin: 0 0 12px;
+        color: #66707c;
+        line-height: 1.8;
+      }
+
+      .list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .item {
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(166, 81, 42, 0.08);
+      }
+
+      .long-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .long-item {
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(166, 81, 42, 0.08);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="subtopbar">
+        <div>
+          <h2>财务子页面</h2>
+          <span>财务系统 / 开票中心 / 待处理账单</span>
+        </div>
+        <span>开票工作台</span>
+      </div>
+
+      <section class="card">
+        <p>现在 iframe 里已经切成另一个页面了，但它仍然像一个被嵌进去的独立站点。</p>
+
+        <div class="toolbar">
+          <button id="notifyParent">同步开票待办</button>
+        </div>
+
+        <div class="route-block">
+          <strong>子应用当前内部路径：<span id="routeLabel">#/finance/bills</span></strong>
+          <p>这里是财务子应用自己维护的路由状态。</p>
+          <div class="route-actions">
+            <button data-route="#/finance/bills">账单列表</button>
+            <button data-route="#/finance/invoice/908">开票详情</button>
+            <button data-route="#/finance/refund/1024">退款打款</button>
+          </div>
+        </div>
+
+        <div class="list">
+          <div class="item">账单中心</div>
+          <div class="item">开票处理</div>
+          <div class="item">退款打款执行</div>
+        </div>
+
+        <div class="long-list">
+          <div class="long-item">发票申请 001：等待财务审核</div>
+          <div class="long-item">发票申请 002：等待税率确认</div>
+          <div class="long-item">账单 003：等待回款核销</div>
+          <div class="long-item">账单 004：等待异常处理</div>
+          <div class="long-item">发票申请 005：等待抬头补充</div>
+          <div class="long-item">账单 006：等待开票完成</div>
+          <div class="long-item">账单 007：等待客户确认</div>
+          <div class="long-item">发票申请 008：等待作废处理</div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const routeLabel = document.getElementById('routeLabel');
+
+      function syncRouteToParent() {
+        const currentRoute = location.hash || '#/finance/bills';
+        routeLabel.textContent = currentRoute;
+        window.parent.postMessage(
+          {
+            type: 'child-route',
+            text: `财务子应用 ${currentRoute}`,
+          },
+          '*',
+        );
+      }
+
+      if (!location.hash) {
+        location.hash = '#/finance/bills';
+      } else {
+        syncRouteToParent();
+      }
+
+      window.addEventListener('hashchange', syncRouteToParent);
+
+      document.querySelectorAll('[data-route]').forEach((button) => {
+        button.addEventListener('click', () => {
+          location.hash = button.dataset.route;
+        });
+      });
+
+      document.getElementById('notifyParent').addEventListener('click', () => {
+        window.parent.postMessage(
+          {
+            type: 'child-message',
+            count: 2,
+            text: '财务子页面发来两条新的开票待办',
+          },
+          '*',
+        );
+      });
+    </script>
+  </body>
+</html>

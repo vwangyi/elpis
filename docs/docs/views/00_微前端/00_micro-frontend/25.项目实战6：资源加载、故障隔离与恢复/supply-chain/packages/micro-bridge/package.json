@@ -1,0 +1,20 @@
+{
+  "name": "@supply-chain/micro-bridge",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.ts",
+    "typecheck": "tsc -b"
+  },
+  "exports": {
+    ".": "./src/index.ts",
+    "./contracts": "./src/contracts.ts"
+  },
+  "dependencies": {
+    "@supply-chain/design-tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@supply-chain/typescript-config": "workspace:*"
+  }
+}

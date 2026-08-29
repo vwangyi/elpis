@@ -1,0 +1,4 @@
+packages:
+  - main-app
+  - order-app
+  - finance-app

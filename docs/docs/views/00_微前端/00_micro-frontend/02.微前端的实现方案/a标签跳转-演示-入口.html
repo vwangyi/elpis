@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>a 标签跳转演示 - 入口</title>
+    <style>
+      :root {
+        --bg: #f6f1e8;
+        --paper: rgba(255, 252, 247, 0.92);
+        --ink: #1c2a39;
+        --muted: #66717d;
+        --line: rgba(28, 42, 57, 0.1);
+        --main: #194d63;
+        --card: rgba(255, 255, 255, 0.9);
+        --shadow: 0 22px 50px rgba(27, 39, 50, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(25, 77, 99, 0.09), transparent 28%),
+          radial-gradient(circle at right bottom, rgba(166, 81, 42, 0.12), transparent 24%),
+          linear-gradient(180deg, #f8f3ea 0%, #f1eadf 100%);
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+
+      .shell {
+        padding: 28px;
+        border-radius: 32px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .hero {
+        display: grid;
+        gap: 18px;
+        padding: 24px;
+        border-radius: 26px;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(249, 241, 232, 0.9));
+        border: 1px solid rgba(28, 42, 57, 0.08);
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 34px;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 10px;
+      }
+
+      a.card {
+        display: block;
+        padding: 20px;
+        border-radius: 22px;
+        text-decoration: none;
+        color: var(--ink);
+        background: var(--card);
+        border: 1px solid rgba(28, 42, 57, 0.08);
+      }
+
+      a.card strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 20px;
+      }
+
+      a.card span {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 14px;
+      }
+
+      @media (max-width: 760px) {
+        .page {
+          padding: 16px;
+        }
+
+        .links {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="shell">
+        <section class="hero">
+          <h1>a 标签跳转方式</h1>
+          <p>
+            这里没有真正的主应用接入子应用，只是把不同业务页面当成不同站点，点击链接后直接跳过去。
+          </p>
+
+          <div class="links">
+            <a class="card" href="./a标签跳转-演示-订单页.html">
+              <strong>进入订单系统</strong>
+              <span>点击后离开当前入口页，整页跳转到订单页面。</span>
+            </a>
+
+            <a class="card" href="./a标签跳转-演示-财务页.html">
+              <strong>进入财务系统</strong>
+              <span>点击后整页跳转到财务页面，本质上还是不同页面之间切换。</span>
+            </a>
+          </div>
+        </section>
+      </section>
+    </div>
+  </body>
+</html>

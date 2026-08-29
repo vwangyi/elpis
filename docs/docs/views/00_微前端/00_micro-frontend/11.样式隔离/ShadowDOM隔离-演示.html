@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shadow DOM 隔离演示</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: #f5f6f2;
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      .page {
+        max-width: 1120px;
+        margin: 0 auto;
+        padding: 32px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .shell-title {
+        display: grid;
+        gap: 8px;
+      }
+
+      .shell-title h1 {
+        font-size: 32px;
+      }
+
+      .shell-title p {
+        color: #64748b;
+        line-height: 1.8;
+      }
+
+      .layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 16px;
+      }
+
+      .panel,
+      #shadow-host {
+        min-height: 260px;
+        padding: 18px;
+        border: 1px solid #d7ded9;
+        border-radius: 18px;
+        background: #ffffff;
+      }
+
+      .panel {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .card {
+        padding: 16px;
+        border: 1px solid #d7ded9;
+        border-radius: 14px;
+        background: #f8fafc;
+        display: grid;
+        gap: 10px;
+      }
+
+      .action-button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: #ffffff;
+        background: #334155;
+        cursor: pointer;
+      }
+
+      .outside-style {
+        padding: 16px;
+        border-radius: 16px;
+        background: #111827;
+        color: #d1fae5;
+        overflow-x: auto;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 820px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="shell-title">
+        <h1>Shadow DOM 给样式提供浏览器原生边界</h1>
+        <p>
+          右侧订单应用的 DOM 和 style 被放进 shadowRoot。里面的 button
+          样式不会把左侧主应用按钮一起改掉。
+        </p>
+      </section>
+
+      <section class="layout">
+        <article class="panel">
+          <h2>主应用普通 DOM</h2>
+          <div class="card">
+            <p>主应用卡片</p>
+            <button class="action-button" type="button">主应用按钮</button>
+          </div>
+        </article>
+
+        <article id="shadow-host"></article>
+      </section>
+
+      <pre
+        class="outside-style"
+      ><code>const host = document.querySelector("#shadow-host");
+const shadowRoot = host.attachShadow({ mode: "open" });
+
+shadowRoot.innerHTML = `
+  &lt;style&gt;
+    button { background: #dc2626; }
+  &lt;/style&gt;
+  &lt;button&gt;订单按钮&lt;/button&gt;
+`;</code></pre>
+    </main>
+
+    <script>
+      const host = document.querySelector("#shadow-host");
+      const shadowRoot = host.attachShadow({ mode: "open" });
+
+      shadowRoot.innerHTML = `
+        <style>
+          * {
+            box-sizing: border-box;
+          }
+
+          h2,
+          p {
+            margin: 0;
+          }
+
+          .shadow-shell {
+            display: grid;
+            gap: 14px;
+            align-content: start;
+          }
+
+          .card {
+            padding: 16px;
+            border: 1px solid #fecaca;
+            border-radius: 14px;
+            background: #fff1f2;
+            display: grid;
+            gap: 10px;
+          }
+
+          button {
+            border: 0;
+            border-radius: 12px;
+            padding: 10px 12px;
+            color: #ffffff;
+            background: #dc2626;
+            cursor: pointer;
+            font: inherit;
+          }
+        </style>
+
+        <section class="shadow-shell">
+          <h2>订单子应用 Shadow DOM</h2>
+          <div class="card">
+            <p>订单应用卡片</p>
+            <button type="button">订单按钮</button>
+          </div>
+        </section>
+      `;
+    </script>
+  </body>
+</html>

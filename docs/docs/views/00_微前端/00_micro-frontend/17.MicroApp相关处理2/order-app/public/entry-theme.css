@@ -1,0 +1,15 @@
+.order-app {
+  border-left: 6px solid #b0692d;
+}
+
+.order-entry-note {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  color: #7a431c;
+  background: #f7dfb8;
+  font-size: 12px;
+  font-weight: 700;
+}

@@ -31,4 +31,3 @@ export { withCtx, withDirectives, withKeys, withMemo, withModifiers, withScopeId
 export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callback';
 export { setInterval } from '#app/compat/interval';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
-export { useNuxtDevTools } from '../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

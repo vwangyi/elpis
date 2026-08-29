@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <user-card name="张三" role="管理员"></user-card>
+</body>
+<script>
+class UserCard extends HTMLElement{
+  connectedCallback(){
+    const name = this.getAttribute('name') || '未命名用户';
+    const role = this.getAttribute('role') || '未设置岗位';
+
+    this.innerHTML = `
+      <div>
+        <h2>${name}</h2>
+        <p>${role}</p>
+      </div>
+    `;
+  }
+}
+customElements.define('user-card', UserCard);
+</script>
+</html>

@@ -1,0 +1,7 @@
+{
+  "extends": "@supply-chain/typescript-config/app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.cache/tsconfig.tsbuildinfo"
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue"]
+}

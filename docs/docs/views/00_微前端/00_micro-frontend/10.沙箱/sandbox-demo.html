@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body></body>
+  <script>
+    // with 语句可以扩展作用域链，with 后面跟的对象会被放在作用域链的最前面，with 语句块内的变量查找会优先在这个对象上查找。
+    // with(表达式) { statement }
+
+    // const obj = { x: 1 };
+    // const x = 2;
+
+    // with (obj) {
+    //   console.log(x);
+    // }
+
+    // 创建假 window 和代理
+    const fakeWindow = {};
+    const proxy = new Proxy(fakeWindow, {
+      get(target, key) {
+        if (key === "window" || key === "self" || key === "globalThis") {
+          return proxy;
+        }
+        if (key in target) {
+          return target[key];
+        }
+        return window[key];
+      },
+      set(target, key, value) {
+        target[key] = value;
+        return true;
+      },
+      // 关键：has 拦截让 with 认为所有属性都在 proxy 上
+      has(target, key) {
+        console.log("has:", key);
+        return true;
+      },
+    });
+
+    // 包裹代码执行
+    function runInSandbox(code) {
+      const wrappedCode = `;(function(window, self, globalThis){with(window){${code}}}).bind(proxy)(proxy, proxy, proxy);`;
+      const indirectEval = (0, eval);
+      indirectEval(wrappedCode);
+    }
+
+    // 测试
+    console.log("=== 测试 ===");
+
+    runInSandbox(`
+      myVar = '子应用的变量';
+      console.log('内部:', myVar);
+      window.globalVar = '通过window设置的变量';
+    `);
+
+    console.log("全局 myVar:", window.myVar); // undefined
+    console.log("全局 globalVar:", window.globalVar); // undefined
+    console.log("沙箱 myVar:", fakeWindow.myVar); // 子应用的变量
+    console.log("沙箱 globalVar:", fakeWindow.globalVar); // '通过window设置的变量'
+  </script>
+</html>

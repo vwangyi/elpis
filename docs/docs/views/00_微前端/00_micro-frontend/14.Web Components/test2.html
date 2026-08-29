@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button type="button" id="mountUser">插入 user-status</button>
+  <button type="button" id="changeName">修改 name 属性</button>
+  <button type="button" id="removeUser">移除 user-status</button>
+  <button type="button" id="moveToFrame">移动到另外的文档中</button>
+
+  <div id="layer"></div>
+
+  <iframe
+    id="targetFrame"
+  ></iframe>
+</body>
+<script>
+class UserStatus extends HTMLElement{
+
+  static get observedAttributes(){
+    return ['name', 'role'];
+  }
+
+  connectedCallback(){
+    this.render();
+  }
+
+  disconnectedCallback(){
+    console.log('disconnectedCallback: 元素被移除');
+  }
+
+  // name 发生变化的属性名
+  // oldValue 旧的属性值,新增属性时为 null
+  // newValue 新的属性值,删除属性时为 null
+  attributeChangedCallback(name, oldValue, newValue){
+    if(oldValue === newValue) return;
+    console.log(`attributeChangedCallback: ${name} 属性从 ${oldValue || "空"} 变为 ${newValue}`);
+    this.render();
+  }
+
+  render(){
+    const name = this.getAttribute('name') || '未命名用户';
+    const role = this.getAttribute('role') || '未设置岗位';
+
+    this.innerHTML = `
+      <div>
+        <h2>${name}</h2>
+        <p>${role}</p>
+      </div>
+    `;
+  }
+}
+customElements.define('user-status', UserStatus);
+
+
+const layer = document.getElementById('layer');
+
+const targetFrame = document.getElementById('targetFrame');
+
+document.getElementById('mountUser').addEventListener('click', () => {
+  const element = document.createElement('user-status');
+  element.setAttribute('name', '张三');
+  element.setAttribute('role', '管理员');
+  layer.appendChild(element);
+});
+
+document.getElementById('changeName').addEventListener('click', () => {
+  const element = layer.querySelector('user-status');
+  if(element){
+    element.setAttribute('name', '李四');
+  }
+});
+
+document.getElementById('removeUser').addEventListener('click', () => {
+  const element = layer.querySelector('user-status');
+  if(element){
+    layer.removeChild(element);
+  }
+});
+
+document.getElementById('moveToFrame').addEventListener('click', () => {
+  const element = layer.querySelector('user-status');
+  if(element){
+    targetFrame.contentDocument.body.appendChild(element);
+  }
+});
+
+</script>
+</html>

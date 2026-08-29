@@ -1,8 +1,8 @@
 declare global {
   const H3Error: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').H3Error
   const H3Event: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').H3Event
-  const __buildAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
-  const __publicAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').publicAssetsURL
+  const __buildAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
+  const __publicAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').publicAssetsURL
   const appendCorsHeaders: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').appendCorsHeaders
   const appendCorsPreflightHeaders: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').appendCorsPreflightHeaders
   const appendHeader: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').appendHeader
@@ -22,7 +22,7 @@ declare global {
   const createEventStream: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').createEventStream
   const createRouter: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').createRouter
   const defaultContentType: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').defaultContentType
-  const defineAppConfig: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/config').defineAppConfig
+  const defineAppConfig: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/config').defineAppConfig
   const defineCachedEventHandler: typeof import('../../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack/dist/runtime/internal/cache').defineCachedEventHandler
   const defineCachedFunction: typeof import('../../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack/dist/runtime/internal/cache').defineCachedFunction
   const defineEventHandler: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').defineEventHandler
@@ -118,7 +118,7 @@ declare global {
   const toWebRequest: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').toWebRequest
   const unsealSession: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').unsealSession
   const updateSession: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').updateSession
-  const useAppConfig: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/app-config').useAppConfig
+  const useAppConfig: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/app-config').useAppConfig
   const useBase: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index').useBase
   const useEvent: typeof import('../../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack/dist/runtime/internal/context').useEvent
   const useNitroApp: typeof import('../../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack/dist/runtime/internal/app').useNitroApp
@@ -145,6 +145,6 @@ export { getRouteRules } from 'nitropack/runtime/internal/route-rules';
 export { useEvent } from 'nitropack/runtime/internal/context';
 export { defineTask, runTask } from 'nitropack/runtime/internal/task';
 export { defineNitroErrorHandler } from 'nitropack/runtime/internal/error/utils';
-export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/Users/elpis/onepiece/node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
-export { defineAppConfig } from '/Users/elpis/onepiece/node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
-export { useAppConfig } from '/Users/elpis/onepiece/node_modules/.pnpm/@nuxt+nitro-server@4.5.2_0508f541468a07820777c8f42f817a9c/node_modules/@nuxt/nitro-server/dist/runtime/utils/app-config';
+export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/Users/vwangyi/onepiece/node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
+export { defineAppConfig } from '/Users/vwangyi/onepiece/node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
+export { useAppConfig } from '/Users/vwangyi/onepiece/node_modules/.pnpm/@nuxt+nitro-server@4.5.2_8d8c19d8f0d95492b8d1dcf6c430ee91/node_modules/@nuxt/nitro-server/dist/runtime/utils/app-config';
