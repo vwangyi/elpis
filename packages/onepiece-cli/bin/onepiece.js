@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 // #! /usr/bin/env node  表示当前文件是调用系统变量node脚本 执行本js文件 必须在第一行写
-// 执行 npm link 就可以获取一个 elpis命令
+// 执行 npm link 就可以获取一个 onepiece命令
 
 const { program } = require('commander');
 
@@ -14,12 +14,12 @@ const ora = require('ora');
 const spinner = ora();
 spinner.text = 'loading';
 /**
- * elpis --help
- * elpis create xxx xxx xxx
+ * onepiece --help
+ * onepiece create xxx xxx xxx
  */
 
 /**
- * 执行 elpis --help
+ * 执行 onepiece --help
  */
 // if (process.argv[2] === '--help') {
 //     console.log('@@@', process.argv)
@@ -34,15 +34,15 @@ program
     const framworkList = [
       {
         name: 'koa',
-        http: 'https://cnb.cool/elpis-code/test.git'
+        http: 'https://cnb.cool/onepiece-code/test.git'
       },
       {
         name: 'express',
-        http: 'https://cnb.cool/elpis-code/test.git'
+        http: 'https://cnb.cool/onepiece-code/test.git'
       },
       {
         name: 'egg',
-        http: 'https://cnb.cool/elpis-code/test.git'
+        http: 'https://cnb.cool/onepiece-code/test.git'
       }
     ];
     const { framwork } = await inquirer.prompt([
