@@ -18,3 +18,4 @@ tinyint
 varchat
 VITE
 subapp
+vwangyi

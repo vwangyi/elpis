@@ -4,7 +4,7 @@
   "main": "index.js",
   "type": "module",
   "bin": {
-    "onepiece": "bin/onepiece.js"
+    "onepiece-cli": "bin/onepiece-cli.js"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
