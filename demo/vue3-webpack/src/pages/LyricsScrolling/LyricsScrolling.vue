@@ -1,1 +1,0 @@
-<template>LyricsScrolling</template>

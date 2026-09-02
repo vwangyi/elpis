@@ -7,7 +7,7 @@
     "onepiece": "bin/onepiece.js"
   },
   "scripts": {
-    "publish": "sh scripts/release.sh"
+    "publish:prod": "sh scripts/publish.prod.sh"
   },
   "author": "",
   "license": "ISC",
