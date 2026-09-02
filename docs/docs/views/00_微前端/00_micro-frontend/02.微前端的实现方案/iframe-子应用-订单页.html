@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iframe 子应用 - 订单页</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+        background: #fffdf9;
+        color: #1c2a39;
+      }
+
+      .page {
+        padding: 24px;
+      }
+
+      .subtopbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .subtopbar span {
+        color: #66707c;
+        font-size: 13px;
+      }
+
+      .toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .toolbar button {
+        appearance: none;
+        border: 0;
+        border-radius: 999px;
+        padding: 10px 14px;
+        background: #194d63;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .route-block {
+        margin-top: 18px;
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(25, 77, 99, 0.05);
+      }
+
+      .route-block strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 15px;
+      }
+
+      .route-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .route-actions button {
+        appearance: none;
+        border: 1px solid rgba(25, 77, 99, 0.12);
+        border-radius: 999px;
+        padding: 9px 14px;
+        background: #fff;
+        color: #194d63;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .card {
+        padding: 22px;
+        border-radius: 24px;
+        border: 1px solid rgba(28, 42, 57, 0.08);
+        background: rgba(255, 255, 255, 0.92);
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-size: 26px;
+      }
+
+      p {
+        margin: 0 0 12px;
+        color: #66707c;
+        line-height: 1.8;
+      }
+
+      .list {
+        display: grid;
+        gap: 12px;
+        margin-top: 18px;
+      }
+
+      .item {
+        padding: 16px;
+        border-radius: 18px;
+        background: rgba(25, 77, 99, 0.05);
+      }
+
+      .overlay {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(28, 42, 57, 0.28);
+        padding: 20px;
+      }
+
+      .overlay.open {
+        display: flex;
+      }
+
+      .modal {
+        width: min(520px, 100%);
+        padding: 22px;
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 24px 50px rgba(28, 42, 57, 0.2);
+      }
+
+      .modal h3 {
+        margin: 0 0 10px;
+        font-size: 22px;
+      }
+
+      .modal p {
+        margin: 0 0 14px;
+      }
+
+      .long-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 18px;
+      }
+
+      .long-item {
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: rgba(28, 42, 57, 0.04);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="subtopbar">
+        <div>
+          <h2>订单子页面</h2>
+          <span>订单系统 / 售后中心 / 退款详情</span>
+        </div>
+        <span>售后工作台</span>
+      </div>
+
+      <section class="card">
+        <p>这是被 iframe 装进来的页面。它有自己的页面结构、自己的交互区，也会产生自己的滚动和弹窗。</p>
+
+        <div class="toolbar">
+          <button id="notifyParent">同步退款待办</button>
+          <button id="openModal">打开退款详情弹窗</button>
+        </div>
+
+        <div class="route-block">
+          <strong>子应用当前内部路径：<span id="routeLabel">#/orders/list</span></strong>
+          <p>这里是订单子应用自己维护的路由状态。</p>
+          <div class="route-actions">
+            <button data-route="#/orders/list">订单列表</button>
+            <button data-route="#/orders/refund/1024">退款详情</button>
+            <button data-route="#/orders/logistics/7788">物流追踪</button>
+          </div>
+        </div>
+
+        <div class="list">
+          <div class="item">订单列表</div>
+          <div class="item">售后处理</div>
+          <div class="item">物流追踪</div>
+        </div>
+
+        <div class="long-list">
+          <div class="long-item">售后工单 001：等待审核</div>
+          <div class="long-item">售后工单 002：等待回仓确认</div>
+          <div class="long-item">售后工单 003：等待退款执行</div>
+          <div class="long-item">售后工单 004：等待客服回访</div>
+          <div class="long-item">售后工单 005：物流异常待处理</div>
+          <div class="long-item">售后工单 006：退货地址确认中</div>
+          <div class="long-item">售后工单 007：商品签收中</div>
+          <div class="long-item">售后工单 008：退款单据核对中</div>
+          <div class="long-item">售后工单 009：财务打款待确认</div>
+          <div class="long-item">售后工单 010：售后完成待归档</div>
+          <div class="long-item">售后工单 011：二次审核待处理</div>
+          <div class="long-item">售后工单 012：补发物流待跟进</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="overlay" id="overlay">
+      <section class="modal">
+        <h3>退款详情弹窗</h3>
+        <p>订单号：R-20240622-1024</p>
+        <p>当前状态：等待财务打款</p>
+        <p>售后原因：商品破损，等待退款完成</p>
+        <button id="closeModal">关闭</button>
+      </section>
+    </div>
+
+    <script>
+      const overlay = document.getElementById('overlay');
+      const routeLabel = document.getElementById('routeLabel');
+
+      function syncRouteToParent() {
+        const currentRoute = location.hash || '#/orders/list';
+        routeLabel.textContent = currentRoute;
+        window.parent.postMessage(
+          {
+            type: 'child-route',
+            text: `订单子应用 ${currentRoute}`,
+          },
+          '*',
+        );
+      }
+
+      if (!location.hash) {
+        location.hash = '#/orders/list';
+      } else {
+        syncRouteToParent();
+      }
+
+      window.addEventListener('hashchange', syncRouteToParent);
+
+      document.querySelectorAll('[data-route]').forEach((button) => {
+        button.addEventListener('click', () => {
+          location.hash = button.dataset.route;
+        });
+      });
+
+      document.getElementById('openModal').addEventListener('click', () => {
+        overlay.classList.add('open');
+      });
+
+      document.getElementById('closeModal').addEventListener('click', () => {
+        overlay.classList.remove('open');
+      });
+
+      document.getElementById('notifyParent').addEventListener('click', () => {
+        window.parent.postMessage(
+          {
+            type: 'child-message',
+            count: 1,
+            text: '订单子页面发来一条新的退款待办',
+          },
+          '*',
+        );
+      });
+    </script>
+  </body>
+</html>

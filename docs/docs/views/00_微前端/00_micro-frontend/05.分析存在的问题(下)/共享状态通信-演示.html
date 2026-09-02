@@ -1,0 +1,989 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>共享状态通信演示</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: linear-gradient(180deg, #f4f8f5 0%, #eaf2ef 100%);
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      ul {
+        margin: 0;
+      }
+
+      .page {
+        max-width: 1380px;
+        margin: 0 auto;
+        padding: 32px 24px 48px;
+      }
+
+      .hero,
+      .card {
+        border-radius: 28px;
+        border: 1px solid rgba(31, 41, 55, 0.08);
+        box-shadow: 0 20px 42px rgba(15, 23, 42, 0.08);
+      }
+
+      .hero {
+        padding: 28px;
+        color: #ecfeff;
+        background: linear-gradient(135deg, #0f4c45, #0f766e);
+      }
+
+      .hero span {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .hero h1 {
+        margin: 14px 0 10px;
+        font-size: 34px;
+      }
+
+      .hero p {
+        max-width: 920px;
+        line-height: 1.85;
+      }
+
+      .hero strong {
+        color: #ccfbf1;
+      }
+
+      .top-grid,
+      .apps-grid,
+      .bottom-grid {
+        margin-top: 22px;
+        display: grid;
+        gap: 20px;
+      }
+
+      .top-grid,
+      .bottom-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .apps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .card {
+        padding: 22px;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .card p {
+        margin-top: 10px;
+        color: #4b5563;
+        line-height: 1.8;
+      }
+
+      .actions {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .actions button {
+        appearance: none;
+        border: 0;
+        border-radius: 14px;
+        padding: 11px 14px;
+        font-weight: 700;
+        color: #ecfeff;
+        background: #0f766e;
+        cursor: pointer;
+      }
+
+      .actions button.alt {
+        color: #115e59;
+        background: #ccfbf1;
+      }
+
+      .actions button.warn {
+        color: #7c2d12;
+        background: #ffedd5;
+      }
+
+      .panel {
+        margin-top: 14px;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        background: #f8fafc;
+      }
+
+      .panel strong {
+        color: #0f172a;
+      }
+
+      .state-box,
+      .code-box,
+      .log-box {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 16px;
+        background: #0f172a;
+        color: #dbeafe;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .app-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .status-mounted {
+        color: #0f766e;
+        background: rgba(20, 184, 166, 0.12);
+      }
+
+      .status-unmounted {
+        color: #9a3412;
+        background: rgba(251, 191, 36, 0.16);
+      }
+
+      .hint-list,
+      .note-list {
+        margin-top: 14px;
+        padding-left: 18px;
+        color: #4b5563;
+        line-height: 1.8;
+      }
+
+      .summary-grid {
+        margin-top: 16px;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .note {
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+      }
+
+      .note h3 {
+        font-size: 18px;
+      }
+
+      .note.good {
+        background: linear-gradient(
+          180deg,
+          rgba(240, 253, 250, 0.96),
+          rgba(236, 253, 245, 0.92)
+        );
+      }
+
+      .note.bad {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 247, 237, 0.96),
+          rgba(255, 251, 235, 0.92)
+        );
+      }
+
+      @media (max-width: 1040px) {
+        .top-grid,
+        .apps-grid,
+        .bottom-grid,
+        .summary-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <span>共享状态通道</span>
+        <h1>手写一个最小 initGlobalState，到底在干什么</h1>
+        <p>
+          主应用先创建一份<strong>共享状态</strong>，订单子应用和财务子应用在
+          mount 时调用
+          <strong>onGlobalStateChange</strong> 订阅，在 unmount 时调用
+          <strong>offGlobalStateChange</strong> 退订。谁调用
+          <strong>setGlobalState</strong> 改了
+          tenant、theme、unreadCount，所有还在运行的子应用都会立刻收到更新。
+        </p>
+      </section>
+
+      <section class="top-grid">
+        <article class="card">
+          <h2>主应用</h2>
+          <p>
+            主应用维护共享状态的源头，也负责把 patch 广播给所有已挂载的子应用。
+          </p>
+          <div class="actions">
+            <button type="button" data-host-action="tenant-east">
+              切到华东一组
+            </button>
+            <button type="button" data-host-action="tenant-south">
+              切到华南二组
+            </button>
+            <button type="button" data-host-action="theme-toggle">
+              切换主题
+            </button>
+            <button type="button" class="alt" data-host-action="unread-reset">
+              未读清零
+            </button>
+            <button type="button" class="warn" data-host-action="reset-all">
+              重置整套演示
+            </button>
+          </div>
+          <div class="panel">
+            <strong>当前共享状态</strong>
+            <div class="state-box" id="host-state"></div>
+          </div>
+          <div class="panel">
+            <strong>主应用最小代码</strong>
+            <div class="code-box" id="host-code"></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <h2>如果继续往原始 hostApi 上加</h2>
+          <p>
+            这里只同步 3
+            个状态：tenant、theme、unreadCount。你已经要开始堆一组又一组专用回调。
+          </p>
+          <div class="code-box" id="compare-code"></div>
+          <ul class="hint-list">
+            <li>状态一多，函数名和事件清理会膨胀。</li>
+            <li>主应用越来越知道每个子应用要什么。</li>
+            <li>通信从“两个回调”很快长成“自制总线”。</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="apps-grid">
+        <article class="card">
+          <div class="app-head">
+            <h2>订单子应用</h2>
+            <span class="status-badge" id="order-status"></span>
+          </div>
+          <p>
+            订单子应用 mount 时先订阅共享状态；创建订单消息时，直接把
+            unreadCount 写回共享状态。
+          </p>
+          <div class="actions">
+            <button type="button" data-app-action="order-mount">
+              挂载订单子应用
+            </button>
+            <button type="button" class="alt" data-app-action="order-unmount">
+              卸载订单子应用
+            </button>
+            <button type="button" data-app-action="order-add-unread">
+              订单新增未读 +1
+            </button>
+          </div>
+          <div class="panel">
+            <strong>订单子应用看到的共享状态</strong>
+            <div class="state-box" id="order-state"></div>
+          </div>
+          <div class="panel">
+            <strong>订单子应用最小代码</strong>
+            <div class="code-box" id="order-code"></div>
+          </div>
+          <div class="panel">
+            <strong>订单子应用日志</strong>
+            <div class="log-box" id="order-log"></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="app-head">
+            <h2>财务子应用</h2>
+            <span class="status-badge" id="finance-status"></span>
+          </div>
+          <p>
+            财务子应用 mount
+            时同样订阅；它可以切主题，也可以把财务消息标记为已读。
+          </p>
+          <div class="actions">
+            <button type="button" data-app-action="finance-mount">
+              挂载财务子应用
+            </button>
+            <button type="button" class="alt" data-app-action="finance-unmount">
+              卸载财务子应用
+            </button>
+            <button type="button" data-app-action="finance-toggle-theme">
+              财务切换主题
+            </button>
+            <button
+              type="button"
+              class="alt"
+              data-app-action="finance-read-one"
+            >
+              财务已读 -1
+            </button>
+          </div>
+          <div class="panel">
+            <strong>财务子应用看到的共享状态</strong>
+            <div class="state-box" id="finance-state"></div>
+          </div>
+          <div class="panel">
+            <strong>财务子应用最小代码</strong>
+            <div class="code-box" id="finance-code"></div>
+          </div>
+          <div class="panel">
+            <strong>财务子应用日志</strong>
+            <div class="log-box" id="finance-log"></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="card">
+          <h2>运行日志</h2>
+          <p>看谁 set，谁收到，谁在 unmount 时退订。</p>
+          <div class="log-box" id="global-log"></div>
+        </article>
+
+        <article class="card">
+          <h2>这套手写共享状态，到底在干嘛</h2>
+          <p>
+            它的目标不是取代业务通信，而是把“多个子应用共享同一份状态”的通道先收成一套固定动作。
+          </p>
+          <div class="summary-grid">
+            <section class="note good">
+              <h3>好处</h3>
+              <ul class="note-list">
+                <li>
+                  主应用和子应用都围着同一份状态对象说话，状态来源更统一。
+                </li>
+                <li>
+                  每个子应用只需要会订阅、写 patch、退订，不必为
+                  tenant、theme、unread 各写一套专用回调。
+                </li>
+                <li>
+                  后面看到
+                  initGlobalState、onGlobalStateChange、setGlobalState、offGlobalStateChange
+                  时，学生一眼就能对上动作含义。
+                </li>
+              </ul>
+            </section>
+            <section class="note bad">
+              <h3>坏处</h3>
+              <ul class="note-list">
+                <li>
+                  如果什么都往共享状态里塞，它就会变成一个没有边界的大垃圾桶。
+                </li>
+                <li>
+                  谁都能 set
+                  时，要额外约定哪些字段允许谁改，不然状态源头会变得混乱。
+                </li>
+                <li>
+                  订阅、退订、字段约束、日志追踪都还得自己维护，继续手写就会慢慢逼近一个小框架。
+                </li>
+              </ul>
+            </section>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <script>
+      const hostStateEl = document.querySelector("#host-state");
+      const hostCodeEl = document.querySelector("#host-code");
+      const compareCodeEl = document.querySelector("#compare-code");
+      const orderStatusEl = document.querySelector("#order-status");
+      const orderStateEl = document.querySelector("#order-state");
+      const orderCodeEl = document.querySelector("#order-code");
+      const orderLogEl = document.querySelector("#order-log");
+      const financeStatusEl = document.querySelector("#finance-status");
+      const financeStateEl = document.querySelector("#finance-state");
+      const financeCodeEl = document.querySelector("#finance-code");
+      const financeLogEl = document.querySelector("#finance-log");
+      const globalLogEl = document.querySelector("#global-log");
+
+      const INITIAL_STATE = {
+        tenantName: "华东一组",
+        theme: "浅色",
+        unreadCount: 3,
+        lastEditor: "host:init",
+      };
+
+      const globalLogs = [];
+
+      // 作用：把一条新日志插到最前面，并把最新几条日志重新刷到页面上。
+      // 参数：
+      // - list：某一块日志对应的内存数组，例如订单日志、财务日志、全局日志。
+      // - target：这块日志在页面上的 DOM 容器。
+      // - message：这次要追加的日志内容。
+      // 为什么这样写：
+      // - 日志既要保存在内存里，后面才能继续追加；
+      // - 也要同步刷到页面上，学生才能马上看到“刚才是谁触发了更新”。
+      function pushLog(list, target, message) {
+        list.unshift(`[${new Date().toLocaleTimeString()}] ${message}`);
+        target.textContent = list.slice(0, 10).join("\n");
+      }
+
+      // 作用：把共享状态对象格式化成页面上好读的 JSON 文本。
+      // 参数：
+      // - state：当前要展示的状态对象。
+      // 为什么单独提一个方法：
+      // - 这个页面里主应用、订单子应用、财务子应用都要显示状态；
+      // - 单独封装以后，所有区域展示格式保持一致，学生更容易做横向对比。
+      function formatState(state) {
+        return JSON.stringify(state, null, 2);
+      }
+
+      // 作用：创建一条“共享状态通道”。
+      // 参数：
+      // - initialState：主应用最开始放进去的那份公共状态。
+      //   这里用它来初始化 tenantName、theme、unreadCount。
+      // 为什么这里不直接把状态对象暴露出去，而是包成一组方法：
+      // - 因为我们不只是想“存一个对象”；
+      // - 我们真正想要的是：读状态、订阅变化、写 patch、退订监听，都走同一条受控通道；
+      // - 这样后面每次状态变化时，系统才能统一广播、统一记日志、统一管理生命周期。
+      function initGlobalState(initialState) {
+        let currentState = { ...initialState };
+        // listeners 的作用：记录“当前还有哪些子应用正在订阅共享状态”。
+        // key 用 appName，value 用监听函数。
+        // 为什么要这样设计：
+        // - 子应用 mount 时要加进来；
+        // - 子应用 unmount 时要按自己的名字精确删掉；
+        // - 如果只用数组，退订时就很难稳妥地找到“到底该删谁”。
+        const listeners = new Map();
+
+        // 作用：把“这一次共享状态更新”广播给所有仍然活着的子应用监听器。
+        // 参数：
+        // - prevState：更新前的旧状态。
+        //   传它的原因是，订阅方通常不只想知道“现在是什么”，还想知道“这次比刚才改了什么”。
+        // - source：这次更新是谁发起的，例如 host、order-app、finance-app。
+        //   传它的原因是，调试时要分清楚“是主应用改的，还是某个子应用改的”。
+        // 为什么 notify 需要这两个参数，而不是只传 currentState：
+        // - 只传新状态，学生只能看到“结果变了”，看不到“变化前是什么”；
+        // - 不传 source，日志里就只能看到状态变了，却不知道“是谁触发了这次变化”。
+        function notify(prevState, source) {
+          listeners.forEach((listener) => {
+            listener({ ...currentState }, { ...prevState }, source);
+          });
+        }
+
+        return {
+          // 作用：给调用方一份“当前共享状态快照”。
+          // 为什么返回拷贝：
+          // - 如果把原对象直接丢出去，外面可以跳过 setGlobalState() 直接改值；
+          // - 一旦这样做，就不会触发 notify，其他子应用也收不到更新；
+          // - 所以这里故意只给副本，逼着所有写操作都走受控通道。
+          getGlobalState() {
+            return { ...currentState };
+          },
+
+          // 作用：登记一个子应用对共享状态的订阅。
+          // 参数：
+          // - appName：谁在订阅，用来做后续的精确退订。
+          // - listener：共享状态每次更新时，真正要被调用的回调函数。
+          // - fireImmediately：是否在“刚订阅成功的当下”就立刻推送一次当前快照。
+          // 为什么需要 fireImmediately：
+          // - 如果没有它，子应用第一次 mount 完以后，页面上还没有任何状态；
+          // - 它必须等到下一次有人 setGlobalState() 才会第一次显示；
+          // - 这对教学和真实页面都不友好，所以这里支持“订阅即先拿一次当前值”。
+          onGlobalStateChange(appName, listener, fireImmediately = false) {
+            listeners.set(appName, listener);
+            if (fireImmediately) {
+              listener({ ...currentState }, { ...currentState }, "host:init");
+            }
+          },
+
+          // 作用：取消某个子应用的订阅。
+          // 参数：
+          // - appName：要退订的子应用名。
+          // 为什么必须有这个方法：
+          // - 子应用界面虽然卸载了，但监听器如果还留在内存里，后续广播还是会打到它；
+          // - 这会让“已经消失的页面”继续偷偷响应共享状态，产生典型的脏副作用。
+          offGlobalStateChange(appName) {
+            listeners.delete(appName);
+          },
+
+          // 作用：把一份 patch 合并进当前共享状态，并触发一次全量广播。
+          // 参数：
+          // - patch：这次只改哪些字段，例如 { unreadCount: 4 }。
+          // - source：这次状态修改是谁发起的，默认认为是 host。
+          // 为什么这里设计成 patch，而不是要求整份重写状态：
+          // - 因为真实项目里，主应用和子应用往往只改自己关心的一两个字段；
+          // - patch 模式可以避免每次都整份重组状态对象，也更接近后面框架 API 的使用方式。
+          setGlobalState(patch, source = "host") {
+            const prevState = { ...currentState };
+
+            currentState = {
+              ...currentState,
+              ...patch,
+              lastEditor: source,
+            };
+
+            notify(prevState, source);
+            return { ...currentState };
+          },
+        };
+      }
+
+      // 作用：搭好这个演示页的完整运行时。
+      // 为什么不直接在全局随手丢几个变量：
+      // - 因为这里要模拟的是“主应用先创建 channel，再给不同子应用分发各自能调用的 actions”；
+      // - 这样学生后面看到框架给主应用和子应用不同入口能力时，更容易建立对应关系。
+      function createDemoRuntime() {
+        const channel = initGlobalState(INITIAL_STATE);
+
+        // 作用：给某一个子应用生成它专属的一套共享状态动作。
+        // 参数：
+        // - appName：当前是哪个子应用在拿这套动作。
+        // 为什么要再包一层 actions，而不是把 channel 整个扔给子应用：
+        // - 因为我们想把“底层状态通道”和“某个子应用可调用的能力”区分开；
+        // - 子应用不需要知道 listeners、notify 这些内部细节；
+        // - 它只需要会读、会订阅、会写 patch、会退订。
+        function createMicroAppActions(appName) {
+          return {
+            getGlobalState() {
+              return channel.getGlobalState();
+            },
+            onGlobalStateChange(listener, fireImmediately = false) {
+              channel.onGlobalStateChange(appName, listener, fireImmediately);
+            },
+            setGlobalState(patch) {
+              return channel.setGlobalState(patch, appName);
+            },
+            offGlobalStateChange() {
+              channel.offGlobalStateChange(appName);
+            },
+          };
+        }
+
+        return {
+          channel,
+          orderActions: createMicroAppActions("order-app"),
+          financeActions: createMicroAppActions("finance-app"),
+        };
+      }
+
+      let runtime = null;
+
+      const appModels = {
+        order: {
+          label: "订单子应用",
+          mounted: false,
+          snapshot: null,
+          logs: [],
+          actions: null,
+        },
+        finance: {
+          label: "财务子应用",
+          mounted: false,
+          snapshot: null,
+          logs: [],
+          actions: null,
+        },
+      };
+
+      // 作用：把“最小代码长什么样”直接打印到页面上，方便学生边看效果边对代码。
+      // 为什么这里不是写死在 HTML 里：
+      // - 这块内容和运行时逻辑强绑定；
+      // - 放在脚本里维护，改演示逻辑时更容易保持示例代码同步。
+      function setHostCode() {
+        hostCodeEl.textContent = [
+          "const actions = initGlobalState({",
+          '  tenantName: "华东一组",',
+          '  theme: "浅色",',
+          "  unreadCount: 3,",
+          "})",
+          "",
+          'actions.setGlobalState({ tenantName: "华南二组" })',
+          'actions.setGlobalState({ theme: "深色" })',
+          "actions.setGlobalState({ unreadCount: 0 })",
+        ].join("\n");
+
+        compareCodeEl.textContent = [
+          "const hostApi = {",
+          "  onTenantChange(listener) { ... },",
+          "  onThemeChange(listener) { ... },",
+          "  onUnreadChange(listener) { ... },",
+          "  emitTenantChange(nextTenant) { ... },",
+          "  emitThemeChange(nextTheme) { ... },",
+          "  emitUnreadChange(nextUnreadCount) { ... },",
+          "}",
+          "",
+          "// 现在只有 3 个状态，后面如果再加权限、消息数、顶部筛选条件，",
+          "// 你还要继续堆更多 onXxx / emitXxx / cleanupXxx。",
+        ].join("\n");
+
+        orderCodeEl.textContent = [
+          'const actions = createMicroAppActions("order-app")',
+          "",
+          "actions.onGlobalStateChange((state, prevState) => {",
+          "  renderOrderState(state)",
+          "}, true)",
+          "",
+          "actions.setGlobalState({",
+          "  unreadCount: state.unreadCount + 1,",
+          "})",
+          "",
+          "actions.offGlobalStateChange()",
+        ].join("\n");
+
+        financeCodeEl.textContent = [
+          'const actions = createMicroAppActions("finance-app")',
+          "",
+          "actions.onGlobalStateChange((state) => {",
+          "  renderFinanceState(state)",
+          "}, true)",
+          "",
+          "actions.setGlobalState({",
+          '  theme: state.theme === "浅色" ? "深色" : "浅色",',
+          "})",
+          "",
+          "actions.offGlobalStateChange()",
+        ].join("\n");
+      }
+
+      // 作用：刷新主应用看到的共享状态面板。
+      // 为什么单独保留这个方法：
+      // - 主应用面板展示的是“整条共享状态通道此刻的权威快照”；
+      // - 每次广播后，它都应该和订单、财务两个子应用面板一起刷新。
+      function renderHostState() {
+        hostStateEl.textContent = formatState(runtime.channel.getGlobalState());
+      }
+
+      // 作用：刷新某一个子应用卡片的状态、挂载标记和日志。
+      // 参数：
+      // - appKey：当前要刷的是 order 还是 finance。
+      // 为什么单独抽出来：
+      // - 订单和财务两张卡结构一样，只是拿的数据不同；
+      // - 抽成一个方法以后，更容易让学生看出“两个子应用其实走的是同一套机制”。
+      function renderAppCard(appKey) {
+        const model = appModels[appKey];
+        const statusEl = appKey === "order" ? orderStatusEl : financeStatusEl;
+        const stateEl = appKey === "order" ? orderStateEl : financeStateEl;
+        const logEl = appKey === "order" ? orderLogEl : financeLogEl;
+
+        statusEl.textContent = model.mounted ? "已挂载" : "已卸载";
+        statusEl.className = `status-badge ${model.mounted ? "status-mounted" : "status-unmounted"}`;
+
+        stateEl.textContent = formatState(
+          model.snapshot ?? {
+            mounted: false,
+            message: "当前没有订阅共享状态，所以不会再收到后续更新。",
+          },
+        );
+        logEl.textContent =
+          model.logs.length > 0
+            ? model.logs.slice(0, 8).join("\n")
+            : "还没有日志";
+      }
+
+      // 作用：一次性刷新主应用、订单子应用、财务子应用、全局日志四块视图。
+      // 为什么需要这个总入口：
+      // - 共享状态一变，通常不只是某一块要更新；
+      // - 统一从这里刷新，能保证页面上看到的几块信息始终对齐。
+      function renderAll() {
+        renderHostState();
+        renderAppCard("order");
+        renderAppCard("finance");
+        globalLogEl.textContent =
+          globalLogs.length > 0
+            ? globalLogs.slice(0, 12).join("\n")
+            : "还没有日志";
+      }
+
+      // 作用：模拟“某个子应用被主应用真正挂载到页面上”。
+      // 参数：
+      // - appKey：当前挂载的是 order 还是 finance。
+      // 为什么 mount 时才订阅：
+      // - 因为只有真正还活着、还显示在页面上的子应用，才应该继续接收共享状态；
+      // - 这和下一章框架里子应用 mount 后再开始监听，是同一层含义。
+      function mountApp(appKey) {
+        const model = appModels[appKey];
+        if (model.mounted) {
+          pushLog(
+            model.logs,
+            appKey === "order" ? orderLogEl : financeLogEl,
+            `${model.label} 已经挂载，无需重复 mount。`,
+          );
+          return;
+        }
+
+        model.mounted = true;
+        model.actions.onGlobalStateChange((state, prevState, source) => {
+          model.snapshot = {
+            ...state,
+            lastSource: source,
+            prevUnreadCount: prevState.unreadCount,
+          };
+          pushLog(
+            model.logs,
+            appKey === "order" ? orderLogEl : financeLogEl,
+            `${model.label} 收到更新 source=${source} tenant=${state.tenantName} theme=${state.theme} unread=${state.unreadCount}`,
+          );
+          renderAll();
+        }, true);
+
+        pushLog(
+          globalLogs,
+          globalLogEl,
+          `${model.label} 调用了 onGlobalStateChange(true)，立即拿到当前共享状态。`,
+        );
+        renderAll();
+      }
+
+      // 作用：模拟“某个子应用从页面上卸载”。
+      // 参数：
+      // - appKey：当前卸载的是 order 还是 finance。
+      // 为什么这里的重点不是 mounted=false，而是先 offGlobalStateChange()：
+      // - 因为视觉上消失不等于逻辑上停止；
+      // - 真正决定它后面还会不会收到广播的，是监听器有没有被移除。
+      function unmountApp(appKey) {
+        const model = appModels[appKey];
+        if (!model.mounted) {
+          pushLog(
+            model.logs,
+            appKey === "order" ? orderLogEl : financeLogEl,
+            `${model.label} 当前已经是卸载状态。`,
+          );
+          return;
+        }
+
+        model.actions.offGlobalStateChange();
+        model.mounted = false;
+        pushLog(
+          model.logs,
+          appKey === "order" ? orderLogEl : financeLogEl,
+          `${model.label} 调用了 offGlobalStateChange()，后续不再同步。`,
+        );
+        pushLog(globalLogs, globalLogEl, `${model.label} 已经退订共享状态。`);
+        renderAll();
+      }
+
+      // 作用：演示“这次是主应用在改共享状态”。
+      // 参数：
+      // - patch：主应用这次要改哪些字段。
+      // - message：写到日志里的说明文字。
+      // 为什么主应用也走 setGlobalState：
+      // - 因为我们要强调的是“无论谁改，都走同一条共享状态通道”；
+      // - 而不是主应用走一套逻辑、子应用再走另一套逻辑。
+      function applyHostPatch(patch, message) {
+        runtime.channel.setGlobalState(patch, "host");
+        pushLog(globalLogs, globalLogEl, message);
+        renderAll();
+      }
+
+      // 作用：拿到当前最新的共享状态快照。
+      // 为什么单独提一个方法：
+      // - 后面几个按钮在算 unreadCount + 1、theme 切换时都要先读当前值；
+      // - 抽出来以后，页面上的“读当前状态再算 patch”这条动作链更容易看清楚。
+      function getCurrentState() {
+        return runtime.channel.getGlobalState();
+      }
+
+      // 作用：把整个演示页恢复到最初状态。
+      // 为什么重置时不是简单把字段改回去，而是重新 createDemoRuntime()：
+      // - 因为这个案例不只是在演示“状态值变没变”；
+      // - 它还在演示订阅关系、日志、子应用挂载状态；
+      // - 重新创建 runtime，最接近“主应用整套运行时重新启动”的感觉。
+      function resetDemo() {
+        runtime = createDemoRuntime();
+        appModels.order.mounted = false;
+        appModels.order.snapshot = null;
+        appModels.order.logs = [];
+        appModels.order.actions = runtime.orderActions;
+        appModels.finance.mounted = false;
+        appModels.finance.snapshot = null;
+        appModels.finance.logs = [];
+        appModels.finance.actions = runtime.financeActions;
+        globalLogs.length = 0;
+        setHostCode();
+        pushLog(
+          globalLogs,
+          globalLogEl,
+          "主应用重新执行了 initGlobalState()，共享状态已重置。",
+        );
+        mountApp("order");
+        mountApp("finance");
+        renderAll();
+      }
+
+      // 作用：统一接住页面上所有按钮点击，再按 data-* 分流到不同动作。
+      // 为什么这里不用给每个按钮单独 addEventListener：
+      // - 因为这个页按钮很多，但本质上都是“某个动作被触发了”；
+      // - 统一在一个入口分发，更容易看清楚“按钮 -> 动作 -> 状态变化”的总链路。
+      document.addEventListener("click", (event) => {
+        const hostAction = event.target.dataset.hostAction;
+        const appAction = event.target.dataset.appAction;
+
+        if (hostAction) {
+          switch (hostAction) {
+            case "tenant-east":
+              applyHostPatch(
+                { tenantName: "华东一组" },
+                "主应用把 tenantName 切回了华东一组。",
+              );
+              break;
+            case "tenant-south":
+              applyHostPatch(
+                { tenantName: "华南二组" },
+                "主应用把 tenantName 切到了华南二组。",
+              );
+              break;
+            case "theme-toggle": {
+              const nextTheme =
+                getCurrentState().theme === "浅色" ? "深色" : "浅色";
+              applyHostPatch(
+                { theme: nextTheme },
+                `主应用切换了主题，当前 theme=${nextTheme}。`,
+              );
+              break;
+            }
+            case "unread-reset":
+              applyHostPatch(
+                { unreadCount: 0 },
+                "主应用把 unreadCount 清零了。",
+              );
+              break;
+            case "reset-all":
+              resetDemo();
+              break;
+            default:
+              break;
+          }
+          return;
+        }
+
+        if (appAction) {
+          switch (appAction) {
+            case "order-mount":
+              mountApp("order");
+              break;
+            case "order-unmount":
+              unmountApp("order");
+              break;
+            case "order-add-unread": {
+              if (!appModels.order.mounted) {
+                pushLog(
+                  appModels.order.logs,
+                  orderLogEl,
+                  "订单子应用还没挂载，不能 setGlobalState。",
+                );
+                renderAll();
+                break;
+              }
+              // 这里的作用是演示：不是只有主应用能 setGlobalState，
+              // 子应用自己也可以基于“当前共享状态”算出 patch 再写回去。
+              const nextUnread = getCurrentState().unreadCount + 1;
+              appModels.order.actions.setGlobalState({
+                unreadCount: nextUnread,
+              });
+              pushLog(
+                globalLogs,
+                globalLogEl,
+                `订单子应用调用 setGlobalState({ unreadCount: ${nextUnread} })。`,
+              );
+              renderAll();
+              break;
+            }
+            case "finance-mount":
+              mountApp("finance");
+              break;
+            case "finance-unmount":
+              unmountApp("finance");
+              break;
+            case "finance-toggle-theme": {
+              if (!appModels.finance.mounted) {
+                pushLog(
+                  appModels.finance.logs,
+                  financeLogEl,
+                  "财务子应用还没挂载，不能 setGlobalState。",
+                );
+                renderAll();
+                break;
+              }
+              // 这里故意让财务子应用改 theme，
+              // 是为了说明：共享状态不是“只允许主应用改”，也不是“只能改 unreadCount”。
+              const nextTheme =
+                getCurrentState().theme === "浅色" ? "深色" : "浅色";
+              appModels.finance.actions.setGlobalState({ theme: nextTheme });
+              pushLog(
+                globalLogs,
+                globalLogEl,
+                `财务子应用调用 setGlobalState({ theme: "${nextTheme}" })。`,
+              );
+              renderAll();
+              break;
+            }
+            case "finance-read-one": {
+              if (!appModels.finance.mounted) {
+                pushLog(
+                  appModels.finance.logs,
+                  financeLogEl,
+                  "财务子应用还没挂载，不能 setGlobalState。",
+                );
+                renderAll();
+                break;
+              }
+              // 这里再给一个“从另一个子应用把 unreadCount 往回减”的例子，
+              // 用来说明 patch 可以来自任意一个当前还挂着的子应用。
+              const nextUnread = Math.max(getCurrentState().unreadCount - 1, 0);
+              appModels.finance.actions.setGlobalState({
+                unreadCount: nextUnread,
+              });
+              pushLog(
+                globalLogs,
+                globalLogEl,
+                `财务子应用调用 setGlobalState({ unreadCount: ${nextUnread} })。`,
+              );
+              renderAll();
+              break;
+            }
+            default:
+              break;
+          }
+        }
+      });
+
+      resetDemo();
+    </script>
+  </body>
+</html>

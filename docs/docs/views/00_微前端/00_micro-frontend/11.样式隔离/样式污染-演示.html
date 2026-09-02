@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>样式污染演示</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: #f4f7f5;
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .shell-title {
+        display: grid;
+        gap: 8px;
+      }
+
+      .shell-title h1 {
+        font-size: 32px;
+      }
+
+      .shell-title p {
+        color: #64748b;
+        line-height: 1.8;
+      }
+
+      .app-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .app-panel {
+        min-height: 260px;
+        padding: 18px;
+        border: 1px solid #d7ded9;
+        border-radius: 18px;
+        background: #ffffff;
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .card {
+        padding: 16px;
+        border: 1px solid #d7ded9;
+        border-radius: 14px;
+        background: #f8fafc;
+        display: grid;
+        gap: 10px;
+      }
+
+      .action-button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: #ffffff;
+        background: #334155;
+        cursor: pointer;
+      }
+
+      .loader {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .loader button {
+        border: 1px solid #0f766e;
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: #0f766e;
+        background: #ffffff;
+        cursor: pointer;
+      }
+
+      .style-source {
+        padding: 16px;
+        border-radius: 16px;
+        background: #111827;
+        color: #d1fae5;
+        overflow-x: auto;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 900px) {
+        .app-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="shell-title">
+        <h1>普通 CSS 会按整个 document 匹配</h1>
+        <p>
+          三个区域看起来各有容器，但后来插入的订单样式仍然会影响页面里所有匹配的
+          .card 和 .action-button。
+        </p>
+      </section>
+
+      <div class="loader">
+        <button type="button" id="loadOrderStyle">加载订单应用样式</button>
+        <button type="button" id="removeOrderStyle">移除订单应用样式</button>
+      </div>
+
+      <section class="app-grid">
+        <article class="app-panel" id="main-app">
+          <h2>主应用</h2>
+          <div class="card">
+            <p>主应用工作台卡片</p>
+            <button class="action-button" type="button">主应用按钮</button>
+          </div>
+        </article>
+
+        <article class="app-panel" id="order-app">
+          <h2>订单子应用</h2>
+          <div class="card">
+            <p>订单应用卡片</p>
+            <button class="action-button" type="button">订单按钮</button>
+          </div>
+        </article>
+
+        <article class="app-panel" id="finance-app">
+          <h2>财务子应用</h2>
+          <div class="card">
+            <p>财务应用卡片</p>
+            <button class="action-button" type="button">财务按钮</button>
+          </div>
+        </article>
+      </section>
+
+      <pre class="style-source"><code>.card {
+  border-color: #dc2626;
+  background: #fff1f2;
+}
+
+.action-button {
+  background: #dc2626;
+}</code></pre>
+    </main>
+
+    <script>
+      const orderCss = `.card {
+  border-color: #dc2626;
+  background: #fff1f2;
+}
+
+.action-button {
+  background: #dc2626;
+}`;
+
+      let styleElement = null;
+
+      document
+        .querySelector("#loadOrderStyle")
+        .addEventListener("click", () => {
+          if (styleElement) return;
+          styleElement = document.createElement("style");
+          styleElement.dataset.app = "order-app";
+          styleElement.textContent = orderCss;
+          document.head.appendChild(styleElement);
+        });
+
+      document
+        .querySelector("#removeOrderStyle")
+        .addEventListener("click", () => {
+          styleElement?.remove();
+          styleElement = null;
+        });
+    </script>
+  </body>
+</html>

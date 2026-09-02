@@ -1,0 +1,14 @@
+{
+  "style": "new-york",
+  "typescript": true,
+  "tailwind": {
+    "config": "../../apps/portal-shell/tailwind.config.ts",
+    "css": "../design-tokens/theme.css",
+    "baseColor": "slate",
+    "cssVariables": true
+  },
+  "aliases": {
+    "components": "@supply-chain/ui-vue",
+    "utils": "@supply-chain/ui-vue"
+  }
+}

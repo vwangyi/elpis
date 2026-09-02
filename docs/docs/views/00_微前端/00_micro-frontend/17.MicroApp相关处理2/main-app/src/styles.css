@@ -1,0 +1,232 @@
+:root {
+  font-family: "Avenir Next", "PingFang SC", "Hiragino Sans GB", sans-serif;
+  color: #21302a;
+  background: #eef1e8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; }
+button, input { font: inherit; }
+
+.page-shell {
+  display: grid;
+  grid-template-columns: 310px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 28px 22px;
+  color: #f4f1e9;
+  background: #1f2f2a;
+}
+
+.brand-block span, .panel-label {
+  display: block;
+  color: #97b7a7;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.brand-block h1, .workspace-header h2 { margin: 8px 0 0; font-size: 28px; }
+.module-nav, .control-panel { display: grid; gap: 10px; }
+
+.module-nav button, .control-panel button {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid rgba(244, 241, 233, 0.18);
+  border-radius: 8px;
+  color: inherit;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+}
+
+.module-nav button { display: grid; gap: 6px; }
+.module-nav button.active { border-color: #d7a84c; color: #1f2f2a; background: #f4f1e9; }
+.module-nav strong { font-size: 17px; }
+.module-nav span { font-size: 12px; opacity: 0.78; }
+.control-panel label { display: flex; gap: 8px; align-items: center; font-size: 13px; }
+
+.status-panel {
+  min-height: 250px;
+  margin-top: auto;
+  padding: 15px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.timeline-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.timeline-heading small {
+  display: block;
+  margin-top: 4px;
+  color: rgba(244, 241, 233, 0.56);
+  font-size: 10px;
+}
+
+.timeline-heading button {
+  padding: 3px 7px;
+  border: 1px solid rgba(244, 241, 233, 0.2);
+  border-radius: 5px;
+  color: rgba(244, 241, 233, 0.72);
+  font-size: 10px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 7px;
+  max-height: 330px;
+  padding: 0 3px 0 0;
+  margin: 12px 0 0;
+  overflow-y: auto;
+  list-style: none;
+  font-size: 11px;
+}
+
+.timeline-list li {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: 3px 8px;
+  padding: 7px 8px;
+  border-left: 3px solid #8aa99a;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.timeline-list li.timeline-finance { border-left-color: #d7a84c; }
+.timeline-list li.timeline-switch {
+  grid-template-columns: auto minmax(0, 1fr);
+  margin-top: 4px;
+  border: 1px dashed rgba(244, 241, 233, 0.3);
+  border-left: 1px dashed rgba(244, 241, 233, 0.3);
+  color: #f4d89f;
+  background: rgba(215, 168, 76, 0.08);
+}
+.timeline-list li.timeline-data { border-left-color: #79aee8; }
+.timeline-list li.timeline-error { border-left-color: #e06b65; }
+.timeline-list li.timeline-retry { border-left-color: #65b889; }
+.timeline-list li.timeline-prefetch { border-left-color: #a78bca; }
+
+.timeline-meta {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: space-between;
+  color: rgba(244, 241, 233, 0.46);
+  font-size: 9px;
+}
+
+.timeline-meta b { font-variant-numeric: tabular-nums; }
+.timeline-list strong { color: #f4f1e9; font-size: 11px; }
+.timeline-list code {
+  overflow: hidden;
+  color: #b9cabf;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.timeline-switch-label { color: #d7a84c !important; }
+.workspace { display: grid; gap: 18px; align-content: start; padding: 28px; }
+
+.workspace-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 20px;
+  border: 1px solid #cfd6c6;
+  border-radius: 8px;
+  background: #f7f8f3;
+}
+
+.workspace-header p { margin: 8px 0 0; color: #627064; }
+.observation-grid { display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 10px; margin: 0; }
+.observation-grid div { padding: 9px 12px; border-radius: 6px; background: #e7ece3; }
+.observation-grid dt { color: #627064; font-size: 11px; }
+.observation-grid dd { margin: 4px 0 0; font-size: 13px; font-weight: 700; }
+.micro-stage { position: relative; min-height: 620px; }
+micro-app { display: block; min-height: 620px; }
+
+.micro-fallback,
+.micro-loading {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: start;
+  padding: 48px;
+  border: 1px solid #e2b6ae;
+  border-radius: 8px;
+  background: #fff8f5;
+}
+
+.micro-loading {
+  grid-auto-flow: column;
+  gap: 18px;
+  align-items: center;
+  border-color: #cbd8cf;
+  background: #f7faf7;
+}
+
+.loading-spinner {
+  width: 34px;
+  height: 34px;
+  border: 4px solid #d8e2da;
+  border-top-color: #2f6b50;
+  border-radius: 50%;
+  animation: loading-spin 0.8s linear infinite;
+}
+
+.loading-eyebrow { color: #2f6b50; font-size: 12px; font-weight: 800; }
+.micro-loading h3 { margin: 8px 0 0; font-size: 24px; }
+.micro-loading p { margin: 8px 0 0; color: #627064; }
+
+@keyframes loading-spin {
+  to { transform: rotate(360deg); }
+}
+
+.fallback-eyebrow { color: #a7463f; font-size: 12px; font-weight: 800; }
+.micro-fallback h3 { margin: 10px 0 0; font-size: 26px; }
+.micro-fallback p { max-width: 520px; margin: 10px 0; color: #6e5a55; }
+.micro-fallback code {
+  max-width: 620px;
+  padding: 8px 10px;
+  overflow-wrap: anywhere;
+  border-radius: 5px;
+  color: #8f332d;
+  background: #f8e3de;
+}
+.fallback-actions { display: flex; gap: 10px; margin-top: 20px; }
+.fallback-actions button {
+  padding: 9px 14px;
+  border: 1px solid #8f332d;
+  border-radius: 6px;
+  color: #fff;
+  background: #8f332d;
+  cursor: pointer;
+}
+.fallback-actions button:disabled { cursor: wait; opacity: 0.55; }
+.fallback-actions .fallback-secondary { color: #8f332d; background: transparent; }
+
+.host-style-invasion .child-shared-title {
+  color: #c52c2c !important;
+  text-decoration: underline wavy #c52c2c 2px !important;
+}
+
+@media (max-width: 900px) {
+  .page-shell { grid-template-columns: 1fr; }
+  .sidebar { min-height: auto; }
+  .workspace-header { flex-direction: column; }
+}

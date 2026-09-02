@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>选择器改写隔离演示</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: #f6f7f4;
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      h1,
+      h2,
+      p {
+        margin: 0;
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 32px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .shell-title {
+        display: grid;
+        gap: 8px;
+      }
+
+      .shell-title h1 {
+        font-size: 32px;
+      }
+
+      .shell-title p {
+        color: #64748b;
+        line-height: 1.8;
+      }
+
+      .control-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .control-bar button {
+        border: 1px solid #0f766e;
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: #0f766e;
+        background: #ffffff;
+        cursor: pointer;
+      }
+
+      .app-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .app-panel {
+        min-height: 260px;
+        padding: 18px;
+        border: 1px solid #d7ded9;
+        border-radius: 18px;
+        background: #ffffff;
+        display: grid;
+        gap: 14px;
+        align-content: start;
+      }
+
+      .card {
+        padding: 16px;
+        border: 1px solid #d7ded9;
+        border-radius: 14px;
+        background: #f8fafc;
+        display: grid;
+        gap: 10px;
+      }
+
+      .action-button {
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 12px;
+        color: #ffffff;
+        background: #334155;
+        cursor: pointer;
+      }
+
+      .code-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .code-card {
+        display: grid;
+        gap: 8px;
+      }
+
+      .code-card strong {
+        color: #0f172a;
+      }
+
+      pre {
+        margin: 0;
+        min-height: 170px;
+        padding: 16px;
+        border-radius: 16px;
+        background: #111827;
+        color: #d1fae5;
+        overflow-x: auto;
+        line-height: 1.7;
+      }
+
+      @media (max-width: 900px) {
+        .app-grid,
+        .code-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="shell-title">
+        <h1>把普通选择器改写成带容器前缀的选择器</h1>
+        <p>
+          订单样式原本会命中全页面，改写后只会命中带 data-qiankun-order
+          标记的区域。
+        </p>
+      </section>
+
+      <div class="control-bar">
+        <button type="button" id="loadRawStyle">加载未改写样式</button>
+        <button type="button" id="loadScopedStyle">加载改写后样式</button>
+        <button type="button" id="clearStyle">清空样式</button>
+      </div>
+
+      <section class="app-grid">
+        <article class="app-panel">
+          <h2>主应用</h2>
+          <div class="card">
+            <p>主应用卡片</p>
+            <button class="action-button" type="button">主应用按钮</button>
+          </div>
+        </article>
+
+        <article class="app-panel" data-qiankun-order>
+          <h2>订单子应用</h2>
+          <div class="card">
+            <p>订单卡片</p>
+            <button class="action-button" type="button">订单按钮</button>
+          </div>
+        </article>
+
+        <article class="app-panel" data-qiankun-finance>
+          <h2>财务子应用</h2>
+          <div class="card">
+            <p>财务卡片</p>
+            <button class="action-button" type="button">财务按钮</button>
+          </div>
+        </article>
+      </section>
+
+      <section class="code-grid">
+        <div class="code-card">
+          <strong>子应用原始 CSS</strong>
+          <pre><code id="rawCode"></code></pre>
+        </div>
+        <div class="code-card">
+          <strong>运行时改写后的 CSS</strong>
+          <pre><code id="scopedCode"></code></pre>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const rawCss = `.card {
+  border-color: #0f766e;
+  background: #ecfdf5;
+}
+
+.action-button {
+  background: #0f766e;
+}`;
+
+      function scopeCss(cssText, scopeSelector) {
+        return cssText.replace(
+          /(^|})\s*([^@{}][^{}]*)\s*{/g,
+          (match, close, selectorText) => {
+            const scopedSelector = selectorText
+              .split(",")
+              .map((selector) => `${scopeSelector} ${selector.trim()}`)
+              .join(", ");
+
+            return `${close}\n${scopedSelector} {`;
+          },
+        );
+      }
+
+      const scopedCss = scopeCss(rawCss, "[data-qiankun-order]");
+      let styleElement = null;
+
+      function applyCss(cssText) {
+        styleElement?.remove();
+        styleElement = document.createElement("style");
+        styleElement.textContent = cssText;
+        document.head.appendChild(styleElement);
+      }
+
+      document.querySelector("#rawCode").textContent = rawCss;
+      document.querySelector("#scopedCode").textContent = scopedCss;
+
+      document
+        .querySelector("#loadRawStyle")
+        .addEventListener("click", () => applyCss(rawCss));
+
+      document
+        .querySelector("#loadScopedStyle")
+        .addEventListener("click", () => applyCss(scopedCss));
+
+      document.querySelector("#clearStyle").addEventListener("click", () => {
+        styleElement?.remove();
+        styleElement = null;
+      });
+    </script>
+  </body>
+</html>

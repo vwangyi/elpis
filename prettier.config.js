@@ -9,7 +9,7 @@ export default {
   // 只有一个属性时不换行，>=2 个属性时每个属性独占一行
   // (Prettier 3.0+ 原生支持，替代之前 Vue 文件 printWidth:40 的强拆方案)
   singleAttributePerLine: true,
-  // 缩进制表符宽度 | 空格数
+  // 缩进制表符宽度 | 空格数   缩进统一是prettier的tabWidth控制 而不会用eslint的相关规则
   tabWidth: 2,
   // 使用制表符而不是空格缩进行 (true：制表符，false：空格)
   useTabs: false,
@@ -17,8 +17,8 @@ export default {
   semi: true,
   // 使用单引号 (true：单引号，false：双引号)
   singleQuote: true,
-  // 在对象字面量中决定是否将属性名用引号括起来 可选值 "<as-needed|consistent|preserve>"
-  quoteProps: 'as-needed',
+  // 在对象字面量中决定是否将属性名用引号括起来 可选值 "<as-needed默认值，只在需要时添加引号 |consistent如果有任何一个属性需要引号，所有属性都加引号 |preserve 保持原样，不改变>"
+  quoteProps: 'consistent',
   // 在JSX中使用单引号而不是双引号 (true：单引号，false：双引号)
   jsxSingleQuote: true,
   // 多行时尽可能打印尾随逗号 可选值"<none|es5|all>"

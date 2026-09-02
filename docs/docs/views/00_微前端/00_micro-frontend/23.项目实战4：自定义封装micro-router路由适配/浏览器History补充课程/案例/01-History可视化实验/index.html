@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>History 可视化实验</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: #f4f7fb;
+        color: #172033;
+        font:
+          15px/1.55 system-ui,
+          sans-serif;
+      }
+      main {
+        width: min(1100px, calc(100% - 32px));
+        margin: 32px auto;
+      }
+      h1,
+      h2 {
+        margin: 0 0 12px;
+      }
+      .tip {
+        color: #64748b;
+      }
+      .panel {
+        margin-top: 16px;
+        padding: 20px;
+        border: 1px solid #dbe3ef;
+        border-radius: 14px;
+        background: white;
+      }
+      .status {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 12px;
+      }
+      .item {
+        padding: 12px;
+        border-radius: 10px;
+        background: #f8fafc;
+      }
+      .label {
+        display: block;
+        margin-bottom: 5px;
+        color: #64748b;
+        font-size: 12px;
+      }
+      code,
+      pre {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      pre {
+        min-height: 90px;
+        margin: 0;
+        padding: 14px;
+        overflow: auto;
+        border-radius: 10px;
+        background: #0f172a;
+        color: #dbeafe;
+      }
+      .buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      button {
+        padding: 9px 13px;
+        border: 0;
+        border-radius: 8px;
+        background: #2563eb;
+        color: white;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: #475569;
+      }
+      button.warn {
+        background: #c2410c;
+      }
+      .stack {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .card {
+        padding: 10px 12px;
+        border: 2px solid #cbd5e1;
+        border-radius: 9px;
+        background: #f8fafc;
+      }
+      .card.current {
+        border-color: #2563eb;
+        background: #eff6ff;
+      }
+      .note {
+        margin-top: 10px;
+        color: #64748b;
+        font-size: 13px;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>History 可视化实验</h1>
+      <p class="tip">
+        点击前先预测：URL 是否变化、history.length 是否增加、会不会出现
+        popstate。
+      </p>
+
+      <section class="panel status">
+        <div class="item">
+          <span class="label">当前 URL</span><code id="url"></code>
+        </div>
+        <div class="item">
+          <span class="label">history.length</span><strong id="length"></strong>
+        </div>
+        <div class="item">
+          <span class="label">当前页面名称</span><strong id="page"></strong>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>操作</h2>
+        <div class="buttons">
+          <button data-push="A">push 页面 A</button>
+          <button data-push="B">push 页面 B</button>
+          <button data-push="C">push 页面 C</button>
+          <button class="warn" id="replace">replace 当前页</button>
+          <button class="secondary" id="back">back()</button>
+          <button class="secondary" id="forward">forward()</button>
+          <button class="secondary" id="goBackTwo">go(-2)</button>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>history.state</h2>
+        <pre id="state"></pre>
+      </section>
+
+      <section class="panel">
+        <h2>影子历史栈</h2>
+        <div class="stack" id="stack"></div>
+        <p class="note">
+          这是案例自己维护的学习模型。浏览器不会向网页公开完整历史栈。
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>事件日志</h2>
+        <pre id="logs">等待操作……</pre>
+      </section>
+    </main>
+
+    <script>
+      const urlElement = document.querySelector("#url");
+      const lengthElement = document.querySelector("#length");
+      const pageElement = document.querySelector("#page");
+      const stateElement = document.querySelector("#state");
+      const stackElement = document.querySelector("#stack");
+      const logsElement = document.querySelector("#logs");
+
+      let shadowEntries = [{ name: "初始页", index: 0 }];
+      let shadowIndex = 0;
+      let replaceCount = 0;
+      const logs = [];
+
+      if (!history.state?.historyLab) {
+        history.replaceState(
+          { historyLab: true, name: "初始页", demoIndex: 0 },
+          "",
+          location.href,
+        );
+      } else {
+        shadowIndex = history.state.demoIndex ?? 0;
+        shadowEntries = [
+          { name: history.state.name ?? "当前页", index: shadowIndex },
+        ];
+      }
+
+      function pageUrl(name) {
+        const url = new URL(location.href);
+        url.searchParams.set("page", name);
+        return `${url.pathname}${url.search}${url.hash}`;
+      }
+
+      function log(message) {
+        logs.unshift(`${new Date().toLocaleTimeString()}  ${message}`);
+        logsElement.textContent = logs.slice(0, 12).join("\n");
+      }
+
+      function render() {
+        urlElement.textContent = location.href;
+        lengthElement.textContent = history.length;
+        pageElement.textContent = history.state?.name ?? "没有页面名称";
+        stateElement.textContent = JSON.stringify(history.state, null, 2);
+        stackElement.innerHTML = shadowEntries
+          .map(
+            (entry) =>
+              `<span class="card ${entry.index === shadowIndex ? "current" : ""}">${entry.name}<br><small>index: ${entry.index}</small></span>`,
+          )
+          .join("");
+      }
+
+      function pushPage(name) {
+        const nextIndex = shadowIndex + 1;
+        shadowEntries = shadowEntries.filter(
+          (entry) => entry.index <= shadowIndex,
+        );
+        shadowEntries.push({ name: `页面 ${name}`, index: nextIndex });
+        shadowIndex = nextIndex;
+        history.pushState(
+          { historyLab: true, name: `页面 ${name}`, demoIndex: nextIndex },
+          "",
+          pageUrl(name),
+        );
+        log(`执行 pushState：新增页面 ${name}；注意没有 popstate`);
+        render();
+      }
+
+      document.querySelectorAll("[data-push]").forEach((button) => {
+        button.addEventListener("click", () => pushPage(button.dataset.push));
+      });
+
+      document.querySelector("#replace").addEventListener("click", () => {
+        replaceCount += 1;
+        const name = `替换页 R${replaceCount}`;
+        history.replaceState(
+          { ...history.state, name, replaced: true },
+          "",
+          pageUrl(`R${replaceCount}`),
+        );
+        const currentEntry = shadowEntries.find(
+          (entry) => entry.index === shadowIndex,
+        );
+        if (currentEntry) currentEntry.name = name;
+        log(
+          `执行 replaceState：替换当前条目；history.length 不增加，也没有 popstate`,
+        );
+        render();
+      });
+
+      document
+        .querySelector("#back")
+        .addEventListener("click", () => history.back());
+      document
+        .querySelector("#forward")
+        .addEventListener("click", () => history.forward());
+      document
+        .querySelector("#goBackTwo")
+        .addEventListener("click", () => history.go(-2));
+
+      window.addEventListener("popstate", (event) => {
+        shadowIndex = event.state?.demoIndex ?? -1;
+        if (!shadowEntries.some((entry) => entry.index === shadowIndex)) {
+          shadowEntries.push({
+            name: event.state?.name ?? "外部历史条目",
+            index: shadowIndex,
+          });
+        }
+        log(`收到 popstate，目标 state = ${JSON.stringify(event.state)}`);
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>

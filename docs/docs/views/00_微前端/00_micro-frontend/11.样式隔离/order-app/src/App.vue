@@ -1,0 +1,202 @@
+<script setup>
+import { computed, inject, ref } from "vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const isDialogOpen = ref(false);
+const sandboxValue = ref("未写入");
+const escapedEffectStatus = ref("未制造");
+const hostNavigation = inject("hostNavigation", null);
+const sharedGlobalState = inject("sharedGlobalState", null);
+
+const navItems = [
+  { to: "/orders/list", label: "订单列表" },
+  { to: "/orders/detail/2048", label: "订单详情" },
+  { to: "/orders/refund/1024", label: "退款处理" },
+];
+
+const dialogConfig = computed(() => {
+  if (route.path === "/orders/detail/2048") {
+    return {
+      actionLabel: "修改订单备注",
+      title: "修改订单备注",
+      fields: ["订单备注", "跟进人", "同步客户通知"],
+    };
+  }
+
+  if (route.path === "/orders/refund/1024") {
+    return {
+      actionLabel: "审核退款申请",
+      title: "审核退款申请",
+      fields: ["审核意见", "责任归属", "是否同步财务"],
+    };
+  }
+
+  return {
+    actionLabel: "新建订单",
+    title: "新建订单",
+    fields: ["客户姓名", "商品数量", "配送方式"],
+  };
+});
+
+function openDialog() {
+  isDialogOpen.value = true;
+}
+
+function closeDialog() {
+  isDialogOpen.value = false;
+}
+
+function notifyHostNavigation(path) {
+  // [路由处理1:] 嵌入态点击子应用内部路由时，通知主应用同步更新地址栏。
+  if (hostNavigation?.isEmbedded) {
+    hostNavigation.navigate?.(path);
+  }
+}
+
+function finishOneOrder() {
+  sharedGlobalState?.changePendingCount(-1);
+}
+
+function sendOrderNotice() {
+  window.dispatchEvent(
+    new CustomEvent("order:notice", {
+      detail: {
+        message: "订单系统刚刚发出一条操作提醒",
+        orderId: "O-2048",
+      },
+    }),
+  );
+}
+
+function writeSandboxWindowValue() {
+  const value = `order-app ${new Date().toLocaleTimeString()}`;
+  window.__QIANKUN_SANDBOX_LEAK_TEST__ = value;
+  sandboxValue.value = window.__QIANKUN_SANDBOX_LEAK_TEST__ || "无";
+}
+
+function writeEscapedSideEffects() {
+  document.title = "订单子应用改过的 document.title";
+  localStorage.setItem("qiankun:sandbox-demo", "order-app 写入了 localStorage");
+  escapedEffectStatus.value = "已写入";
+}
+
+function clearEscapedSideEffects() {
+  localStorage.removeItem("qiankun:sandbox-demo");
+  escapedEffectStatus.value = "已清理";
+}
+</script>
+
+<template>
+  <section class="module-shell">
+    <header class="module-header">
+      <div>
+        <span class="module-badge">订单系统</span>
+        <h1>订单管理</h1>
+      </div>
+      <div class="header-actions">
+        <div class="module-status">
+          待处理事项 {{ sharedGlobalState?.state.pendingCount ?? 0 }} 条
+        </div>
+        <button class="dialog-trigger" type="button" @click="finishOneOrder">
+          处理一条订单
+        </button>
+        <button class="event-trigger" type="button" @click="sendOrderNotice">
+          发送操作提醒
+        </button>
+        <button class="dialog-trigger" type="button" @click="openDialog">
+          {{ dialogConfig.actionLabel }}
+        </button>
+      </div>
+    </header>
+
+    <nav class="module-tabs">
+      <RouterLink
+        v-for="item in navItems"
+        :key="item.to"
+        :to="item.to"
+        class="tab-link"
+        @click="notifyHostNavigation(item.to)"
+      >
+        {{ item.label }}
+      </RouterLink>
+    </nav>
+
+    <main class="module-content">
+      <section class="sandbox-demo-panel">
+        <div class="sandbox-demo-copy">
+          <span class="module-badge">沙箱演示</span>
+          <h2>全局写入验证</h2>
+          <p>子应用 window：{{ sandboxValue }}</p>
+          <p>document / localStorage：{{ escapedEffectStatus }}</p>
+        </div>
+        <div class="sandbox-demo-actions">
+          <button
+            class="event-trigger"
+            type="button"
+            @click="writeSandboxWindowValue"
+          >
+            写入 window 字段
+          </button>
+          <button
+            class="dialog-trigger"
+            type="button"
+            @click="writeEscapedSideEffects"
+          >
+            修改 document 和 localStorage
+          </button>
+          <button
+            class="event-trigger"
+            type="button"
+            @click="clearEscapedSideEffects"
+          >
+            清理 localStorage
+          </button>
+        </div>
+      </section>
+
+      <RouterView />
+    </main>
+
+    <Teleport to="body">
+      <div v-if="isDialogOpen" class="dialog-mask" @click.self="closeDialog">
+        <section
+          class="dialog-panel"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="dialogConfig.title"
+        >
+          <div class="dialog-head">
+            <div>
+              <span class="dialog-badge">订单操作</span>
+              <h2>{{ dialogConfig.title }}</h2>
+            </div>
+            <button class="dialog-close" type="button" @click="closeDialog">
+              关闭
+            </button>
+          </div>
+
+          <div class="dialog-form">
+            <label
+              v-for="field in dialogConfig.fields"
+              :key="field"
+              class="dialog-field"
+            >
+              <span>{{ field }}</span>
+              <input :placeholder="`请输入${field}`" />
+            </label>
+          </div>
+
+          <div class="dialog-footer">
+            <button class="dialog-secondary" type="button" @click="closeDialog">
+              取消
+            </button>
+            <button class="dialog-primary" type="button" @click="closeDialog">
+              确认提交
+            </button>
+          </div>
+        </section>
+      </div>
+    </Teleport>
+  </section>
+</template>

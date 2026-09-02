@@ -1,0 +1,25 @@
+{
+  "name": "onepiece-cli",
+  "version": "1.0.2",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "onepiece": "bin/onepiece.js"
+  },
+  "scripts": {
+    "publish:prod": "sh scripts/publish.prod.sh"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^14.0.2",
+    "download-git-repo": "^3.0.2",
+    "figlet": "^1.11.4",
+    "fs-extra": "^11.4.0",
+    "inquirer": "^8.0.0",
+    "ora": "^5.4.1",
+    "shelljs": "^0.10.0"
+  }
+}

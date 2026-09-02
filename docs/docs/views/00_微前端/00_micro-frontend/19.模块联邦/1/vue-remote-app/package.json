@@ -1,0 +1,15 @@
+{
+  "name": "mf-vue-remote",
+  "private": true,
+  "scripts": {
+    "dev": "webpack serve --mode development",
+    "build": "webpack --mode production"
+  },
+  "dependencies": {
+    "vue": "3.5.41"
+  },
+  "devDependencies": {
+    "@vue/compiler-sfc": "3.5.41",
+    "vue-loader": "17.4.2"
+  }
+}

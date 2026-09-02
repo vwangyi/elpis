@@ -1,0 +1,109 @@
+{
+  "compilerOptions": {
+    "paths": {
+      "@unhead/vue": [
+        "../../../node_modules/.pnpm/@unhead+vue@3.3.2_@oxc-project+types@0.146.0_esbuild@0.28.1_lightningcss@1.33.0_rolldow_5c0fea26a77bc1c4030afc2813671616/node_modules/@unhead/vue"
+      ],
+      "@nuxt/devtools": [
+        "../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/@nuxt/devtools"
+      ],
+      "@vue/runtime-core": [
+        "../../../node_modules/.pnpm/@vue+runtime-core@3.5.40/node_modules/@vue/runtime-core"
+      ],
+      "@vue/compiler-sfc": [
+        "../../../node_modules/.pnpm/@vue+compiler-sfc@3.5.41/node_modules/@vue/compiler-sfc"
+      ],
+      "@nuxt/schema": [
+        "../../../node_modules/.pnpm/@nuxt+schema@4.5.2/node_modules/@nuxt/schema"
+      ],
+      "nuxt": [
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt"
+      ],
+      "vite/client": [
+        "../../../node_modules/.pnpm/vite@8.1.4_@types+node@25.9.5_esbuild@0.28.1_jiti@2.7.0_less@4.6.7_sass@1.101.0_terser@5.49.0_yaml@2.9.0/node_modules/vite/client"
+      ],
+      "nitropack/types": [
+        "../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack/types"
+      ],
+      "nitropack/runtime": [
+        "../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack/runtime"
+      ],
+      "nitropack": [
+        "../../../node_modules/.pnpm/nitropack@2.13.4_@parcel+watcher@2.5.6_mysql2@3.23.3_@types+node@25.9.5__rolldown@1.2.5_53c724d2fde5a27fd3be88b46d3c2900/node_modules/nitropack"
+      ],
+      "defu": [
+        "../../../node_modules/.pnpm/defu@6.1.7/node_modules/defu"
+      ],
+      "h3": [
+        "../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3"
+      ],
+      "consola": [
+        "../../../node_modules/.pnpm/consola@3.4.2/node_modules/consola"
+      ],
+      "ofetch": [
+        "../../../node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch"
+      ],
+      "crossws": [
+        "../../../node_modules/.pnpm/crossws@0.4.12_srvx@0.11.22/node_modules/crossws"
+      ],
+      "#app/types": [
+        "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/types"
+      ]
+    },
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "ESNext",
+    "allowJs": true,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "allowArbitraryExtensions": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitOverride": true,
+    "module": "preserve",
+    "noEmit": true,
+    "types": [],
+    "moduleResolution": "Bundler",
+    "useDefineForClassFields": true,
+    "noImplicitThis": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./nuxt.node.d.ts",
+    "../modules/*.*",
+    "../nuxt.config.*",
+    "../.config/nuxt.*",
+    "../layers/*/nuxt.config.*",
+    "../layers/*/.config/nuxt.*",
+    "../layers/*/modules/*.*",
+    "../layers/*/modules/*/*.*",
+    "../nuxt.schema.*",
+    "../layers/*/nuxt.schema.*"
+  ],
+  "exclude": [
+    "../node_modules",
+    "../../../node_modules",
+    "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/node_modules",
+    "../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/@nuxt/devtools/node_modules",
+    "../../../node_modules/.pnpm/@nuxt+telemetry@2.8.0_@nuxt+kit@4.5.2_magic-string@1.2.2_magicast@0.5.4_rolldown@1.2.5__04431eac60541a03a892723b9a270d14/node_modules/@nuxt/telemetry/node_modules",
+    "../dist",
+    "../.data",
+    "../app/**/*",
+    "../modules/*/runtime/**/*",
+    "../test/nuxt/**/*",
+    "../tests/nuxt/**/*",
+    "../layers/*/app/**/*",
+    "../layers/*/modules/*/runtime/**/*",
+    "../modules/*/runtime/server/**/*",
+    "../layers/*/server/**/*",
+    "../layers/*/modules/*/runtime/server/**/*",
+    "../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/runtime",
+    "../../../node_modules/.pnpm/@nuxt+devtools@3.4.1_db0@0.3.4_mysql2@3.23.3_@types+node@25.9.5___ioredis@5.11.1_magic-_da6549226a2d484611c7d2edc4a7f6cc/node_modules/dist/runtime",
+    "../../../node_modules/.pnpm/@nuxt+telemetry@2.8.0_@nuxt+kit@4.5.2_magic-string@1.2.2_magicast@0.5.4_rolldown@1.2.5__04431eac60541a03a892723b9a270d14/node_modules/runtime",
+    "../../../node_modules/.pnpm/@nuxt+telemetry@2.8.0_@nuxt+kit@4.5.2_magic-string@1.2.2_magicast@0.5.4_rolldown@1.2.5__04431eac60541a03a892723b9a270d14/node_modules/dist/runtime"
+  ]
+}

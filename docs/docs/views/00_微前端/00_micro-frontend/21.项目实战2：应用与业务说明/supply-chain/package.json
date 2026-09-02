@@ -1,0 +1,55 @@
+{
+  "name": "supply-chain-platform",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20.19.0",
+    "pnpm": ">=10.0.0"
+  },
+  "scripts": {
+    "dev": "pnpm --parallel --filter @supply-chain/portal-shell --filter @supply-chain/fulfillment-app --filter @supply-chain/settlement-app --filter @supply-chain/api-server dev",
+    "dev:portal": "pnpm --filter @supply-chain/portal-shell dev",
+    "dev:fulfillment": "pnpm --filter @supply-chain/fulfillment-app dev",
+    "dev:settlement": "pnpm --filter @supply-chain/settlement-app dev",
+    "dev:api": "pnpm --filter @supply-chain/api-server dev",
+    "build": "pnpm -r --if-present build",
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker stop supply-chain-postgres",
+    "db:logs": "docker logs -f supply-chain-postgres",
+    "db:seed": "pnpm --filter @supply-chain/api-server seed",
+    "bootstrap": "pnpm db:up && pnpm db:seed",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc -b",
+    "check": "pnpm format:check && pnpm lint && pnpm typecheck",
+    "commit": "cz",
+    "prepare": "husky"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-git"
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.30.0",
+    "@supply-chain/eslint-config": "workspace:*",
+    "@supply-chain/typescript-config": "workspace:*",
+    "@types/node": "^24.0.0",
+    "commitizen": "^4.3.1",
+    "cz-git": "^1.12.0",
+    "eslint": "^9.30.0",
+    "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "^3.6.2",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.35.1"
+  }
+}

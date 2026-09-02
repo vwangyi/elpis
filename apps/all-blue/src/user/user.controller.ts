@@ -56,13 +56,12 @@ export class UserController {
         data: result,
         code: 200
       };
-    } else {
-      return {
-        message: '登录失败',
-        code: 400,
-        data: null
-      };
     }
+    return {
+      message: '登录失败',
+      code: 400,
+      data: null
+    };
   }
 
   // 注册

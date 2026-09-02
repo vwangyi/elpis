@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iframe 演示</title>
+    <style>
+      :root {
+        --bg: #f6f1e8;
+        --paper: rgba(255, 252, 247, 0.9);
+        --ink: #1c2a39;
+        --muted: #65707c;
+        --line: rgba(28, 42, 57, 0.1);
+        --main: #194d63;
+        --card: rgba(255, 255, 255, 0.88);
+        --shadow: 0 22px 50px rgba(27, 39, 50, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(circle at top left, rgba(25, 77, 99, 0.09), transparent 28%),
+          radial-gradient(circle at right bottom, rgba(166, 81, 42, 0.12), transparent 24%),
+          linear-gradient(180deg, #f8f3ea 0%, #f1eadf 100%);
+      }
+
+      .page {
+        max-width: 1440px;
+        margin: 0 auto;
+        padding: 28px;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: 18px;
+        padding: 18px;
+        border-radius: 34px;
+        border: 1px solid var(--line);
+        background: var(--paper);
+        box-shadow: var(--shadow);
+      }
+
+      .sidebar,
+      .workspace {
+        border-radius: 26px;
+        overflow: hidden;
+      }
+
+      .sidebar {
+        padding: 22px;
+        background: linear-gradient(180deg, #183d50 0%, #1f5870 100%);
+        color: #edf7fb;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+      }
+
+      .brand strong {
+        font-size: 20px;
+      }
+
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+
+      .tag-main {
+        color: #edf7fb;
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .nav-title {
+        margin: 0 0 10px;
+        font-size: 13px;
+        color: rgba(237, 247, 251, 0.72);
+        letter-spacing: 0.08em;
+      }
+
+      .menu {
+        display: grid;
+        gap: 10px;
+      }
+
+      .menu button {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(255, 255, 255, 0.08);
+        color: #f2f8fb;
+        border-radius: 18px;
+        padding: 14px 16px;
+        text-align: left;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .menu button.active {
+        color: var(--main);
+        background: #f0f6f8;
+      }
+
+      .workspace {
+        display: flex;
+        flex-direction: column;
+        background: linear-gradient(180deg, #fffdfa 0%, #f8f2ea 100%);
+        border: 1px solid rgba(28, 42, 57, 0.1);
+      }
+
+      .topbar {
+        padding: 20px 24px;
+        background: rgba(255, 255, 255, 0.84);
+        border-bottom: 1px solid rgba(28, 42, 57, 0.08);
+      }
+
+      .topbar h1 {
+        margin: 0 0 8px;
+        font-size: 28px;
+      }
+
+      .topbar p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .stage {
+        padding: 24px;
+        display: grid;
+        gap: 16px;
+      }
+
+      .status-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .status-card {
+        padding: 16px 18px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(28, 42, 57, 0.08);
+      }
+
+      .status-card span {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .status-card strong {
+        display: block;
+        font-size: 18px;
+        line-height: 1.6;
+        word-break: break-word;
+      }
+
+      .status-card.wide {
+        grid-column: 1 / -1;
+      }
+
+      iframe {
+        width: 100%;
+        height: 440px;
+        border: 1px solid rgba(28, 42, 57, 0.1);
+        border-radius: 24px;
+        background: #fff;
+      }
+
+      @media (max-width: 1080px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="shell">
+        <aside class="sidebar">
+          <div class="brand">
+            <strong>运营管理平台</strong>
+            <span class="tag tag-main">iframe 主页面</span>
+          </div>
+
+          <p class="nav-title">业务导航</p>
+          <div class="menu">
+            <button class="menu-btn active" data-src="./iframe-子应用-订单页.html">订单管理</button>
+            <button class="menu-btn" data-src="./iframe-子应用-财务页.html">财务管理</button>
+          </div>
+        </aside>
+
+        <main class="workspace">
+          <div class="topbar">
+            <h1>iframe 方式</h1>
+            <p>主页面稳定不动，中间内容区域通过 iframe 切换不同子页面。</p>
+          </div>
+
+          <div class="stage">
+            <section class="status-grid">
+              <article class="status-card">
+                <span>主应用当前地址</span>
+                <strong id="mainRoute">-</strong>
+              </article>
+              <article class="status-card">
+                <span>子应用上报地址</span>
+                <strong id="childRoute">等待子应用上报</strong>
+              </article>
+              <article class="status-card">
+                <span>iframe 重新加载次数</span>
+                <strong id="reloadCount">0 次</strong>
+              </article>
+              <article class="status-card">
+                <span>主应用顶部待办角标</span>
+                <strong id="todoCount">0 条新待办</strong>
+              </article>
+              <article class="status-card wide">
+                <span>主应用最近收到的消息</span>
+                <strong id="lastMessage">暂时没有来自子页面的消息</strong>
+              </article>
+            </section>
+
+            <iframe id="appFrame" src="./iframe-子应用-订单页.html" title="iframe 子应用"></iframe>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <script>
+      const frame = document.getElementById('appFrame');
+      const buttons = document.querySelectorAll('.menu-btn');
+      const mainRoute = document.getElementById('mainRoute');
+      const childRoute = document.getElementById('childRoute');
+      const reloadCount = document.getElementById('reloadCount');
+      let loadTimes = 0;
+
+      function renderMainRoute() {
+        const fileName = decodeURIComponent(location.pathname.split('/').pop() || 'iframe-demo');
+        const hash = decodeURIComponent(location.hash || '');
+        mainRoute.textContent = hash ? `${fileName}${hash}` : fileName;
+      }
+
+      renderMainRoute();
+      window.addEventListener('hashchange', renderMainRoute);
+
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          childRoute.textContent = '子应用重新加载中...';
+          frame.src = button.dataset.src;
+          buttons.forEach((item) => item.classList.toggle('active', item === button));
+        });
+      });
+
+      frame.addEventListener('load', () => {
+        loadTimes += 1;
+        reloadCount.textContent = `${loadTimes} 次`;
+      });
+
+      window.addEventListener('message', (event) => {
+        const data = event.data;
+
+        if (!data) {
+          return;
+        }
+
+        if (data.type === 'child-route') {
+          childRoute.textContent = data.text;
+          return;
+        }
+
+        if (data.type !== 'child-message') {
+          return;
+        }
+
+        document.getElementById('todoCount').textContent = `${data.count} 条新待办`;
+        document.getElementById('lastMessage').textContent = data.text;
+      });
+    </script>
+  </body>
+</html>

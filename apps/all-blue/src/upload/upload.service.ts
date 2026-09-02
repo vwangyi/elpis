@@ -9,7 +9,7 @@ export class UploadService {
   }
 
   findAll() {
-    return `hello`;
+    return 'hello';
   }
 
   findOne(id: number) {

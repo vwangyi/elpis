@@ -1,7 +1,16 @@
 {
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit" // 或 "always"
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    // "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.validate": [
     "javascript",
@@ -16,8 +25,9 @@
   // "explorer.fileNesting.enabled": false,
   // // 关闭折叠规则
   // "explorer.fileNesting.expand": false,
-  // 自定义规则把文件折叠起来.    eslint prettier cspell package.json 
+  // 自定义规则把文件折叠起来.    eslint prettier cspell package.json
   "explorer.fileNesting.patterns": {
+    // "tsconfig.json": "tsconfig.*.json,README.md"
     // "eslint.config.js":"eslint.config.js, ",
     // ".gitignore": ".gitignore, .prettierignore",
     // "tsconfig.json": "tsconfig.*.json, env.d.ts, typed-router.d.ts",
@@ -26,9 +36,155 @@
   },
   // 1. 指定字体，将 'Fira Code' 替换为你安装的字体名称
   "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
+
   // 2. 开启连字功能
-  "editor.fontLigatures": true,
+  // "editor.fontLigatures": true
+
   // 如果你想更精细地控制，也可以用下面的方式
   // "editor.fontLigatures": "'calt', 'ss01'"
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": true,
+    "markdown": true,
+    "scminput": false,
+    "yaml": false
+  },
+  "hediet.vscode-drawio.resizeImages": null,
+  "workbench.editor.decorations.colors": false,
+  "color-highlight.languages": ["*"],
+  "editor.guides.bracketPairs": true,
+  "emmet.optimizeStylesheetParsing": false,
+  "emmet.triggerExpansionOnTab": true,
+  "git.openRepositoryInParentFolders": "always",
+  "security.workspace.trust.untrustedFiles": "open",
+  "powermode.enabled": true,
+  "powermode.presets": "fireworks",
+  "powermode.shake.enabled": false,
+  "workbench.colorCustomizations": {
+    "editorBracketMatch.background": "#000"
+    // "editorBracketMatch.border": "#ff55ff"
+  },
+  // 设置代码关键字颜色
+  "editor.tokenColorCustomizations": {
+    "comments": "#52A976", // 注释
+    "keywords": "#C8B9FA", // 关键字
+    "variables": "#64b3f4", // 变量名
+    "strings": "#fda085", // 字符串
+    "functions": "#fad0c4", // 函数名
+    "numbers": "#a6c1ee", // 数字
+    "types": "#fbc2eb", // 类型的颜色
+    "textMateRules": [
+      {
+        "scope": "variable.parameter.function.language.special.self.python.this",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": "meta.brace.curly",
+        "settings": {
+          "foreground": "#ff00c8"
+        }
+      },
+      {
+        "scope": "entity.name.function",
+        "settings": {
+          "foreground": "#d9afd9"
+        }
+      },
+      {
+        "scope": "entity.name.function",
+        "settings": {
+          "foreground": "#30cfd0"
+        }
+      },
+      {
+        "scope": "keyword.operator.logical", //逻辑符号 && || ! 的颜色
+        "settings": {
+          "foreground": "#667eea",
+          "fontStyle": ""
+        }
+      },
+      //类的名称颜色 如class abc{} 中的abc
+      {
+        "scope": "entity.name.type", //函数和类的名称颜色
+        "settings": {
+          "foreground": "#5f72bd"
+        }
+      },
+      // : , 的颜色
+      {
+        "scope": "punctuation.separator",
+        "settings": {
+          "foreground": "#00cdac"
+        }
+      },
+      // ; 的颜色
+      {
+        "scope": "punctuation.terminator",
+        "settings": {
+          "foreground": "#dad4ec"
+        }
+      },
+      // 对象的健值对的颜色 如 { key: value } 中的key的颜色
+      {
+        "scope": "meta.object-literal.key",
+        "settings": {
+          "foreground": "#a3bded"
+        }
+      },
+      // . 的颜色
+      {
+        "scope": "punctuation.accessor",
+        "settings": {
+          "foreground": "#ff758c"
+        }
+      }
+    ]
+  },
+  "explorer.compactFolders": false,
+  "cSpell.userWords": ["clazz", "iterm", "vuex"],
+  "liveServer.settings.donotShowInfoMsg": true,
+  "osumode.enableCursorExplosions": false,
+  "osumode.enableComboCounter": false,
+  "osumode.enableRandomPlayImgs": false,
+  "osumode.imgInterval": 2,
+  "workbench.iconTheme": "vscode-icons",
+  "vsicons.dontShowNewVersionMessage": true,
+  "eslint.codeActionsOnSave.rules": null,
+  "vue.inlayHints.optionsWrapper": false,
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.suggest.matchOnWordStartOnly": false,
+  "terminal.integrated.env.windows": {},
+  "terminal.integrated.env.osx": {},
+  "redhat.telemetry.enabled": true,
+  "console-ninja.featureSet": "Community",
+  "zenMode.hideStatusBar": false,
+  "editor.smoothScrolling": true,
+  "workbench.list.smoothScrolling": true,
+  "terminal.integrated.smoothScrolling": true,
+  "editor.cursorSmoothCaretAnimation": "on",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "github.copilot.editor.enableAutoCompletions": true,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "smarty.highlight": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "files.associations": {
+    "*.tpl": "html"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "workbench.colorTheme": "Dark Modern",
+  "editor.cursorBlinking": "smooth",
+  "tabnine.experimentalAutoImports": true,
+  "editor.fontLigatures": true,
+  "terminal.integrated.fontFamily": "monospace",
+  "workbench.experimental.modernUI": true,
+  "svn.ignoreMissingSvnWarning": true
 }
- 

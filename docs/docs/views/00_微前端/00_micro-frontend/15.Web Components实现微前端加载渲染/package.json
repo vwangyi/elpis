@@ -1,0 +1,23 @@
+{
+  "name": "lesson-15-custom-element-html-entry",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:main": "pnpm --filter main-app dev",
+    "dev:order": "pnpm --filter order-app dev",
+    "dev:finance": "pnpm --filter finance-app dev",
+    "test": "node --test main-app/src/micro-app/*.test.mjs",
+    "build": "pnpm -r build"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "latest",
+    "jsdom": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-router-dom": "latest",
+    "vite": "latest",
+    "vue": "latest",
+    "vue-router": "latest"
+  }
+}

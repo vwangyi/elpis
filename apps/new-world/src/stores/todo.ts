@@ -2,10 +2,18 @@ import { ref } from 'vue';
 import { defineStore } from 'pinia';
 import * as todoAPI from '@/api/todo';
 import type { Todo, TodoPageResult, TodoParams } from '@/types/todo';
-import type { ApiResponse } from '@/utils/request';
+import type { ApiResponse } from '@/api/request';
 
 /* todo 模块 */
 export const useTodoStore = defineStore('todo', () => {
+  // 总条数（分页用）
+  const todoTotal = ref<number>(0);
+  // 当前页 / 每页条数
+  const page = ref<number>(1);
+  const pageSize = ref<number>(10);
+  // 加载状态
+  const loading = ref<boolean>(false);
+
   // 输入框内容
   const todoInp = ref<string>('');
   function updateTodoInp(val: string) {
@@ -41,14 +49,6 @@ export const useTodoStore = defineStore('todo', () => {
       loading.value = false;
     }
   }
-
-  // 总条数（分页用）
-  const todoTotal = ref<number>(0);
-  // 当前页 / 每页条数
-  const page = ref<number>(1);
-  const pageSize = ref<number>(10);
-  // 加载状态
-  const loading = ref<boolean>(false);
 
   // 查询单个待办
   async function findOne(id: number): Promise<ApiResponse<Todo>> {

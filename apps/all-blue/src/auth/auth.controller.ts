@@ -42,7 +42,9 @@ export class AuthController {
       try {
         const token = authorization?.split(' ')?.[1] || '';
         const payload = this.jwtService.verify(token);
-        const newToken = this.jwtService.sign({ count: payload.count + 1 });
+        const newToken = this.jwtService.sign({
+          count: payload.count + 1
+        });
         res.setHeader('Authorization', `Bearer ${newToken}`);
       } catch (e) {
         console.log('catch error', e);

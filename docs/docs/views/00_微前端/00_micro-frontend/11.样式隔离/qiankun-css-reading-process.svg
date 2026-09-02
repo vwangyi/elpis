@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="1120" viewBox="0 0 1800 1120" role="img" aria-labelledby="title desc">
+  <title id="title">qiankun 与 import-html-entry 读取 CSS 的源码机制剖面图</title>
+  <desc id="desc">展示 import-html-entry 从 HTML Entry 中解析 link rel stylesheet、读取 CSS 文本、缓存并回填 style 标签的过程，并对照 qiankun 当前 loader 的 link transpiler 处理。</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8faf7"/>
+      <stop offset="0.48" stop-color="#eef6f2"/>
+      <stop offset="1" stop-color="#f7f1e8"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#f4f7f2" stop-opacity="0.96"/>
+    </linearGradient>
+    <linearGradient id="primary" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#176b5b"/>
+      <stop offset="1" stop-color="#2b8a6f"/>
+    </linearGradient>
+    <linearGradient id="network" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f1a208"/>
+      <stop offset="1" stop-color="#d65f35"/>
+    </linearGradient>
+    <linearGradient id="modern" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#274c77"/>
+      <stop offset="1" stop-color="#5b7f95"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#1d352f" flood-opacity="0.16"/>
+    </filter>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#20312c" flood-opacity="0.13"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#176b5b"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#d65f35"/>
+    </marker>
+    <marker id="arrow-blue" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M2,2 L10,6 L2,10 Z" fill="#274c77"/>
+    </marker>
+    <style>
+      .title { font: 800 36px Georgia, 'Times New Roman', serif; fill: #18352f; letter-spacing: 0; }
+      .subtitle { font: 400 18px 'Avenir Next', 'PingFang SC', sans-serif; fill: #48645d; }
+      .section-title { font: 800 24px 'Avenir Next', 'PingFang SC', sans-serif; fill: #18352f; letter-spacing: 0; }
+      .label { font: 700 18px 'Avenir Next', 'PingFang SC', sans-serif; fill: #203b35; }
+      .small { font: 500 15px 'Avenir Next', 'PingFang SC', sans-serif; fill: #50645f; }
+      .tiny { font: 500 13px 'Avenir Next', 'PingFang SC', sans-serif; fill: #5f716c; }
+      .code { font: 600 16px 'SFMono-Regular', Menlo, Consolas, monospace; fill: #24352f; }
+      .code-small { font: 500 13px 'SFMono-Regular', Menlo, Consolas, monospace; fill: #31443d; }
+      .chip { font: 800 13px 'Avenir Next', 'PingFang SC', sans-serif; fill: #ffffff; letter-spacing: 0.5px; }
+      .white { fill: #fff; }
+      .panel-stroke { stroke: #d7e1dc; stroke-width: 1.5; }
+      .green-stroke { stroke: #176b5b; stroke-width: 4; fill: none; }
+      .orange-stroke { stroke: #d65f35; stroke-width: 4; fill: none; }
+      .blue-stroke { stroke: #274c77; stroke-width: 4; fill: none; }
+      .hairline { stroke: #cddad5; stroke-width: 1.2; }
+      .dash { stroke-dasharray: 8 8; }
+    </style>
+  </defs>
+
+  <rect width="1800" height="1120" fill="url(#bg)"/>
+  <path d="M0 200 C260 140 340 260 560 205 C760 156 920 70 1160 122 C1420 180 1540 92 1800 50 L1800 0 L0 0 Z" fill="#dfeee7" opacity="0.72"/>
+  <path d="M0 1040 C260 990 390 1090 620 1020 C920 928 1090 1012 1300 950 C1510 888 1610 945 1800 902 L1800 1120 L0 1120 Z" fill="#eadfcf" opacity="0.72"/>
+
+  <g transform="translate(72 58)">
+    <text class="title" x="0" y="0">qiankun / import-html-entry：CSS 读取源码机制剖面图</text>
+    <text class="subtitle" x="0" y="36">按源码职责拆开：HTML 字符串、占位符、fetch 文本、缓存、DOM 回填分别发生在哪里。</text>
+    <text class="subtitle" x="0" y="62">主线是 import-html-entry 经典实现，底部补充 qiankun 当前仓库 loader 的差异。</text>
+    <rect x="1262" y="-30" width="390" height="74" rx="16" fill="#ffffff" opacity="0.82" class="panel-stroke"/>
+    <text class="small" x="1286" y="-2">源码依据</text>
+    <text class="code-small" x="1286" y="24">import-html-entry/src/process-tpl.js</text>
+    <text class="code-small" x="1286" y="46">import-html-entry/src/index.js</text>
+  </g>
+
+  <g transform="translate(70 150)">
+    <rect x="0" y="0" width="1660" height="650" rx="30" fill="url(#panel)" class="panel-stroke" filter="url(#shadow)"/>
+    <text class="section-title" x="34" y="48">主线：import-html-entry 经典 HTML Entry 模式</text>
+    <text class="small" x="34" y="78">qiankun v2 时代常见入口：主应用拿到微应用 HTML 后，把外链 CSS 读成文本，再嵌回模板。</text>
+
+    <g transform="translate(42 120)">
+      <rect x="0" y="0" width="250" height="360" rx="22" fill="#ffffff" class="panel-stroke" filter="url(#softShadow)"/>
+      <rect x="0" y="0" width="250" height="56" rx="22" fill="#e7f2ed"/>
+      <path d="M0 34 H250 V56 H0 Z" fill="#e7f2ed"/>
+      <circle cx="30" cy="28" r="7" fill="#d65f35"/><circle cx="53" cy="28" r="7" fill="#f1a208"/><circle cx="76" cy="28" r="7" fill="#2b8a6f"/>
+      <text class="label" x="28" y="90">1. 入口 HTML</text>
+      <text class="small" x="28" y="122">`importHTML(url)` 先请求</text>
+      <text class="small" x="28" y="145">微应用页面。</text>
+      <text class="code" x="28" y="194">fetch(url)</text>
+      <text class="code" x="28" y="222">readResAsString()</text>
+      <line x1="28" y1="252" x2="222" y2="252" class="hairline"/>
+      <text class="code-small" x="28" y="286">&lt;link rel="stylesheet"</text>
+      <text class="code-small" x="28" y="310">      href="/app.css"&gt;</text>
+      <text class="code-small" x="28" y="338">&lt;script entry src="main.js"&gt;</text>
+    </g>
+
+    <path d="M310 300 C350 300 365 300 405 300" class="green-stroke" marker-end="url(#arrow)"/>
+
+    <g transform="translate(420 118)">
+      <rect x="0" y="0" width="330" height="365" rx="24" fill="#ffffff" class="panel-stroke" filter="url(#softShadow)"/>
+      <rect x="24" y="24" width="96" height="34" rx="17" fill="url(#primary)"/>
+      <text class="chip" x="45" y="47">解析层</text>
+      <text class="label" x="24" y="92">2. `processTpl()` 扫描模板</text>
+      <text class="small" x="24" y="124">用正则识别 `link`、`style`、`script`。</text>
+      <text class="small" x="24" y="149">只有 `rel="stylesheet"` 会进入 CSS 列表。</text>
+
+      <rect x="24" y="184" width="282" height="128" rx="16" fill="#f3f8f5" stroke="#d7e5de"/>
+      <text class="code-small" x="44" y="214">styles.push(parseUrl(newHref))</text>
+      <text class="code-small" x="44" y="244">return genLinkReplaceSymbol()</text>
+      <text class="code-small" x="44" y="274">scripts.push(...)</text>
+      <text class="code-small" x="44" y="300">entry = entry || last script</text>
+
+      <text class="tiny" x="24" y="344">结果：`template` 里原 link 被注释占位符替换。</text>
+    </g>
+
+    <g transform="translate(690 460)">
+      <rect x="0" y="0" width="260" height="86" rx="18" fill="#18352f" opacity="0.94"/>
+      <text class="white" style="font:700 16px 'Avenir Next','PingFang SC',sans-serif" x="24" y="34">中间产物</text>
+      <text class="code-small" x="24" y="62" fill="#dcebe5">{ template, styles, scripts, entry }</text>
+    </g>
+
+    <path d="M764 300 C815 300 830 300 880 300" class="green-stroke" marker-end="url(#arrow)"/>
+
+    <g transform="translate(895 118)">
+      <rect x="0" y="0" width="330" height="365" rx="24" fill="#ffffff" class="panel-stroke" filter="url(#softShadow)"/>
+      <rect x="24" y="24" width="114" height="34" rx="17" fill="url(#network)"/>
+      <text class="chip" x="44" y="47">读取层</text>
+      <text class="label" x="24" y="92">3. `getExternalStyleSheets()`</text>
+      <text class="small" x="24" y="124">遍历 `styles` 数组；内联样式直接取内容，</text>
+      <text class="small" x="24" y="149">外链样式通过自定义或默认 `fetch` 拉取。</text>
+
+      <g transform="translate(28 188)">
+        <rect x="0" y="0" width="275" height="46" rx="12" fill="#fff4dd" stroke="#f3c36d"/>
+        <text class="code-small" x="16" y="29">styleCache[styleLink] || fetch()</text>
+        <rect x="0" y="58" width="275" height="46" rx="12" fill="#fff4dd" stroke="#f3c36d"/>
+        <text class="code-small" x="16" y="87">response.status &gt;= 400 -> error</text>
+        <rect x="0" y="116" width="275" height="46" rx="12" fill="#fff4dd" stroke="#f3c36d"/>
+        <text class="code-small" x="16" y="145">response.text() -> CSS string</text>
+      </g>
+    </g>
+
+    <g transform="translate(1122 244)">
+      <path d="M0 0 C42 -70 120 -72 162 -6 C188 36 174 90 132 118 C82 152 20 128 0 74 C-7 55 -7 18 0 0 Z" fill="#ffffff" stroke="#f0c06a" stroke-width="4" filter="url(#softShadow)"/>
+      <path d="M136 106 L214 172" stroke="#d65f35" stroke-width="14" stroke-linecap="round"/>
+      <text class="code-small" x="38" y="43">GET</text>
+      <text class="code-small" x="38" y="70">/app.css</text>
+      <text class="tiny" x="30" y="97">Network</text>
+    </g>
+
+    <path d="M1240 300 C1285 300 1305 300 1350 300" class="orange-stroke" marker-end="url(#arrow-orange)"/>
+
+    <g transform="translate(1365 118)">
+      <rect x="0" y="0" width="250" height="365" rx="24" fill="#ffffff" class="panel-stroke" filter="url(#softShadow)"/>
+      <rect x="24" y="24" width="116" height="34" rx="17" fill="url(#primary)"/>
+      <text class="chip" x="44" y="47">回填层</text>
+      <text class="label" x="24" y="92">4. `getEmbedHTML()`</text>
+      <text class="small" x="24" y="124">把每个 CSS 文本替换回</text>
+      <text class="small" x="24" y="148">模板里的 link 占位符。</text>
+      <rect x="24" y="184" width="202" height="118" rx="14" fill="#eef6f2" stroke="#cfe0d7"/>
+      <text class="code-small" x="42" y="218">&lt;style&gt;</text>
+      <text class="code-small" x="42" y="245">/* app.css */</text>
+      <text class="code-small" x="42" y="272">.btn { ... }</text>
+      <text class="code-small" x="42" y="294">&lt;/style&gt;</text>
+      <text class="tiny" x="24" y="340">返回给 qiankun 的 `template` 已经含 CSS。</text>
+    </g>
+
+    <path d="M1478 496 C1478 565 1390 585 1320 585 C1120 585 965 585 760 585 C555 585 420 560 420 505" class="green-stroke dash" marker-end="url(#arrow)" opacity="0.8"/>
+    <text class="tiny" x="840" y="620">后续 `execScripts()` 执行 JS；CSS 已在 `template` 中等待挂载到容器。</text>
+
+    <g transform="translate(70 540)">
+      <rect x="0" y="0" width="430" height="72" rx="18" fill="#fffdf6" stroke="#ead9b9"/>
+      <text class="small" x="24" y="30">关键理解：CSS 的“读取”不是浏览器自然加载原 link，</text>
+      <text class="small" x="24" y="54">而是库自己 `fetch(css).then(res =&gt; res.text())` 读出字符串。</text>
+    </g>
+  </g>
+
+  <g transform="translate(70 840)">
+    <rect x="0" y="0" width="1660" height="210" rx="30" fill="#ffffff" class="panel-stroke" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="1660" height="64" rx="30" fill="#e8f0f6"/>
+    <path d="M0 34 H1660 V64 H0 Z" fill="#e8f0f6"/>
+    <text class="section-title" x="34" y="42">对照：qiankun 当前仓库 loader 的 CSS 处理</text>
+    <text class="small" x="34" y="92">当前仓库的 `packages/loader` 流式写入 DOM；节点经过 `nodeTransformer`，link/style 处理落在 `packages/shared/src/assets-transpilers`。</text>
+
+    <g transform="translate(42 116)">
+      <rect x="0" y="0" width="255" height="62" rx="18" fill="#f4f8fb" stroke="#cbd9e3"/>
+      <text class="code-small" x="18" y="27">loadEntry(entry, container)</text>
+      <text class="tiny" x="18" y="49">HTML Response body stream</text>
+    </g>
+    <path d="M310 147 H425" class="blue-stroke" marker-end="url(#arrow-blue)"/>
+    <g transform="translate(440 116)">
+      <rect x="0" y="0" width="270" height="62" rx="18" fill="#f4f8fb" stroke="#cbd9e3"/>
+      <text class="code-small" x="18" y="27">WritableDOMStream(...)</text>
+      <text class="tiny" x="18" y="49">clone node before append</text>
+    </g>
+    <path d="M725 147 H840" class="blue-stroke" marker-end="url(#arrow-blue)"/>
+    <g transform="translate(855 116)">
+      <rect x="0" y="0" width="300" height="62" rx="18" fill="#f4f8fb" stroke="#cbd9e3"/>
+      <text class="code-small" x="18" y="27">transpileLink(link, baseURI)</text>
+      <text class="tiny" x="18" y="49">fetch CSS + optional isolation</text>
+    </g>
+    <path d="M1170 147 H1285" class="blue-stroke" marker-end="url(#arrow-blue)"/>
+    <g transform="translate(1300 104)">
+      <rect x="0" y="0" width="300" height="86" rx="18" fill="#f4f8fb" stroke="#cbd9e3"/>
+      <text class="code-small" x="18" y="28">CSS string -> Blob</text>
+      <text class="code-small" x="18" y="53">URL.createObjectURL(blob)</text>
+      <text class="tiny" x="18" y="74">回填到原 link.href，而不是内联 style</text>
+    </g>
+  </g>
+
+  <g transform="translate(86 1075)">
+    <text class="tiny" x="0" y="0">图中主线基于 import-html-entry: `importHTML` / `processTpl` / `getExternalStyleSheets` / `getEmbedHTML`。底部对照基于 qiankun 当前仓库 loader 与 shared assets-transpilers。</text>
+  </g>
+</svg>

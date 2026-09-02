@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <user-card name="张三" role="管理员">
+    <p slot="description">负责付款、发票校验和异常退款确认</p>
+    <button slot="action">查看审批队列</button>
+  </user-card>
+</body>
+<script>
+class UserCard extends HTMLElement{
+  connectedCallback(){
+    const name = this.getAttribute('name') || '未命名用户';
+    const role = this.getAttribute('role') || '未设置岗位';
+
+    const shadowRoot = this.attachShadow({mode: 'open'});
+
+    shadowRoot.innerHTML = `
+      <section>
+        <div>
+          <h2>${name}</h2>
+          <p>${role}</p>
+          <slot name="description"></slot>
+        </div>
+        <div>
+          <slot name="action"></slot>
+        </div>
+      </div>
+    `;
+  }
+}
+customElements.define('user-card', UserCard);
+</script>
+</html>

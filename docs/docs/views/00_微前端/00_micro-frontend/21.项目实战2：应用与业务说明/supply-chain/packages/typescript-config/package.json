@@ -1,0 +1,10 @@
+{
+  "name": "@supply-chain/typescript-config",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./base.json": "./base.json",
+    "./app.json": "./app.json",
+    "./server.json": "./server.json"
+  }
+}

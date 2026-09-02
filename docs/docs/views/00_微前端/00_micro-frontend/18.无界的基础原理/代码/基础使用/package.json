@@ -1,0 +1,11 @@
+{
+  "name": "wujie-retail-console",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "dev:main": "pnpm --filter main-app dev",
+    "dev:order": "pnpm --filter order-app dev",
+    "dev:finance": "pnpm --filter finance-app dev",
+    "build": "pnpm -r build"
+  }
+}

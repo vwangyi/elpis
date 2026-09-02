@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue';
+import { ref, computed, readonly } from 'vue';
 import { defineStore } from 'pinia';
 
 export const useCounterStore = defineStore('counter', () => {
@@ -8,5 +8,9 @@ export const useCounterStore = defineStore('counter', () => {
     count.value++;
   }
 
-  return { count, doubleCount, increment };
+  return {
+    count: readonly(count), // ref需要readonly包裹 防止外部直接赋值
+    doubleCount, // computed不需要readonly包裹
+    increment
+  };
 });

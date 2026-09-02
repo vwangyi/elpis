@@ -1,0 +1,5 @@
+.remote-hello-card { padding: 22px; border: 1px solid #a7dbc6; border-radius: 12px; color: #174737; background: #ecfdf5; }
+.remote-hello-card > span { color: #059669; font-size: 11px; font-weight: 800; letter-spacing: .08em; }
+.remote-hello-card h2 { margin: 8px 0; }
+.remote-hello-card p { margin: 0 0 16px; color: #4d7165; }
+.remote-hello-card button { padding: 8px 13px; border: 0; border-radius: 7px; color: #fff; background: #059669; cursor: pointer; }

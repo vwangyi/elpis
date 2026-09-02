@@ -2,10 +2,22 @@
 import { defineConfig } from 'eslint/config';
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+// eslint-plugin-prettier 把prettier的错误报到eslint里面
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 import eslintPluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
+/**
+ * eslint-config-prettier 会帮我们把处理 eslint中格式化规则 和prettier冲突后 按prettier走
+ * eslint-config-prettier 内部维护了一个规则列表，包含了所有可能与 Prettier 产生冲突的 ESLint 规则，然后统一将它们设置为 off。
+ */
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
+
+/**
+ * 最新版的 eslint 和 prettier 各司其职
+ * Prettier 负责所有格式：换行、缩进、引号、空格等
+ * ESLint 负责代码质量：语法错误、潜在bug、最佳实践，
+ * 之前版本的eslint涉及（换行、缩进、引号、空格等）都放弃使用 而是在prettier的配置中处理
+ */
 
 /**
  * rules
@@ -24,14 +36,19 @@ const ignores = [
   'demo',
   'scripts',
   'packages/*',
+  '**/.nuxt/**',
+  'apps/new-world/*',
+  'app/s/all-blue/*',
   'apps/*' // 注意: 不能全局忽略 'apps/*'，否则下方 all-blue / new-world 的规则块永远不会生效
 ];
-const rules = {
+
+// ============ 基础规则 ============
+const baseRules = {
   '@typescript-eslint/no-require-imports': 'off', // 使用require函数
   '@typescript-eslint/no-unused-vars': 'off', // 未使用的变量
+  '@typescript-eslint/no-explicit-any': 'off', // 是否允许any
   'no-unreachable': 'off', // 无法访问的代码 比如 return后面的代码
-  // 不能使用var
-  'no-var': 'error',
+  'no-var': 'error', // 不能使用var
   // 强制在注释中 // 或 /* 使用一致的空格
   'spaced-comment': [
     'error',
@@ -58,7 +75,7 @@ const rules = {
   // 强制在任何允许的时候使用点号
   'dot-notation': 'error',
   // 要求使用 === 和 !==
-  eqeqeq: 'error',
+  'eqeqeq': 'error',
   // 禁用 alert、confirm 和 prompt
   'no-alert': 'error',
   // 禁止 if 语句中有 return 之后有 else
@@ -67,8 +84,9 @@ const rules = {
   'no-eval': 'error',
   // 禁止使用多个空格
   'no-multi-spaces': 'error',
-  // 禁止使用 var 多次声明同一变量
-  'no-redeclare': 'error',
+  // 用@typescript-eslint/no-redeclare 替换 no-redeclare 来实现 禁止多次声明同一变量
+  'no-redeclare': 'off',
+  '@typescript-eslint/no-redeclare': 'error',
   // 禁止在 return 语句中使用赋值语句
   'no-return-assign': 'error',
   // 禁止出现未使用过的表达式
@@ -77,8 +95,19 @@ const rules = {
   'no-useless-call': 'error',
   // 禁用未声明的变量，除非它们在 /global / 注释中被提到
   'no-undef': 'off',
-  // 不允许在变量定义之前使用它们
-  'no-use-before-define': 'error',
+  /**
+   * 用ts的@typescript-eslint/no-use-before-define 替换 原生的 no-use-before-define
+   * 实现 不允许在变量定义之前使用它们
+   */
+  'no-use-before-define': 'off',
+  '@typescript-eslint/no-use-before-define': [
+    'error',
+    {
+      functions: false, // 允许函数提升
+      classes: true,
+      variables: true
+    }
+  ],
   // 强制在逗号前后使用一致的空格
   'comma-spacing': 'error',
   // 强制数组方括号中使用一致的空格
@@ -89,8 +118,6 @@ const rules = {
   'brace-style': 'error',
   // 强制文件末尾至少保留一行空行
   'eol-last': 'error',
-  // 强制使用一致的缩进
-  indent: ['error', 2],
   // 强制在对象字面量的属性中键和值之间使用一致的间距
   'key-spacing': 'error',
   // 强制在关键字前后使用一致的空格
@@ -114,10 +141,20 @@ const rules = {
   // 要求操作符周围有空格
   'space-infix-ops': 'error',
   // js中必须使用单引号
-  quotes: ['error', 'single'],
-  //
-  'operator-linebreak': 'off',
+  'quotes': ['error', 'single'],
+  // 换行符
+  'linebreak-style': [2, 'unix'],
+  // 取消jsdoc注释
+  'require-jsdoc': 'off',
+  // 正常for..in..
+  'guard-for-in': 'off',
+  // 限制每行代码的字数
+  'max-len': 'off',
+  'operator-linebreak': 'off'
+};
 
+// ============ Vue 规则 ============
+const vueRules = {
   // vue部分
   // vue组件标签不能是一个单词
   'vue/multi-word-component-names': 'off',
@@ -199,8 +236,6 @@ const rules = {
   'vue/no-v-html': 'off',
   // template中不止可以有一个标签
   'vue/valid-template-root': 'off',
-  // template中的缩进
-  'vue/html-indent': ['error', 2],
   // template中的引号
   'vue/html-quotes': ['error', 'double', { avoidEscape: false }],
 
@@ -213,16 +248,7 @@ const rules = {
       ignoreProperties: false
     }
   ],
-  'vue/no-v-text-v-html-on-component': 'off',
-
-  // 换行符
-  'linebreak-style': [2, 'unix'],
-  // 取消jsdoc注释
-  'require-jsdoc': 'off',
-  // 正常for..in..
-  'guard-for-in': 'off',
-  // 限制每行代码的字数
-  'max-len': 'off'
+  'vue/no-v-text-v-html-on-component': 'off'
 };
 
 export default defineConfig([
@@ -245,7 +271,11 @@ export default defineConfig([
       parser: tseslint.parser // 解析器
     },
     rules: {
-      'no-var': 'error'
+      ...baseRules,
+      // 新增或重写自己的eslint规则
+      'no-var': 'error',
+      // 关闭所有和prettier冲突的规则
+      ...eslintConfigPrettier.rules
     }
   },
   /* nestjs项目 */
@@ -261,10 +291,11 @@ export default defineConfig([
       }
     },
     rules: {
+      ...baseRules,
+      // 新增或重写自己的eslint规则
       '@typescript-eslint/no-require-imports': 'off', // 使用require函数
       '@typescript-eslint/no-unused-vars': 'off', // 未使用的变量
       'no-unreachable': 'off', // 无法访问的代码 比如 return后面的代码
-
       // 禁止使用 var，强制使用 let 或 const
       'no-var': 'error',
       // 如果变量从未被重新赋值，强制使用 const
@@ -274,7 +305,10 @@ export default defineConfig([
           destructuring: 'any', // 解构时也检查
           ignoreReadBeforeAssign: false // 赋值前读取的变量也检查
         }
-      ]
+      ],
+
+      // 关闭所有和prettier冲突的规则
+      ...eslintConfigPrettier.rules
     }
   },
   /* 所有的vue项目共享同一套eslint规则 */
@@ -297,7 +331,14 @@ export default defineConfig([
         ...globals.browser
       }
     },
-    rules
+    rules: {
+      ...baseRules,
+      ...vueRules,
+      // 新增或重写自己的eslint规则
+
+      // 关闭所有和prettier冲突的规则
+      ...eslintConfigPrettier.rules
+    }
   }
   // ...后续新增其他项目
 ]);

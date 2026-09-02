@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { APP_INTERCEPTOR, APP_FILTER } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -10,6 +11,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { TodoModule } from './todo/todo.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ChatModule } from './chat/chat.module';
+import { LoggerModule } from './logger/logger.module';
+import { LoggerMiddleware } from './logger/logger.middleware';
+import { ResponseInterceptor } from './logger/response.interceptor';
+import { HttpExceptionFilter } from './logger/http-exception.filter';
 
 @Module({
   imports: [
@@ -32,23 +38,32 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         logging: true
       })
     }),
-    // TypeOrmModule.forRoot({
-    //   type: 'mysql',
-    //   host: 'codewy.top',
-    //   port: 3306,
-    //   username: 'root',
-    //   password: 'Root@123456',
-    //   database: 'onepiece_dev',
-    //   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    //   synchronize: true, // 可以修改数据库根据实体和数据库会一致
-    //   timezone: 'Z' // 表示用 UTC时间
-    // }),
+    // 自定义日志模块
+    LoggerModule,
     UserModule,
     UploadModule,
     AuthModule,
-    TodoModule
+    TodoModule,
+    ChatModule
   ],
   controllers: [AppController],
-  providers: [AppService]
+  providers: [
+    AppService,
+    // 全局响应拦截器
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseInterceptor
+    },
+    // 全局异常过滤器
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter
+    }
+  ]
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    // 全局请求日志中间件
+    consumer.apply(LoggerMiddleware).forRoutes('*');
+  }
+}

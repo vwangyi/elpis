@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HTML Entry 原理演示</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: linear-gradient(180deg, #fcfaf7 0%, #f5efe4 100%);
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .page {
+        max-width: 1320px;
+        margin: 0 auto;
+        padding: 32px 24px 48px;
+      }
+
+      .hero,
+      .card,
+      .viewer {
+        border-radius: 26px;
+        border: 1px solid rgba(31, 41, 55, 0.08);
+        box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+      }
+
+      .hero {
+        padding: 28px;
+        color: #fff7ed;
+        background: linear-gradient(135deg, #9a3412, #c2410c);
+      }
+
+      .hero span {
+        display: inline-flex;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        background: rgba(255, 255, 255, 0.14);
+      }
+
+      .hero h1 {
+        margin: 14px 0 10px;
+        font-size: 34px;
+      }
+
+      .hero p {
+        margin: 0;
+        max-width: 860px;
+        line-height: 1.85;
+      }
+
+      .hero strong {
+        color: #ffedd5;
+      }
+
+      .layout {
+        margin-top: 22px;
+        display: grid;
+        grid-template-columns: 420px minmax(0, 1fr);
+        gap: 20px;
+      }
+
+      .card,
+      .viewer {
+        padding: 22px;
+        background: rgba(255, 255, 255, 0.9);
+      }
+
+      .card h2,
+      .viewer h2 {
+        margin: 0 0 10px;
+      }
+
+      .card p,
+      .viewer p {
+        margin: 0;
+        color: #4b5563;
+        line-height: 1.8;
+      }
+
+      .actions {
+        margin-top: 16px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 14px;
+        padding: 11px 14px;
+        font: inherit;
+        font-weight: 700;
+        color: #fff7ed;
+        background: #c2410c;
+        cursor: pointer;
+      }
+
+      button.alt {
+        color: #7c2d12;
+        background: #ffedd5;
+      }
+
+      .code,
+      .log,
+      .result {
+        margin-top: 12px;
+        padding: 14px;
+        border-radius: 16px;
+        background: #111827;
+        color: #dbeafe;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 13px;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      .mount-area {
+        margin-top: 16px;
+        min-height: 240px;
+        padding: 18px;
+        border-radius: 20px;
+        background: linear-gradient(180deg, #fff7ed 0%, #fffbf5 100%);
+        border: 1px dashed rgba(194, 65, 12, 0.36);
+      }
+
+      .mount-placeholder {
+        min-height: 196px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        color: #9a3412;
+        background: rgba(255, 237, 213, 0.52);
+        border: 1px dashed rgba(194, 65, 12, 0.24);
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .mount-area #subapp-root {
+        min-height: 196px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        border: 1px dashed rgba(194, 65, 12, 0.24);
+        background: rgba(255, 237, 213, 0.38);
+      }
+
+      .mount-area #subapp-root:empty::before {
+        content: "#subapp-root";
+        color: #9a3412;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.06em;
+      }
+
+      .mock-app {
+        padding: 18px;
+        border-radius: 18px;
+        color: #7c2d12;
+        background: rgba(255, 237, 213, 0.84);
+        border: 1px solid rgba(194, 65, 12, 0.16);
+      }
+
+      .mock-app h3 {
+        margin: 0 0 8px;
+      }
+
+      .mock-app p {
+        margin: 0;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <section class="hero">
+        <h1>HTML Entry 为什么不是“多 fetch 一次 HTML”</h1>
+        <p>
+          这个页只看 3 件事：<strong>先拿 HTML</strong
+          >、<strong>再拆资源</strong>、<strong
+            >最后执行 entry script 拿到 mount</strong
+          >。
+        </p>
+      </section>
+
+      <section class="layout">
+        <article class="card">
+          <h2>模拟子应用的 index.html</h2>
+          <p>先看入口 HTML 里带了什么。</p>
+          <div class="actions">
+            <button type="button" id="parse-btn">解析入口</button>
+            <button type="button" id="mount-btn">执行挂载</button>
+            <button type="button" class="alt" id="reset-btn">重置</button>
+          </div>
+          <div class="code" id="html-source"></div>
+          <div class="log" id="parse-log"></div>
+        </article>
+
+        <article class="viewer">
+          <h2>主应用视角</h2>
+          <p>这里展示 template、资源清单和最终挂载结果。</p>
+          <div class="result" id="parse-result"></div>
+          <div class="mount-area" id="mount-area">
+            <div class="mount-placeholder">等待解析</div>
+          </div>
+        </article>
+      </section>
+    </div>
+
+    <script>
+      // 这些 DOM 引用分别对应“源码区、日志区、解析结果区、挂载区”。
+      // 后面的每一步演示，都是把中间结果写回这几个区域，看到主应用当前处理到了哪一步。
+      const htmlSourceEl = document.querySelector("#html-source");
+      const parseLogEl = document.querySelector("#parse-log");
+      const parseResultEl = document.querySelector("#parse-result");
+      const mountAreaEl = document.querySelector("#mount-area");
+
+      // 这里用一个字符串，模拟“主应用通过 fetch 拿到的子应用 index.html 原文”。
+      // 这页想强调的是：HTML Entry 的起点不是直接执行 JS，而是先拿到整份 HTML，再从里面拆资源。
+      const htmlEntry = `<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/assets/order-app.css" />
+    <script src="/assets/runtime.js"><\/script>
+    <script src="/assets/vendor.js"><\/script>
+  </head>
+  <body>
+    <div id="subapp-root"></div>
+    <script src="/assets/micro-entry.js" entry><\/script>
+  </body>
+</html>`;
+
+      // 这个对象模拟“主应用已经把外部脚本资源下载回来，并且知道每个脚本执行后会发生什么”。
+      // 真实框架里会去请求 /assets/*.js；这里为了教学可控，直接用 run() 代替真实脚本执行。
+      const scriptRegistry = {
+        "/assets/runtime.js": {
+          // 先执行 runtime，模拟子应用运行时环境已经就绪。
+          run(proxyWindow) {
+            proxyWindow.__runtimeReady = true;
+          },
+        },
+        "/assets/vendor.js": {
+          // 再执行 vendor，模拟公共依赖已经加载完成。
+          run(proxyWindow) {
+            proxyWindow.__vendorLoaded = ["vue", "router"];
+          },
+        },
+        "/assets/micro-entry.js": {
+          // 最后执行 entry script。
+          // 它的关键职责不是“直接渲染页面”，而是把子应用的挂载能力暴露出来。
+          run(proxyWindow) {
+            // 这里把 orderMicroApp 挂到 proxyWindow 上，模拟子应用把生命周期导出到自己的运行上下文。
+            // 主应用后面拿到的，不是 HTML 本身，而是这个带 mount() 的入口对象。
+            proxyWindow.orderMicroApp = {
+              // mount() 才是子应用真正开始往容器里渲染内容的地方。
+              // 也就是说，前面的 parse 和 exec 都是在“准备”，这里才进入“挂载”。
+              async mount({ container }) {
+                const root = container.querySelector("#subapp-root");
+                root.innerHTML = `
+                  <section class="mock-app">
+                    <h3>订单子应用已经挂载</h3>
+                    <p>这里的内容不是主应用直接写出来的，而是 entry script 导出的 mount() 真正执行以后渲染进去的。</p>
+                  </section>
+                `;
+              },
+            };
+
+            // 返回这个入口对象，方便主应用在演示里直接拿到导出结果。
+            return proxyWindow.orderMicroApp;
+          },
+        },
+      };
+
+      // parseState 专门保存“主应用处理 HTML Entry 过程中的中间产物”。
+      // 右侧看到的 template、styles、scripts、entryScript，都是从这里读出来的。
+      const parseState = {
+        template: "",
+        styles: [],
+        scripts: [],
+        entryScript: "",
+        exports: null,
+      };
+
+      // 更新底部日志，当前这一步做完了什么。
+      function setLog(message) {
+        parseLogEl.textContent = message;
+      }
+
+      // 把 parseState 渲染到右侧结果区。
+      // 这样能把“代码里的中间状态”直接和页面上的展示对应起来。
+      function renderState() {
+        parseResultEl.textContent = JSON.stringify(
+          {
+            template: parseState.template,
+            styles: parseState.styles,
+            scripts: parseState.scripts,
+            entryScript: parseState.entryScript,
+            exportsReady: Boolean(parseState.exports),
+          },
+          null,
+          2,
+        );
+      }
+
+      // 第一步：解析入口 HTML。
+      // 这一步会把模板、样式资源、脚本资源、entry script 都拆出来，模拟主应用处理 HTML Entry 的准备阶段。
+      function parseHtmlEntry() {
+        const doc = new DOMParser().parseFromString(htmlEntry, "text/html");
+        const entryScriptNode = doc.querySelector("script[entry]");
+
+        // body 里的 script 标签要先移除，只保留真正要挂到页面里的模板结构。
+        parseState.template = doc.body.innerHTML
+          .replace(/<script[\s\S]*?<\/script>/g, "")
+          .trim();
+        parseState.styles = [
+          ...doc.querySelectorAll('link[rel="stylesheet"]'),
+        ].map((node) => node.getAttribute("href"));
+        parseState.scripts = [...doc.querySelectorAll("script[src]")].map(
+          (node) => node.getAttribute("src"),
+        );
+
+        // 优先找带 entry 标记的脚本；如果没标，就退回到最后一个脚本。
+        // 这是为了：主应用不仅要拿到脚本列表，还要知道“谁才是真正的入口”。
+        parseState.entryScript = entryScriptNode
+          ? entryScriptNode.getAttribute("src")
+          : parseState.scripts.at(-1);
+        parseState.exports = null;
+
+        mountAreaEl.innerHTML = parseState.template;
+        setLog(
+          `已解析: styles ${parseState.styles.length} 个, scripts ${parseState.scripts.length} 个, entry = ${parseState.entryScript}`,
+        );
+        renderState();
+      }
+
+      // 第二步：执行脚本，拿到子应用导出的入口对象，再调用它的 mount()。
+      async function execEntryScript() {
+        if (!parseState.entryScript) {
+          setLog("请先解析入口。");
+          return;
+        }
+
+        // proxyWindow 模拟“子应用脚本执行时看到的全局上下文”。
+        // 用它承接运行时标记和入口导出，避免把演示数据直接堆到真实 window 上。
+        const proxyWindow = Object.create(window);
+
+        // 按脚本列表顺序执行，模拟主应用把 runtime、vendor、entry 一个个跑起来。
+        for (const script of parseState.scripts) {
+          scriptRegistry[script]?.run(proxyWindow);
+        }
+
+        // 执行完 entry script 后，主应用会从运行上下文里把导出的入口对象取出来。
+        parseState.exports = proxyWindow.orderMicroApp;
+
+        if (
+          !parseState.exports ||
+          typeof parseState.exports.mount !== "function"
+        ) {
+          setLog("没有拿到 mount 导出。");
+          renderState();
+          return;
+        }
+
+        // 真正调用子应用暴露出来的 mount()，把内容渲染到主应用预留的容器里。
+        await parseState.exports.mount({ container: mountAreaEl });
+
+        setLog(
+          `已执行: runtime -> vendor -> ${parseState.entryScript}, mount 完成`,
+        );
+        renderState();
+      }
+
+      // 把本次演示的所有中间状态恢复到初始值，方便重新从“解析入口”开始看一遍。
+      function resetDemo() {
+        parseState.template = "";
+        parseState.styles = [];
+        parseState.scripts = [];
+        parseState.entryScript = "";
+        parseState.exports = null;
+        mountAreaEl.innerHTML = '<div class="mount-placeholder">等待解析</div>';
+        setLog("已重置");
+        renderState();
+      }
+
+      // 三个按钮分别对应“解析入口、执行挂载、重置演示”。
+      document
+        .querySelector("#parse-btn")
+        .addEventListener("click", parseHtmlEntry);
+      document
+        .querySelector("#mount-btn")
+        .addEventListener("click", execEntryScript);
+      document.querySelector("#reset-btn").addEventListener("click", resetDemo);
+
+      // 页面初始化时，先把模拟出来的 index.html 原文展示出来，再把状态重置到待开始状态。
+      htmlSourceEl.textContent = htmlEntry;
+      resetDemo();
+    </script>
+  </body>
+</html>

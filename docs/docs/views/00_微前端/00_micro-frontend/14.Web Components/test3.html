@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    button{
+      background-color: #2563eb;
+      color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <template id="cardTemplate">
+    <style>
+      button{
+        background-color: #dc2626;
+        color: #fff;
+        border: 1px solid #ccc;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+    </style>
+    <button>内部按钮</button>
+  </template>
+
+  <button id="btn">外部按钮</button>  
+  <isolated-card></isolated-card>
+</body>
+<script>
+  const cardTemplate = document.getElementById('cardTemplate');
+  const btn = document.getElementById('btn');
+  btn.addEventListener('click', () => {
+    alert('外部按钮被点击了，window.sharedRuntime = ' + window.sharedRuntime);
+  })
+
+
+
+  class IsolatedCard extends HTMLElement{
+    connectedCallback(){
+      const shadowRoot = this.attachShadow({mode: 'open'});
+      
+      // shadowRoot.innerHTML = `
+      //   <style>
+      //     button{
+      //       background-color: #dc2626;
+      //       color: #fff;
+      //       border: 1px solid #ccc;
+      //       padding: 5px 10px;
+      //       cursor: pointer;
+      //     }
+      //   </style>
+      //   <button>内部按钮</button>
+      // `;
+
+      shadowRoot.appendChild(cardTemplate.content)
+      console.log(shadowRoot.children);
+      const children = shadowRoot.children;
+
+      for(let ele of children){
+        if(ele.tagName === "BUTTON"){
+          ele.addEventListener('click', () => {
+            window.sharedRuntime = "来自 shadow DOM 内部";
+            alert('内部按钮被点击了，已经写入window.sharedRuntime = ' + window.sharedRuntime);
+          })
+        }
+      }
+    }
+  }
+
+  customElements.define('isolated-card', IsolatedCard);
+</script>
+</html>

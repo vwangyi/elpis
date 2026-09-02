@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>沙箱执行环境</title>
+    <style>
+      :root {
+        color: #1f2937;
+        background: #f4f6f2;
+        font-family:
+          "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      button {
+        font: inherit;
+      }
+
+      .page {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 28px 22px;
+      }
+
+      .header,
+      .panel {
+        border: 1px solid rgba(31, 41, 55, 0.08);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+      }
+
+      .header {
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      h1,
+      h2,
+      h3,
+      p,
+      pre {
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+
+      h2 {
+        font-size: 18px;
+      }
+
+      .actions,
+      .subapp-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      button {
+        appearance: none;
+        border: 0;
+        border-radius: 12px;
+        padding: 10px 14px;
+        color: #f8fafc;
+        background: #0f766e;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button.secondary {
+        color: #0f766e;
+        background: rgba(15, 118, 110, 0.12);
+      }
+
+      .grid {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 18px;
+      }
+
+      .panel {
+        padding: 18px;
+        display: grid;
+        gap: 12px;
+      }
+
+      .wide {
+        grid-column: 1 / -1;
+      }
+
+      .viewport {
+        min-height: 190px;
+        border: 1px dashed rgba(15, 118, 110, 0.34);
+        border-radius: 16px;
+        padding: 16px;
+        background: #f8fafc;
+      }
+
+      .subapp-card {
+        display: grid;
+        gap: 14px;
+      }
+
+      .subapp-card h3 {
+        font-size: 22px;
+      }
+
+      .subapp-status {
+        display: inline-flex;
+        width: fit-content;
+        border-radius: 999px;
+        padding: 6px 10px;
+        color: #0f766e;
+        background: rgba(15, 118, 110, 0.12);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      pre {
+        min-height: 150px;
+        padding: 14px;
+        border-radius: 14px;
+        color: #dbeafe;
+        background: #0f172a;
+        line-height: 1.7;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+
+      @media (max-width: 900px) {
+        .header {
+          display: grid;
+        }
+
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .wide {
+          grid-column: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="header">
+        <h1>沙箱执行环境</h1>
+        <div class="actions">
+          <button type="button" data-action="load">加载订单子应用</button>
+          <button type="button" class="secondary" data-action="unmount">
+            卸载
+          </button>
+          <button type="button" class="secondary" data-action="reset">
+            重置
+          </button>
+        </div>
+      </section>
+
+      <section class="grid">
+        <article class="panel wide">
+          <h2>主应用容器</h2>
+          <div class="viewport" id="subapp-container"></div>
+        </article>
+
+        <article class="panel">
+          <h2>订单子应用源码</h2>
+          <pre id="source-code"></pre>
+        </article>
+
+        <article class="panel">
+          <h2>包装后执行</h2>
+          <pre id="wrapped-code"></pre>
+        </article>
+
+        <article class="panel">
+          <h2>proxyWindow</h2>
+          <pre id="proxy-state"></pre>
+        </article>
+
+        <article class="panel">
+          <h2>真实 window</h2>
+          <pre id="real-state"></pre>
+        </article>
+      </section>
+    </main>
+
+    <script>
+      const container = document.querySelector("#subapp-container");
+      const sourceCodeEl = document.querySelector("#source-code");
+      const wrappedCodeEl = document.querySelector("#wrapped-code");
+      const proxyStateEl = document.querySelector("#proxy-state");
+      const realStateEl = document.querySelector("#real-state");
+
+      const orderAppSource = `window.orderApp = {
+  mount(container) {
+    let count = 0;
+    let notice = "暂无提醒";
+
+    const render = () => {
+      container.innerHTML =
+        '<section class="subapp-card">' +
+        '<span class="subapp-status">订单子应用</span>' +
+        '<h3>订单工作台</h3>' +
+        '<p>已处理订单：' + count + '</p>' +
+        '<p>最近提醒：' + notice + '</p>' +
+        '<div class="subapp-actions">' +
+        '<button type="button" data-order-action="finish">处理订单</button>' +
+        '<button type="button" class="secondary" data-order-action="notice">发送提醒</button>' +
+        '</div>' +
+        '</section>';
+
+      container
+        .querySelector('[data-order-action="finish"]')
+        .addEventListener("click", () => {
+          count += 1;
+          window.sharedRuntime = { app: "order-app", count };
+          window.latestAction = "finish order";
+          window.hostRefresh?.();
+          render();
+        });
+
+      container
+        .querySelector('[data-order-action="notice"]')
+        .addEventListener("click", () => {
+          notice = "订单系统发送了一条提醒";
+          window.latestAction = "send notice";
+          window.hostRefresh?.();
+          render();
+        });
+    };
+
+    render();
+  },
+
+  unmount(container) {
+    container.innerHTML = "";
+  },
+};`;
+
+      let proxyWindow = createProxyWindow(window);
+      let orderApp = null;
+      window.hostRefresh = render;
+
+      function createProxyWindow(realWindow) {
+        const fakeWindow = Object.create(null);
+        let proxy = null;
+
+        proxy = new Proxy(fakeWindow, {
+          get(target, key) {
+            if (key === "window" || key === "self" || key === "globalThis") {
+              return proxy;
+            }
+
+            if (key in target) {
+              return target[key];
+            }
+
+            return realWindow[key];
+          },
+          set(target, key, value) {
+            target[key] = value;
+            return true;
+          },
+        });
+
+        return proxy;
+      }
+
+      function createExecutableScript(scriptText) {
+        return `;(function(window, self, globalThis) {
+${scriptText}
+}).bind(window.proxy)(window.proxy, window.proxy, window.proxy);`;
+      }
+
+      function loadSubApp() {
+        orderApp?.unmount(container);
+        orderApp = null;
+        proxyWindow = createProxyWindow(window);
+
+        window.proxy = proxyWindow;
+        (0, eval)(createExecutableScript(orderAppSource));
+        delete window.proxy;
+
+        orderApp = proxyWindow.orderApp;
+        orderApp.mount(container);
+        render();
+      }
+
+      function unmountSubApp() {
+        orderApp?.unmount(container);
+        orderApp = null;
+        render();
+      }
+
+      function reset() {
+        unmountSubApp();
+        delete window.orderApp;
+        delete window.sharedRuntime;
+        delete window.latestAction;
+        proxyWindow = createProxyWindow(window);
+        orderApp = null;
+        render();
+      }
+
+      function readState(target) {
+        return {
+          orderApp: typeof target.orderApp,
+          sharedRuntime: target.sharedRuntime || null,
+          latestAction: target.latestAction || null,
+        };
+      }
+
+      function render() {
+        sourceCodeEl.textContent = orderAppSource;
+        wrappedCodeEl.textContent = createExecutableScript(orderAppSource);
+        proxyStateEl.textContent = JSON.stringify(
+          readState(proxyWindow),
+          null,
+          2,
+        );
+        realStateEl.textContent = JSON.stringify(readState(window), null, 2);
+      }
+
+      document.addEventListener("click", (event) => {
+        const action = event.target.dataset.action;
+
+        if (action === "load") loadSubApp();
+        if (action === "unmount") unmountSubApp();
+        if (action === "reset") reset();
+      });
+
+      reset();
+    </script>
+  </body>
+</html>

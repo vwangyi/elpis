@@ -1,0 +1,4 @@
+packages:
+  - "host-app"
+  - "vue-remote-app"
+  - "react-remote-app"

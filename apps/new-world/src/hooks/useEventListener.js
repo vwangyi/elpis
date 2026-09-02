@@ -4,8 +4,8 @@ import { unref, watch } from 'vue';
  * 页面上 常常实现 绑定事件 卸载时移除事件 这里封装一个hooks解决
  * useEventListener(window, 'move', function(e) {console.log(e)})
  * 以后绑定事件 就用这个hooks 不用原生的了
- * const haha = useTemplateRef('haha') 
-    useEventListener(haha,  'mousemove', function(e: Event) {
+ * const xx = useTemplateRef('xx') 
+    useEventListener(xx,  'mousemove', function(e: Event) {
     console.log('mousemove', e)
     })
  */
