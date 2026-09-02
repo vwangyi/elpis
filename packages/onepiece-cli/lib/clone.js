@@ -2,6 +2,12 @@ import download from 'download-git-repo';
 import ora from 'ora';
 import chalk from 'chalk';
 
+/**
+ * // const github = 'vwangyi/template-vue3#vue2';
+// const name = './template';
+
+// await clone(github, name).catch(() => void 0);
+ */
 function clone(remote, name, options = false) {
   const spinner = ora('正在拉取项目......').start();
 
