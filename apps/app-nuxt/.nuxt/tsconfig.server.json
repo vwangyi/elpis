@@ -72,7 +72,7 @@
         "../../../node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch"
       ],
       "crossws": [
-        "../../../node_modules/.pnpm/crossws@0.3.5/node_modules/crossws"
+        "../../../node_modules/.pnpm/crossws@0.4.12_srvx@0.11.22/node_modules/crossws"
       ],
       "#shared": [
         "../shared"

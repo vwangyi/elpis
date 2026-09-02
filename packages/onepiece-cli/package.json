@@ -1,13 +1,13 @@
 {
   "name": "onepiece-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "index.js",
   "type": "module",
   "bin": {
     "onepiece": "bin/onepiece.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "publish": "sh scripts/release.sh"
   },
   "author": "",
   "license": "ISC",

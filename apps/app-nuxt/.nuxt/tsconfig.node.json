@@ -44,7 +44,7 @@
         "../../../node_modules/.pnpm/ofetch@1.5.1/node_modules/ofetch"
       ],
       "crossws": [
-        "../../../node_modules/.pnpm/crossws@0.3.5/node_modules/crossws"
+        "../../../node_modules/.pnpm/crossws@0.4.12_srvx@0.11.22/node_modules/crossws"
       ],
       "#app/types": [
         "../../../node_modules/.pnpm/nuxt@4.5.2_@babel+plugin-proposal-decorators@7.29.7_@babel+core@7.29.7__@babel+plugin-s_04236f0b2531f04a0654c50ddaa90e03/node_modules/nuxt/dist/app/types"
