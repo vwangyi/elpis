@@ -17,5 +17,6 @@ segs
 tinyint
 varchat
 VITE
+chunkhash
 subapp
 vwangyi
